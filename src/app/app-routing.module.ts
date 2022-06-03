@@ -9,6 +9,8 @@ import { GalleryComponent } from './pages/gallery/gallery.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { LoginComponent } from './pages/login/login.component';
 
+import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
+
 const routes: Routes = [
   {
     path: '',
@@ -42,7 +44,7 @@ const routes: Routes = [
       {
         path: 'account',
         component: AccountComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, AngularFireAuthGuard],
       },
     ],
   },

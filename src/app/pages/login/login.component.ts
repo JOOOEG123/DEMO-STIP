@@ -18,16 +18,23 @@ export class LoginComponent implements OnInit {
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    confirmEmail: ['', [Validators.required, Validators.email]],
+    firstName: [''],
+    lastName: [''],
+    confirmEmail: [''],
   });
 
   isSignIn = true;
-  constructor(private fb: FormBuilder, private authService: AuthServiceService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthServiceService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm.setValidators([this.checkEmails]);
+    this.loginForm.valueChanges.subscribe((value) => {
+      console.log(value);
+    });
+    this.loginForm.updateValueAndValidity();
   }
 
   onSubmit() {
@@ -55,9 +62,11 @@ export class LoginComponent implements OnInit {
     }
   }
   checkEmails(): ValidatorFn {
+    console.log('checkEmails');
     const j = (group: AbstractControl): ValidationErrors | null => {
       const email = group?.get('email')?.value;
       const confirmEmail = group?.get('confirmEmail')?.value;
+      console.log(email, confirmEmail);
       return email === confirmEmail ? null : { notSame: true };
     };
     return j;
@@ -70,5 +79,4 @@ export class LoginComponent implements OnInit {
   logout() {
     this.authService.signOut();
   }
-  
 }
