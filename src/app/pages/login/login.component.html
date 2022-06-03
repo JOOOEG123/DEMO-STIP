@@ -1,0 +1,49 @@
+<div class="container-sm mh-100">
+    <div class="center-div my-5">
+        <div class="card shadow w-50 rounded-3 rounded-start">
+            <div class="card-header ">
+                <h3>{{ !isSignIn ? 'Sign Up' : 'Sign In'}}</h3>
+                {{ loginForm.valid}}
+            </div>
+            <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                    <div class="form-floating mb-3" *ngIf="!isSignIn">
+                        <input type="text" class="form-control" id="firstName" formControlName="firstName"
+                            placeholder="name@example.com">
+                        <label for="firstName">First name <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="form-floating mb-3" *ngIf="!isSignIn">
+                        <input type="text" class="form-control" id="lastname" formControlName="lastName"
+                            placeholder="name@example.com">
+                        <label for="lastname">Last name <span class="text-danger">*</span></label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" formControlName="email"
+                            placeholder="name@example.com">
+                        <label for="email">Email address <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="form-floating mb-3" *ngIf="!isSignIn">
+                        <input type="email" class="form-control" id="confirmEmail" formControlName="confirmEmail"
+                            placeholder="name@example.com">
+                        <label for="confirmEmail">Confirm Email address <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" formControlName="password" id="password"
+                            placeholder="Password">
+                        <label for="password">Password <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-primary" type="button" (click)="switchState()"  [ngClass]="{'btn-success': isSignIn}">{{ isSignIn
+                            ? 'Sign Up' : 'Sign In'}}</button>
+                        <a routerLink="/" class="link-primary mx-3">Forget password</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
