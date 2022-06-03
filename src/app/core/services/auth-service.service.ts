@@ -4,12 +4,14 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import * as provider from 'firebase/auth';
 import { Router } from '@angular/router';
 import { Profile } from '../types/auth.types';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthServiceService {
   user: any;
+  isLoggedIn = new Subject<boolean>();
   constructor(
     private store: AngularFirestore,
     private auth: AngularFireAuth,
@@ -23,12 +25,15 @@ export class AuthServiceService {
       } else {
         localStorage.setItem('user', '');
       }
+      this.isLoggedIn.next(this.isLoggedInCheck);
     });
   }
 
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user')!);
-    return user !== null && user.emailVerified !== false ? true : false;
+  get isLoggedInCheck(): boolean {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user !== null && user.uid && user.emailVerified == true
+      ? true
+      : false;
   }
 
   signInWithEmail({ email, password }: { email: string; password: string }) {
@@ -75,9 +80,11 @@ export class AuthServiceService {
         updatedAt: p.updatedAt || '',
       };
       console.log('profile', profile);
-      return this.store.doc<any>(`users/${p.uid}`).set(profile, { merge: true });
+      return this.store
+        .doc<any>(`users/${p.uid}`)
+        .set(profile, { merge: true });
     }
-    return null
+    return null;
   }
 
   signOut() {
