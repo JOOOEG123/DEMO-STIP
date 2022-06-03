@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-home-blue {
+    background-color: #2699fb;
+    color: #ffffff;
+}
+.bg-home-light-grey {
+    background-color: #f2f9ff;
+    color: #2699fb;
+}
+.bg-home-light {
+    background-color: #F1F9FF;
+    color: #2699fb;
+}
+
+.rounded-bottom-left {
+    border-bottom-left-radius: 6rem;
+}
+.rounded-bottom-right {
+    border-bottom-right-radius: 6rem;
+}
