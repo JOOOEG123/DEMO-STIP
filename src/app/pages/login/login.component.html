@@ -36,9 +36,12 @@
                     </div>
                     <div class="d-grid gap-2 col-6 mx-auto">
                         <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-primary" type="button" (click)="logout()">temp log out</button>
                         <button class="btn btn-primary" type="button" (click)="switchState()"
                             [ngClass]="{'btn-success': isSignIn}">{{ isSignIn
                             ? 'Sign Up' : 'Sign In'}}</button>
+                        <button class="btn btn-danger" type="button" (click)="userGoogleLogin()">{{ !isSignIn
+                            ? 'Sign Up ' : 'Sign In '}}with Google</button>
                         <a routerLink="/" class="link-primary mx-3">Forget password</a>
                     </div>
 

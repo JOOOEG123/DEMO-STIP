@@ -7,6 +7,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
   });
 
   isSignIn = true;
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private authService: AuthServiceService) {}
 
   ngOnInit(): void {
     this.loginForm.setValidators([this.checkEmails]);
@@ -61,4 +62,13 @@ export class LoginComponent implements OnInit {
     };
     return j;
   }
+
+  userGoogleLogin() {
+    this.authService.googleSignIn();
+  }
+
+  logout() {
+    this.authService.signOut();
+  }
+  
 }

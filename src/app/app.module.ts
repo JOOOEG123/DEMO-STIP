@@ -20,9 +20,11 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 
 import { environment } from 'src/environments/environment';
+import { AuthServiceService } from './core/services/auth-service.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { environment } from 'src/environments/environment';
     AngularFireAuthModule,
     AngularFireFunctionsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
     AppRoutingModule,
@@ -49,7 +52,7 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     NgxBootstrapModule
   ],
-  providers: [],
+  providers: [AuthServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

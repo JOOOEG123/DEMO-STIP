@@ -6,6 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "deploy:firestore": "firebase deploy --only firestore:rules",
+    "deploy:fireStorage": "firebase deploy --only storage:rules",
     "test": "ng test"
   },
   "private": true,
