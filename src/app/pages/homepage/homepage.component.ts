@@ -12,14 +12,17 @@ export class HomepageComponent implements OnInit {
     {
       name: 'John Doe',
       email: 'johnDoe@aol.com',
+      profile: 'theguy.png'
     },
     {
       name: 'Jane Doe',
       email: 'JaneDoe@aol.com',
+      profile: 'default-profile.png'
     },
     {
       name: 'John Smith',
       email: 'johnSmith@aol.com',
+      profile: 'default-profile.png'
     },
   ];
 
