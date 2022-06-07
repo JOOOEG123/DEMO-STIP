@@ -6,6 +6,8 @@
 .what-we-found{
     padding-bottom: 200px;
     padding-top: 50px;
+    padding-left: 100px;
+    padding-right: 100px;
     background-color: rgb(104, 190, 247);
 }
 
@@ -20,12 +22,78 @@
 }
 
 .meet-team{
-    padding-bottom:300px;
+    padding-bottom:100px;
     padding-top:100px;
 }
 
 .contact-us{
-    padding-bottom:310px;
+    padding-bottom:50px;
     padding-top:100px;
     background-color: rgb(104, 190, 247);
 }
+
+.input-form{
+    padding-left: 35%;
+    width:100%
+}
+
+.subm-btn{
+    position: absolute;
+    left: 35%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+li {
+    float: left;
+    margin-left: 6%;
+    margin-top: 5%;
+    margin-right: 2%;
+  }
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.container{
+    position: relative;
+    width: 89%;
+    max-width: 300px;
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  /* The overlay effect - lays on top of the container and over the image */
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    color: #f1f1f1;
+    width: 100%;
+    transition: .5s ease;
+    opacity:0;
+    color: white;
+    font-size: 15px;
+    padding: 18%;
+    text-align: left;
+  }
+  
+  /* When you mouse over the container, fade in the overlay title */
+  .container:hover .overlay {
+    opacity: 1;
+  }
