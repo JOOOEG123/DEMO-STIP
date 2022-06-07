@@ -11,6 +11,7 @@ import { LoginComponent } from './pages/login/login.component';
 
 import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 
+
 const routes: Routes = [
   {
     path: '',

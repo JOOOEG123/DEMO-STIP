@@ -1,1 +1,71 @@
-<p>browse works!</p>
+<div id='search-bar'>
+  <div class='cell'><input type='search' placeholder='Search'></div>
+  <div class='cell'>
+    <div class='button'>Search</div>
+  </div>
+</div>
+
+
+<body>
+
+  <div ng-controller="expandCollapseCtrl">
+    <div (click)="filterDropDown()">
+      <p>Filter</p>
+    </div>
+
+    <div *ngIf="active">
+
+      <form name="Form" ng-controller="genderController">
+
+        <section class="gender-section">
+          <label class="gender-margin">Gender</label>
+          <mat-radio-group [(ngModel)]="genderPosition">
+            <mat-radio-button class="gender-margin" value="male">male</mat-radio-button>
+            <mat-radio-button class="gender-margin" value="female">female</mat-radio-button>
+          </mat-radio-group>
+        </section>
+
+        <section class="status-section">
+          <label class="status-margin">Status</label>
+          <mat-radio-group [(ngModel)]="statusPosition">
+            <mat-radio-button class="status-margin" value="alive">alive</mat-radio-button>
+            <mat-radio-button class="status-margin" value="deceased">deceased</mat-radio-button>
+          </mat-radio-group>
+        </section>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="startatpicker" placeholder="Choose a date">
+          <mat-datepicker-toggle [for]="startatpicker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #startatpicker startView="year" [startAt]="startDate"></mat-datepicker>
+        </mat-form-field>
+
+
+        <h6>Chinese Ethic Group</h6>
+        <mat-form-field appearance="fill">
+          <mat-label>Chinese Ethic Group</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let group of groups" [value]="group.value">
+              {{group.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+      </form>
+
+      <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Occupation</mat-label>
+          <input matInput placeholder="Ex. Teacher" value="Teacher">
+        </mat-form-field>
+      
+      </form>
+
+    </div>
+
+  </div>
+
+</body>
+
+
+

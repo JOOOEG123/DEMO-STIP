@@ -12,6 +12,7 @@
         "@schematics/angular:application": {
           "strict": true
         }
+        
       },
       "root": "",
       "sourceRoot": "src",
@@ -20,6 +21,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "preserveSymlinks": true,
             "outputPath": "dist/stip-demo",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -120,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "stip-demo"
+  "defaultProject": "stip-demo",
+  "cli": {
+    "analytics": false
+  }
 }

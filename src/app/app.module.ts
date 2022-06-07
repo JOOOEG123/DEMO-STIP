@@ -26,6 +26,15 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from 'src/environments/environment';
 import { AuthServiceService } from './core/services/auth-service.service';
 import { AccountComponent } from './pages/account/account.component';
+import { MatSliderModule } from '@angular/material/slider';
+
+
+import {MatSelectModule} from '@angular/material/select';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -52,7 +61,14 @@ import { AccountComponent } from './pages/account/account.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgxBootstrapModule
+    NgxBootstrapModule,
+    MatSliderModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatRadioModule,
+    MatCheckboxModule
   ],
   providers: [AuthServiceService],
   bootstrap: [AppComponent]
