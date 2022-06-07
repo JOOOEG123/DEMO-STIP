@@ -3,7 +3,7 @@
         <div class="container py-4 text-center">
             <h2 class="my-3">Chinese Anti-Rightists Archives</h2>
             <div class="m-5 px-5">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                testLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                 ex
                 ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
@@ -14,10 +14,10 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <img src="" width="100" height="300" />
+    <div class="container-fluid" style="text-align:center; background-color:rgb(215, 86, 86);">
+        <img class="img-fluid" src="assets/homepage/Anti-Rightist_Movement.jpg" width="700" height="300" />
     </div>
-    <div class="container-fluid bg-home-blue rounded-bottom-left">
+    <div class="container-fluid bg-home-blue">
         <div class="container py-4 text-center">
             <h2 class="my-3">Timeline</h2>
             <div class="m-5 px-5">
@@ -33,13 +33,15 @@
         </div>
     </div>
 </div>
+
+
 <div class="bg-home-blue">
-    <div class="container-fluid bg-home-light rounded-bottom-right py-5">
+    <div class="container-fluid bg-home-light py-5">
         <div class="row mx-5 text-center">
-            <h2 class="col-12 pb-5">Featured Contributors of the Anti-Rightists Movement</h2>
+            <h2 class="col-12 pb-5">Featured Victims of the Anti-Rightists Movement</h2>
             <div class="col-12 col-md-4" *ngFor="let profile of fakeProfile">
                 <div class="text-center">
-                    <img src="assets/homepage/default-profile.jpg" class="rounded-circle" width="200" height="200" />
+                    <img src="assets/homepage/{{profile.profile}}" width="200" height="250" />
                 </div>
                 <div class="text-center">
                     <h4 class="text-dark">{{profile.name}}</h4>
@@ -50,8 +52,8 @@
         </div>
     </div>
     <div class="container-fluid py-3">
-        <div class="row-col-1 bg-home-light m-5">
-            <img src="" width="100" height="300" />
+        <div class="row-col-1 bg-home-light m-5" style="text-align:center; background-color:rgb(40, 141, 212);">
+            <img class="img-fluid" src="assets/homepage/china.svg" width="700" height="500" />
         </div>
     </div>
     <div class="container-fluid bg-home-blue">
@@ -70,3 +72,4 @@
         </div>
     </div>
 </div>
+
