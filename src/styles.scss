@@ -19,7 +19,22 @@
     border-bottom-right-radius: 6rem;
 }
 
+// center div in container
 .center-div {
    display: grid;
    place-items: center;
+}
+
+// word between lines
+.linebtntext {
+    display: flex;
+    flex-direction: row;
+}
+
+.linebtntext:before,
+.linebtntext:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid #000;
+  margin: auto 0.5em;
 }

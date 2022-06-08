@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,6 +7,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
 @Component({
@@ -22,12 +23,25 @@ export class LoginComponent implements OnInit {
     lastName: [''],
     confirmEmail: [''],
   });
+  modalRef?: BsModalRef;
+
+  @ViewChild('template') template!: TemplateRef<any>;
+  @ViewChild('templateLogout') templateLogout!: TemplateRef<any>;
 
   isSignIn = true;
   constructor(
     private fb: FormBuilder,
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    private modalService: BsModalService
   ) {}
+
+  openModal(
+    template: TemplateRef<any> = this.authService.isLoggedInCheck
+      ? this.templateLogout
+      : this.template
+  ) {
+    this.modalRef = this.modalService.show(template);
+  }
 
   ngOnInit(): void {
     this.loginForm.setValidators([this.checkEmails]);
@@ -77,6 +91,8 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
-    this.authService.signOut();
+    this.authService.signOut().then(() => {
+      this.modalRef?.hide();
+    });
   }
 }
