@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
+  bsValue = new Date();
+  bsRangeValue: Date[];
+  maxDate = new Date();
+  minDate = new Date();
 
-  constructor() { }
+  constructor() {
+     this.minDate.setDate(this.minDate.getDate() - 1);
+     this.maxDate.setDate(this.maxDate.getDate() + 7);
+     this.bsRangeValue = [this.bsValue, this.maxDate];
+  }
 
   ngOnInit(): void {
   }
-
 }

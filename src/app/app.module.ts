@@ -12,7 +12,7 @@ import { GalleryComponent } from './pages/gallery/gallery.component';
 import { BrowseComponent } from './pages/browse/browse.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Firebase Modules
 import { AngularFireModule } from '@angular/fire/compat';
@@ -46,7 +46,6 @@ import { AccountComponent } from './pages/account/account.component';
     AngularFireStorageModule,
     AngularFirestoreModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     BrowserModule,
     BrowserModule,
     FormsModule,
