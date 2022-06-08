@@ -1,34 +1,74 @@
-<div class="bg-primary bg-opacity-25 p-4">
-  <div class="input-group input-group-lg mb-3">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Search for..."
-      aria-label="Search for..."
-      aria-describedby="search-filter"
-    />
-    <button class="btn btn-primary" type="button" id="search-filter">
-      Search
-    </button>
-  </div>
-</div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                    value="option2" />
+                                <label class="form-check-label" for="inlineRadio2">
+                                    Female
+                                </label>
+                            </div>
+                        </div>
+                    </div>
 
-<div class="card m-4">
-  <div class="card-header d-flex">
-    <h4 class="flex-grow-1">Filter</h4>
-    <button
-      class="btn btn-primary"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#collapseExample"
-      aria-expanded="false"
-      aria-controls="collapseExample"
-    >
-      +
-    </button>
-  </div>
-  <div class="collapse card-body" id="collapseExample">
-    Some placeholder content for the collapse component. This panel is hidden by
-    default but revealed when the user activates the relevant trigger.
-  </div>
+                    <div class="col-12 col-md-6">
+                        <div class="p-3">
+                            <span class="px-3">Status</span>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                    value="option1" />
+                                <label class="form-check-label" for="statusRadio1">Alive</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                    value="option2" />
+                                <label class="form-check-label" for="statusRadio2">Deceased</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row gx-5">
+                    <div class="col-12 col-md-6">
+                        <div class="p-3">
+                            <span class="px-3">Chinese Ethic Group</span>
+                            <div class="form-floating">
+                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                    <option selected>Select Ethic Group</option>
+                                    <option [value]="group.value" *ngFor="let group of groups">{{group.viewValue}}
+                                    </option>
+                                </select>
+                                <label for="floatingSelect">Works with selects</label>
+    
+                            </div>
+                        </div>
+    
+                    </div>
+                    <div class="col-12 col-md-6">
+    
+                        <div class="p-3">
+                            <span class="px-3">Year</span>
+                            <div class="form-group">
+                                <input type="date" placeholder="Datepicker" class="form-control">
+                            </div>
+    
+    
+                        </div>
+    
+                    </div>
+                    
+                </div>
+
+                <div class="row gx-5">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputOccupation">Occupation</label>
+                          <input type="occupation" class="form-control" id="inputOccupation" placeholder="Type an occupation">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
 </div>
