@@ -1,1 +1,34 @@
-<p>browse works!</p>
+<div class="bg-primary bg-opacity-25 p-4">
+  <div class="input-group input-group-lg mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search for..."
+      aria-label="Search for..."
+      aria-describedby="search-filter"
+    />
+    <button class="btn btn-primary" type="button" id="search-filter">
+      Search
+    </button>
+  </div>
+</div>
+
+<div class="card m-4">
+  <div class="card-header d-flex">
+    <h4 class="flex-grow-1">Filter</h4>
+    <button
+      class="btn btn-primary"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseExample"
+      aria-expanded="false"
+      aria-controls="collapseExample"
+    >
+      +
+    </button>
+  </div>
+  <div class="collapse card-body" id="collapseExample">
+    Some placeholder content for the collapse component. This panel is hidden by
+    default but revealed when the user activates the relevant trigger.
+  </div>
+</div>

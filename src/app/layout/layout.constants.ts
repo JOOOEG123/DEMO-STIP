@@ -19,9 +19,4 @@ export const NavBar = [
     url: '/gallery',
     icon: 'phone',
   },
-  {
-    title: 'Log In',
-    url: '/login',
-    icon: 'user',
-  },
 ];

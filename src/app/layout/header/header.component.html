@@ -1,43 +1,52 @@
+<app-login #login></app-login>
 <header class="sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-light bg-home-blue">
-      <div class="container-fluid">
-        <a class="navbar-brand h2 text-white" routerLink="/home">Logo</a>
-        <button
-          class="navbar-toggler"
-          #navbarToggler
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarMobile"
-          aria-controls="navbarMobile"
-          [attr.aria-expanded]="!isCollapsed"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarMobile">
-          <ul class="nav nav-underline nav-fill me-auto mb-2">
-            <li class="nav-item" *ngFor="let item of navbars">
-              <a
-                class="nav-link text-white rounded-top"
-                routerLinkActive="active"
-                [routerLink]="item.url"
-                >{{ item.title }}</a
-              >
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
+  <nav class="navbar navbar-expand-lg navbar-light bg-home-blue">
+    <div class="container-fluid">
+      <a class="navbar-brand h2 text-white" routerLink="/home">Logo</a>
+      <button
+        class="navbar-toggler"
+        #navbarToggler
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarMobile"
+        aria-controls="navbarMobile"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMobile">
+        <ul class="nav nav-underline nav-fill me-auto mb-2">
+          <li class="nav-item" *ngFor="let item of navbars">
+            <a
+              class="nav-link text-white rounded-top"
+              routerLinkActive="active"
+              [routerLink]="item.url"
+              >{{ item.title }}</a
+            >
+          </li>
+        </ul>
+        <div class="d-flex flex-row">
+          <div>
+            <img
+              src="assets/homepage/globe-white.png"
+              alt="globe"
+              width="32"
+              class="img-fluid"
             />
-            <button class="btn btn-outline-primary rounded-pill" type="submit">
-              Search
+            EN
+          </div>
+          <div class="mx-3">
+            <button
+              type="button"
+              class="btn bg-white text-primary"
+              (click)="loginLogin()"
+            >
+              {{ isLoggedIn ? "Log out" : "Log in" }}
             </button>
-          </form>
+          </div>
         </div>
       </div>
-    </nav>
-  </header>
-  
+    </div>
+  </nav>
+</header>

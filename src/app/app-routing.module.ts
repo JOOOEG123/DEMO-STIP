@@ -44,7 +44,7 @@ const routes: Routes = [
       {
         path: 'account',
         component: AccountComponent,
-        canActivate: [AuthGuard, AngularFireAuthGuard],
+        canActivate: [AngularFireAuthGuard],
       },
     ],
   },

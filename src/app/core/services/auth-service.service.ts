@@ -25,6 +25,7 @@ export class AuthServiceService {
       } else {
         localStorage.setItem('user', '');
       }
+      console.log('user', user);
       this.isLoggedIn.next(this.isLoggedInCheck);
     });
   }
@@ -88,7 +89,7 @@ export class AuthServiceService {
   }
 
   signOut() {
-    this.auth.signOut().then(() => {
+    return this.auth.signOut().then(() => {
       localStorage.removeItem('user');
       this.router.navigate(['/']);
     });
