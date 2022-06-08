@@ -25,6 +25,7 @@ export class AuthServiceService {
       } else {
         localStorage.setItem('user', '');
       }
+      console.log('user', user);
       this.isLoggedIn.next(this.isLoggedInCheck);
     });
   }

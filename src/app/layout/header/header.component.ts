@@ -29,19 +29,20 @@ export class HeaderComponent implements OnInit {
     this.auth.isLoggedIn.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
       console.log('isLoggedIn', this.isLoggedIn);
+      this.navbars = this.navbars.filter((nav) => nav.title !== 'Acount');
       if (isLoggedIn) {
+        console.log('isLoggedIn', this.isLoggedIn);
         this.login.modalRef?.hide();
-        this.navbars[this.navbars.length - 1] = {
+        this.navbars.push({
           title: 'Acount',
           url: '/account',
           icon: 'acount',
-        };
-      } else {
-        this.navbars = this.navbars.filter((nav) => nav.title !== 'Acount');
+        });
       }
     });
   }
   loginLogin() {
-    this.login.openModal();
+    console.log('loginLogin', this.isLoggedIn);
+    this.login.openModal(undefined, this.isLoggedIn);
   }
 }
