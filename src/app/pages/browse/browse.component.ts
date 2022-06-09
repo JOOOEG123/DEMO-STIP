@@ -73,9 +73,37 @@ export class BrowseComponent implements OnInit {
     {value: '58', viewValue: 'Naturalized Citizen'}
   ];
 
-  constructor() { }
+  sign: string
+  group: string
+  year: string
+
+  constructor() { 
+    this.sign = "+"
+    this.group = ""
+    this.year = ""
+  }
 
   ngOnInit(): void {
+  }
+
+  updateCollapse() {
+    this.drop = !this.drop;
+    // var isExpanded = $(collapsableRegion).attr("aria-expanded");
+    // if (this.sign == "+") {
+    //   this.sign = "-"
+    // }
+    // else {
+    //   this.sign = "+"
+    // }
+
+  }
+
+  pickGroup() {
+
+  }
+
+  pickYear() {
+
   }
 
 }

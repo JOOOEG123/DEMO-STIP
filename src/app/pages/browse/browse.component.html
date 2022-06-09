@@ -1,3 +1,39 @@
+<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
+
+<div class="p-3 mb-2 bg-info bg-opacity-25">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search for ... " aria-label="Search for ... "
+            aria-describedby="button-addon2" />
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+            Button
+        </button>
+    </div>
+</div>
+
+<div class="card m-4">
+    <div class="card-header d-flex bd-highlight">
+        <h6 class="flex-grow-1 bd-highlight">Filter</h6>
+
+        <button class="btn btn-primary bd-highlight" type="button" [attr.aria-expanded]="!drop"
+            aria-controls="collapseBasic" (click)='updateCollapse()'>
+            {{drop ? '-' : '+'}}
+        </button>
+    </div>
+
+    <div id="collapseBasic" [collapse]="drop" [isAnimated]="true" >
+        <div class="card card-body">
+            <div class="container px-4">
+                <div class="row gx-5">
+
+                    <div class="col-12 col-md-6">
+                        <div class="p-3">
+                            <span class="px-3">Gender</span>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                    value="option1" />
+                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                            </div>
+
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
                                     value="option2" />
@@ -32,37 +68,40 @@
                         <div class="p-3">
                             <span class="px-3">Chinese Ethic Group</span>
                             <div class="form-floating">
-                                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <select class="form-select" id="floatingSelect"
+                                    aria-label="Floating label select example">
                                     <option selected>Select Ethic Group</option>
                                     <option [value]="group.value" *ngFor="let group of groups">{{group.viewValue}}
                                     </option>
                                 </select>
                                 <label for="floatingSelect">Works with selects</label>
-    
+
                             </div>
                         </div>
-    
+
                     </div>
                     <div class="col-12 col-md-6">
-    
+
                         <div class="p-3">
                             <span class="px-3">Year</span>
-                            <div class="form-group">
-                                <input type="date" placeholder="Datepicker" class="form-control">
+                            <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
+                                <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
+                                    [bsConfig]="{ adaptivePosition: true }">
                             </div>
-    
-    
+
+
                         </div>
-    
+
                     </div>
-                    
+
                 </div>
 
                 <div class="row gx-5">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label for="inputOccupation">Occupation</label>
-                          <input type="occupation" class="form-control" id="inputOccupation" placeholder="Type an occupation">
+                            <label for="inputOccupation">Occupation</label>
+                            <input type="occupation" class="form-control" id="inputOccupation"
+                                placeholder="Type an occupation">
                         </div>
                     </div>
                 </div>
