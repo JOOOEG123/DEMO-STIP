@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://unpkg.com/ngx-bootstrap/datepicker/bs-datepicker.css">
 
 <div class="p-3 mb-2 bg-info bg-opacity-25">
     <div class="input-group mb-3">
@@ -13,8 +12,7 @@
 <div class="card m-4">
     <div class="card-header d-flex bd-highlight">
         <h6 class="flex-grow-1 bd-highlight">Filter</h6>
-
-        <button class="btn btn-primary bd-highlight" type="button" [attr.aria-expanded]="!drop"
+        <button class="btn btn-primary bd-highlight display-3" type="button" [attr.aria-expanded]="!drop"
             aria-controls="collapseBasic" (click)='updateCollapse()'>
             {{drop ? '-' : '+'}}
         </button>
@@ -116,10 +114,7 @@
                                         <!-- <option *ngFor="let occupation of occupation" >{{occupation.viewValue}}
                                         </option> -->
                                     </select>
-
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -148,20 +143,19 @@
         </div>
     </div>
 
-    <div class="row bg-secondary position-relative" style="--bs-bg-opacity: .1;">
-        <div class="position-absolute top- start-30">
-            <img src="assets\browsepage\tempprofile.png" class="rounded float-start rounded-circle border border-secondary border-1" width="100" height="100">
+    <div class="d-flex p-4 my-5 bg-light rounded-start rounded-pill">
+        <div class="pe-5">
+            <img src="assets\browsepage\tempprofile.png" class="rounded-circle border" width="100" height="100">
         </div>
-        <div class="position-absolute top-100 start-50 ">
-            <label for="colFormLabelSm" class="row ">Name</label>
-            <label for="colFormLabelSm" class="row ">Gender</label>
-            <label for="colFormLabelSm" class="row ">Intro</label>
-
+        <div class="flex-grow-1">
+            <div>Surname</div>
+            <div class="pb-3">Occupation</div>
+            <div>Brief paragraph/sentence</div>
         </div>
     </div>
 </div>
 
-
+<!-- 
 <table class="table">
     <thead>
       <tr>
@@ -192,4 +186,4 @@
         <td>@twitter</td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
