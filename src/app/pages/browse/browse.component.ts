@@ -4,6 +4,10 @@ interface Group {
   value: string;
   viewValue: string;
 }
+interface Occupation {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-browse',
@@ -12,6 +16,7 @@ interface Group {
 })
 export class BrowseComponent implements OnInit {
   drop = false;
+
   groups: Group[] = [
     {value: '1', viewValue: 'Han Chinese'},
     {value: '2', viewValue: 'Zhuang'},
@@ -73,14 +78,24 @@ export class BrowseComponent implements OnInit {
     {value: '58', viewValue: 'Naturalized Citizen'}
   ];
 
-  sign: string
+  occupations : Occupation[] = [
+    {value: '1', viewValue: 'Testing1'},
+    {value: '2', viewValue: 'Testing2'}
+  ];
+  
   group: string
   year: string
+  gender: string
+  status: string
+  occupation: string
 
   constructor() { 
-    this.sign = "+"
     this.group = ""
     this.year = ""
+    this.gender = "Male"
+    this.status = ""
+    this.occupation = ""
+    console.log(typeof this.occupations[0].viewValue)
   }
 
   ngOnInit(): void {
@@ -88,22 +103,40 @@ export class BrowseComponent implements OnInit {
 
   updateCollapse() {
     this.drop = !this.drop;
-    // var isExpanded = $(collapsableRegion).attr("aria-expanded");
-    // if (this.sign == "+") {
-    //   this.sign = "-"
-    // }
-    // else {
-    //   this.sign = "+"
-    // }
 
   }
 
-  pickGroup() {
-
+  onGroupChange() {
+    console.log("group clciked")
+    var x = document.getElementById("mySelect");
   }
 
-  pickYear() {
+  onYearChange() {
+    console.log("year clicked")
+  }
 
+  onGenderChange() {
+    console.log("gender clicked");
+    //this.gender  = document.getElementById('inlineRadio1').value
+    
+  }
+
+  onStatusChange() {
+    //this.status= document.getElementsByName("status")[0];
+    console.log(this.status)
+    console.log("status clicked");
+  }
+  onOccupationChange() {
+    this.occupation= (<HTMLInputElement>document.getElementById("inputOccupation")).value;
+    console.log(this.occupation)
+    console.log("occupation clicked")
+  }
+
+  submitClick() {
+    this.onGroupChange()
+    this.onOccupationChange()
+    this.onStatusChange()
+    this.onYearChange()
   }
 
 }

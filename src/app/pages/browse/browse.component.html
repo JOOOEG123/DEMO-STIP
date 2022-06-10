@@ -20,7 +20,7 @@
         </button>
     </div>
 
-    <div id="collapseBasic" [collapse]="drop" [isAnimated]="true" >
+    <div id="collapseBasic" [collapse]="drop" [isAnimated]="true">
         <div class="card card-body">
             <div class="container px-4">
                 <div class="row gx-5">
@@ -29,85 +29,167 @@
                         <div class="p-3">
                             <span class="px-3">Gender</span>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                    value="option1" />
-                                <label class="form-check-label" for="inlineRadio1">Male</label>
-                            </div>
-
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                    value="option2" />
-                                <label class="form-check-label" for="inlineRadio2">
-                                    Female
+                                <label class="form-check-label radio-inline" for="genderRadio1">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                        id="genderRadio1" value="male" [(ngModel)]="gender"
+                                        (change)="onGenderChange()" /> Male
                                 </label>
+
+
+
+
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label radio-inline" for="genderRadio2">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                            id="genderRadio2" value="female" [(ngModel)]="gender"
+                                            (change)="onGenderChange()" /> Female
+                                    </label>
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="p-3">
+                                <span class="px-3">Status</span>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label" for="statusRadio1">
+                                        <input class="form-check-input" type="radio" name="status" id="statusRadio1"
+                                            value="alive" [(ngModel)]="status" (change)="onStatusChange()" />
+                                        Alive</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label" for="statusRadio2">
+                                        <input class="form-check-input" type="radio" name="status" id="statusRadio2"
+                                            value="deceased" [(ngModel)]="status" (change)="onStatusChange()" />
+                                        Deceased</label>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6">
-                        <div class="p-3">
-                            <span class="px-3">Status</span>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                    value="option1" />
-                                <label class="form-check-label" for="statusRadio1">Alive</label>
+                    <div class="row gx-5">
+                        <div class="col-12 col-md-6">
+                            <div class="p-3">
+                                <span class="px-3">Chinese Ethic Group</span>
+                                <div class="form-floating">
+                                    <select class="form-select" id="groupSelect"
+                                        aria-label="Floating label select example" (change)="onGroupChange()">
+                                        <option selected>Select Ethic Group</option>
+                                        <option [value]="group.value" *ngFor="let group of groups">{{group.viewValue}}
+                                        </option>
+                                    </select>
+                                    <label for="floatingSelect">Works with selects</label>
+
+                                </div>
                             </div>
 
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                    value="option2" />
-                                <label class="form-check-label" for="statusRadio2">Deceased</label>
+                        </div>
+                        <div class="col-12 col-md-6">
+
+                            <div class="p-3">
+                                <span class="px-3">Year</span>
+                                <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
+                                    <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
+                                        [bsConfig]="{ adaptivePosition: true }" (change)="onYearChange()">
+                                </div>
+
+
                             </div>
+
                         </div>
 
+                    </div>
+
+                    <div class="row gx-5">
+                        <div class="form-row">
+                            <div class="form-group row mb-3">
+                                <label for="occupationSelect"
+                                    class="row col-sm-2 pt-1 col-form-label">Occupation</label>
+
+                                <div class="form-floating row col-md-2 pt-1">
+
+                                    <select class="form-select" id="occupationSelect"
+                                        aria-label="Floating label select example" (change)="onOccupationChange()">
+                                        <option selected>Select Occupation</option>
+                                        <!-- <option *ngFor="let occupation of occupation" >{{occupation.viewValue}}
+                                        </option> -->
+                                    </select>
+
+
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row gx-5">
-                    <div class="col-12 col-md-6">
-                        <div class="p-3">
-                            <span class="px-3">Chinese Ethic Group</span>
-                            <div class="form-floating">
-                                <select class="form-select" id="floatingSelect"
-                                    aria-label="Floating label select example">
-                                    <option selected>Select Ethic Group</option>
-                                    <option [value]="group.value" *ngFor="let group of groups">{{group.viewValue}}
-                                    </option>
-                                </select>
-                                <label for="floatingSelect">Works with selects</label>
 
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-12 col-md-6">
-
-                        <div class="p-3">
-                            <span class="px-3">Year</span>
-                            <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
-                                <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
-                                    [bsConfig]="{ adaptivePosition: true }">
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="row gx-5">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="inputOccupation">Occupation</label>
-                            <input type="occupation" class="form-control" id="inputOccupation"
-                                placeholder="Type an occupation">
-                        </div>
-                    </div>
-                </div>
             </div>
+        </div>
+    </div>
+</div>
 
+
+<div class = "m-4">
+    <div class="row">
+        <div class="col">
+            Search Results 40,000
+        </div>
+        <div class="col text-end">
+            Order by: A-Z
+        </div>
+    </div>
+    
+    <div class="row  border-bottom border-danger">
+        <div class="col">
+            A
+        </div>
+    </div>
+
+    <div class="row bg-secondary position-relative" style="--bs-bg-opacity: .1;">
+        <div class="position-absolute top- start-30">
+            <img src="assets\browsepage\tempprofile.png" class="rounded float-start rounded-circle border border-secondary border-1" width="100" height="100">
+        </div>
+        <div class="position-absolute top-100 start-50 ">
+            <label for="colFormLabelSm" class="row ">Name</label>
+            <label for="colFormLabelSm" class="row ">Gender</label>
+            <label for="colFormLabelSm" class="row ">Intro</label>
 
         </div>
     </div>
 </div>
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">
+            <img src="assets\browsepage\tempprofile.png" class="rounded float-start rounded-circle border border-secondary border-1" width="100" height="100">
+        </th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
