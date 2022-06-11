@@ -1,5 +1,5 @@
-
 <div class="p-3 mb-2 bg-info bg-opacity-25">
+    <!-- search bar -->
     <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Search for ... " aria-label="Search for ... "
             aria-describedby="button-addon2" />
@@ -9,181 +9,255 @@
     </div>
 </div>
 
-<div class="card m-4">
-    <div class="card-header d-flex bd-highlight">
-        <h6 class="flex-grow-1 bd-highlight">Filter</h6>
-        <button class="btn btn-primary bd-highlight display-3" type="button" [attr.aria-expanded]="!drop"
-            aria-controls="collapseBasic" (click)='updateCollapse()'>
-            {{drop ? '-' : '+'}}
-        </button>
-    </div>
+<div>
+    <div class="card m-4">
+        <div class="card-header d-flex bd-highlight">
+            <h6 class="flex-grow-1 bd-highlight">Filter</h6>
+            <button class="btn btn-primary bd-highlight display-3" type="button" [attr.aria-expanded]="!drop"
+                aria-controls="collapseBasic" (click)='updateCollapse()'>
+                {{drop ? '-' : '+'}}
+            </button>
+        </div>
 
-    <div id="collapseBasic" [collapse]="drop" [isAnimated]="true">
-        <div class="card card-body">
-            <div class="container px-4">
-                <div class="row gx-5">
+        <div id="collapseBasic" [collapse]="drop" [isAnimated]="true">
+            <div class="card card-body">
+                <div class="container px-4">
+                    <div class="row gx-5">
 
-                    <div class="col-12 col-md-6">
-                        <div class="p-3">
-                            <span class="px-3">Gender</span>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label radio-inline" for="genderRadio1">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                        id="genderRadio1" value="male" [(ngModel)]="gender"
-                                        (change)="onGenderChange()" /> Male
-                                </label>
-
-
-
-
+                        <div class="col-12 col-md-6">
+                            <div class="p-3">
+                                <span class="px-3">Gender</span>
                                 <div class="form-check form-check-inline">
-                                    <label class="form-check-label radio-inline" for="genderRadio2">
+                                    <label class="form-check-label radio-inline p-1" for="genderRadio1">
                                         <input class="form-check-input" type="radio" name="inlineRadioOptions"
-                                            id="genderRadio2" value="female" [(ngModel)]="gender"
-                                            (change)="onGenderChange()" /> Female
+                                            id="genderRadio1" value="male" [(ngModel)]="gender"
+                                            (change)="onGenderChange()" /> Male
                                     </label>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col-12 col-md-6">
-                            <div class="p-3">
-                                <span class="px-3">Status</span>
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label" for="statusRadio1">
-                                        <input class="form-check-input" type="radio" name="status" id="statusRadio1"
-                                            value="alive" [(ngModel)]="status" (change)="onStatusChange()" />
-                                        Alive</label>
-                                </div>
 
-                                <div class="form-check form-check-inline">
-                                    <label class="form-check-label" for="statusRadio2">
-                                        <input class="form-check-input" type="radio" name="status" id="statusRadio2"
-                                            value="deceased" [(ngModel)]="status" (change)="onStatusChange()" />
-                                        Deceased</label>
+
+
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label radio-inline" for="genderRadio2">
+                                            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                                                id="genderRadio2" value="female" [(ngModel)]="gender"
+                                                (change)="onGenderChange()" /> Female
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
+                            <div class="col-12 col-md-6">
+                                <div class="p-3">
+                                    <span class="px-3 m-1">Status</span>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" for="statusRadio1">
+                                            <input class="form-check-input pl-3" type="radio" name="status"
+                                                id="statusRadio1" value="alive" [(ngModel)]="status"
+                                                (change)="onStatusChange()" />
+                                            Alive</label>
+                                    </div>
 
-                    <div class="row gx-5">
-                        <div class="col-12 col-md-6">
-                            <div class="p-3">
-                                <span class="px-3">Chinese Ethic Group</span>
-                                <div class="form-floating">
-                                    <select class="form-select" id="groupSelect"
-                                        aria-label="Floating label select example" (change)="onGroupChange()">
-                                        <option selected>Select Ethic Group</option>
-                                        <option [value]="group.value" *ngFor="let group of groups">{{group.viewValue}}
-                                        </option>
-                                    </select>
-                                    <label for="floatingSelect">Works with selects</label>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label" for="statusRadio2">
+                                            <input class="form-check-input" type="radio" name="status" id="statusRadio2"
+                                                value="deceased" [(ngModel)]="status" (change)="onStatusChange()" />
+                                            Deceased</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row gx-5">
+                            <div class="col-12 col-md-6">
+                                <div class="d-flex flex-row p-3">
+                                    <div class="px-3 text-wrap text-end" style="width: 8rem;">Chinese Ethnic Group</div>
+                                    <div class="form-floating col-6">
+                                        <select class="form-select m-0" id="groupSelect"
+                                            aria-label="Floating label select example" (change)="onGroupChange()"
+                                            style="max-height:10px">
+
+                                            <option [value]="group.value" *ngFor="let group of groups">
+                                                {{group.viewValue}}
+                                            </option>
+                                        </select>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-6">
+
+                                <div class="d-flex flex-row p-3">
+                                    <span class="px-3">Year</span>
+                                    <div class="col-6 form-group">
+                                        <input type="text" class="form-control" bsDatepicker
+                                            [bsConfig]="{ adaptivePosition: true }" (change)="onYearChange()">
+                                    </div>
+
 
                                 </div>
+
                             </div>
 
                         </div>
-                        <div class="col-12 col-md-6">
 
-                            <div class="p-3">
-                                <span class="px-3">Year</span>
-                                <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
-                                    <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
-                                        [bsConfig]="{ adaptivePosition: true }" (change)="onYearChange()">
-                                </div>
+                        <div class="row gx-5">
+                            <div class="col-12 col-md-6">
 
+                                <div class="d-flex flex-row p-3">
+                                    <span class="px-3">Occupation</span>
+                                    <div class="form-floating col-6">
 
-                            </div>
+                                        <select class="form-select" style="max-height:10px" id="occupationSelect"
+                                            aria-label="Floating label select example" (change)="onOccupationChange()">
 
-                        </div>
-
-                    </div>
-
-                    <div class="row gx-5">
-                        <div class="form-row">
-                            <div class="form-group row mb-3">
-                                <label for="occupationSelect"
-                                    class="row col-sm-2 pt-1 col-form-label">Occupation</label>
-
-                                <div class="form-floating row col-md-2 pt-1">
-
-                                    <select class="form-select" id="occupationSelect"
-                                        aria-label="Floating label select example" (change)="onOccupationChange()">
-                                        <option selected>Select Occupation</option>
-                                        <!-- <option *ngFor="let occupation of occupation" >{{occupation.viewValue}}
+                                            <!-- <option *ngFor="let occupation of occupation" >{{occupation.viewValue}}
                                         </option> -->
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
 
-
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-light me-md-2" type="button" (click)='clearClick()'>Clear</button>
+                    <button class="btn btn-light" type="button" (click)='submitClick()'>Submit</button>
+                </div>
             </div>
         </div>
+
+
+
+    </div>
+    <!-- search -->
+    <div class="m-4">
+        <!-- search result -->
+        <div class="d-flex">
+            <div class="col mt-3">
+                Search Results 40,000
+            </div>
+
+            <div class="d-flex flex-row-reverse">
+
+                <div class="m-3">| Order by: A-Z</div>
+                <div class="p-2">
+                    <select class="form-select m-0" style="max-height:40px" id="viewSelect" aria-label="View select">
+                        <option selected>List</option>
+                        <option value="1">Grid</option>
+                    </select>
+                </div>
+                <div class="my-3 ps-3">View</div>
+
+                <div class="p-2">
+
+                    <select class="form-select m-0" style="max-height:40px" id="pageSelect"
+                        aria-label="Result per page select">
+                        <option selected>50</option>
+                        <option value="1">15</option>
+                        <option value="2">30</option>
+                    </select>
+                </div>
+                <div class="mt-3">Result per page</div>
+            </div>
+
+        </div>
+
+        <div class="row  border-bottom border-danger">
+            <div class="col">
+                A
+            </div>
+        </div>
+        <!-- display search results -->
+        <div class="d-flex p-4 my-5 bg-light rounded-start rounded-pill" (click)="searchResultClick()">
+            <div class="pe-5">
+                <img src="assets\browsepage\tempprofile.png" class="rounded-circle border" width="100" height="100">
+            </div>
+            <div class="flex-grow-1">
+                <div>Surname</div>
+                <div class="pb-3">Occupation</div>
+                <div>Brief paragraph/sentence</div>
+            </div>
+        </div>
+
+        <!-- search nav -->
+        <div class="d-flex flex-row-reverse">
+            <div class="p-2 bd-highlight">####</div>
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#">38</a></li>
+                    <li class="page-item"><a class="page-link" href="#">39</a></li>
+                    <li class="page-item"><a class="page-link" href="#">40</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="p-2 bd-highlight">page 1 of ####</div>
+        </div>
+
     </div>
 </div>
 
 
-<div class = "m-4">
-    <div class="row">
-        <div class="col">
-            Search Results 40,000
-        </div>
-        <div class="col text-end">
-            Order by: A-Z
-        </div>
-    </div>
-    
-    <div class="row  border-bottom border-danger">
-        <div class="col">
-            A
-        </div>
-    </div>
 
-    <div class="d-flex p-4 my-5 bg-light rounded-start rounded-pill">
-        <div class="pe-5">
+<!-- profile -->
+<div class = "bg-dark">
+    <div class="d-flex p-4 my-5 bg-light rounded-start rounded-pill col-9 position-relative " style="max-height:90px">
+        <div class="pe-5 ">
             <img src="assets\browsepage\tempprofile.png" class="rounded-circle border" width="100" height="100">
         </div>
         <div class="flex-grow-1">
-            <div>Surname</div>
+            <div>Name</div>
             <div class="pb-3">Occupation</div>
-            <div>Brief paragraph/sentence</div>
         </div>
     </div>
-</div>
 
-<!-- 
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">
-            <img src="assets\browsepage\tempprofile.png" class="rounded float-start rounded-circle border border-secondary border-1" width="100" height="100">
-        </th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table> -->
+    <div class="row bg-light p-4">
+        
+        <div class="col-4">
+            <div class="pb-3">Additional Files</div>
+            <div class="d-flex flex-row">
+                <img src="assets\browsepage\fileIcon.png" class="border border-white " width="20" height="20">
+                <div class="ps-2">Memoir</div>
+            </div>
+            <div class="d-flex flex-row">
+                <img src="assets\browsepage\fileIcon.png" class="border border-white" width="20" height="20">
+                <div class="ps-2">Link Name</div>
+            </div>
+            <div class="d-flex flex-row">
+                <img src="assets\browsepage\fileIcon.png" class="border border-white" width="20" height="20">
+                <div class="ps-2">Link Name</div>
+            </div>
+
+        </div>
+        <div class="col-6">
+            <div class="card" width="400" height="400">
+                <div class="card-body">
+                  <h6 class="card-title">Paragraph Text</h6>
+                  <p class="card-text"></p>
+
+                </div>
+              </div>
+        </div>
+      </div>
+</div>

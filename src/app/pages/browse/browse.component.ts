@@ -139,4 +139,15 @@ export class BrowseComponent implements OnInit {
     this.onYearChange()
   }
 
+  clearClick() {
+    this.group = ""
+    this.year = ""
+    this.gender = "Male"
+    this.status = ""
+    this.occupation = ""
+  }
+  searchResultClick() {
+    
+  }
+
 }
