@@ -36,11 +36,9 @@ export class LoginComponent implements OnInit {
   ) {}
 
   openModal(
-    template: TemplateRef<any> = this.template,
-    hasLoggedIn: boolean = false
-  ) {
-    const temp = hasLoggedIn ? this.templateLogout : template;
-    this.modalRef = this.modalService.show(temp);
+    template: TemplateRef<any> = this.template) {
+    this.modalRef = this.modalService.show(template);
+    this.isSignIn = true;
   }
 
   ngOnInit(): void {
@@ -88,12 +86,6 @@ export class LoginComponent implements OnInit {
 
   userGoogleLogin() {
     this.authService.googleSignIn().then(() => {
-      this.modalRef?.hide();
-    });
-  }
-
-  logout() {
-    this.authService.signOut().then(() => {
       this.modalRef?.hide();
     });
   }

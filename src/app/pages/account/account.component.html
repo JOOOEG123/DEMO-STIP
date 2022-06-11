@@ -1,31 +1,88 @@
-<div class="row">
-    <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
-      <input type="text"
-             placeholder="Datepicker"
-             class="form-control"
-             bsDatepicker
-             [bsConfig]="{ isAnimated: true }">
+<div
+  class="container-fluid bg-medium-blue p-5 rounded-bottom-right"
+  style="border-bottom: 5px solid #cea374"
+>
+  <div class="row">
+    <div class="col d-flex flex-row">
+      <img
+        src="/assets/account/template-profile.png"
+        class="img-fluid"
+        alt=""
+      />
+      <div>
+        <h4 class="text-white mt-5">Surname Full name</h4>
+        <p class="text-white mt-2">Description</p>
+      </div>
     </div>
-    <div class="col-xs-12 col-12 col-md-4 form-group mb-3">
-      <input type="text"
-             placeholder="Daterangepicker"
-             class="form-control"
-             bsDaterangepicker
-             [bsConfig]="{ isAnimated: true }">
+    <div class="col-12 col-md-9">
+      <div class="d-flex">
+        <div>
+          <h2>Account Information</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore.
+          </p>
+        </div>
+        <div class="row">
+          <button type="button" class="btn rounded-pill col-12 btn-khali">
+            Edit Account
+          </button>
+          <button type="button" class="btn rounded-pill my-2 col-12 btn-khali">
+            Upload
+          </button>
+          <button
+            type="button"
+            class="btn rounded-pill col-12 btn-khali"
+            (click)="openModal(templateLogout)"
+          >
+            Log out
+          </button>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
+<div class="container-fluid my-4 ps-0">
+  <div class="text-center text-dark display-6">Your Contributions</div>
+  <div
+    class="rounded-start rounded-pill border-start-0"
+    style="border: 2px solid #cea374"
+  >
+    <div class="d-flex flex-row">
+      <div class="p-2">
+        <img
+          src="/assets/homepage/default-profile.png"
+          class="img-fluid rounded-circle"
+          alt=""
+        />
+      </div>
+      <div class="py-3">
+        <h4>Title</h4>
+        <p>Description</p>
+        <p>email</p>
+      </div>
+      <div class="py-3 row col-12 col-md-6 ms-auto">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure
+      </div>
+    </div>
+  </div>
+</div>
 
-  <p>
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-      Link with href
-    </a>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-      Button with data-target
+<ng-template #templateLogout>
+  <div class="modal-body text-center">
+    <p>Are you sure you want to log out?</p>
+    <button type="button" class="btn btn-default" (click)="logout()">
+      Yes
     </button>
-  </p>
-  <div class="collapse" id="collapseExample">
-    <div class="card card-body">
-      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-    </div>
+    <button type="button" class="btn btn-primary" (click)="modalRef?.hide()">
+      No
+    </button>
   </div>
+</ng-template>

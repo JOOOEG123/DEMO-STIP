@@ -5,6 +5,7 @@ import * as provider from 'firebase/auth';
 import { Router } from '@angular/router';
 import { Profile } from '../types/auth.types';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class AuthServiceService {
     private store: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
-    private outsideScope: NgZone
+    private outsideScope: NgZone,
+    private http: HttpClient
   ) {
     this.auth.authState.subscribe((user) => {
       if (user) {
@@ -93,5 +95,13 @@ export class AuthServiceService {
       localStorage.removeItem('user');
       this.router.navigate(['/']);
     });
+  }
+
+  getUserDetails() {
+    return JSON.parse(localStorage.getItem('user') || '{}');
+  }
+
+  editProfile(profile: Profile) {
+    return this.store.doc<any>(`users/${profile.uid}`).update(profile);
   }
 }
