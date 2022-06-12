@@ -25,7 +25,10 @@ export class AuthServiceService {
         this.user = user;
         user.getIdTokenResult().then((token) => {
           console.log('token', token, this.user);
-          localStorage.setItem('user', JSON.stringify({user: this.user, token: token}));
+          localStorage.setItem(
+            'user',
+            JSON.stringify({ user: this.user, token: token })
+          );
           this.isLoggedIn.next(this.isLoggedInCheck);
         });
       } else {
@@ -44,9 +47,11 @@ export class AuthServiceService {
   }
 
   signInWithEmail({ email, password }: { email: string; password: string }) {
-    return this.auth.signInWithEmailAndPassword(email, password).then((user) => {
-      this.saveUser(user.user as Profile | null);
-    });
+    return this.auth
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        this.saveUser(user.user as Profile | null);
+      });
   }
 
   forgetPassword(email: string) {
@@ -72,12 +77,11 @@ export class AuthServiceService {
 
   signUpwithEmail(profile: EmailPassword) {
     if (profile.email && profile.password) {
-      return this.auth.createUserWithEmailAndPassword(
-        profile.email,
-        profile?.password
-      ).then((user) => {
-        this.saveUser(user.user as Profile | null);
-      });
+      return this.auth
+        .createUserWithEmailAndPassword(profile.email, profile?.password)
+        .then((user) => {
+          this.saveUser(user.user as Profile | null);
+        });
     }
     return null;
   }
