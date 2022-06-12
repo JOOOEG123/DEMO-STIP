@@ -1,6 +1,20 @@
 {
   "rules": {
-    ".read": false,
-    ".write": false
+    "persons": {
+      ".read": false,
+      ".write": false,
+      "public": {
+        ".read": true,
+        ".write": "auth.token.admin === true"
+      },
+      "requestArchieve": {
+        ".read": "auth.token.admin === true",
+      	".write": "auth.token.admin === true",
+          "$uid": {
+            ".write": "$uid === auth.uid || auth.token.admin === true",
+            ".read": "$uid === auth.uid || auth.token.admin === true"
+          }
+      }
+    }
   }
 }

@@ -1,22 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
-  bsValue = new Date();
-  bsRangeValue: Date[];
-  maxDate = new Date();
-  minDate = new Date();
+  modalRef?: BsModalRef;
+  constructor(
+    private auth: AuthServiceService,
+    private modalService: BsModalService
+  ) {}
 
-  constructor() {
-     this.minDate.setDate(this.minDate.getDate() - 1);
-     this.maxDate.setDate(this.maxDate.getDate() + 7);
-     this.bsRangeValue = [this.bsValue, this.maxDate];
+  ngOnInit(): void {}
+  logout() {
+    this.auth.signOut().then(() => {
+      this.modalRef?.hide();
+    });
   }
-
-  ngOnInit(): void {
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 }
