@@ -12,3 +12,10 @@ export type Profile = {
   createdAt?: string;
   updatedAt: string;
 };
+
+
+export type EmailPassword = {
+  email: string;
+  password: string;
+};
+

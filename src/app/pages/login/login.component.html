@@ -11,10 +11,10 @@
   </div> -->
   <div class="modal-body">
     <h3 class="modal-title text-center my-3">
-        {{ !isSignIn ? "Create an account" : "Log In" }}
+        {{ isSignIn === 'signup' ? "Create an account" : "Log In" }}
       </h3>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="form-floating mb-3" *ngIf="!isSignIn">
+      <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
         <input
           type="text"
           class="form-control"
@@ -26,7 +26,7 @@
           >First name <span class="text-danger">*</span></label
         >
       </div>
-      <div class="form-floating mb-3" *ngIf="!isSignIn">
+      <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
         <input
           type="text"
           class="form-control"
@@ -51,7 +51,7 @@
           >Email address <span class="text-danger">*</span></label
         >
       </div>
-      <div class="form-floating mb-3" *ngIf="!isSignIn">
+      <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
         <input
           type="email"
           class="form-control"
@@ -80,7 +80,7 @@
       </button>
 
       <div class="d-grid gap-2 col-10 mx-auto">
-        <button class="btn btn-primary rounded-pill" type="submit">
+        <button class="btn btn-primary rounded-pill" (click)="signUpwithEmail()" type="submit">
           Log in
         </button>
         <div class="linebtntext w-100">OR</div>
@@ -96,7 +96,7 @@
             class="img-fluid"
             width="25"
           />
-          {{ !isSignIn ? "Sign Up " : "Log In " }}with Facebook
+          {{ isSignIn === 'signup' ? "Sign Up " : "Log In " }}with Facebook
         </button>
         <button
           class="btn btn-light rounded-pill border"
@@ -109,16 +109,16 @@
             class="img-fluid"
             width="20"
           />
-          {{ !isSignIn ? "Sign Up " : "Log In " }}with Google
+          {{ isSignIn === 'signup' ? "Sign Up " : "Log In " }}with Google
         </button>
         <div class="">
-          {{ isSignIn ? "Don't have an account?" : "Already have an account?" }}
+          {{ isSignIn === 'signin' ? "Don't have an account?" : "Already have an account?" }}
           <button
             class="btn btn-link p-0"
             type="button"
             (click)="switchState()"
           >
-            {{ isSignIn ? "Sign Up" : "Log In" }}
+            {{ isSignIn === 'signup' ? "Log In" : "Sign Up" }}
           </button>
         </div>
       </div>

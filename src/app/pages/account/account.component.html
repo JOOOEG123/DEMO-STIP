@@ -74,7 +74,7 @@
         <p>Description</p>
         <p>email</p>
       </div>
-      <div class="col-12 col-md-7 ms-auto">
+      <div class="col-12 col-md-7 ms-auto p-2">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -85,11 +85,11 @@
 </div>
 <ng-template #templateLogout>
   <div class="modal-body text-center">
-    <p>Are you sure you want to log out?</p>
-    <button type="button" class="btn btn-default" (click)="logout()">
+    <p>Do you want to log out?</p>
+    <button type="button" class="btn btn-outline-dark px-3 me-3" (click)="logout()">
       Yes
     </button>
-    <button type="button" class="btn btn-primary" (click)="modalRef?.hide()">
+    <button type="button" class="btn btn-dark px-3" (click)="modalRef?.hide()">
       No
     </button>
   </div>

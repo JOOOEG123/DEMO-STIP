@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('template') template!: TemplateRef<any>;
   @ViewChild('templateLogout') templateLogout!: TemplateRef<any>;
 
-  isSignIn = true;
+  isSignIn: 'signin' | 'signup' | 'forgetpassword' = 'signup';
   constructor(
     private fb: FormBuilder,
     private authService: AuthServiceService,
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   openModal(
     template: TemplateRef<any> = this.template) {
     this.modalRef = this.modalService.show(template);
-    this.isSignIn = true;
+    this.isSignIn = 'signin';
   }
 
   ngOnInit(): void {
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
   }
 
   switchState() {
-    this.isSignIn = !this.isSignIn;
+    this.isSignIn = this.isSignIn === 'signin' ? 'signup' : 'signin';
     if (this.isSignIn) {
       this.loginForm.get('confirmEmail')?.clearValidators();
       this.loginForm.get('firstName')?.clearValidators();
@@ -72,6 +72,22 @@ export class LoginComponent implements OnInit {
       this.loginForm.get('lastName')?.updateValueAndValidity();
       this.loginForm.get('confirmEmail')?.updateValueAndValidity();
     }
+  }
+  signInWithEmail() {
+  }
+
+  signUpwithEmail() {
+    if (this.isSignIn === 'signup') {
+      this.authService.signUpwithEmail(this.loginForm.value)?.then((x) => {
+        console.log('Sign up: ', x);
+        this.modalRef?.hide();
+      });
+    } else if (this.isSignIn === 'signin') {
+      this.authService.signInWithEmail(this.loginForm.value)?.then(() => {
+        this.modalRef?.hide();
+      })
+    }
+    // this.modalRef?.hide();
   }
   checkEmails(): ValidatorFn {
     console.log('checkEmails');

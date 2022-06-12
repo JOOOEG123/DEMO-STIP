@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import * as provider from 'firebase/auth';
 import { Router } from '@angular/router';
-import { Profile } from '../types/auth.types';
+import { EmailPassword, Profile } from '../types/auth.types';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -34,13 +34,13 @@ export class AuthServiceService {
 
   get isLoggedInCheck(): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user !== null && user.uid && user.emailVerified == true
+    return user !== null && user.uid
       ? true
       : false;
   }
 
   signInWithEmail({ email, password }: { email: string; password: string }) {
-    this.auth.signInWithEmailAndPassword(email, password).then((user) => {
+    return this.auth.signInWithEmailAndPassword(email, password).then((user) => {
       this.saveUser(user.user as Profile | null);
     });
   }
@@ -64,6 +64,18 @@ export class AuthServiceService {
       });
       this.saveUser(user.user as Profile | null);
     });
+  }
+
+  signUpwithEmail(profile: EmailPassword) {
+    if (profile.email && profile.password) {
+      return this.auth.createUserWithEmailAndPassword(
+        profile.email,
+        profile?.password
+      ).then((user) => {
+        this.saveUser(user.user as Profile | null);
+      });
+    }
+    return null;
   }
 
   saveUser(p: Profile | null) {
