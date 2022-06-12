@@ -23,18 +23,22 @@ export class AuthServiceService {
     this.auth.authState.subscribe((user) => {
       if (user) {
         this.user = user;
-        localStorage.setItem('user', JSON.stringify(this.user));
+        user.getIdTokenResult().then((token) => {
+          console.log('token', token, this.user);
+          localStorage.setItem('user', JSON.stringify({user: this.user, token: token}));
+          this.isLoggedIn.next(this.isLoggedInCheck);
+        });
       } else {
         localStorage.setItem('user', '');
+        this.isLoggedIn.next(this.isLoggedInCheck);
       }
       console.log('user', user);
-      this.isLoggedIn.next(this.isLoggedInCheck);
     });
   }
 
   get isLoggedInCheck(): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user !== null && user.uid
+    return user.user !== null && user.token != null && user.user.uid
       ? true
       : false;
   }
