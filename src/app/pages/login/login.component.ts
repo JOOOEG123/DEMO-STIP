@@ -16,13 +16,15 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
-    firstName: [''],
-    lastName: [''],
-    confirmEmail: [''],
-  });
+  loginForm = this.fb.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      firstName: [''],
+      lastName: [''],
+      confirmEmail: [''],
+    }
+  );
   modalRef?: BsModalRef;
 
   @ViewChild('template') template!: TemplateRef<any>;
@@ -35,14 +37,12 @@ export class LoginComponent implements OnInit {
     private modalService: BsModalService
   ) {}
 
-  openModal(
-    template: TemplateRef<any> = this.template) {
+  openModal(template: TemplateRef<any> = this.template) {
     this.modalRef = this.modalService.show(template);
     this.isSignIn = 'signin';
   }
 
   ngOnInit(): void {
-    this.loginForm.setValidators([this.checkEmails]);
     this.loginForm.valueChanges.subscribe((value) => {
       console.log(value);
     });
@@ -59,22 +59,21 @@ export class LoginComponent implements OnInit {
       this.loginForm.get('confirmEmail')?.clearValidators();
       this.loginForm.get('firstName')?.clearValidators();
       this.loginForm.get('lastName')?.clearValidators();
-      this.loginForm.get('firstName')?.updateValueAndValidity();
-      this.loginForm.get('lastName')?.updateValueAndValidity();
-      this.loginForm.get('confirmEmail')?.updateValueAndValidity();
+      this.loginForm.setValidators([]);
     } else {
       this.loginForm
         .get('confirmEmail')
         ?.setValidators([Validators.required, Validators.email]);
       this.loginForm.get('firstName')?.setValidators([Validators.required]);
       this.loginForm.get('lastName')?.setValidators([Validators.required]);
-      this.loginForm.get('firstName')?.updateValueAndValidity();
-      this.loginForm.get('lastName')?.updateValueAndValidity();
-      this.loginForm.get('confirmEmail')?.updateValueAndValidity();
+      this.loginForm.setValidators([this.checkEmails]);
     }
+    this.loginForm.get('firstName')?.updateValueAndValidity();
+    this.loginForm.get('lastName')?.updateValueAndValidity();
+    this.loginForm.get('confirmEmail')?.updateValueAndValidity();
+    this.loginForm.updateValueAndValidity();
   }
-  signInWithEmail() {
-  }
+  signInWithEmail() {}
 
   signUpwithEmail() {
     if (this.isSignIn === 'signup') {
@@ -85,19 +84,17 @@ export class LoginComponent implements OnInit {
     } else if (this.isSignIn === 'signin') {
       this.authService.signInWithEmail(this.loginForm.value)?.then(() => {
         this.modalRef?.hide();
-      })
+      });
     }
     // this.modalRef?.hide();
   }
-  checkEmails(): ValidatorFn {
-    console.log('checkEmails');
-    const j = (group: AbstractControl): ValidationErrors | null => {
-      const email = group?.get('email')?.value;
-      const confirmEmail = group?.get('confirmEmail')?.value;
-      console.log(email, confirmEmail);
-      return email === confirmEmail ? null : { notSame: true };
-    };
-    return j;
+  checkEmails(group: AbstractControl) {
+    const email = group?.get('email')?.value;
+    const confirmEmail = group?.get('confirmEmail')?.value;
+    console.log(email, confirmEmail);
+    return email === confirmEmail
+      ? null
+      : { notSame: true };
   }
 
   userGoogleLogin() {
