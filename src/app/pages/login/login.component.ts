@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
 
   switchState() {
     this.isSignIn = this.isSignIn === 'signin' ? 'signup' : 'signin';
-    if (this.isSignIn) {
+    if (this.isSignIn === 'signin') {
       this.loginForm.get('confirmEmail')?.clearValidators();
       this.loginForm.get('firstName')?.clearValidators();
       this.loginForm.get('lastName')?.clearValidators();

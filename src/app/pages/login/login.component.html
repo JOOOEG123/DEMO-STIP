@@ -13,7 +13,7 @@
     <h3 class="modal-title text-center my-3">
         {{ isSignIn === 'signup' ? "Create an account" : "Log In" }}
       </h3>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="loginForm" (ngSubmit)="signUpwithEmail()">
       <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
         <input
           type="text"
@@ -80,7 +80,7 @@
       </button>
 
       <div class="d-grid gap-2 col-10 mx-auto">
-        <button class="btn btn-primary rounded-pill" (click)="signUpwithEmail()" type="submit">
+        <button class="btn btn-primary rounded-pill" [disabled]="loginForm.invalid" type="submit">
           Log in
         </button>
         <div class="linebtntext w-100">OR</div>
