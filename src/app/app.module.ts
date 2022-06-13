@@ -27,6 +27,7 @@ import { environment } from 'src/environments/environment';
 import { AuthServiceService } from './core/services/auth-service.service';
 import { AccountComponent } from './pages/account/account.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProjectOverviewComponent } from './pages/about/ProjectOverview/project-overview/project-overview.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { HttpClientModule } from '@angular/common/http';
     AboutComponent,
     GalleryComponent,
     BrowseComponent,
-    AccountComponent
+    AccountComponent,
+    ProjectOverviewComponent
   ],
   imports: [
     AngularFireAuthModule,
