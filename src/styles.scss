@@ -1,28 +1,97 @@
 /* You can add global styles to this file, and also import other style files */
-.bg-home-blue {
-    background-color: #2699fb;
-    color: #ffffff;
-}
-.bg-home-light-grey {
-    background-color: #f2f9ff;
-    color: #2699fb;
-}
-.bg-home-light {
-    background-color: #F1F9FF;
-    color: #2699fb;
+$khaki: #cea374;
+$medium-blue: #0c1e3c;
+$dark-blue: #0c1330;
+$black: #000000;
+$orange-red: #df4028;
+$white: white;
+$light-grey: #f5f5f5;
+
+// @font-face {
+//     font-family: "Times New Roman", Times, serif !important;
+// }
+body {
+    // font-family: 'DO Futuristic', sans-serif;
+    font-family: "Times New Roman", Times, serif !important;
+    // font-size: 16px;
 }
 
-.rounded-bottom-left {
-    border-bottom-left-radius: 6rem;
+.bg-image-blue {
+    background-image: url("/assets/homepage/stip-design.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
-.rounded-bottom-right {
-    border-bottom-right-radius: 6rem;
+.homepage-bg {
+    background-image: url("/assets/homepage/homepage-bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
 }
 
+.border-khaki {
+    border-color: $khaki;
+    border: 2px solid $khaki;
+}
+// rounded border
+.rounded-bottom {
+    &-left {
+        border-bottom-left-radius: 6rem;
+    }
+
+    &-right {
+        border-bottom-right-radius: 6rem;
+    }
+}
+
+// nav bar
+.nav-underline .nav-link.active {
+    border-bottom: 1px solid white;
+    padding-bottom: 5px;
+
+}
+
+.nav-underline .nav-link.active:hover {
+    background-color: white !important;
+    color: $medium-blue  !important;
+}
+
+.nav-underline .nav-link {
+    color: white;
+}
+
+.nav-underline .nav-link:hover {
+    border-bottom: 1px dashed white;
+    padding-bottom: 5px;
+}
 // center div in container
 .center-div {
-   display: grid;
-   place-items: center;
+    display: grid;
+    place-items: center;
+}
+
+// background color
+.bg {
+    &-orangish-red {
+        color: white !important;
+        background-color: $orange-red;
+    }
+
+    &-khaki {
+        color: white !important;
+        background-color: $khaki;
+    }
+
+    &-dark-blue {
+        color: white !important;
+        background-color: $dark-blue;
+    }
+
+    &-medium-blue {
+        color: white !important;
+        background-color: $medium-blue;
+    }
 }
 
 // word between lines
@@ -33,8 +102,8 @@
 
 .linebtntext:before,
 .linebtntext:after {
-  content: "";
-  flex: 1 1;
-  border-bottom: 1px solid #000;
-  margin: auto 0.5em;
+    content: "";
+    flex: 1 1;
+    border-bottom: 1px solid #000;
+    margin: auto 0.5em;
 }

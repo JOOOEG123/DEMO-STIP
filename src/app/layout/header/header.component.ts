@@ -17,32 +17,32 @@ export class HeaderComponent implements OnInit {
   constructor(private auth: AuthServiceService) {}
 
   ngOnInit(): void {
-    const nav = document.querySelector('nav');
-    addEventListener('scroll', () => {
-      if (window.scrollY > 0) {
-        nav?.classList.add('shadow', 'bg-primary', 'bg-opacity-20');
-      } else {
-        nav?.classList.remove('shadow', 'bg-primary', 'bg-opacity-20');
-      }
-    });
+    // const nav = document.querySelector('nav');
+    // addEventListener('scroll', () => {
+    //   if (window.scrollY > 0) {
+    //     nav?.classList.add('shadow', 'bg-primary', 'bg-opacity-20');
+    //   } else {
+    //     nav?.classList.remove('shadow', 'bg-primary', 'bg-opacity-20');
+    //   }
+    // });
 
     this.auth.isLoggedIn.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
       console.log('isLoggedIn', this.isLoggedIn);
-      this.navbars = this.navbars.filter((nav) => nav.title !== 'Acount');
-      if (isLoggedIn) {
-        console.log('isLoggedIn', this.isLoggedIn);
-        this.login.modalRef?.hide();
-        this.navbars.push({
-          title: 'Acount',
-          url: '/account',
-          icon: 'acount',
-        });
-      }
+      // this.navbars = this.navbars.filter((nav) => nav.title !== 'Acount');
+      // if (isLoggedIn) {
+      //   console.log('isLoggedIn', this.isLoggedIn);
+      //   this.login.modalRef?.hide();
+      //   this.navbars.push({
+      //     title: 'Acount',
+      //     url: '/account',
+      //     icon: 'acount',
+      //   });
+      // }
     });
   }
   loginLogin() {
     console.log('loginLogin', this.isLoggedIn);
-    this.login.openModal(undefined, this.isLoggedIn);
+    this.login.openModal();
   }
 }

@@ -1,21 +1,21 @@
 export const NavBar = [
   {
-    title: 'Home',
+    title: 'HOME',
     url: '/home',
     icon: 'home',
   },
   {
-    title: 'Browse',
+    title: 'BROSWE',
     url: '/browse',
     icon: 'home',
   },
   {
-    title: 'About',
+    title: 'ABOUT',
     url: '/about',
     icon: 'info',
   },
   {
-    title: 'Gallery',
+    title: 'GALLERY',
     url: '/gallery',
     icon: 'phone',
   },

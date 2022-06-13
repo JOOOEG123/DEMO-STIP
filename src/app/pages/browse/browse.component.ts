@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 
 interface Group {
   value: string;
@@ -101,7 +102,8 @@ export class BrowseComponent implements OnInit {
   
   date = new Date();
 
-  constructor() { 
+  constructor(private archApi: ArchieveApiService) { 
+    //this.sign = "+"
     this.group = ""
     
     this.gender = "Male"
@@ -111,6 +113,9 @@ export class BrowseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.archApi.getPublicArchieve().subscribe((x:any)  =>{
+      console.log(x)
+    })
   }
 
   updateCollapse() {

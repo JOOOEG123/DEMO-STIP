@@ -3,8 +3,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import * as provider from 'firebase/auth';
 import { Router } from '@angular/router';
-import { Profile } from '../types/auth.types';
+import { EmailPassword, Profile } from '../types/auth.types';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -16,31 +17,41 @@ export class AuthServiceService {
     private store: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
-    private outsideScope: NgZone
+    private outsideScope: NgZone,
+    private http: HttpClient
   ) {
     this.auth.authState.subscribe((user) => {
       if (user) {
         this.user = user;
-        localStorage.setItem('user', JSON.stringify(this.user));
+        user.getIdTokenResult().then((token) => {
+          console.log('token', token, this.user);
+          localStorage.setItem(
+            'user',
+            JSON.stringify({ user: this.user, token: token })
+          );
+          this.isLoggedIn.next(this.isLoggedInCheck);
+        });
       } else {
         localStorage.setItem('user', '');
+        this.isLoggedIn.next(this.isLoggedInCheck);
       }
       console.log('user', user);
-      this.isLoggedIn.next(this.isLoggedInCheck);
     });
   }
 
   get isLoggedInCheck(): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user !== null && user.uid && user.emailVerified == true
+    return user.user !== null && user.token != null && user.user.uid
       ? true
       : false;
   }
 
   signInWithEmail({ email, password }: { email: string; password: string }) {
-    this.auth.signInWithEmailAndPassword(email, password).then((user) => {
-      this.saveUser(user.user as Profile | null);
-    });
+    return this.auth
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        this.saveUser(user.user as Profile | null);
+      });
   }
 
   forgetPassword(email: string) {
@@ -62,6 +73,17 @@ export class AuthServiceService {
       });
       this.saveUser(user.user as Profile | null);
     });
+  }
+
+  signUpwithEmail(profile: EmailPassword) {
+    if (profile.email && profile.password) {
+      return this.auth
+        .createUserWithEmailAndPassword(profile.email, profile?.password)
+        .then((user) => {
+          this.saveUser(user.user as Profile | null);
+        });
+    }
+    return null;
   }
 
   saveUser(p: Profile | null) {
@@ -93,5 +115,13 @@ export class AuthServiceService {
       localStorage.removeItem('user');
       this.router.navigate(['/']);
     });
+  }
+
+  getUserDetails() {
+    return JSON.parse(localStorage.getItem('user') || '{}');
+  }
+
+  editProfile(profile: Profile) {
+    return this.store.doc<any>(`users/${profile.uid}`).update(profile);
   }
 }

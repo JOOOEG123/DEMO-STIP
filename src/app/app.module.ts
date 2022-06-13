@@ -26,6 +26,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from 'src/environments/environment';
 import { AuthServiceService } from './core/services/auth-service.service';
 import { AccountComponent } from './pages/account/account.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { AccountComponent } from './pages/account/account.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgxBootstrapModule
+    NgxBootstrapModule,
+    HttpClientModule,
   ],
   providers: [AuthServiceService],
   bootstrap: [AppComponent]
