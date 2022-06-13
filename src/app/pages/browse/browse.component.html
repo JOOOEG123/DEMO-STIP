@@ -155,9 +155,7 @@
                 <div class="my-3 ps-3">View</div>
 
                 <div class="p-2">
-
-                    <select class="form-select m-0" style="max-height:40px" id="pageSelect"
-                        aria-label="Result per page select">
+                    <select class="form-select m-0" style="max-height:40px" id="pageSelect" (change)="onPerPageChange()" aria-label="Result per page select">
                         <option selected>50</option>
                         <option value="1">15</option>
                         <option value="2">30</option>

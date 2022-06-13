@@ -103,13 +103,11 @@ export class BrowseComponent implements OnInit {
   date = new Date();
 
   constructor(private archApi: ArchieveApiService) { 
-    //this.sign = "+"
-    this.group = ""
-    
+    this.group = "" 
     this.gender = "Male"
     this.status = ""
     this.occupation = ""
-    console.log(typeof this.occupations[0].viewValue)
+
   }
 
   ngOnInit(): void {
@@ -188,6 +186,26 @@ export class BrowseComponent implements OnInit {
     this.occupation = ""
   }
 
+  onPerPageChange() {
+    console.log("onPerPageChange clicked")
+    var select_option = (<HTMLInputElement>document.getElementById("pageSelect")).value;
+    var search_layout = document.getElementsByName("searchLayout");
+
+    for (let i = 0; i < this.results.length; i++) {
+      if (select_option =="50" && i == 50 ){
+        break;
+
+      }
+      else if (i == 15){
+
+      }
+      else {
+
+      }
+      //search_layout[i].setAttribute("class", "d-flex p-4 my-1 bg-primary rounded-start rounded-pill")
+    }
+  
+  }
 
   onViewChange() {
     console.log("onViewChange clicked")
