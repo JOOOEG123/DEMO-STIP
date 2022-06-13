@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/services/auth-guard.service';
 import { LayoutComponent } from './layout/layout.component';
-import { AboutComponent } from './pages/about/about.component';
+import { AboutComponent } from './pages/about/AboutMovement/about.component';
 import { AccountComponent } from './pages/account/account.component';
 import { BrowseComponent } from './pages/browse/browse.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';

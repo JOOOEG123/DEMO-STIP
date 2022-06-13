@@ -7,7 +7,7 @@ import { allLayoutComponents } from './layout';
 import { NgxBootstrapModule } from './module/ngx-bootrap.module';
 import { pagesComponents } from './pages';
 import { LoginComponent } from './pages/login/login.component';
-import { AboutComponent } from './pages/about/about.component';
+import { AboutComponent } from './pages/about/AboutMovement/about.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { BrowseComponent } from './pages/browse/browse.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
