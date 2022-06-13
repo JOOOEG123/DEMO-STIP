@@ -1,98 +1,98 @@
-<div class="container-fluid homepage-bg">
-      <div class="container py-4 text-center">
-        <h2 class="my-3">Chinese Anti-Rightists Archives</h2>
-        <div class="m-5 px-5 py-5">
-          testLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
-        </div>
-        <div class="input-group py-5">
-          <input
-            type="search"
-            class="form-control rounded-end rounded-pill"
-            placeholder="Search for Archives"
-            aria-label="Search for Archives"
-            aria-describedby="scearh_home__btn"
-          />
-          <button
-            class="btn border border-start-0 bg-white rounded-start rounded-pill "
-            type="button"
-            id="scearh_home__btn"
-          >
-            <img src="assets/homepage/search.png" alt="globe" width="15" />
-          </button>
-        </div>
-      </div>
-    <div class="text-center">
-      <img
-        class="img-fluid"
-        src="assets/homepage/Anti-Rightist_Movement.jpg"
-        width="700"
-        height="300"
+<div class="container-fluid homepage-bg pb-1">
+  
+  <div class="container-fluid pt-5">
+    <h2 class="text-center">Chinese Anti-Rightists</h2>
+    <h2 class="text-center">Archives</h2>
+    <div class="text-left mx-auto p-5 lh-lg" style="width: 700px">
+      testLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur.
+    </div>
+    <div class="input-group mx-auto my-4 pb-5" style="width: 650px">
+      <input
+        type="search"
+        class="form-control rounded-end rounded-pill text-center"
+        placeholder="Search for Archives"
+        aria-label="Search for Archives"
+        aria-describedby="scearh_home__btn"
       />
+      <button
+        class="btn border border-start-0 bg-white rounded-start rounded-pill"
+        type="button"
+        id="scearh_home__btn"
+      >
+        <img src="assets/homepage/search.png" alt="globe" width="15" />
+      </button>
     </div>
-      <div class="container py-4 text-center">
-        <h2 class="my-3">Timeline</h2>
-        <div class="m-5 px-5">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
-        </div>
-    </div>
-
-      <div class="row mx-5 text-center">
-        <h2 class="col-12 pb-5">
-          Featured Victims of the Anti-Rightists Movement
-        </h2>
-        <div class="col-12 col-md-4" *ngFor="let profile of fakeProfile">
-          <div class="text-center">
-            <img
-              src="assets/homepage/{{ profile.profile }}"
-              class="rounded-circle"
-              width="250"
-              height="250"
-            />
-          </div>
-          <div class="text-center">
-            <h4 class="text-dark">{{ profile.name }}</h4>
-            <p>{{ profile.email }}</p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </div>
-        </div>
-      </div>
-    <div class="container-fluid py-3">
-      <div class="row-col-1 text-center m-5">
+  </div>
+  <div class="row mx-auto" style="padding-top: 230px">
+    <h2 class="text-center mb-5">
+      Featured Victims of the Anti-Rightists Movement
+    </h2>
+    <div class="text-center col-2 mx-auto" *ngFor="let profile of fakeProfile">
+      <div>
         <img
-          class="img-fluid"
-          src="assets/homepage/china.svg"
-          width="700"
-          height="500"
+          src="assets/homepage/{{ profile.profile }}"
+          class="rounded-circle"
+          width="200"
+          height="200"
         />
       </div>
-    </div>
-    <div class="container-fluid">
-      <div class="container py-4 text-center">
-        <h2 class="my-3">Map of China's Provinces</h2>
-        <div class="m-5 px-5">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
-        </div>
+      <div class="text-center">
+        <h4 class="">{{ profile.name }}</h4>
+        <p class="mx-auto" style="width: 200px">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
       </div>
     </div>
+  </div>
+
+  <div class="container-fluid mt-5" style="padding-top: 100px">
+    <h3 class="text-black ms-5 ps-5">Movement Brief</h3>
+    <p class="text-black mt-5 ms-5 ps-5 lh-lg" style="width: 500px">
+      testLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur.
+    </p>
+    <p class="text-black mt-5 ms-5 ps-5 lh-lg" style="width: 500px">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore.
+    </p>
+  </div>
+  <div class="text-align-right my-5" style="padding-bottom: 100px">
+    <img src="assets/homepage/gold_lines.png" />
+    <h3
+      class="text-black mt-5 pt-5"
+      style="text-align: right; padding-right: 20%"
+    >
+      Timeline
+    </h3>
+    <p
+      class="text-black lh-lg"
+      style="text-align: right; padding-right: 20%; padding-left: 30%"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore.
+    </p>
+  </div>
+  <div class="text-center" style="padding-bottom: 50px">
+    <button
+      type="button"
+      class="btn btn-light rounded-pill"
+      style="width:40%; border:2px solid #c04545"
+    >
+      learn more about this movement
+    </button>
+  </div>
 </div>
