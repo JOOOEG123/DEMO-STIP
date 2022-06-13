@@ -2,8 +2,10 @@
     <h1>Gallery</h1>
 </div>
 
-<div class="container text-center">
-    <h2>Album Name</h2>   
+<div class="container">
+    <h2>Album Name</h2> 
+    <pre>{{ filterValues | json }}</pre>
+    <app-search-filter [(filterValues)]="filterValues"></app-search-filter>  
     
 </div>
 
