@@ -3,11 +3,37 @@
 </div>
 
 <div class="container">
-    <h2>Album Name</h2> 
-    <pre>{{ filterValues | json }}</pre>
-    <app-search-filter [(filterValues)]="filterValues"></app-search-filter>  
-    
+    <div class="d-flex justify-content-center">
+        <div *ngFor="let gallery of galleries" class="p-2 mx-4">
+            <div [ngStyle]="{
+                'cursor': 'pointer',
+                'color': selected == gallery ? 'red': 'black', 
+                'border-bottom': selected == gallery ? '3px solid red': 'none'
+            }"     
+                (click)="setActive(gallery)">
+                <b>{{ gallery }}</b>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
 </div>
+
+<div class="container">
+    <ngx-masonry [options]="masonryOptions" [ordered]="true" [ngStyle]="{'width': '100%'}">
+        <div ngxMasonryItem class="masonry-item my-2" *ngFor="let image of images" [ngStyle]="{'width': '31%'}">
+            <img [src]="image" width="100%"/>    
+        </div>
+    </ngx-masonry>
+</div>
+
+
+
+
+
+
+
+
 
 
 
