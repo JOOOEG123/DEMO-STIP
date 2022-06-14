@@ -22,4 +22,27 @@ describe('GalleryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('initializes selectedCategory', () => {
+    expect(component.selectedCategory).toBe('All')
+  })
+
+  it('initializes currentImageIndex', () => {
+    expect(component.currentImageIndex).toBe(-1)
+  })
+
+  it('changes selectedCategory', () => {
+    component.setActive('new')
+    expect(component.selectedCategory).toBe('new')
+  })
+
+  it('changes currentImageIndex', () => {
+    component.onEnter(5)
+    expect(component.currentImageIndex).toBe(5)
+  })
+
+  it('resets currentImageIndex', () => {
+    component.onLeave()
+    expect(component.currentImageIndex).toBe(-1)
+  })
 });
