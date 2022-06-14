@@ -7,25 +7,44 @@
         <div *ngFor="let gallery of galleries" class="p-2 mx-4">
             <div [ngStyle]="{
                 'cursor': 'pointer',
-                'color': selected == gallery ? 'red': 'black', 
-                'border-bottom': selected == gallery ? '3px solid red': 'none'
+                'color': selectedCategory == gallery ? 'red': 'black', 
+                'border-bottom': selectedCategory == gallery ? '3px solid red': 'none'
             }"     
                 (click)="setActive(gallery)">
                 <b>{{ gallery }}</b>
             </div>
         </div>
     </div>
-
     <hr class="divider">
 </div>
 
 <div class="container">
     <ngx-masonry [options]="masonryOptions" [ordered]="true" [ngStyle]="{'width': '100%'}">
-        <div ngxMasonryItem class="masonry-item my-2" *ngFor="let image of images" [ngStyle]="{'width': '31%'}">
-            <img [src]="image" width="100%"/>    
+        <div ngxMasonryItem class="masonry-item my-2" *ngFor="let image of images; let i = index" [ngStyle]="{'width': '31%'}">
+            <img [src]="image.src" width="100%" (click)="onClick(i, imageModal)" [ngStyle]="{'cursor': 'pointer'}"/>    
+            <!-- <ng-container *ngTemplateOutlet="imageModal; context: {image: image}"></ng-container> -->
         </div>
     </ngx-masonry>
 </div>
+
+<ng-template #imageModal>
+    <span *ngIf="selectedImage">
+        <div class="modal-header text-center">
+            <h4 class="modal-title w-100">{{ selectedImage.title }}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="card text-center">
+              
+                <div class="card-body">
+                    <img [src]="selectedImage.src" class="card-img-top" alt="...">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+        </div>
+    </span>
+</ng-template>
 
 
 
