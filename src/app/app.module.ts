@@ -11,6 +11,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { BrowseComponent } from './pages/browse/browse.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMasonryModule } from 'ngx-masonry';
 
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -54,6 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     NgxBootstrapModule,
     HttpClientModule,
+    NgxMasonryModule
   ],
   providers: [AuthServiceService],
   bootstrap: [AppComponent]
