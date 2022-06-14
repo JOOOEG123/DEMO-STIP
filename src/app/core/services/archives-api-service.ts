@@ -91,4 +91,8 @@ export class ArchieveApiService {
       .object(`/persons/publics/${alphabet}/persons/${data.person_id}`)
       .update(data);
   }
+
+  getPersonsByLetter(letter: string) {
+    return this.db.list(`/persons/publics/${letter}`).valueChanges();
+  }
 }

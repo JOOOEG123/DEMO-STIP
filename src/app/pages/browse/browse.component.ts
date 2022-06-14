@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 
 interface Group {
@@ -16,18 +16,35 @@ interface Result {
   description: string
 }
 
+@Pipe({
+  name: 'UpdateRowsPipe',
+  
+})
+export class UpdateRowsPipe implements PipeTransform {
+
+  transform<T>(value: T[], perRow: number): T[][] {
+    let updated_db_result: T[][] = [];
+    for (let i = 0; i < value.length; i += perRow) {
+      updated_db_result.push(value.slice(i, i + perRow))
+    }
+    return updated_db_result;
+  }
+
+}
 @Component({
   selector: 'app-browse',
   templateUrl: './browse.component.html',
   styleUrls: ['./browse.component.scss']
 })
 export class BrowseComponent implements OnInit {
-  drop = false;
+  
 
   results: Result[] = [
     {name: "Surname" , occupation: "Job" , description: "Brif Intro"},
     {name: "Surname" , occupation: "Job" , description: "Brif Intro"}
   ]
+
+
   groups: Group[] = [
     {value: '1', viewValue: 'Han Chinese'},
     {value: '2', viewValue: 'Zhuang'},
@@ -94,19 +111,40 @@ export class BrowseComponent implements OnInit {
     {value: '2', viewValue: 'Testing2'}
   ];
   
-  group: string
+  group!: string;
   //date: string
-  gender: string
-  status: string
-  occupation: string
+  gender: string ="Male"
+  status!: string
+  occupation!: string
+  currentLetter!: string 
+  drop = false;
+  curView: string = "List"
+
+  date: Date = new Date();
+  db_result: any[] = [];
+  letters: any[] = ["All","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X", "Y", "Z"]
+
   
-  date = new Date();
+  keyword = ""
+
 
   constructor(private archApi: ArchieveApiService) { 
-    this.group = "" 
-    this.gender = "Male"
-    this.status = ""
-    this.occupation = ""
+    // this.group = "" 
+    // this.gender = "Male"
+    // this.status = ""
+    // this.occupation = ""
+    // this.currentLetter = "s"
+  
+  }
+
+  filterByKeyword() {
+    if(this.keyword) {
+      console.log(this.keyword)
+      this.db_result = this.db_result.filter(x => x.full_name.includes(this.keyword));
+    }
+    else{
+
+    }
 
   }
 
@@ -126,12 +164,11 @@ export class BrowseComponent implements OnInit {
   }
 
   onYearChange() {
-    //var date =<HTMLInputElement>document.getElementById("datepicker");
     console.log("year clicked")
 
-    this.date = new Date((<HTMLInputElement>document.getElementById("datepicker")).value);
+    // this.date = new Date(this.date);
     console.log(this.date);
-    console.log(this.date.toLocaleDateString("en-US"))
+    // console.log(this.date.toLocaleDateString("en-US"))
   }
 
   onGenderChange() {
@@ -189,15 +226,8 @@ export class BrowseComponent implements OnInit {
     var search_layout = document.getElementsByName("searchLayout");
 
     for (let i = 0; i < this.results.length; i++) {
-      if (select_option =="50" && i == 50 ){
+      if ((select_option =="50" && i == 49)||(select_option =="100" && i==99) ||(select_option =="1" && i==0)|| (select_option =="10" && i==9)){
         break;
-
-      }
-      else if (i == 15){
-
-      }
-      else {
-
       }
       //search_layout[i].setAttribute("class", "d-flex p-4 my-1 bg-primary rounded-start rounded-pill")
     }
@@ -209,21 +239,28 @@ export class BrowseComponent implements OnInit {
     var select_option = (<HTMLInputElement>document.getElementById("viewSelect")).value;
     var search_layout = document.getElementsByName("searchLayout");
     
-    //console.log(select_option)
-    //console.log(search_layout)
-    for (let i = 0; i < search_layout.length; i++) {
-      if (select_option == "List"){
-        search_layout[i].setAttribute("class", "d-flex p-4 my-1 bg-primary rounded-start rounded-pill")
-      }
-      else {
-        //search_layout[i].style.width = "50%";
-        search_layout[i].setAttribute("class", "d-flex p-4 my-1 bg-dark")
-      
-      }
-    }
+    this.curView = select_option
 
 
   }
+  lettersBtnClick(letter: string){
+    this.currentLetter = letter
+    console.log(letter)
+    if (letter === "All") {
+      this.archApi.getPublicArchieve().subscribe((data:any)  =>{
+        //fix later: update the length of search result
+        this.db_result = data;
+      })
+    }
+    else {
+      this.archApi.getPersonsByLetter(this.currentLetter).subscribe((data:any)  =>{
+        this.db_result = data[1];
+        console.log(this.db_result)
+      })
+    }
+
+  }
+
 
   searchResultClick() {
     

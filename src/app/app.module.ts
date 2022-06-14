@@ -9,11 +9,10 @@ import { pagesComponents } from './pages';
 import { LoginComponent } from './pages/login/login.component';
 import { AboutComponent } from './pages/about/AboutMovement/about.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
-import { BrowseComponent } from './pages/browse/browse.component';
+import { BrowseComponent} from './pages/browse/browse.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMasonryModule } from 'ngx-masonry';
 
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Firebase Modules
 import { AngularFireModule } from '@angular/fire/compat';
@@ -33,6 +32,11 @@ import { AboutResearchComponent } from './pages/about/AboutResearch/about-resear
 import { ResourcesComponent } from './pages/about/Resources/resources/resources.component';
 import { AboutTeamComponent } from './pages/about/AboutTeam/about-team/about-team.component';
 
+
+//Pipe: used to transfrom db data
+import { UpdateRowsPipe } from './pages/browse/browse.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +50,8 @@ import { AboutTeamComponent } from './pages/about/AboutTeam/about-team/about-tea
     SearchFilterComponent,
     AboutResearchComponent,
     ResourcesComponent,
-    AboutTeamComponent
+    AboutTeamComponent,
+    UpdateRowsPipe
   ],
   imports: [
     AngularFireAuthModule,
