@@ -30,83 +30,71 @@ export class GalleryComponent implements OnInit {
 
   images: Array<Image> = [
     {
-      src: "https://i.imgur.com/C2FSuws.jpg",
+      src: "assets/gallery/historical_1.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://imgur.com/ugRuIHq.jpg",
+      src: "assets/gallery/historical_2.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://imgur.com/ugRuIHq.jpg",
+      src: "assets/gallery/historical_3.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://i.imgur.com/7tWYNvv.jpg",
+      src: "assets/gallery/historical_4.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://i.imgur.com/SeLoG8d.jpg",
+      src: "assets/gallery/historical_5.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://i.imgur.com/Xaha6Vo.jpg",
+      src: "assets/gallery/historical_6.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://i.imgur.com/bN4U2J0.jpg",
+      src: "assets/gallery/historical_7.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://i.imgur.com/3S1OoAi.jpg",
+      src: "assets/gallery/historical_8.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://i.imgur.com/3GHYEo3.jpg",
+      src: "assets/gallery/historical_9.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://i.imgur.com/ywAiaWh.jpg",
+      src: "assets/gallery/historical_10.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
     {
-      src: "https://i.imgur.com/wOPcRBD.jpg",
+      src: "assets/gallery/historical_11.jpg",
       title: "Some title",
       description: 'Some description',
       opacity: 100,
     },
-    {
-      src: "https://i.imgur.com/Z9dsNRc.jpg",
-      title: "Some title",
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: "https://i.imgur.com/3HXgWpU.jpg",
-      title: "Some title",
-      description: 'Some description',
-      opacity: 100,
-    }
   ]
 
   constructor() {
