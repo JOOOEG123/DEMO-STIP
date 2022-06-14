@@ -40,7 +40,7 @@ import { SearchFilterComponent } from './share/search-filter/search-filter.compo
     GalleryComponent,
     BrowseComponent,
     AccountComponent,
-    ProjectOverviewComponent
+    ProjectOverviewComponent,
     SearchFilterComponent
   ],
   imports: [
