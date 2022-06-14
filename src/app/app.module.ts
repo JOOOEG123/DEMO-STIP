@@ -29,6 +29,9 @@ import { AccountComponent } from './pages/account/account.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectOverviewComponent } from './pages/about/ProjectOverview/project-overview/project-overview.component';
 import { SearchFilterComponent } from './share/search-filter/search-filter.component';
+import { AboutResearchComponent } from './pages/about/AboutResearch/about-research/about-research.component';
+import { ResourcesComponent } from './pages/about/Resources/resources/resources.component';
+import { AboutTeamComponent } from './pages/about/AboutTeam/about-team/about-team.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,10 @@ import { SearchFilterComponent } from './share/search-filter/search-filter.compo
     BrowseComponent,
     AccountComponent,
     ProjectOverviewComponent,
-    SearchFilterComponent
+    SearchFilterComponent,
+    AboutResearchComponent,
+    ResourcesComponent,
+    AboutTeamComponent
   ],
   imports: [
     AngularFireAuthModule,
