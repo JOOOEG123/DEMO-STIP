@@ -79,19 +79,14 @@
         <div class="col-auto">
           <input
             class="form-control form-control-sm"
-            list="ethicGroup"
             formControlName="group"
             id="chinese-ethic-group"
+            [typeahead]="groups"
+            typeaheadOptionField="viewValue"
+            [typeaheadOptionsLimit]="5"
             placeholder="Type to search ethnic groups..."
           />
         </div>
-        <datalist id="ethicGroup">
-          <option value="San Francisco"></option>
-          <option value="New York"></option>
-          <option value="Seattle"></option>
-          <option value="Los Angeles"></option>
-          <option value="Chicago"></option>
-        </datalist>
       </div>
       <div class="col-12 col-md-3">
         <label for="chinese-ethic-group fw-bold" class="form-label col fw-bold"
@@ -103,7 +98,8 @@
             formControlName="occupation"
             aria-label=".form-select-lg example"
           >
-            <option selected>Open this select menu</option>
+            <!-- This should be iterative *ngFor create the constant in -->
+            <option selected value="" disabled>Open this select menu</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
@@ -134,7 +130,9 @@
           >
             Clear
           </button>
-          <button class="btn btn-outline-secondary" type="submit">Submit</button>
+          <button class="btn btn-outline-secondary" type="submit">
+            Submit
+          </button>
         </div>
       </div>
     </form>

@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgModule } from '@angular/core';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 @NgModule({
   declarations: [],
@@ -14,14 +15,16 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     AlertModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TypeaheadModule.forRoot(),
   ],
   exports: [
     BsDropdownModule,
     CollapseModule,
     AlertModule,
     ModalModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    TypeaheadModule,
   ],
   providers: [BsDatepickerConfig],
   bootstrap: []
