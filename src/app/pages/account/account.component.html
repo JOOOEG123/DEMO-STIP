@@ -4,8 +4,8 @@
     style="border-bottom: 5px solid #cea374"
   >
     <div class="row">
-      <div class="col-auto row">
-        <div class="col-auto">
+      <div class="col row">
+        <div class="col">
           <img
             src="/assets/account/template-profile.png"
             class="img-fluid"
@@ -18,38 +18,36 @@
           <p class="text-white mt-2">Description</p>
         </div>
       </div>
-      <div class="col-12 col-md-9">
-        <div class="row">
-          <div class="col-12 col-md-8">
-            <h2>Account Information</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore.
-            </p>
+      <div class="col-12 col-sm-9 row">
+        <div class="col-12 col-sm-8">
+          <h2>Account Information</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore.
+          </p>
+        </div>
+        <div class="col d-flex flex-column">
+          <div class="my-2 ms-auto">
+            <button type="button" class="btn rounded-pill btn-khali">
+              Edit Account
+            </button>
           </div>
-          <div class="col-auto ms-auto">
-            <div class="my-2">
-              <button type="button" class="btn rounded-pill btn-khali">
-                Edit Account
-              </button>
-            </div>
-            <div class="my-2">
-              <button type="button" class="btn rounded-pill my-2 btn-khali">
-                Upload
-              </button>
-            </div>
-            <div class="my-2">
-              <button
-                type="button"
-                class="btn rounded-pill btn-khali"
-                (click)="openModal(templateLogout)"
-              >
-                Log out
-              </button>
-            </div>
+          <div class="my-2 ms-auto">
+            <button type="button" class="btn rounded-pill my-2 btn-khali">
+              Upload
+            </button>
+          </div>
+          <div class="my-2 ms-auto">
+            <button
+              type="button"
+              class="btn rounded-pill btn-khali"
+              (click)="openModal(templateLogout)"
+            >
+              Log out
+            </button>
           </div>
         </div>
       </div>
@@ -86,7 +84,11 @@
 <ng-template #templateLogout>
   <div class="modal-body text-center">
     <p>Do you want to log out?</p>
-    <button type="button" class="btn btn-outline-dark px-3 me-3" (click)="logout()">
+    <button
+      type="button"
+      class="btn btn-outline-dark px-3 me-3"
+      (click)="logout()"
+    >
       Yes
     </button>
     <button type="button" class="btn btn-dark px-3" (click)="modalRef?.hide()">

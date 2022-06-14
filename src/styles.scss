@@ -107,3 +107,16 @@ body {
     border-bottom: 1px solid #000;
     margin: auto 0.5em;
 }
+
+// date design 
+.form-control, .form-control-sm {
+    transition: none !important;
+    &[bsdatepiker],
+    &[bsDaterangepicker] {
+        background-image: url("/assets/filters/date.svg");
+        background-repeat: no-repeat;
+        background-position: right 0.0rem center;
+
+    }
+
+}
