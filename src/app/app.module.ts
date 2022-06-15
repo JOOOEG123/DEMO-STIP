@@ -27,7 +27,6 @@ import { environment } from 'src/environments/environment';
 import { AuthServiceService } from './core/services/auth-service.service';
 import { AccountComponent } from './pages/account/account.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ProjectOverviewComponent } from './pages/about/ProjectOverview/project-overview/project-overview.component';
 import { SearchFilterComponent } from './share/search-filter/search-filter.component';
 import { AboutResearchComponent } from './pages/about/AboutResearch/about-research/about-research.component';
 import { ResourcesComponent } from './pages/about/Resources/resources/resources.component';
@@ -43,7 +42,6 @@ import { AboutTeamComponent } from './pages/about/AboutTeam/about-team/about-tea
     GalleryComponent,
     BrowseComponent,
     AccountComponent,
-    ProjectOverviewComponent,
     SearchFilterComponent,
     AboutResearchComponent,
     ResourcesComponent,
