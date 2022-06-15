@@ -29,6 +29,10 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "ngx-masonry",
+              "masonry-layout"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
