@@ -111,9 +111,6 @@ export class BrowseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.archApi.getPublicArchieve().subscribe((x:any)  =>{
-      console.log(x)
-    })
   }
 
   updateCollapse() {

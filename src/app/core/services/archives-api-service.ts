@@ -2,7 +2,6 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 
@@ -17,15 +16,77 @@ export class ArchieveApiService {
     private db: AngularFireDatabase,
     private router: Router,
     private outsideScope: NgZone,
-    private http: HttpClient,
+    private http: HttpClient
   ) {}
 
-
-  getPublicArchieve() {
-    return this.db.list('/persons/public').valueChanges();
+  getArchieveByAlphabet(alphabet: string) {
+    return this.db.list(`/persons/publics/${alphabet}`).valueChanges();
   }
 
-  adminAddArchieve(data: any) {
-    return this.db.list('/persons/public').push(data);
+  getArchieveEventsByAlphabet(alphabet: string) {
+    return this.db.list(`/persons/publics/${alphabet}/events`).valueChanges();
+  }
+
+  getArchievePersonByAlphabet(alphabet: string) {
+    return this.db.list(`/persons/publics/${alphabet}/persons`).valueChanges();
+  }
+
+  getEventByAlphabetAndEventId(alphabet: string, id: string) {
+    return this.db
+      .list(`/persons/publics/${alphabet}/events`, (ref) =>
+        ref.orderByChild('event_id').equalTo(id)
+      )
+      .valueChanges();
+  }
+
+  getEventByAlphabetAndPersonId(alphabet: string, id: string) {
+    return this.db
+      .list(`/persons/publics/${alphabet}/events`, (ref) =>
+        ref.orderByChild('person_id').equalTo(id)
+      )
+      .valueChanges();
+  }
+
+  getPersonByAlphabetAndPersonId(alphabet: string, id: string) {
+    return this.db
+      .list(`/persons/publics/${alphabet}/persons`, (ref) =>
+        ref.orderByChild('person_id').equalTo(id)
+      )
+      .valueChanges();
+  }
+
+  // Admin Functions
+  adminAddPersonByAlphabet(alphabet: string, data: any) {
+    return this.db.list(`/persons/publics/${alphabet}/persons`).push(data);
+  }
+
+  adminAddEventByAlphabet(alphabet: string, data: any) {
+    return this.db.list(`/persons/publics/${alphabet}/events`).push(data);
+  }
+  // if we list in array format, we can use push() to add new item
+  adminUpdatePersonByAlphabetAndPersonId(alphabet: string, data: any) {
+    var ref = this.db.database.ref(`/persons/publics/${alphabet}/persons`);
+    return ref
+      .orderByChild('person_id')
+      .equalTo(data.person_id)
+      .once('value', function (snapshot) {
+        snapshot.forEach(function (e) {
+          e.ref.update(data);
+        });
+      });
+    // return this.db.list(`/persons/publics/${alphabet}/persons`, (ref) =>  ref.orderByChild('person_id').equalTo(data.person_id)).update(data.person_id, data);
+  }
+
+  // key value pair is person_id: data. Scenario: update person_id: 1 to data: {name: "new name"}
+  // if we use object key is person_id, we can use update() to update person_id: 1 to data: {name: "new name"}
+  adminUpdateEventByAlphabetAndEventId(alphabet: string, data: any) {
+    this.db
+      .object(`/persons/publics/${alphabet}/events/${data.event_id}`)
+      .update(data);
+  }
+  adminUpdateEventByAlphabetAndPersonId(alphabet: string, data: any) {
+    this.db
+      .object(`/persons/publics/${alphabet}/persons/${data.person_id}`)
+      .update(data);
   }
 }
