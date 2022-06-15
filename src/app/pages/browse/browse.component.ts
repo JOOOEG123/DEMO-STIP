@@ -1,5 +1,6 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
+import { FilterTypes } from 'src/app/core/types/filters.type';
 
 interface Group {
   value: string;
@@ -43,6 +44,8 @@ export class BrowseComponent implements OnInit {
     {name: "Surname" , occupation: "Job" , description: "Brif Intro"},
     {name: "Surname" , occupation: "Job" , description: "Brif Intro"}
   ]
+
+  filterValues: FilterTypes = {} as FilterTypes;
 
 
   groups: Group[] = [
@@ -116,10 +119,10 @@ export class BrowseComponent implements OnInit {
   gender: string ="Male"
   status!: string
   occupation!: string
-  currentLetter!: string 
+  currentLetter: string = "All"
   drop = false;
   curView: string = "List"
-
+  resultsPerPage: number = 50
   date: Date = new Date();
   db_result: any[] = [];
   letters: any[] = ["All","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X", "Y", "Z"]
@@ -149,10 +152,13 @@ export class BrowseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.archApi.getPublicArchieve().subscribe((x:any)  =>{
-    //   console.log(x)
-    //   this.db_result = x;
-    // })
+
+    this.lettersBtnClick("All")
+    
+  }
+
+  filterValueschanges(filterValues: FilterTypes) {
+    console.log(filterValues)
   }
 
   updateCollapse() {
@@ -248,45 +254,20 @@ export class BrowseComponent implements OnInit {
 
   }
 
-  resultsPerPage: number = 10
 
   lettersBtnClick(letter: string){
     this.currentLetter = letter
     console.log(letter)
-    if (letter === "All") {
-      var temparr: any[] = []
-      this.db_result = []
+    const alpha = letter === 'All' ? '' : letter;
 
-      for (let i = 1; i < this.letters.length; i++) {
-        console.log(this.db_result.length)
-        if (this.db_result.length < this.resultsPerPage) {
-          this.archApi.getArchievePersonByAlphabet('').subscribe((datas:any) => {
-            this.db_result.push(...datas)
-          })
-        }
-    
-      // for (let i = 1; i < this.letters.length; i++) {
-      //   if (i < 3) {
-      //     this.archApi.getPersonsByLetter(this.letters[i]).subscribe((datas:any)  =>{
-      //       this.db_result.push(...datas);
-      //       // for (let data of datas) {
-      //       //   this.db_result = this.db_result.concat(data[1]);
-      //       //   //console.log(data[1])
-      //       //   //console.log(temparr)
-      //       // }
-      //       //return tempar
-      //     })
-      //   }
-      }
-    console.log(this.db_result)
-      //console.log(this.db_result)
-    }
-    else {
-      this.archApi.getPersonsByLetter(this.currentLetter, this.resultsPerPage).subscribe((data:any)  =>{
-        this.db_result = data;
-        console.log(this.db_result)
-      })
-    }
+    this.archApi.getArchievePersonByAlphabet(alpha).subscribe((datas:any) => {
+      console.log(datas.length)
+      this.db_result = letter === 'All' ? datas.map((alphabet: any) => [].concat(alphabet.persons)) : datas;
+      this.db_result = this.db_result.flat();
+      console.log(this.db_result)
+    });
+    console.log("testing")
+    console.log(this.db_result);
 
   }
 

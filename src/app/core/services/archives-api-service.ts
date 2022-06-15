@@ -28,7 +28,8 @@ export class ArchieveApiService {
   }
 
   getArchievePersonByAlphabet(alphabet: string) {
-    return this.db.list(`/persons/publics/${alphabet}/persons`).valueChanges();
+    const path = alphabet ? `${alphabet}/persons` : alphabet;
+    return this.db.list(`/persons/publics/${path}`).valueChanges();
   }
 
   getEventByAlphabetAndEventId(alphabet: string, id: string) {
@@ -93,8 +94,12 @@ export class ArchieveApiService {
   }
 
   getPersonsByLetter(letter: string, limit: number) {
-    return this.db.list(`/persons/publics/${letter}/persons`, ref => ref.limitToFirst(limit)).valueChanges();
+    return this.db
+      .list(`/persons/publics/${letter}/persons`, (ref) =>
+        ref.limitToFirst(limit)
+      )
+      .valueChanges();
   }
 
-//   getPersonEventsByLetter(letter: string)
- }
+  //   getPersonEventsByLetter(letter: string)
+}

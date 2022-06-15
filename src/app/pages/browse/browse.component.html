@@ -8,6 +8,8 @@
         </button>
     </div>
 </div>
+<pre>{{ filterValues | json }}</pre>
+<app-search-filter [(filterValues)]="filterValues" (filterValuesChange)="filterValueschanges($event)"></app-search-filter>
 
 <div>
     <div class="card m-4">
