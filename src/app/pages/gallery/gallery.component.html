@@ -1,4 +1,4 @@
-<div class="container m-5 p-4 text-center " >
+<div class="container m-5 p-4 text-center">
     <h1>Gallery</h1>
 </div>
 
@@ -30,17 +30,14 @@
 </div>
 
 <div class="container d-flex justify-content-center">
-    <pagination [boundaryLinks]="showBoundaryLinks" [itemsPerPage]="itemsPerPage" [totalItems]="images.length" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+    <pagination 
+        [boundaryLinks]="showBoundaryLinks" 
+        [itemsPerPage]="itemsPerPage" 
+        [totalItems]="images.length" 
+        [(ngModel)]="currentPage" 
+        (pageChanged)="pageChanged($event)" 
+        previousText="&lsaquo;" 
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;"></pagination>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
