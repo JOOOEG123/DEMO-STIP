@@ -1,5 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Component, OnInit } from '@angular/core';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { NgxMasonryOptions } from 'ngx-masonry';
 
@@ -26,8 +25,6 @@ export class GalleryComponent implements OnInit {
   public masonryOptions: NgxMasonryOptions = {
     gutter: 20
   };
-
-  modelRef: BsModalRef | undefined
 
   images: Array<Image> = [
     {
