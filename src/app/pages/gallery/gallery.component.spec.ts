@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 
 import { GalleryComponent } from './gallery.component';
 

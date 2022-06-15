@@ -3,7 +3,7 @@
 </div>
 
 <div class="container">
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center flex-wrap">
         <div *ngFor="let gallery of galleries" class="p-2 mx-4">
             <div [ngStyle]="{
                 'cursor': 'pointer',
@@ -18,36 +18,21 @@
     <hr class="divider">
 </div>
 
-<div class="container">
+<div class="container my-4">
     <ngx-masonry [options]="masonryOptions" [ordered]="true" [ngStyle]="{'width': '100%'}">
-        <div ngxMasonryItem class="masonry-item my-2" *ngFor="let image of images; let i = index" [ngStyle]="{'width': '31%'}">
+        <div ngxMasonryItem class="masonry-item my-2" *ngFor="let image of display; let i = index" [ngClass]="'responsive-columns'">
             <div>
                 <img [src]="image.src" width="100%" [ngClass]="'hovered-img'" (mouseleave)="onLeave()" (mouseover)="onEnter(i)" [ngStyle]="{'opacity': currentImageIndex == i ? '0.4' : '1'}"/>
                 <button [ngClass]="'hovered-button'" (mouseover)="onEnter(i)" [ngStyle]="{'opacity': currentImageIndex == i ? '1.0': '0.0'}" >LEARN MORE</button>
             </div>
-            <!-- <ng-container *ngTemplateOutlet="imageModal; context: {image: image}"></ng-container> -->
         </div>
     </ngx-masonry>
 </div>
 
-<!-- <ng-template #imageModal>
-    <span *ngIf="selectedImage">
-        <div class="modal-header text-center">
-            <h4 class="modal-title w-100">{{ selectedImage.title }}</h4>
-        </div>
-        <div class="modal-body">
-            <div class="card text-center">
-              
-                <div class="card-body">
-                    <img [src]="selectedImage.src" class="card-img-top" alt="...">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-        </div>
-    </span>
-</ng-template> -->
+<div class="container d-flex justify-content-center">
+    <pagination [boundaryLinks]="showBoundaryLinks" [itemsPerPage]="itemsPerPage" [totalItems]="images.length" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+</div>
+
 
 
 

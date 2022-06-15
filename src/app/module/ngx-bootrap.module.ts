@@ -5,6 +5,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination'
 
 @NgModule({
   declarations: [],
@@ -14,16 +15,17 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     AlertModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ],
   exports: [
     BsDropdownModule,
     CollapseModule,
     AlertModule,
     ModalModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    PaginationModule
   ],
-  providers: [BsDatepickerConfig],
+  providers: [BsDatepickerConfig, PaginationConfig],
   bootstrap: []
 })
 export class NgxBootstrapModule { }
