@@ -63,7 +63,8 @@ export class ArchieveApiService {
   adminAddEventByAlphabet(alphabet: string, data: any) {
     return this.db.list(`/persons/publics/${alphabet}/events`).push(data);
   }
-  // if we list in array format, we can use push() to add new item
+  // if we use array format, we can use push() to add new item
+  // Ex: [{}, {}, {}]
   adminUpdatePersonByAlphabetAndPersonId(alphabet: string, data: any) {
     var ref = this.db.database.ref(`/persons/publics/${alphabet}/persons`);
     return ref
@@ -78,7 +79,8 @@ export class ArchieveApiService {
   }
 
   // key value pair is person_id: data. Scenario: update person_id: 1 to data: {name: "new name"}
-  // if we use object key is person_id, we can use update() to update person_id: 1 to data: {name: "new name"}
+  // if we use object. key is person_id, we can use update() to update person_id: 1 to data: {name: "new name"}
+  // Ex : {A1: {}, A2: {}, A3: {}}
   adminUpdateEventByAlphabetAndEventId(alphabet: string, data: any) {
     this.db
       .object(`/persons/publics/${alphabet}/events/${data.event_id}`)
