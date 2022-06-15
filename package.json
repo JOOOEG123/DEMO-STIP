@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "deploy:firestore": "firebase deploy --only firestore:rules",
     "deploy:fireStorage": "firebase deploy --only storage:rules",
+    "deploy:database": "firebase deploy --only database:rules",
     "test": "ng test",
     "firebase-admin install": "npm install firebase-admin"
   },
