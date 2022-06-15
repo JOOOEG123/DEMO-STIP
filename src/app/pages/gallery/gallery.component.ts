@@ -1,5 +1,5 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Component, OnInit } from '@angular/core';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { NgxMasonryOptions } from 'ngx-masonry';
 
 interface Image {
@@ -25,8 +25,6 @@ export class GalleryComponent implements OnInit {
   public masonryOptions: NgxMasonryOptions = {
     gutter: 20
   };
-
-  modelRef: BsModalRef | undefined
 
   images: Array<Image> = [
     {
@@ -96,10 +94,17 @@ export class GalleryComponent implements OnInit {
       opacity: 100,
     },
   ]
+  
+  currentPage?: number
+  showBoundaryLinks: boolean = true
+  itemsPerPage: number = 5
+  display?: Array<Image>
 
   constructor() {
     this.selectedCategory = 'All';
     this.currentImageIndex = -1;
+    this.currentPage = 1;
+    this.display = this.images.slice(0, this.itemsPerPage)
   }
 
   ngOnInit(): void {}
@@ -114,5 +119,12 @@ export class GalleryComponent implements OnInit {
 
   onLeave() {
     this.currentImageIndex = -1
+  }
+
+  pageChanged(event: PageChangedEvent): void {
+    this.currentPage = event.page
+    var start = (this.currentPage - 1) * this.itemsPerPage;
+    var end = start + this.itemsPerPage
+    this.display = this.images.slice(start, end)
   }
 }
