@@ -38,6 +38,10 @@ const routes: Routes = [
         component: BrowseComponent,
       },
       {
+        path: 'search/:search',
+        component: BrowseComponent
+      },
+      {
         path: 'login',
         component: LoginComponent,
       },

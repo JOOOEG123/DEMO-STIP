@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
+  styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-  constructor(private arch: ArchieveApiService) {}
+  constructor(private arch: ArchieveApiService, private router: Router) {}
+  searchTerm: string = ''
 
   fakeProfile = [
     {
@@ -27,4 +30,13 @@ export class HomepageComponent implements OnInit {
   ];
 
   ngOnInit(): void {}
+
+  onKey(event: any) {
+    this.searchTerm = (event.target as HTMLInputElement).value;
+  }
+
+  searchArchives() {
+    console.log(this.searchTerm)
+    this.router.navigate(["search/" + this.searchTerm]);
+  }
 }
