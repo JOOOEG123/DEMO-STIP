@@ -92,7 +92,9 @@ export class ArchieveApiService {
       .update(data);
   }
 
-  getPersonsByLetter(letter: string) {
-    return this.db.list(`/persons/publics/${letter}`).valueChanges();
+  getPersonsByLetter(letter: string, limit: number) {
+    return this.db.list(`/persons/publics/${letter}/persons`, ref => ref.limitToFirst(limit)).valueChanges();
   }
-}
+
+//   getPersonEventsByLetter(letter: string)
+ }
