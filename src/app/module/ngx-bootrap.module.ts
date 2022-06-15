@@ -6,6 +6,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgModule } from '@angular/core';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination'
 
 @NgModule({
   declarations: [],
@@ -25,8 +26,9 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     ModalModule,
     BsDatepickerModule,
     TypeaheadModule,
+    PaginationModule
   ],
-  providers: [BsDatepickerConfig],
+  providers: [BsDatepickerConfig, PaginationConfig],
   bootstrap: []
 })
 export class NgxBootstrapModule { }
