@@ -102,4 +102,12 @@ export class LoginComponent implements OnInit {
       this.modalRef?.hide();
     });
   }
+
+  userFacebookLogin() {
+    console.log("facebook auth")
+  }
+
+  logout() {
+    console.log("logout")
+  }
 }

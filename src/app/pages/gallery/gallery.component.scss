@@ -6,4 +6,20 @@
     padding-bottom: 50px;
 }
 
+.hovered-img {
+    transition: 1s;
+    cursor: pointer;
+}
 
+.hovered-button {
+    transition: 1s;
+    position: absolute;
+    background-color: #0c1330;
+    color: white;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    opacity: 0;
+}
