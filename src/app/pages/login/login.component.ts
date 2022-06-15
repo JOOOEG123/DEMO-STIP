@@ -16,15 +16,13 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  loginForm = this.fb.group(
-    {
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      firstName: [''],
-      lastName: [''],
-      confirmEmail: [''],
-    }
-  );
+  loginForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+    firstName: [''],
+    lastName: [''],
+    confirmEmail: [''],
+  });
   modalRef?: BsModalRef;
 
   @ViewChild('template') template!: TemplateRef<any>;
@@ -51,6 +49,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm.value);
+    this.authService.signInWithEmail(this.loginForm.value)?.then(() => {
+      this.modalRef?.hide();
+    });
   }
 
   switchState() {
@@ -92,9 +93,7 @@ export class LoginComponent implements OnInit {
     const email = group?.get('email')?.value;
     const confirmEmail = group?.get('confirmEmail')?.value;
     console.log(email, confirmEmail);
-    return email === confirmEmail
-      ? null
-      : { notSame: true };
+    return email === confirmEmail ? null : { notSame: true };
   }
 
   userGoogleLogin() {
@@ -104,10 +103,10 @@ export class LoginComponent implements OnInit {
   }
 
   userFacebookLogin() {
-    console.log("facebook auth")
+    console.log('facebook auth');
   }
 
   logout() {
-    console.log("logout")
+    console.log('logout');
   }
 }
