@@ -22,6 +22,9 @@ export class AuthServiceService {
   ) {
     this.auth.authState.subscribe((user) => {
       if (user) {
+        if (!user.emailVerified) {
+          this.sendEmailVerification();
+        }
         this.user = user;
         user.getIdTokenResult().then((token) => {
           console.log('token', token, this.user);
@@ -49,9 +52,15 @@ export class AuthServiceService {
   signInWithEmail({ email, password }: { email: string; password: string }) {
     return this.auth
       .signInWithEmailAndPassword(email, password)
-      .then((user) => {
+      .then(async (user) => {
         this.saveUser(user.user as Profile | null);
       });
+  }
+
+  sendEmailVerification() {
+    this.auth.currentUser.then((user) => {
+      user?.sendEmailVerification();
+    });
   }
 
   forgetPassword(email: string) {
