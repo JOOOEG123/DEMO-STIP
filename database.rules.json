@@ -3,7 +3,7 @@
     "persons": {
       ".read": false,
       ".write": false,
-      "public": {
+        "publics": {
         ".read": true,
         ".write": "auth.token.admin === true"
       },
