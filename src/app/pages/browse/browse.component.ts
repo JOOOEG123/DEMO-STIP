@@ -149,6 +149,10 @@ export class BrowseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.archApi.getPublicArchieve().subscribe((x:any)  =>{
+    //   console.log(x)
+    //   this.db_result = x;
+    // })
   }
 
   updateCollapse() {
@@ -256,13 +260,11 @@ export class BrowseComponent implements OnInit {
       for (let i = 1; i < this.letters.length; i++) {
         console.log(this.db_result.length)
         if (this.db_result.length < this.resultsPerPage) {
-          this.archApi.getPersonsByLetter(this.letters[i], this.resultsPerPage).subscribe((datas:any) => {
+          this.archApi.getArchievePersonByAlphabet('').subscribe((datas:any) => {
             this.db_result.push(...datas)
           })
         }
-      
-      
-
+    
       // for (let i = 1; i < this.letters.length; i++) {
       //   if (i < 3) {
       //     this.archApi.getPersonsByLetter(this.letters[i]).subscribe((datas:any)  =>{
