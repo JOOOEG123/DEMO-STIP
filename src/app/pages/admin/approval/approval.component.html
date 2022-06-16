@@ -1,0 +1,59 @@
+<div class="container-fluid px-0">
+   
+    <div class="display-1 text-center my-4">Public Contributions</div>
+
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <button 
+                *ngFor="let category of categoriesList" 
+                class="my-2 mx-4 p-2 category-button bg-warning fw-bold" 
+                (click)="setActiveCategory(category)"
+                [ngClass]="{'bg-warning': category == activeCategory}">{{ category }}</button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row my-4 contribution-container border border-warning border-3" *ngFor="let victim of selectedContributions">
+                <div class="col-5">
+                    <div class="card border-0">
+                        <div class="row no-gutters">
+                          <div class="col-md-6 d-flex align-items-center p-4">
+                            <img [src]="victim.imgSrc" class="card-img rounded-circle" alt="...">
+                          </div>
+                          <div class="col-md-6 d-flex align-items-center">
+                            <div class="card-body">
+                              <h5 class="card-title fw-bold display-6">{{ victim.surname }}</h5>
+                              <p class="card-text" *ngIf="victim.occupation">Occupation: {{ victim.occupation }}</p>
+                              <p class="card-text" *ngIf="victim.ethnicGroup">Ethnicity: {{ victim.ethnicGroup }}</p>
+                              <p class="card-text" *ngIf="victim.gender">Gender: {{ victim.gender }}</p>
+                              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                </div>
+                <div class="col-5 align-self-center">
+                    <p>{{ victim.content }}</p>
+                    <!-- <button (click)="viewFullText($event)" class="btn btn-transparant mx-2 float-end">
+                        <span class="arrow-icon">&ShortDownArrow;</span>
+                    </button> -->
+                </div>
+                <div class="col-2 d-flex align-items-center justify-content-center">
+                    <button (click)="onApprove(victim.id)" class="btn btn-transparent mx-2">
+                        <span class="check-icon">&checkmark;</span>
+                    </button>
+                    <button (click)="onEdit(victim.id)" class="btn btn-transparent mx-2">
+                        <span class="pencil-icon text-warning">&#9998;</span>
+                    </button>
+                    <button (click)="onReject(victim.id)" class="btn btn-transparent mx-2">
+                        <span class="cross-icon">&cross;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+  
+</div>

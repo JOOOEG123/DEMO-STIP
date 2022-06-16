@@ -32,6 +32,7 @@ import { SearchFilterComponent } from './share/search-filter/search-filter.compo
 import { AboutResearchComponent } from './pages/about/AboutResearch/about-research/about-research.component';
 import { ResourcesComponent } from './pages/about/Resources/resources/resources.component';
 import { AboutTeamComponent } from './pages/about/AboutTeam/about-team/about-team.component';
+import { ApprovalComponent } from './pages/admin/approval/approval.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AboutTeamComponent } from './pages/about/AboutTeam/about-team/about-tea
     SearchFilterComponent,
     AboutResearchComponent,
     ResourcesComponent,
-    AboutTeamComponent
+    AboutTeamComponent,
+    ApprovalComponent
   ],
   imports: [
     AngularFireAuthModule,
