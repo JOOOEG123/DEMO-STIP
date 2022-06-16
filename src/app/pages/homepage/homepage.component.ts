@@ -37,6 +37,6 @@ export class HomepageComponent implements OnInit {
 
   searchArchives() {
     console.log(this.searchTerm)
-    this.router.navigate(["search/" + this.searchTerm]);
+    // this.router.navigate(["search/" + this.searchTerm]);
   }
 }
