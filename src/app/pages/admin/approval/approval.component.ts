@@ -45,7 +45,7 @@ export class ApprovalComponent implements OnInit {
     {
       id: 'victim2',
       imgSrc: 'assets/homepage/theguy.png',
-      surname: 'Jane Doe',
+      surname: 'Joe Doe',
       occupation: 'Butcher',
       ethnicGroup: 'Han',
       gender: 'female',
@@ -55,7 +55,7 @@ export class ApprovalComponent implements OnInit {
     {
       id: 'victim2',
       imgSrc: 'assets/homepage/theguy.png',
-      surname: 'Jane Doe',
+      surname: 'Josh Doe',
       occupation: 'Butcher',
       ethnicGroup: 'Han',
       gender: 'female',
@@ -84,12 +84,13 @@ export class ApprovalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.categories)
   }
 
   onApprove(victimId: string) {
     const index = this.newContributions.findIndex(contribution => contribution.id == victimId)
     const returned = this.newContributions.splice(index, 1)
-    this.approvedContribution.push(returned[0])
+    this.approvedContribution.unshift(returned[0])
   }
 
   onEdit(victimId: string) {
@@ -99,7 +100,7 @@ export class ApprovalComponent implements OnInit {
   onReject(victimId: string) {
     const index = this.newContributions.findIndex(contribution => contribution.id == victimId)
     const returned = this.newContributions.splice(index, 1)
-    this.rejectedContributions.push(returned[0])
+    this.rejectedContributions.unshift(returned[0])
   }
 
   setActiveCategory(category: Categories) {
