@@ -1,15 +1,15 @@
-<div class="container-fluid homepage-bg">
-      <div class="container py-4 text-center">
-        <h2 class="my-3">Chinese Anti-Rightists Archives</h2>
-        <div class="m-5 px-5 py-5">
-          testLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-          voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
-        </div>
+<div class="container-fluid px-0 homepage-bg">
+  <div class="container-fluid px-0 py-4 text-center blue-bg">
+    <div class="container w-50">
+      <h2 class="">Chinese Anti-Rightists Archives</h2>
+      <div class="px-5 py-5  text-center">
+        testLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
         <div class="input-group py-5">
           <input
             type="search"
@@ -17,42 +17,33 @@
             placeholder="Search for Archives"
             aria-label="Search for Archives"
             aria-describedby="scearh_home__btn"
+            (keyup)="onKey($event)"
+            (keyup.enter)="searchArchives()"
           />
           <button
             class="btn border border-start-0 bg-white rounded-start rounded-pill "
             type="button"
             id="scearh_home__btn"
+            (click)="searchArchives()"
           >
             <img src="assets/homepage/search.png" alt="globe" width="15" />
           </button>
         </div>
       </div>
-    <div class="text-center">
-      <img
-        class="img-fluid"
-        src="assets/homepage/Anti-Rightist_Movement.jpg"
-        width="700"
-        height="300"
-      />
     </div>
-      <div class="container py-4 text-center">
-        <h2 class="my-3">Timeline</h2>
-        <div class="m-5 px-5">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
-        </div>
-    </div>
+  </div>
 
+  <div class="container-fluid px-0">
+    <img src="assets/homepage/stip-design-updated.png" width="100%" height="100%"/>
+  </div>
+
+  <div class="container-fluid px-0 py-5 mid-blue-bg">
+    <div class="container">
       <div class="row mx-5 text-center">
         <h2 class="col-12 pb-5">
           Featured Victims of the Anti-Rightists Movement
         </h2>
-        <div class="col-12 col-md-4" *ngFor="let profile of fakeProfile">
+        <div class="col-xs-12 col-md-6 col-lg-4" *ngFor="let profile of fakeProfile">
           <div class="text-center">
             <img
               src="assets/homepage/{{ profile.profile }}"
@@ -62,7 +53,7 @@
             />
           </div>
           <div class="text-center">
-            <h4 class="text-dark">{{ profile.name }}</h4>
+            <h4 class="text-light">{{ profile.name }}</h4>
             <p>{{ profile.email }}</p>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -71,28 +62,93 @@
           </div>
         </div>
       </div>
-    <div class="container-fluid py-3">
-      <div class="row-col-1 text-center m-5">
-        <img
-          class="img-fluid"
-          src="assets/homepage/china.svg"
-          width="700"
-          height="500"
-        />
-      </div>
     </div>
-    <div class="container-fluid">
-      <div class="container py-4 text-center">
-        <h2 class="my-3">Map of China's Provinces</h2>
-        <div class="m-5 px-5">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-          mollit anim id est laborum.
+  </div>
+  
+  <div class="container-fluid px-0 py-4 mid-blue-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-12 col-xs-12">
+          <div class="w-100 h-100 brief-responsive">
+            <h1>Movement Brief</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+              commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+              occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+              mollit anim id est laborum.
+            </p>
+            <hr>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+              commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+              occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+              mollit anim id est laborum.
+            </p>
+          </div>
+          
+        </div>
+        <div class="col-lg-6 col-md-12 col-xs-12 text-left">
+          <div class="w-100 text-center china-sign-responsive">
+            <img src="assets/homepage/china_sign.png" />
+          </div>
         </div>
       </div>
     </div>
+  </div>
+    
+  <div class="container py-4 text-center">
+    <h2 class="my-3">Timeline</h2>
+    <div class="m-5 px-5">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+      mollit anim id est laborum.
+    </div>
+  </div>
+  
+  <div class="container text-center">
+    <img
+      class="img-fluid"
+      src="assets/homepage/Anti-Rightist_Movement.jpg"
+      width="700"
+      height="300"
+    />
+  </div>
+
+  <div class="container-fluid py-3">
+    <div class="row-col-1 text-center m-5">
+      <img
+        class="img-fluid"
+        src="assets/homepage/china.svg"
+        width="700"
+        height="500"
+      />
+    </div>
+  </div>
+
+  
+  <div class="container-fluid">
+    <div class="container py-4 text-center">
+      <h2 class="my-3">Map of China's Provinces</h2>
+      <div class="m-5 px-5">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+      </div>
+    </div>
+  </div>
+  
 </div>
