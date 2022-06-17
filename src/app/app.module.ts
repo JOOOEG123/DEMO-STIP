@@ -10,6 +10,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { AboutComponent } from './pages/about/AboutMovement/about.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { BrowseComponent } from './pages/browse/browse.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMasonryModule } from 'ngx-masonry';
 
@@ -59,7 +60,7 @@ import { ApprovalComponent } from './pages/admin/approval/approval.component';
     AngularFirestoreModule,
     AppRoutingModule,
     BrowserModule,
-    BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
