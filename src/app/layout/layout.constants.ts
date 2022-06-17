@@ -5,7 +5,7 @@ export const NavBar = [
     icon: 'home',
   },
   {
-    title: 'BROSWE',
+    title: 'BROWSE',
     url: '/browse',
     icon: 'home',
   },

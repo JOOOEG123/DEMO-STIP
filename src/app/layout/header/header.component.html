@@ -1,6 +1,6 @@
 <app-login #login></app-login>
-<header class="sticky-top">
-  <nav class="navbar navbar-expand-lg navbar-light bg-dark-blue row">
+<header class="sticky-top border border-4 border-warning">
+  <nav class="navbar p-0 m-0 navbar-expand-lg navbar-light bg-dark-blue mw-100 row">
     <div class="container-fluid">
       <a class="navbar-brand h2 text-white px-4" routerLink="/home">Logo</a>
       <button
@@ -16,7 +16,6 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse row" id="navbarMobile">
-        <h5 class="col-12 m-0">Chinese Anti-Rightist Archives</h5>
         <ul class="nav nav-underline nav-fill me-auto mb-2 col-auto">
           <li class="nav-item" *ngFor="let item of navbars">
             <a
@@ -28,7 +27,7 @@
           </li>
         </ul>
         <div class="col-auto">
-          <div class="mx-5">
+          <div class="mx-5 mt-4">
             <div class="input-group input-group-sm">
               <input
                 type="search"
@@ -46,18 +45,18 @@
               </button>
             </div>
           </div>
-          <div class="d-flex flex-row">
-            <div class="mx-2 mt-2">
+          <div class="d-flex flex-row m-2">
+            <div class="mx-4 mt-2">
               <img
                 src="assets/homepage/united-states.png"
                 alt="globe"
                 width="30"
               />
-              ENGLISH
+              English
             </div>
-            <div class="mx-2 mt-2">
+            <div class="mx-4 mt-2">
               <img src="assets/homepage/china.png" alt="globe" width="30" />
-              CHINESE
+              Chinese
             </div>
             <div class="mx-3" *ngIf="!isLoggedIn">
               <button
@@ -74,7 +73,7 @@
                 class="nav-link text-white rounded-top"
                 routerLinkActive="active"
                 routerLink="/account"
-                >ACCOUNT</a
+                >Account</a
               >
             </div>
           </div>
