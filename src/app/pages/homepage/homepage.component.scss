@@ -25,21 +25,31 @@ $medium: 48rem;
 $small: 36rem;
 
 .brief-responsive {
-    @media screen and (min-width: $large) {
+    @media screen and (min-width: $medium) {
         text-align: left;
     }
 
-    @media screen and (min-width: $small) and (max-width: $large) {
+    @media screen and (max-width: $medium) {
         text-align: center;
     }
 }
 
-.china-sign-responsive {
-    @media screen and (min-width: $large) {
-        display: block
+// .china-sign-responsive {
+//     @media screen and (min-width: $medium) {
+//         display: block
+//     }
+
+//     @media screen and (max-width: $medium) {
+//         display: none
+//     }
+// }
+
+.homepage-text {
+    @media screen and (min-width: $medium) {
+        width: 50%
     }
 
-    @media screen and (min-width: $small) and (max-width: $large) {
-        display: none
+    @media screen and (max-width: $medium) {
+        width: 100%
     }
 }
