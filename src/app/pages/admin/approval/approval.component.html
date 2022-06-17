@@ -1,0 +1,69 @@
+<div class="container-fluid px-0">
+    <div class="display-1 text-center my-4">Public Contributions</div>
+    <div class="container">
+        <div class="d-flex flex-md-row flex-column justify-content-center">
+            <button 
+                *ngFor="let category of categoriesList" 
+                class="my-2 mx-4 p-2 category-button bg-warning fw-bold position-relative" 
+                (click)="setActiveCategory(category)"
+                [ngClass]="{'bg-warning': category == activeCategory}">{{ category }}
+                <span 
+                    *ngIf="categories[category].length != 0"
+                    [ngClass]="{
+                        'bg-danger': category == 'New Contributions', 
+                        'bg-success': category == 'Approved Contributions',
+                        'bg-warning': category == 'Rejected Contributions'
+                    }"
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill">{{ categories[category].length }}</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="container">
+            <div 
+            class="row my-4 contribution-container border border-warning border-3" 
+            *ngFor="let victim of selectedContributions" 
+            [@contributionAnimation]="victim.state"
+            (@contributionAnimation.start)="animationStart($event)"
+            (@contributionAnimation.done)="animationDone($event)"
+            >
+                <div class="col-5">
+                    <div class="card border-0">
+                        <div class="row no-gutters my-2">
+                          <div class="col-md-6 d-flex align-items-center justify-content-center">
+                                <img [src]="victim.imgSrc" class="card-img image-fluid w-50 rounded-pill" alt="...">
+                          </div>
+                          <div class="col-md-6 d-flex align-items-center">
+                            <div class="card-body text-md-start text-center">
+                              <h5 class="card-title fw-bold display-6">{{ victim.surname }}</h5>
+                              <p class="card-text m-0 text-uppercase" *ngIf="victim.occupation">{{ victim.occupation }}</p>
+                              <p class="card-text m-0 text-uppercase" *ngIf="victim.ethnicGroup">{{ victim.ethnicGroup }}</p>
+                              <p class="card-text m-0 text-uppercase" *ngIf="victim.gender">{{ victim.gender }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                </div>
+                <div class="col-5 align-self-center">
+                    <h4 class="fw-bold">Content:</h4>
+                    <p>{{ victim.content }}</p>
+                </div>
+                <div class="col-lg-2 col-12 d-flex align-items-center justify-content-center" *ngIf="activeCategory == 'New Contributions'">
+                    <button (click)="onApprove(victim.id)" class="btn btn-transparent mx-2">
+                        <span class="check-icon">&checkmark;</span>
+                    </button>
+                    <button (click)="onEdit(victim.id)" class="btn btn-transparent mx-2">
+                        <span class="pencil-icon text-warning">&#9998;</span>
+                    </button>
+                    <button (click)="onReject(victim.id)" class="btn btn-transparent mx-2">
+                        <span class="cross-icon">&cross;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+  
+</div>

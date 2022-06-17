@@ -10,6 +10,7 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { LoginComponent } from './pages/login/login.component';
 
 import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
+import { ApprovalComponent } from './pages/admin/approval/approval.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
         component: AccountComponent,
         canActivate: [AngularFireAuthGuard],
       },
+      {
+        path: 'admin/approval',
+        component: ApprovalComponent
+      }
     ],
   },
   {
