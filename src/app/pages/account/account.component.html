@@ -1,3 +1,4 @@
+<app-logout #logoutModal></app-logout>
 <div class="container-fluid">
   <div
     class="bg-medium-blue p-5 rounded-bottom-right"
@@ -44,7 +45,7 @@
             <button
               type="button"
               class="btn rounded-pill btn-khali"
-              (click)="openModal(templateLogout)"
+              (click)="logoutModal?.openModal()"
             >
               Log out
             </button>
