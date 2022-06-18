@@ -1,6 +1,8 @@
 <app-login #login></app-login>
 <header class="sticky-top">
-  <nav class="navbar navbar-expand-lg navbar-light bg-dark-blue row">
+  <nav
+    class="navbar p-0 m-0 navbar-expand-lg navbar-light bg-dark-blue mw-100 row"
+  >
     <div class="container-fluid">
       <a class="navbar-brand h2 text-white px-4" routerLink="/home">Logo</a>
       <button
@@ -16,19 +18,9 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse row" id="navbarMobile">
-        <h5 class="col-12 m-0">Chinese Anti-Rightist Archives</h5>
-        <ul class="nav nav-underline nav-fill me-auto mb-2 col-auto">
-          <li class="nav-item" *ngFor="let item of navbars">
-            <a
-              class="nav-link text-white rounded-top"
-              routerLinkActive="active"
-              [routerLink]="item.url"
-              >{{ item.title }}</a
-            >
-          </li>
-        </ul>
-        <div class="col-auto">
-          <div class="mx-5">
+        <div class="col-12 my-1 d-flex flex-row">
+          <h5 class="m-0 py-0">Chinese Anti-Rightist Archives</h5>
+          <div class="ms-auto">
             <div class="input-group input-group-sm">
               <input
                 type="search"
@@ -38,7 +30,7 @@
                 aria-describedby="searh_btn"
               />
               <button
-                class="btn border border-start-0 bg-white rounded-start rounded-pill "
+                class="btn border border-start-0 bg-white rounded-start rounded-pill"
                 type="button"
                 id="searh_btn"
               >
@@ -46,18 +38,52 @@
               </button>
             </div>
           </div>
-          <div class="d-flex flex-row">
-            <div class="mx-2 mt-2">
+        </div>
+        <ul class="nav nav-underline nav-fill me-auto my-0 py-0 col-auto">
+          <li
+            class="nav-item"
+            *ngFor="let item of navbars"
+            [ngClass]="{ dropdown: item.dropdown }"
+          >
+            <a
+              *ngIf="!item?.dropdown"
+              class="nav-link text-white rounded-top"
+              routerLinkActive="active"
+              [routerLink]="item.url"
+              >{{ item.title }}</a
+            >
+            <a
+              *ngIf="item?.dropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              class="nav-link text-white rounded-top dropdown-toggle"
+              [id]="item.icon"
+              routerLinkActive="active"
+              >{{ item.title }}</a
+            >
+            <ul class="dropdown-menu" aria-labelledby="item.icon">
+              <li *ngFor="let drop of item.dropdown">
+                <a class="dropdown-item" [routerLink]="drop.url">{{
+                  drop.title
+                }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="col-auto my-0">
+          <div class="d-flex flex-row m-2">
+            <div class="mx-4 mt-2">
               <img
                 src="assets/homepage/united-states.png"
                 alt="globe"
                 width="30"
               />
-              ENGLISH
+              English
             </div>
-            <div class="mx-2 mt-2">
+            <div class="mx-4 mt-2">
               <img src="assets/homepage/china.png" alt="globe" width="30" />
-              CHINESE
+              Chinese
             </div>
             <div class="mx-3" *ngIf="!isLoggedIn">
               <button
@@ -65,7 +91,6 @@
                 class="btn text-white"
                 (click)="loginLogin()"
               >
-                <!-- {{ isLoggedIn ? "Log out" : "Log in" }} -->
                 LOG IN / SIGN UP
               </button>
             </div>
@@ -74,7 +99,7 @@
                 class="nav-link text-white rounded-top"
                 routerLinkActive="active"
                 routerLink="/account"
-                >ACCOUNT</a
+                >Account</a
               >
             </div>
           </div>
