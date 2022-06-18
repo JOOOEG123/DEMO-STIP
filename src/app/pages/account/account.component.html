@@ -1,5 +1,5 @@
 <app-logout #logoutModal></app-logout>
-<div class="container-fluid">
+<div class="container-fluidp-0">
   <div
     class="bg-medium-blue p-5 rounded-bottom-right"
     style="border-bottom: 5px solid #cea374"
@@ -32,23 +32,31 @@
         </div>
         <div class="col d-flex flex-column">
           <div class="my-2 ms-auto">
-            <button type="button" class="btn rounded-pill btn-khali">
+            <button type="button" class="rounded-pill btn-khali">
               Edit Account
             </button>
           </div>
           <div class="my-2 ms-auto">
-            <button type="button" class="btn rounded-pill my-2 btn-khali">
+            <button type="button" class="rounded-pill my-2 btn-khali">
               Upload
             </button>
           </div>
           <div class="my-2 ms-auto">
             <button
               type="button"
-              class="btn rounded-pill btn-khali"
+              class="rounded-pill btn-khali"
               (click)="logoutModal?.openModal()"
             >
               Log out
             </button>
+          </div>
+          <div class="my-2 ms-auto" *ngIf="isAdmin">
+            <a
+              class="rounded-pill my-2 btn-orange-red"
+              routerLink="/admin/approval"
+            >
+              View Public Contributions
+            </a>
           </div>
         </div>
       </div>
@@ -57,10 +65,9 @@
 
   <div class="text-center text-dark display-6">Your Contributions</div>
   <div
-    class="rounded-start rounded-pill border-start-0 my-2"
-    style="border: 2px solid #cea374"
+    class="rounded-start rounded-pill border-start-0 my-2 border border-khaki"
   >
-    <div class="row">
+    <div class="row m-0">
       <div class="col-12 col-md-2">
         <img
           src="/assets/homepage/default-profile.png"

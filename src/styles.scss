@@ -1,5 +1,8 @@
+
+@import '~bootstrap/scss/bootstrap';
 /* You can add global styles to this file, and also import other style files */
 $khaki: #cea374;
+$khaki-dark: #a76724;
 $medium-blue: #0c1e3c;
 $dark-blue: #0c1330;
 $black: #000000;
@@ -23,10 +26,32 @@ body {
     background-repeat: no-repeat;
 }
 
+// border color
 .border-khaki {
     border-color: $khaki;
     border: 2px solid $khaki;
 }
+
+.border-orange-red {
+    border-color: $orange-red;
+    border: 2px solid $orange-red;
+}
+
+// btn color 
+.btn-khali {
+    @extend .btn;
+    border: 2px solid $khaki;
+    background-color: white;
+    color: $khaki-dark;
+}
+
+.btn-orange-red {
+    @extend .btn;
+    border: 2px solid $orange-red;
+    background-color: white;
+    color: $orange-red;
+}
+
 // rounded border
 .rounded-bottom {
     &-left {
@@ -58,6 +83,7 @@ body {
     border-bottom: 1px dashed white;
     padding-bottom: 5px;
 }
+
 // center div in container
 .center-div {
     display: grid;
@@ -102,8 +128,10 @@ body {
 }
 
 // date design 
-.form-control, .form-control-sm {
+.form-control,
+.form-control-sm {
     transition: none !important;
+
     &[bsdatepiker],
     &[bsDaterangepicker] {
         background-image: url("/assets/filters/date.svg");
