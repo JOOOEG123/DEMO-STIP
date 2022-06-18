@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { allLayoutComponents } from './layout';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,7 +8,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxBootstrapModule } from './module/ngx-bootrap.module';
 import { NgxMasonryModule } from 'ngx-masonry';
+
+// Index Components
+import { allLayoutComponents } from './layout';
 import { pagesComponents } from './pages';
+import { sharedComponents } from './share';
 
 // Firebase Modules
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
@@ -23,15 +26,12 @@ import { AuthServiceService } from './core/services/auth-service.service';
 
 import { environment } from 'src/environments/environment';
 
-// shared components
-import { SearchFilterComponent } from './share/search-filter/search-filter.component';
-
 @NgModule({
   declarations: [
     AppComponent,
     ...allLayoutComponents,
     ...pagesComponents,
-    SearchFilterComponent,
+    ...sharedComponents,
   ],
   imports: [
     AngularFireAuthModule,

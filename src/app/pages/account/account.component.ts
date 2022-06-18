@@ -1,6 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-account',
@@ -8,19 +6,7 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
   styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
-  modalRef?: BsModalRef;
-  constructor(
-    private auth: AuthServiceService,
-    private modalService: BsModalService
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {}
-  logout() {
-    this.auth.signOut().then(() => {
-      this.modalRef?.hide();
-    });
-  }
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
-  }
 }
