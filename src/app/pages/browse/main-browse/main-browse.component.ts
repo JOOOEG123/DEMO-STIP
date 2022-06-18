@@ -57,7 +57,6 @@ export class MainBrowseComponent implements OnInit {
 
 
     ngOnInit(): void {
-      console.log("in ngoninit")
       this.lettersBtnClick("All")
 
       
@@ -71,14 +70,11 @@ export class MainBrowseComponent implements OnInit {
       var search_layout = document.getElementsByName("searchLayout");
       
       this.curView = select_option
-      console.log(this.itemsPerPage)
   
   
     }
   
     itemPerPageChanged() {
-
-      console.log("in itemPerPageChanged")
 
       //casting 
       this.itemsPerPage = +this.itemsPerPage
