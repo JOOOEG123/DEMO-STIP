@@ -9,7 +9,10 @@ import { pagesComponents } from './pages';
 import { LoginComponent } from './pages/login/login.component';
 import { AboutComponent } from './pages/about/AboutMovement/about.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
-import { BrowseComponent} from './pages/browse/browse.component';
+import { MainBrowseComponent } from './pages/browse/main-browse/main-browse.component';
+import { BrowseArchiveComponent } from './pages/browse/browse-archive/browse-archive.component';
+import { BrowseSearchFilterComponent } from './pages/browse/browse-search-filter/browse-search-filter.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMasonryModule } from 'ngx-masonry';
 
@@ -34,7 +37,10 @@ import { AboutTeamComponent } from './pages/about/AboutTeam/about-team/about-tea
 
 
 //Pipe: used to transfrom db data
-import { UpdateRowsPipe } from './pages/browse/browse.component';
+import { UpdateRowsPipe } from './pipe/update-rows-pipe.pipe';
+
+
+
 
 
 @NgModule({
@@ -45,13 +51,15 @@ import { UpdateRowsPipe } from './pages/browse/browse.component';
     LoginComponent,
     AboutComponent,
     GalleryComponent,
-    BrowseComponent,
     AccountComponent,
     SearchFilterComponent,
     AboutResearchComponent,
     ResourcesComponent,
     AboutTeamComponent,
-    UpdateRowsPipe
+    UpdateRowsPipe,
+    BrowseSearchFilterComponent,
+    BrowseArchiveComponent,
+    MainBrowseComponent,
   ],
   imports: [
     AngularFireAuthModule,

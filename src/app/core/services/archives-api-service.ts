@@ -19,7 +19,7 @@ export class ArchieveApiService {
     private http: HttpClient
   ) {}
 
-  getArchieveByAlphabet(alphabet: string) {
+  async getArchieveByAlphabet(alphabet: string) {
     return this.db.list(`/persons/publics/${alphabet}`).valueChanges();
   }
 

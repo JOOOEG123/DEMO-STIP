@@ -4,7 +4,7 @@ import { AuthGuard } from './core/services/auth-guard.service';
 import { LayoutComponent } from './layout/layout.component';
 import { AboutComponent } from './pages/about/AboutMovement/about.component';
 import { AccountComponent } from './pages/account/account.component';
-import { BrowseComponent } from './pages/browse/browse.component';
+import { MainBrowseComponent } from './pages/browse/main-browse/main-browse.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -35,7 +35,7 @@ const routes: Routes = [
       },
       {
         path: 'browse',
-        component: BrowseComponent,
+        component: MainBrowseComponent,
       },
       {
         path: 'login',
