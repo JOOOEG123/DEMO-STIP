@@ -5,11 +5,11 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.scss']
+  styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent implements OnInit {
   constructor(private arch: ArchieveApiService, private router: Router) {}
-  searchTerm: string = ''
+  searchTerm: string = '';
 
   fakeProfile = [
     {
@@ -36,7 +36,7 @@ export class HomepageComponent implements OnInit {
   }
 
   searchArchives() {
-    console.log(this.searchTerm)
+    console.log(this.searchTerm);
     // this.router.navigate(["search/" + this.searchTerm]);
   }
 }

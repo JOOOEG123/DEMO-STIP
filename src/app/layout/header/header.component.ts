@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
-import { LoginComponent } from 'src/app/pages/login/login.component';
+import { LoginComponent } from 'src/app/layout/login/login.component';
 import { NavBar } from '../layout.constants';
 import { NavBarLinks } from '../layout.types';
 
