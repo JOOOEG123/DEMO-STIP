@@ -1,0 +1,51 @@
+.check-icon {
+    font-size: 2rem;
+    color: green;
+}
+
+.pencil-icon {
+    font-size: 2rem;
+}
+
+.cross-icon {
+    font-size: 2rem;
+    color: red;
+}
+
+.arrow-icon {
+   font-size: 2rem;
+}
+
+.contribution-container {
+    border-radius: 0 5rem 5rem 0;
+}
+
+.category-button {
+    border-radius: 2rem;
+    border-color: #0c1330;
+    color: #0c1330;
+    font-size: 1rem;
+    font-weight: 10rem;
+}
+
+@keyframes contributionAnimation {
+    0%{
+        opacity: 1;
+        transform: rotateX(90deg);
+    }
+    50%{
+        opacity: 0.5;
+        transform: rotateX(0deg);
+    }
+    100%{
+        display: none;
+        opacity: 0;
+        transform: rotateX(90deg);
+    }
+}
+
+.contribution-animation {
+    animation-name: contributionAnimation;
+    animation-duration: 2000ms;
+    animation-fill-mode: forwards;
+}

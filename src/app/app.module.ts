@@ -3,19 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { allLayoutComponents } from './layout';
 import { NgxBootstrapModule } from './module/ngx-bootrap.module';
-import { pagesComponents } from './pages';
-import { LoginComponent } from './pages/login/login.component';
-import { AboutComponent } from './pages/about/AboutMovement/about.component';
-import { GalleryComponent } from './pages/gallery/gallery.component';
-import { MainBrowseComponent } from './pages/browse/main-browse/main-browse.component';
-import { BrowseArchiveComponent } from './pages/browse/browse-archive/browse-archive.component';
-import { BrowseSearchFilterComponent } from './pages/browse/browse-search-filter/browse-search-filter.component';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMasonryModule } from 'ngx-masonry';
 
+
+// Index Components
+import { allLayoutComponents } from './layout';
+import { pagesComponents } from './pages';
+import { sharedComponents } from './share';
 
 // Firebase Modules
 import { AngularFireModule } from '@angular/fire/compat';
@@ -48,18 +44,8 @@ import { UpdateRowsPipe } from './pipe/update-rows-pipe.pipe';
     AppComponent,
     ...allLayoutComponents,
     ...pagesComponents,
-    LoginComponent,
-    AboutComponent,
-    GalleryComponent,
-    AccountComponent,
-    SearchFilterComponent,
-    AboutResearchComponent,
-    ResourcesComponent,
-    AboutTeamComponent,
+    ...sharedComponents,
     UpdateRowsPipe,
-    BrowseSearchFilterComponent,
-    BrowseArchiveComponent,
-    MainBrowseComponent,
   ],
   imports: [
     AngularFireAuthModule,

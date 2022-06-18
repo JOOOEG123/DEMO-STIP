@@ -11,8 +11,8 @@
   </div> -->
   <div class="modal-body">
     <h3 class="modal-title text-center my-3">
-        {{ isSignIn === 'signup' ? "Create an account" : "Log In" }}
-      </h3>
+      {{ isSignIn === "signup" ? "Create an account" : "Log In" }}
+    </h3>
     <form [formGroup]="loginForm" (ngSubmit)="signUpwithEmail()">
       <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
         <input
@@ -80,7 +80,11 @@
       </button>
 
       <div class="d-grid gap-2 col-10 mx-auto">
-        <button class="btn btn-primary rounded-pill" [disabled]="loginForm.invalid" type="submit">
+        <button
+          class="btn btn-primary rounded-pill"
+          [disabled]="loginForm.invalid"
+          type="submit"
+        >
           Log in
         </button>
         <div class="linebtntext w-100">OR</div>
@@ -96,7 +100,7 @@
             class="img-fluid"
             width="25"
           />
-          {{ isSignIn === 'signup' ? "Sign Up " : "Log In " }}with Facebook
+          {{ isSignIn === "signup" ? "Sign Up " : "Log In " }}with Facebook
         </button>
         <button
           class="btn btn-light rounded-pill border"
@@ -109,21 +113,23 @@
             class="img-fluid"
             width="20"
           />
-          {{ isSignIn === 'signup' ? "Sign Up " : "Log In " }}with Google
+          {{ isSignIn === "signup" ? "Sign Up " : "Log In " }}with Google
         </button>
         <div class="">
-          {{ isSignIn === 'signin' ? "Don't have an account?" : "Already have an account?" }}
+          {{
+            isSignIn === "signin"
+              ? "Don't have an account?"
+              : "Already have an account?"
+          }}
           <button
             class="btn btn-link p-0"
             type="button"
             (click)="switchState()"
           >
-            {{ isSignIn === 'signup' ? "Log In" : "Sign Up" }}
+            {{ isSignIn === "signup" ? "Log In" : "Sign Up" }}
           </button>
         </div>
       </div>
     </form>
   </div>
 </ng-template>
-
-

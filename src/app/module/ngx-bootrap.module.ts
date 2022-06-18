@@ -1,12 +1,15 @@
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {
+  BsDatepickerConfig,
+  BsDatepickerModule,
+} from 'ngx-bootstrap/datepicker';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgModule } from '@angular/core';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination'
+import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [],
@@ -18,6 +21,7 @@ import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination'
     AlertModule.forRoot(),
     ModalModule.forRoot(),
     TypeaheadModule.forRoot(),
+    PaginationModule.forRoot(),
   ],
   exports: [
     BsDropdownModule,
@@ -26,9 +30,9 @@ import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination'
     ModalModule,
     BsDatepickerModule,
     TypeaheadModule,
-    PaginationModule
+    PaginationModule,
   ],
   providers: [BsDatepickerConfig, PaginationConfig],
-  bootstrap: []
+  bootstrap: [],
 })
-export class NgxBootstrapModule { }
+export class NgxBootstrapModule {}
