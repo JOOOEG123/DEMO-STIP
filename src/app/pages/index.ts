@@ -5,7 +5,8 @@ import { AboutTeamComponent } from './about/AboutTeam/about-team/about-team.comp
 import { ResourcesComponent } from './about/Resources/resources/resources.component';
 import { AccountComponent } from './account/account.component';
 import { ApprovalComponent } from './admin/approval/approval.component';
-import { BrowseComponent } from './browse/browse.component';
+import { MainBrowseComponent } from './browse/main-browse/main-browse.component';
+import { BrowseSearchFilterComponent } from './browse/browse-search-filter/browse-search-filter.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { HomepageComponent } from './homepage/homepage.component';
 
@@ -15,7 +16,8 @@ export const pagesComponents = [
   AboutTeamComponent,
   AccountComponent,
   ApprovalComponent,
-  BrowseComponent,
+  MainBrowseComponent,
+  BrowseSearchFilterComponent,
   GalleryComponent,
   HomepageComponent,
   ResourcesComponent,
@@ -44,7 +46,7 @@ export const pagesRoutes = [
   },
   {
     path: 'browse/archive',
-    component: BrowseComponent,
+    component: MainBrowseComponent,
   },
   {
     path: 'account',
