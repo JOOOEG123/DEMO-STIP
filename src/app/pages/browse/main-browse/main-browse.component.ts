@@ -1,5 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  Input,
+  OnDestroy,
+} from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { FilterTypes } from 'src/app/core/types/filters.type';
 import { LETTERS } from './main-browse.constant';
@@ -9,7 +16,7 @@ import { LETTERS } from './main-browse.constant';
   templateUrl: './main-browse.component.html',
   styleUrls: ['./main-browse.component.scss'],
 })
-export class MainBrowseComponent implements OnInit {
+export class MainBrowseComponent implements OnInit, OnDestroy {
   //search result panel variables
   currentLetter = 'All';
   currentPage = 1;
@@ -24,6 +31,9 @@ export class MainBrowseComponent implements OnInit {
 
   //variables for search functionalities
   db_result: any[] = [];
+  archCacheAPI: any = {};
+  archSubAPI: Subscription[] = [];
+  isloading!: boolean;
 
   constructor(
     private archApi: ArchieveApiService,
@@ -59,19 +69,46 @@ export class MainBrowseComponent implements OnInit {
   }
 
   lettersBtnClick(letter: string) {
-    this.spinnerService.show();
     this.currentPage = 1;
     this.currentLetter = letter;
-    const alpha = letter === 'All' ? '' : letter;
-    this.archApi.getArchievePersonByAlphabet(alpha).subscribe((datas: any) => {
-      this.db_result =
-        letter === 'All'
-          ? datas.map((alphabet: any) => [].concat(alphabet.persons)).flat()
-          : datas;
-      //reset current page
+    // const alpha = letter === 'All' ? '' : letter;
+    this.callAPI(letter);
+  }
+
+  callAPI(l: string) {
+    const alpha = l === 'All' ? '' : l;
+    const archKey = `person_arch_${l}`;
+    if (this.archCacheAPI[archKey]) {
+      this.db_result = this.archCacheAPI[archKey];
       this.setDisplayInfo(this.itemsPerPage);
-      this.spinnerService.hide();
-    });
+      console.log('from cache');
+    } else {
+      this.spinnerService.show();
+      this.isloading = true;
+      this.archSubAPI.push(
+        this.archApi
+          .getArchievePersonByAlphabet(alpha)
+          .subscribe((datas: any) => {
+            console.log(datas);
+            this.db_result =
+              l === 'All'
+                ? datas
+                    .map((alphabet: any) => [].concat(alphabet.persons))
+                    .flat()
+                : datas;
+            this.archCacheAPI[archKey] = this.db_result;
+            //reset current page
+            this.setDisplayInfo(this.itemsPerPage);
+            this.isloading = false;
+            this.spinnerService.hide();
+          })
+      );
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.archSubAPI.forEach((sub) => sub.unsubscribe());
+    this.archCacheAPI = {};
   }
 
   searchResultClick() {}
