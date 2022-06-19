@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'UpdateRowsPipe',
+  name: 'updateRows',
 
 })
 export class UpdateRowsPipe implements PipeTransform {
