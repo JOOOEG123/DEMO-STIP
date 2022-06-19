@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 //Pipe: used to transfrom db data
 import { UpdateRowsPipe } from './core/pipes/update-rows-pipe.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
