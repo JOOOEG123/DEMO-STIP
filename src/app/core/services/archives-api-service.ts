@@ -10,6 +10,7 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 })
 export class ArchieveApiService {
   user: any;
+  cache: any = {};
   constructor(
     private store: AngularFirestore,
     private auth: AngularFireAuth,
@@ -20,19 +21,39 @@ export class ArchieveApiService {
   ) {}
 
   async getArchieveByAlphabet(alphabet: string) {
-    return this.db.list(`/persons/publics/${alphabet}`).valueChanges();
+    const key = `archieveByAlphabet_${alphabet}`;
+    if (this.cache[key]) {
+      return this.cache[key];
+    }
+    return (this.cache[key] = this.db
+      .list(`/persons/publics/${alphabet}`)
+      .valueChanges());
   }
 
   getArchieveEventsByAlphabet(alphabet: string) {
+    const key = `archieveEventsByAlphabet_${alphabet}`;
+    if (this.cache[key]) {
+      return this.cache[key];
+    }
     return this.db.list(`/persons/publics/${alphabet}/events`).valueChanges();
   }
 
   getArchievePersonByAlphabet(alphabet: string) {
     const path = alphabet ? `${alphabet}/persons` : alphabet;
-    return this.db.list(`/persons/publics/${path}`).valueChanges();
+    const key = `archievePersonByAlphabet_${path}`;
+    if (this.cache[key]) {
+      return this.cache[key];
+    }
+    return (this.cache[key] = this.db
+      .list(`/persons/publics/${path}`)
+      .valueChanges());
   }
 
   getEventByAlphabetAndEventId(alphabet: string, id: string) {
+    const key = `archieveEventByAlphabetAndEventId_${alphabet}_${id}`;
+    if (this.cache[key]) {
+      return this.cache[key];
+    }
     return this.db
       .list(`/persons/publics/${alphabet}/events`, (ref) =>
         ref.orderByChild('event_id').equalTo(id)
@@ -41,6 +62,10 @@ export class ArchieveApiService {
   }
 
   getEventByAlphabetAndPersonId(alphabet: string, id: string) {
+    const key = `archieveEventByAlphabetAndPersonId_${alphabet}_${id}`;
+    if (this.cache[key]) {
+      return this.cache[key];
+    }
     return this.db
       .list(`/persons/publics/${alphabet}/events`, (ref) =>
         ref.orderByChild('person_id').equalTo(id)
@@ -49,6 +74,10 @@ export class ArchieveApiService {
   }
 
   getPersonByAlphabetAndPersonId(alphabet: string, id: string) {
+    const key = `archievePersonByAlphabetAndPersonId_${alphabet}_${id}`;
+    if (this.cache[key]) {
+      return this.cache[key];
+    }
     return this.db
       .list(`/persons/publics/${alphabet}/persons`, (ref) =>
         ref.orderByChild('person_id').equalTo(id)
