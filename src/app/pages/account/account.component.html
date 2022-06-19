@@ -1,3 +1,4 @@
+<app-logout #logoutModal></app-logout>
 <div class="container-fluid">
   <div
     class="bg-medium-blue p-5 rounded-bottom-right"
@@ -44,7 +45,7 @@
             <button
               type="button"
               class="btn rounded-pill btn-khali"
-              (click)="openModal(templateLogout)"
+              (click)="logoutModal?.openModal()"
             >
               Log out
             </button>
@@ -81,21 +82,6 @@
     </div>
   </div>
 </div>
-<ng-template #templateLogout>
-  <div class="modal-body text-center">
-    <p>Do you want to log out?</p>
-    <button
-      type="button"
-      class="btn btn-outline-dark px-3 me-3"
-      (click)="logout()"
-    >
-      Yes
-    </button>
-    <button type="button" class="btn btn-dark px-3" (click)="modalRef?.hide()">
-      No
-    </button>
-  </div>
-</ng-template>
 <br><br><br><hr>
 <div class="container-fluid">
   <div class="text-center">
