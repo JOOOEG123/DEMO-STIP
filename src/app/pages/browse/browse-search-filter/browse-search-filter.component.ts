@@ -1,33 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
+import { FilterTypes } from 'src/app/core/types/filters.type';
 
 interface Group {
   value: string;
   viewValue: string;
 }
-interface Occupation {
-  value: string;
-  viewValue: string;
-}
-
-interface Result {
-  name: string
-  occupation: string
-  description: string
-}
 
 @Component({
-  selector: 'app-browse',
-  templateUrl: './browse.component.html',
-  styleUrls: ['./browse.component.scss']
+  selector: 'app-browse-search-filter',
+  templateUrl: './browse-search-filter.component.html',
+  styleUrls: ['./browse-search-filter.component.scss']
 })
-export class BrowseComponent implements OnInit {
-  drop = false;
+export class BrowseSearchFilterComponent implements OnInit {
 
-  results: Result[] = [
-    {name: "Surname" , occupation: "Job" , description: "Brif Intro"},
-    {name: "Surname" , occupation: "Job" , description: "Brif Intro"}
-  ]
   groups: Group[] = [
     {value: '1', viewValue: 'Han Chinese'},
     {value: '2', viewValue: 'Zhuang'},
@@ -89,50 +74,35 @@ export class BrowseComponent implements OnInit {
     {value: '58', viewValue: 'Naturalized Citizen'}
   ];
 
-  occupations : Occupation[] = [
-    {value: '1', viewValue: 'Testing1'},
-    {value: '2', viewValue: 'Testing2'}
-  ];
+  FILTERS: FilterTypes = {} as FilterTypes;
   
-  group: string
-  //date: string
-  gender: string
-  status: string
-  occupation: string
-  
-  date = new Date();
+  drop: boolean;
 
-  constructor(private archApi: ArchieveApiService) { 
-    this.group = "" 
-    this.gender = "Male"
-    this.status = ""
-    this.occupation = ""
+  constructor() { 
+    this.drop= false;
+    //filer variables
+    this.FILTERS["group"] = ""
+    this.FILTERS["gender"] = ""
+    this.FILTERS["status"] = ""
+    this.FILTERS["occupation"] = ""
+    this.FILTERS["date"] = new Date();
 
   }
 
   ngOnInit(): void {
   }
-
   updateCollapse() {
     this.drop = !this.drop;
-
   }
+
 
   onGroupChange() {
     console.log("group clciked")
     var index =<HTMLInputElement>document.getElementById("groupSelect");
-    this.group = this.groups[parseInt(index.value) - 1]["viewValue"];
-    console.log(this.group)
+    this.FILTERS["group"] = this.groups[parseInt(index.value) - 1]["viewValue"];
+    console.log(this.FILTERS["group"])
   }
 
-  onYearChange() {
-    //var date =<HTMLInputElement>document.getElementById("datepicker");
-    console.log("year clicked")
-
-    this.date = new Date((<HTMLInputElement>document.getElementById("datepicker")).value);
-    console.log(this.date);
-    console.log(this.date.toLocaleDateString("en-US"))
-  }
 
   onGenderChange() {
 
@@ -140,11 +110,11 @@ export class BrowseComponent implements OnInit {
     
     for (var i = 0, length = gender.length; i < length; i++) {
       if ((<HTMLInputElement>gender[i]).checked) {
-        this.gender = (<HTMLInputElement>gender[i]).value;
+        this.FILTERS["gender"] = (<HTMLInputElement>gender[i]).value;
         break;
       }
     }
-    console.log(this.gender);
+    console.log(this.FILTERS["gender"]);
     console.log("gender clicked");
     
   }
@@ -154,79 +124,34 @@ export class BrowseComponent implements OnInit {
     
     for (var i = 0, length = status.length; i < length; i++) {
       if ((<HTMLInputElement>status[i]).checked) {
-        this.status = (<HTMLInputElement>status[i]).value;
+        this.FILTERS["status"] = (<HTMLInputElement>status[i]).value;
         break;
       }
     }
 
     console.log("status clicked");
   }
-  onOccupationChange() {
-    this.occupation= (<HTMLInputElement>document.getElementById("inputOccupation")).value;
 
+  onOccupationChange() {
+    this.FILTERS["occupation"]= (<HTMLInputElement>document.getElementById("inputOccupation")).value;
     console.log("occupation clicked")
   }
 
   //do later: add database code 
   submitClick() {
-    this.onGroupChange()
-    this.onOccupationChange()
-    this.onStatusChange()
-    this.date
+    // this.onGroupChange()
+    // this.onOccupationChange()
+    // this.onStatusChange()
+    // this.date
   }
 
+  //implement later
   clearClick() {
-    this.group = ""
-    this.date = new Date()
-    this.gender = ""
-    this.status = ""
-    this.occupation = ""
-  }
-
-  onPerPageChange() {
-    console.log("onPerPageChange clicked")
-    var select_option = (<HTMLInputElement>document.getElementById("pageSelect")).value;
-    var search_layout = document.getElementsByName("searchLayout");
-
-    for (let i = 0; i < this.results.length; i++) {
-      if (select_option =="50" && i == 50 ){
-        break;
-
-      }
-      else if (i == 15){
-
-      }
-      else {
-
-      }
-      //search_layout[i].setAttribute("class", "d-flex p-4 my-1 bg-primary rounded-start rounded-pill")
-    }
-  
-  }
-
-  onViewChange() {
-    console.log("onViewChange clicked")
-    var select_option = (<HTMLInputElement>document.getElementById("viewSelect")).value;
-    var search_layout = document.getElementsByName("searchLayout");
-    
-    //console.log(select_option)
-    //console.log(search_layout)
-    for (let i = 0; i < search_layout.length; i++) {
-      if (select_option == "List"){
-        search_layout[i].setAttribute("class", "d-flex p-4 my-1 bg-primary rounded-start rounded-pill")
-      }
-      else {
-        //search_layout[i].style.width = "50%";
-        search_layout[i].setAttribute("class", "d-flex p-4 my-1 bg-dark")
-      
-      }
-    }
-
-
-  }
-
-  searchResultClick() {
-    
+    this.FILTERS["group"] = ""
+    this.FILTERS["gender"] = ""
+    this.FILTERS["status"] = ""
+    this.FILTERS["occupation"] = ""
+    this.FILTERS["date"] = new Date();
   }
 
 }

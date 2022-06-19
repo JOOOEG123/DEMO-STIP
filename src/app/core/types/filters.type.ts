@@ -3,5 +3,5 @@ export type FilterTypes = {
   occupation: string;
   group: string;
   status: string;
-  year: string;
+  date: Date;
 };

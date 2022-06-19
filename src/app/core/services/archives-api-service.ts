@@ -19,7 +19,7 @@ export class ArchieveApiService {
     private http: HttpClient
   ) {}
 
-  getArchieveByAlphabet(alphabet: string) {
+  async getArchieveByAlphabet(alphabet: string) {
     return this.db.list(`/persons/publics/${alphabet}`).valueChanges();
   }
 
@@ -28,7 +28,8 @@ export class ArchieveApiService {
   }
 
   getArchievePersonByAlphabet(alphabet: string) {
-    return this.db.list(`/persons/publics/${alphabet}/persons`).valueChanges();
+    const path = alphabet ? `${alphabet}/persons` : alphabet;
+    return this.db.list(`/persons/publics/${path}`).valueChanges();
   }
 
   getEventByAlphabetAndEventId(alphabet: string, id: string) {
@@ -91,4 +92,14 @@ export class ArchieveApiService {
       .object(`/persons/publics/${alphabet}/persons/${data.person_id}`)
       .update(data);
   }
+
+  getPersonsByLetter(letter: string, limit: number) {
+    return this.db
+      .list(`/persons/publics/${letter}/persons`, (ref) =>
+        ref.limitToFirst(limit)
+      )
+      .valueChanges();
+  }
+
+  //   getPersonEventsByLetter(letter: string)
 }

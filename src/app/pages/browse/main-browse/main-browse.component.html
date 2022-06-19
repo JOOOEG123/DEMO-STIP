@@ -1,0 +1,127 @@
+<div class="p-3 mb-2 bg-info bg-opacity-25 container-fluid">
+    <!-- search bar -->
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search for ... " [(ngModel)]="keyword"
+            (search)="filterByKeyword()" aria-label="Search for ... " aria-describedby="button-addon2" />
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="filterByKeyword()">
+            Button
+        </button>
+    </div>
+</div>
+
+
+<!-- <pre>{{ filterValues | json }}</pre>
+<app-search-filter [(filterValues)]="filterValues" (filterValuesChange)="filterValueschanges($event)"></app-search-filter> -->
+
+<app-browse-search-filter class="container-fluid"></app-browse-search-filter>
+
+<!-- search result -->
+<div class="container-fluid">
+    <div class="m-4">
+        <div class="d-flex">
+            <div class="col mt-3">
+                Search Results {{this.db_result.length}}
+            </div>
+
+            <div class="d-flex flex-row-reverse">
+                <div class="m-3">| Order by: A-Z</div>
+                <div class="p-2">
+                    <select class="form-select m-0" style="max-height:40px" id="viewSelect" aria-label="View select"
+                        (change)="onViewChange()" >
+                        <option selected>List</option>
+                        <option>Grid</option>
+                    </select>
+                </div>
+                <div class="my-3 ps-3">View</div>
+
+                <div class="p-2">
+                    <select class="form-select m-0" style="max-height:40px"
+                        aria-label="Result per page select" [(ngModel)] = "itemsPerPage" (change)="itemPerPageChanged()">
+                        <option selected value=50>50</option>
+                        <option value=100 >100</option>
+                        <option value=10 >10</option>
+                  
+
+                    </select>
+                </div>
+                <div class="mt-3">Result per page</div>
+            </div>
+
+        </div>
+
+        <div class="d-flex  border-bottom border-danger">
+            <div class="col text-primary">
+                {{this.currentLetter}}
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-link" *ngFor="let letter of letters"
+                    [ngClass]="currentLetter === letter ? 'btn-danger' : ''" (click)="lettersBtnClick(letter)">
+                    {{letter}}
+                </button>
+            </div>
+
+        </div>
+
+        <!-- display search results -->
+        
+        <div *ngIf="curView === 'List'; else elseBlock">
+            <div class="row p-4 my-1 bg-primary rounded-pill" name="searchLayout" *ngFor="let result of display">
+                <div class="pe-5">
+                    <img src="assets\browsepage\tempprofile.png" class="rounded-circle border" width="100vw"
+                        height="100vw">
+                </div>
+                <div class="flex-grow-1">
+                    <div>{{result.full_name}}</div>
+                    <div class="pb-3">{{result.workplace}}</div>
+                    <div>{{result.description}}</div>
+                </div>
+
+            </div>
+        </div>
+        <ng-template #elseBlock>
+            <div class="row" name="searchLayout" *ngFor="let results of display| UpdateRowsPipe:5">
+                <div class="p-4 my-1 bg-primary text-truncate" style="height: 20vw; width: 20%" *ngFor="let result of results">
+               
+
+                        <img src="assets\browsepage\tempprofile.png" class="rounded-circle border" width="50vw"
+                            height="50vw">
+
+                        <div >
+                            <div>{{result.full_name}}</div>
+                            <div class="pb-3">{{result.workplace}}</div>
+                            <div class="text-wrap">{{result.description}}</div>
+                        </div>
+
+                    
+                </div>
+            </div>
+        </ng-template>
+
+        <!-- search nav -->
+        
+        <div class="d-flex flex-row-reverse">
+
+            <nav aria-label="Page navigation">
+                <pagination 
+                    [rotate]=true
+                    [totalItems]="db_result.length" 
+                    [boundaryLinks]="true" 
+                    [itemsPerPage]="itemsPerPage" 
+                    [(ngModel)]="currentPage" 
+                    (pageChanged)="pageChanged($event)" 
+                    previousText="&lsaquo;" 
+                    nextText="&rsaquo;" 
+                    firstText="&laquo;" 
+                    lastText="&raquo;"
+                    [maxSize] = "10" >
+                    
+                </pagination>
+            </nav>
+
+            <div class="p-2 bd-highlight">page {{this.currentPage}} of {{this.maxPage}}</div>
+        </div>
+
+    </div>
+</div>
+
