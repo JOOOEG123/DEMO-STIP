@@ -7,24 +7,11 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-
-interface Contribution {
-  id: string;
-  imgSrc: string;
-  surname: string;
-  occupation: string;
-  ethnicGroup: string;
-  gender: string;
-  content: string;
-  date: Date;
-  state: string;
-}
-
-type Categories =
-  | 'New Contributions'
-  | 'Approved Contributions'
-  | 'Rejected Contributions';
-type CategoryList = Record<Categories, Contribution[]>;
+import {
+  Categories,
+  CategoryList,
+  Contribution,
+} from 'src/app/core/types/adminpage.types';
 
 @Component({
   selector: 'app-approval',
@@ -96,8 +83,8 @@ export class ApprovalComponent implements OnInit {
   rejectedContributions: Contribution[] = [];
   selectedContributions: Contribution[] = [];
 
-  activeCategory?: Categories;
-  selectedContribution?: Contribution;
+  activeCategory!: Categories;
+  selectedContribution!: Contribution;
 
   categoriesList: Categories[] = [
     'New Contributions',
