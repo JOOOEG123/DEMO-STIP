@@ -37,12 +37,6 @@ body {
     border: 2px solid $orange-red;
 }
 
-.btn-underline-orange-red {
-    @extend .btn;
-    color: $orange-red;
-    border-bottom: 2px solid $orange-red;
-}
-
 // btn color 
 .btn-khali {
     @extend .btn;

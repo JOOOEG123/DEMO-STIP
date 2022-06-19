@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { NgxBootstrapModule } from './module/ngx-bootrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMasonryModule } from 'ngx-masonry';
-import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 // Index Components
 import { allLayoutComponents } from './layout';
@@ -21,13 +21,23 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
+
 import { environment } from 'src/environments/environment';
 import { AuthServiceService } from './core/services/auth-service.service';
+import { AccountComponent } from './pages/account/account.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SearchFilterComponent } from './share/search-filter/search-filter.component';
+import { AboutResearchComponent } from './pages/about/AboutResearch/about-research/about-research.component';
+import { ResourcesComponent } from './pages/about/Resources/resources/resources.component';
+import { AboutTeamComponent } from './pages/about/AboutTeam/about-team/about-team.component';
+
 
 //Pipe: used to transfrom db data
-import { UpdateRowsPipe } from './core/pipes/update-rows-pipe.pipe';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UpdateRowsPipe } from './pipe/update-rows-pipe.pipe';
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -45,17 +55,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireStorageModule,
     AngularFirestoreModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
+    BrowserModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     NgxBootstrapModule,
     HttpClientModule,
-    NgxMasonryModule,
-    NgxSpinnerModule
+    NgxMasonryModule
   ],
   providers: [AuthServiceService],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

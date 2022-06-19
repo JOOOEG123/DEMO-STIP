@@ -1,20 +1,21 @@
 <div class="container">
-  <h2 class="text-center my-4 fw-bold">Gallery</h2>
+  <h1 class="text-center my-4 fw-bold">Gallery</h1>
   <div class="d-flex justify-content-center flex-wrap">
     <div *ngFor="let gallery of galleries" class="p-2 mx-4">
-      <button
-        [ngClass]="{
-          'border-3 btn-underline-orange-red ': selectedCategory == gallery,
-          btn: selectedCategory != gallery
+      <div
+        [ngStyle]="{
+          cursor: 'pointer',
+          color: selectedCategory == gallery ? 'red' : 'black',
+          'border-bottom':
+            selectedCategory == gallery ? '3px solid red' : 'none'
         }"
-        class="fw-bold"
         (click)="setActive(gallery)"
       >
         <b>{{ gallery }}</b>
-      </button>
+      </div>
     </div>
   </div>
-  <hr class="divider border-orange-red" />
+  <hr class="divider" />
 </div>
 
 <div class="container my-4">
@@ -25,20 +26,21 @@
   >
     <div
       ngxMasonryItem
-      class="masonry-item my-2 responsive-columns"
+      class="masonry-item my-2"
       *ngFor="let image of display; let i = index"
+      [ngClass]="'responsive-columns'"
     >
       <div>
         <img
           [src]="image.src"
           width="100%"
-          class="hovered-img"
+          [ngClass]="'hovered-img'"
           (mouseleave)="onLeave()"
           (mouseover)="onEnter(i)"
           [ngStyle]="{ opacity: currentImageIndex == i ? '0.4' : '1' }"
         />
         <button
-          class="hovered-button"
+          [ngClass]="'hovered-button'"
           (mouseover)="onEnter(i)"
           [ngStyle]="{ opacity: currentImageIndex == i ? '1.0' : '0.0' }"
         >

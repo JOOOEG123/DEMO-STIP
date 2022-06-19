@@ -6,7 +6,7 @@ import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
-  template: `<router-outlet></router-outlet>`,
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   title = 'stip-demo';

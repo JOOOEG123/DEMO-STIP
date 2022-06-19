@@ -43,3 +43,9 @@
         transform: rotateX(90deg);
     }
 }
+
+.contribution-animation {
+    animation-name: contributionAnimation;
+    animation-duration: 2000ms;
+    animation-fill-mode: forwards;
+}
