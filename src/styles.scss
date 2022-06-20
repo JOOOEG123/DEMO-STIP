@@ -1,4 +1,7 @@
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap'; // Import Bootstrap
+@import './styles/animation.scss';
+
+
 /* You can add global styles to this file, and also import other style files */
 $khaki: #cea374;
 $khaki-dark: #a76724;
@@ -159,41 +162,4 @@ body {
 
     }
 
-}
-
-// animation movement
-@keyframes shake-left-right {
-    0% {
-        transform: translateX(0)
-    }
-
-    25% {
-        transform: translateX(5px);
-    }
-
-    50% {
-        transform: translateX(-5px);
-    }
-
-    100% {
-        transform: translateX(0px);
-    }
-}
-
-@keyframes shake-up-down {
-    0% {
-        transform: translateY(0)
-    }
-
-    25% {
-        transform: translateY(5px);
-    }
-
-    50% {
-        transform: translateY(-5px);
-    }
-
-    100% {
-        transform: translateX(0px);
-    }
 }
