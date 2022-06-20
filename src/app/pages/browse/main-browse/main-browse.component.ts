@@ -5,7 +5,6 @@ import { NgxMasonryOptions } from 'ngx-masonry';
 
 import { UpdateRowsPipe } from 'src/app/pipe/update-rows-pipe.pipe'
 
-import { adminRoutes, pagesRoutes } from '../../../pages';
 
 @Component({
   selector: 'app-main-browse',
