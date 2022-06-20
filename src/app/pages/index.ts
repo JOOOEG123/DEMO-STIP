@@ -4,9 +4,9 @@ import {
 } from '@angular/fire/compat/auth-guard';
 import { map, pipe } from 'rxjs';
 import { AboutComponent } from './about/AboutMovement/about.component';
-import { AboutResearchComponent } from './about/AboutResearch/about-research/about-research.component';
-import { AboutTeamComponent } from './about/AboutTeam/about-team/about-team.component';
-import { ResourcesComponent } from './about/Resources/resources/resources.component';
+import { AboutResearchComponent } from './about/AboutResearch/about-research.component';
+import { AboutTeamComponent } from './about/AboutTeam/about-team.component';
+import { ResourcesComponent } from './about/Resources/resources.component';
 import { AccountComponent } from './account/account.component';
 import { ApprovalComponent } from './admin/approval/approval.component';
 import { MainBrowseComponent } from './browse/main-browse/main-browse.component';
