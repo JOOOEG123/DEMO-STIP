@@ -1,4 +1,4 @@
 import { LogoutComponent } from './logout/logout.component';
-import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { StipSpinnerComponent } from './stip-spinner/stip-spinner.component';
 
-export const sharedComponents = [LogoutComponent, SearchFilterComponent];
+export const sharedComponents = [LogoutComponent, StipSpinnerComponent];
