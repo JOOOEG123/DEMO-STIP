@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchFilterComponent } from './search-filter.component';
+import { StipSpinnerComponent } from './stip-spinner.component';
 
-describe('SearchFilterComponent', () => {
-  let component: SearchFilterComponent;
-  let fixture: ComponentFixture<SearchFilterComponent>;
+describe('StipSpinnerComponent', () => {
+  let component: StipSpinnerComponent;
+  let fixture: ComponentFixture<StipSpinnerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchFilterComponent ]
+      declarations: [ StipSpinnerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchFilterComponent);
+    fixture = TestBed.createComponent(StipSpinnerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

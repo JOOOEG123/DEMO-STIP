@@ -1,21 +1,34 @@
-<div class="p-3 container-fluid" style="background-color: rgb(202,163,114)">
+<div class="bg-khaki bg-opacity-25 d-flex">
     <!-- search bar -->
-    <div class="input-group m-3">
-        <input type="text" class="form-control rounded-pill" placeholder="Search for ... " [(ngModel)]="keyword"
-            (search)="filterByKeyword()" aria-label="Search for ... " aria-describedby="button-addon2" />
-        <!-- <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="filterByKeyword()">
-            Button
-        </button> -->
+    <div class="input-group m-5">
+      <input
+        type="search"
+        class="form-control rounded-end rounded-pill"
+        placeholder="Search for ... "
+        [(ngModel)]="keyword"
+        (search)="filterByKeyword()"
+        aria-label="Search for ... "
+        aria-describedby="button-addon2"
+      />
+      <button
+        class="btn border border-start-0 bg-white rounded-start rounded-pill"
+        type="button"
+        (click)="searchResultClick()"
+      >
+        <img src="assets/global/search.svg" alt="" width="20" />
+      </button>
     </div>
-</div>
+  </div>
 
 <div class="row justify-content-center" style="background-color: rgb(12, 19, 48)">
     <div class="col-10 border" style="border-color:#caa372">
 
-        <!-- <pre>{{ filterValues | json }}</pre>
-    <app-search-filter [(filterValues)]="filterValues" (filterValuesChange)="filterValueschanges($event)"></app-search-filter> -->
-
-        <app-browse-search-filter class="container-fluid"></app-browse-search-filter>
+        <div class="my-4">
+            <app-browse-search-filter
+              [(filterValues)]="filterValues"
+              (filterValuesChange)="filterByFilterValues()"
+            ></app-browse-search-filter>
+          </div>
 
         <!-- search result -->
         <div class="container-fluid">
@@ -122,3 +135,5 @@
 
     </div>
 </div>
+
+

@@ -10,6 +10,7 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 })
 export class ArchieveApiService {
   user: any;
+  cache: any = {};
   constructor(
     private store: AngularFirestore,
     private auth: AngularFireAuth,
@@ -29,6 +30,7 @@ export class ArchieveApiService {
 
   getArchievePersonByAlphabet(alphabet: string) {
     const path = alphabet ? `${alphabet}/persons` : alphabet;
+
     return this.db.list(`/persons/publics/${path}`).valueChanges();
   }
 

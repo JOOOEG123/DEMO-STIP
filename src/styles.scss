@@ -1,5 +1,10 @@
+@import '~bootstrap/scss/bootstrap'; // Import Bootstrap
+@import './styles/animation.scss';
+
+
 /* You can add global styles to this file, and also import other style files */
 $khaki: #cea374;
+$khaki-dark: #a76724;
 $medium-blue: #0c1e3c;
 $dark-blue: #0c1330;
 $black: #000000;
@@ -23,10 +28,56 @@ body {
     background-repeat: no-repeat;
 }
 
+// border color
 .border-khaki {
     border-color: $khaki;
     border: 2px solid $khaki;
 }
+
+.border-orange-red {
+    border-color: $orange-red;
+    border: 2px solid $orange-red;
+}
+
+.btn-underline-orange-red {
+    @extend .btn;
+    color: $orange-red;
+    border-bottom: 2px solid $orange-red;
+}
+
+// btn color 
+.btn-khali {
+    @extend .btn;
+    border: 2px solid $khaki;
+    background-color: white;
+    color: $khaki-dark;
+
+    &:hover {
+        @extend .shadow-lg;
+        background-color: $khaki;
+        color: white;
+        animation: shake-left-right 0.8s;
+    }
+}
+
+.btn-orange-red {
+    @extend .btn;
+    border: 2px solid $orange-red;
+    background-color: white;
+    color: $orange-red;
+
+    &:hover {
+        @extend .shadow-lg;
+        background-color: $orange-red;
+        color: white;
+        animation: shake-left-right 0.8s;
+    }
+}
+
+.btn-secondary:hover {
+    animation: shake-left-right 0.8s;
+}
+
 // rounded border
 .rounded-bottom {
     &-left {
@@ -57,7 +108,9 @@ body {
 .nav-underline .nav-link:hover {
     border-bottom: 1px dashed white;
     padding-bottom: 5px;
+    animation: shake-up-down 0.8s;
 }
+
 // center div in container
 .center-div {
     display: grid;
@@ -102,8 +155,10 @@ body {
 }
 
 // date design 
-.form-control, .form-control-sm {
+.form-control,
+.form-control-sm {
     transition: none !important;
+
     &[bsdatepiker],
     &[bsDaterangepicker] {
         background-image: url("/assets/filters/date.svg");

@@ -11,8 +11,15 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AuthServiceService {
+  private _hasAdminRole = false;
+
   user: any;
   isLoggedIn = new Subject<boolean>();
+
+  isAdmin = new BehaviorSubject<boolean>(false);
+  get hasAdminRole() {
+    return this._hasAdminRole;
+  }
   constructor(
     private store: AngularFirestore,
     private auth: AngularFireAuth,
@@ -22,12 +29,11 @@ export class AuthServiceService {
   ) {
     this.auth.authState.subscribe((user) => {
       if (user) {
-        if (!user.emailVerified) {
-          this.sendEmailVerification();
-        }
         this.user = user;
         user.getIdTokenResult().then((token) => {
           console.log('token', token, this.user);
+          this._hasAdminRole = token.claims?.['admin'];
+          this.isAdmin.next(this.hasAdminRole || false);
           localStorage.setItem(
             'user',
             JSON.stringify({ user: this.user, token: token })
@@ -54,12 +60,15 @@ export class AuthServiceService {
       .signInWithEmailAndPassword(email, password)
       .then(async (user) => {
         this.saveUser(user.user as Profile | null);
+        this.sendEmailVerification();
       });
   }
 
   sendEmailVerification() {
     this.auth.currentUser.then((user) => {
-      user?.sendEmailVerification();
+      if (user && !user.emailVerified) {
+        user.sendEmailVerification();
+      }
     });
   }
 

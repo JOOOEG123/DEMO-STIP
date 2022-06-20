@@ -18,6 +18,9 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomepageComponent,
+        data: {
+          title: 'Chinese Anti-Rightist Archives',
+        },
       },
       ...pagesRoutes,
       ...adminRoutes,
