@@ -37,8 +37,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   constructor(
     private archApi: ArchieveApiService,
-    private changeDetection: ChangeDetectorRef,
-    private spinnerService: NgxSpinnerService
+    private changeDetection: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -83,7 +82,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       this.setDisplayInfo(this.itemsPerPage);
       console.log('from cache');
     } else {
-      this.spinnerService.show();
       this.isloading = true;
       this.archSubAPI.push(
         this.archApi
@@ -100,7 +98,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             //reset current page
             this.setDisplayInfo(this.itemsPerPage);
             this.isloading = false;
-            this.spinnerService.hide();
           })
       );
     }

@@ -85,11 +85,9 @@
     <!-- display search results -->
 
     <div *ngIf="curView === 'List'; else elseBlock">
-      <div class="position-relative" style="height: 10rem" *ngIf="isloading">
-        <ngx-spinner size="medium"  class="text-white" type="ball-scale-multiple" [fullScreen]="false" >
-            Fetching archives...
-        </ngx-spinner>
-    </div>
+      <app-stip-spinner
+        [isLoading]="isloading"
+        ></app-stip-spinner>
       <div
         class="row p-4 my-1 bg-primary rounded-pill"
         name="searchLayout"
