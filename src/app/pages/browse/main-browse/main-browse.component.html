@@ -20,31 +20,30 @@
         <!-- search result -->
         <div class="container-fluid">
             <div class="d-flex">
-                <div class="col mt-3 text-light">
+                <div class="me-auto p-2 text-light">
                     Search Results {{this.db_result.length}}
                 </div>
-                <div class="d-flex flex-row-reverse text-light">
-                    <div class="m-3">| Order by: A-Z</div>
-                    <form class="row">
-                        <fieldset class="" style="color: white;">
-                            <label for="fname">View</label>
-                            <select id="viewSelect" aria-label="View select" (change)="onViewChange()">
-                                <option selected>List</option>
-                                <option>Grid</option>
-                            </select>
-                        </fieldset>
                 
-                        <fieldset style="color: white;">
-                            <label for="fname">Result per page</label>
-                            <select aria-label="Result per page select"
-                                [(ngModel)]="itemsPerPage" (change)="itemPerPageChanged()">
-                                <option selected value=50>50</option>
-                                <option value=100>100</option>
-                            </select>
-                        </fieldset>
-
+                <form class="row mb-2 mx-2">
+                    <fieldset class="col-auto" style="color: white;">
+                        <label  >Result per page</label>
+                        <select class="mx-2" aria-label="Result per page select"
+                            [(ngModel)]="itemsPerPage" (change)="itemPerPageChanged()">
+                            <option selected value=50>50</option>
+                            <option value=100>100</option>
+                        </select>
+                    </fieldset>
+                    <fieldset class="col-auto" style="color: white;">
+                        <label >View</label>
+                        <select class="mx-2" id="viewSelect" aria-label="View select" (change)="onViewChange()">
+                            <option selected>List</option>
+                            <option>Grid</option>
+                        </select>
+                    </fieldset>
+            
                 </form>  
-                </div>
+                <div class="mb-1 text-light">|   Order by: A-Z</div>
+                
 
               
 
@@ -68,13 +67,13 @@
             <!-- display search results -->
 
             <div *ngIf="curView === 'List'; else elseBlock">
-                <div class="d-flex p-4 my-3" style="height:100px; border-radius: 28px; background-color: #dbdde2"
+                <div class="d-flex m-3 " style="height:150px; border-radius: 28px; background-color: #dbdde2"
                     name="searchLayout" *ngFor="let result of display">
-                    <div class="col-2 mb-5">
+                    <div class="m-4" >
                         <img src="assets\browsepage\tempprofile.png"
-                            class="rounded-circle border border-dark img-responsive center-block" width="70vw" height="70vw">
+                            class="rounded-circle border border-dark img-responsive center-block" width="100vw" height="100vw">
                     </div>
-                    <div class="flex-grow-1 d-inline-block;">
+                    <div class="flex-grow-1 m-3">
                         <div>{{result.full_name}}</div>
                         <div class="pb-3">{{result.workplace}}</div>
                         <div>{{result.description}}</div>
