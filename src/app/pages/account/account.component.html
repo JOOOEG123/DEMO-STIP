@@ -90,103 +90,151 @@
   </div>
 </div>
 
-<br><br><br><hr>
+<br /><br /><br />
+<hr />
 <!-- upload content -->
 
-<div class="container-fluid text-center" style="width:60%; padding-bottom:20px;">
+<div
+  class="container-fluid"
+  style="width: 80%; padding-bottom: 20px"
+>
+  <h3 class="text-center" style="padding-bottom: 80px">Upload Content</h3>
 
-  <h3 style="padding-bottom:80px;">Upload Content</h3>
-
-  <!-- enter name form -->
-  <div class="form-floating" style="padding-bottom:25px;">
-    <input type="text" class="form-control" placeholder="Firstname Surname">
-    <label for="floatingInput">Name Surname</label>
-  </div>
-
-  <!-- enter Occupation drop down -->
-  <div class="form-floating" style="padding-bottom:25px;">
-    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-      <option selected>Occupation</option>
-      <option value="1">Professor</option>
-      <option value="2">Student</option>
-      <option value="3">Landlord</option>
-    </select>
-    <label for="floatingSelect">Select Occupation</label>
-  </div>
-
-  <!-- enter ethnic group drop down -->
-  <div class="form-floating" style="padding-bottom:25px;">
-    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-      <option selected>Ethnicity</option>
-      <option value="1">Han</option>
-      <option value="2">Zhuang</option>
-      <option value="3">Hui</option>
-    </select>
-    <label for="floatingSelect">Select Chinese ethnic group</label>
-  </div>
-
-  <!-- radio buttons -->
-  <div>
-    Status:
-    <div class="form-check form-check-inline mx-5">
-      <input class="form-check-input" type="radio" name="statusRadios">
-      <label class="form-check-label" for="inlineCheckbox1">Alive</label>
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <!-- enter name form -->
+      <div class="form-floating" style="padding-bottom: 25px">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Firstname Surname"
+        />
+        <label for="floatingInput">Name Surname</label>
+      </div>
     </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="statusRadios">
-      <label class="form-check-label" for="inlineCheckbox1">Deceased</label>
-    </div>
-    <br>
 
-    Gender:
-    <div class="form-check form-check-inline mx-5">
-      <input class="form-check-input" type="radio" name="genderRadios">
-      <label class="form-check-label" for="inlineCheckbox1">Male</label>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <!-- enter Occupation drop down -->
+      <div class="form-floating" style="padding-bottom: 25px">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+        >
+          <option selected>Occupation</option>
+          <option value="1">Professor</option>
+          <option value="2">Student</option>
+          <option value="3">Landlord</option>
+        </select>
+        <label for="floatingSelect">Select Occupation</label>
+      </div>
     </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="genderRadios">
-      <label class="form-check-label" for="inlineCheckbox1">Female</label>
+
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <!-- enter ethnic group drop down -->
+      <div class="form-floating" style="padding-bottom: 25px">
+        <select
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+        >
+          <option selected>Ethnicity</option>
+          <option value="1">Han</option>
+          <option value="2">Zhuang</option>
+          <option value="3">Hui</option>
+        </select>
+        <label for="floatingSelect">Chinese ethnic group</label>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <!-- year -->
+      <div class="form-floating" style="padding-bottom: 25px">
+        <input type="text" class="form-control" placeholder="Year" />
+        <label for="floatingInput">Year Of Events</label>
+      </div>
     </div>
   </div>
+  <div class="row">
+    <!-- radio buttons -->
+    <div class="col-lg-5 col-md-8 col-sm-12">
+      Status:
+      <div class="form-check form-check-inline mx-5">
+        <input class="form-check-input" type="radio" name="statusRadios" />
+        <label class="form-check-label" for="inlineCheckbox1">Alive</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="statusRadios" />
+        <label class="form-check-label" for="inlineCheckbox1">Deceased</label>
+      </div>
+    </div>
 
-  <br>
+    <div class="col-lg-5 col-md-8 col-sm-12">
+      Gender:
+      <div class="form-check form-check-inline mx-5">
+        <input class="form-check-input" type="radio" name="genderRadios" />
+        <label class="form-check-label" for="inlineCheckbox1">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="genderRadios" />
+        <label class="form-check-label" for="inlineCheckbox1">Female</label>
+      </div>
+    </div>
 
-  <!-- year -->
-  <div class="form-floating" style="padding-bottom:25px;">
-    <input type="text" class="form-control" placeholder="Year">
-    <label for="floatingInput">Year Labeled Rightest</label>
   </div>
+  <br />
+
+  <br />
 
   <!-- Add content -->
-  <div class="form-floating" style="padding-bottom:25px;">
-    <textarea class="form-control" placeholder="Leave content here" style="height:200px;"></textarea>
+  <h4>Add Content</h4>
+  <div class="form-floating text-left" style="padding-bottom: 25px">
+    <textarea
+      class="form-control"
+      placeholder="Leave content here"
+      style="height: 200px"
+    ></textarea>
     <label for="floatingTextarea">Content Detail</label>
   </div>
-  <div style="padding-bottom:20px;">
+
+  <!-- upload a picture -->
+  <div style="padding-bottom: 20px">
     <h4>Upload a picture:</h4>
-    <input type="file" multiple="false" accept="image/*">
+    <input type="file" multiple="false" accept="image/*" />
+    Add to gallery?
+    <div class="form-check form-check-inline mx-5">
+      <input class="form-check-input" type="radio" name="addToGallery" />
+      <label class="form-check-label" for="inlineCheckbox1">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="addToGallery" />
+      <label class="form-check-label" for="inlineCheckbox1">No</label>
+    </div>
   </div>
 
   <!-- memoir detail -->
-  <div class="border border-dark border-1" style="padding:30px;">
+  <div class="border border-dark border-1" style="padding: 30px">
     <h4>Add Memoir</h4>
-    <div class="form-floating" style="padding-bottom:25px;">
+    <div class="form-floating" style="padding-bottom: 25px">
       <textarea class="form-control" placeholder="Leave title here"></textarea>
       <label for="floatingTextarea">Memoir Title</label>
     </div>
-    <div class="form-floating" style="padding-bottom:25px;">
-      <textarea class="form-control" placeholder="Leave memoir detail here" style="height:200px;"></textarea>
+    <div class="form-floating" style="padding-bottom: 25px">
+      <textarea
+        class="form-control"
+        placeholder="Leave memoir detail here"
+        style="height: 200px"
+      ></textarea>
       <label for="floatingTextarea">Memoir Detail</label>
     </div>
   </div>
 
-  <div style="padding-top:20px;">
+  <div style="padding-top: 20px">
     <button class="btn btn-dark">Add another memoir</button>
   </div>
   <div>
-    <div style="padding-top:50px;" >
-      <button class="btn btn-dark" style="width:200px;">Submit</button>
+    <div style="padding-top: 50px">
+      <button class="btn btn-dark" style="width: 200px">Submit</button>
+    </div>
   </div>
 </div>
-
-
