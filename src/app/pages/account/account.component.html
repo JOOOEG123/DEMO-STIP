@@ -91,77 +91,69 @@
 </div>
 
 <br><br><br><hr>
-<div class="container-fluid">
-  <div class="text-center">
-    <h2 class="text-center" style="padding-bottom:80px;">Upload Content</h2>
-    <p>Name Surname</p>
-    <input size=";">
-    <br><br>
-    <p>Occupation</p>
-    <select style="width:100px;">
-      <option value="volvo">Student</option>
-      <option value="volvo">Other</option>
-    </select>
-    <br><br>
-    <p>Chinese Ethnic Group</p>
-    <select>
-      <option value="volvo">Han</option>
-      <option value="volvo">Other</option>
-    </select>
-  </div>
-  <br><br>
-  <div class="text-center">
-    <p>Status: 
-      <input type="radio" name="status" value="huey">
-      <label for="huey">Alive</label>
-      <input type="radio" name="status" value="dewey">
-      <label for="dewey">Deceased</label>
-    </p>
-  </div>
-  <div class="text-center">
-    <p>Gender: 
-      <input type="radio" name="gender" value="huey">
-      <label for="huey">Male</label>
-      <input type="radio" name="gender" value="dewey">
-      <label for="dewey">Female</label>
-    </p>
-  </div>
-  <div class="text-center">
-    <h4>Add Content</h4>
-    <textarea name="content" rows="10" cols="30"></textarea>
-  </div>
-  <div class="text-center">
-    <h4>Add Memoir</h4>
-    <textarea name="content" rows="5" cols="30"></textarea>
-    
-  </div>
-  <div class="text-center">
-    <textarea name="content" rows="10" cols="30"></textarea>
-  </div>
-  <br>
-  <div class="text-center border" style="margin-left:25%; margin-right:25%;">
-    <br>
-    <p>
-      Upload a picture
-    </p>
-    <input type="file"
-    id="avatar" name="avatar"
-    accept="image/png, image/jpeg">
-    <p>
-      <br>
-      Include this image in gallery
-      <button>Yes</button>
-      <button>No</button>
-    </p>
+<!-- upload content -->
+
+<div class="container-fluid text-center" style="width:60%; padding-bottom:30px;">
+
+  <h3 style="padding-bottom:80px;">Upload Content</h3>
+
+  <!-- enter name form -->
+  <div class="form-floating" style="padding-bottom:25px;">
+    <input type="text" class="form-control" placeholder="Firstname Surname">
+    <label for="floatingInput">Name Surname</label>
   </div>
 
-  <br><br>
-  <div class="text-center">
-    <button>Add another memoir</button>
+  <!-- enter Occupation drop down -->
+  <div class="form-floating" style="padding-bottom:25px;">
+    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+      <option selected>Occupation</option>
+      <option value="1">Professor</option>
+      <option value="2">Student</option>
+      <option value="3">Landlord</option>
+    </select>
+    <label for="floatingSelect">Select Occupation</label>
+  </div>
+
+  <!-- enter ethnic group drop down -->
+  <div class="form-floating" style="padding-bottom:25px;">
+    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+      <option selected>Ethnicity</option>
+      <option value="1">Han</option>
+      <option value="2">Zhuang</option>
+      <option value="3">Hui</option>
+    </select>
+    <label for="floatingSelect">Select Chinese ethnic group</label>
+  </div>
+
+  <!-- radio buttons -->
+  <div>
+    Status:
+    <div class="form-check form-check-inline mx-5">
+      <input class="form-check-input" type="radio" name="statusRadios">
+      <label class="form-check-label" for="inlineCheckbox1">Alive</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="statusRadios">
+      <label class="form-check-label" for="inlineCheckbox1">Deceased</label>
+    </div>
+    <br>
+    Gender:
+    <div class="form-check form-check-inline mx-5">
+      <input class="form-check-input" type="radio" name="genderRadios">
+      <label class="form-check-label" for="inlineCheckbox1">Male</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="genderRadios">
+      <label class="form-check-label" for="inlineCheckbox1">Female</label>
+    </div>
   </div>
   <br>
-  <div class="text-center">
-    <button>Clear</button>
-    <button>Submit</button>
+  <div class="container-fluid text-left" style="width:20%">
+    <input type="text"
+           placeholder="Year"
+           class="form-control"
+           bsDatepicker>
   </div>
 </div>
+
+
