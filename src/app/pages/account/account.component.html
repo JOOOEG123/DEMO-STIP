@@ -93,7 +93,7 @@
 <br><br><br><hr>
 <!-- upload content -->
 
-<div class="container-fluid text-center" style="width:60%; padding-bottom:30px;">
+<div class="container-fluid text-center" style="width:60%; padding-bottom:20px;">
 
   <h3 style="padding-bottom:80px;">Upload Content</h3>
 
@@ -137,6 +137,7 @@
       <label class="form-check-label" for="inlineCheckbox1">Deceased</label>
     </div>
     <br>
+
     Gender:
     <div class="form-check form-check-inline mx-5">
       <input class="form-check-input" type="radio" name="genderRadios">
@@ -147,12 +148,44 @@
       <label class="form-check-label" for="inlineCheckbox1">Female</label>
     </div>
   </div>
+
   <br>
-  <div class="container-fluid text-left" style="width:20%">
-    <input type="text"
-           placeholder="Year"
-           class="form-control"
-           bsDatepicker>
+
+  <!-- year -->
+  <div class="form-floating" style="padding-bottom:25px;">
+    <input type="text" class="form-control" placeholder="Year">
+    <label for="floatingInput">Year Labeled Rightest</label>
+  </div>
+
+  <!-- Add content -->
+  <div class="form-floating" style="padding-bottom:25px;">
+    <textarea class="form-control" placeholder="Leave content here" style="height:200px;"></textarea>
+    <label for="floatingTextarea">Content Detail</label>
+  </div>
+  <div style="padding-bottom:20px;">
+    <h4>Upload a picture:</h4>
+    <input type="file" multiple="false" accept="image/*">
+  </div>
+
+  <!-- memoir detail -->
+  <div class="border border-dark border-1" style="padding:30px;">
+    <h4>Add Memoir</h4>
+    <div class="form-floating" style="padding-bottom:25px;">
+      <textarea class="form-control" placeholder="Leave title here"></textarea>
+      <label for="floatingTextarea">Memoir Title</label>
+    </div>
+    <div class="form-floating" style="padding-bottom:25px;">
+      <textarea class="form-control" placeholder="Leave memoir detail here" style="height:200px;"></textarea>
+      <label for="floatingTextarea">Memoir Detail</label>
+    </div>
+  </div>
+
+  <div style="padding-top:20px;">
+    <button class="btn btn-dark">Add another memoir</button>
+  </div>
+  <div>
+    <div style="padding-top:50px;" >
+      <button class="btn btn-dark" style="width:200px;">Submit</button>
   </div>
 </div>
 
