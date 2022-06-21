@@ -9,6 +9,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { FilterTypes } from 'src/app/core/types/filters.type';
+
+import { UpdateRowsPipe } from 'src/app/core/pipes/update-rows-pipe.pipe'
+
 import { LETTERS } from './main-browse.constant';
 
 @Component({
@@ -44,6 +47,15 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.lettersBtnClick('All');
   }
 
+  onViewChange() {
+    console.log("onViewChange clicked")
+    var select_option = (<HTMLInputElement>document.getElementById("viewSelect")).value;
+    var search_layout = document.getElementsByName("searchLayout");
+    
+    this.curView = select_option
+
+
+  }
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
@@ -128,4 +140,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   filterValueschanges(filterValues: FilterTypes) {
     console.log(filterValues);
   }
+
+
+  showBrowseArchive() {
+
+  }
+  
 }

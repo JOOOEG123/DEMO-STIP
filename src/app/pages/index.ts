@@ -10,6 +10,7 @@ import { ResourcesComponent } from './about/Resources/resources.component';
 import { AccountComponent } from './account/account.component';
 import { ApprovalComponent } from './admin/approval/approval.component';
 import { MainBrowseComponent } from './browse/main-browse/main-browse.component';
+import { BrowseArchiveComponent } from './browse/browse-archive/browse-archive.component';
 import { BrowseSearchFilterComponent } from './browse/browse-search-filter/browse-search-filter.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -35,6 +36,7 @@ export const pagesComponents = [
   GalleryComponent,
   HomepageComponent,
   ResourcesComponent,
+  BrowseArchiveComponent,
 ];
 
 // Page routes

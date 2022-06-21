@@ -22,7 +22,7 @@
 
 <div class="row justify-content-center" style="background-color: rgb(12, 19, 48)">
     <div class="col-10 border" style="border-color:#caa372">
-
+        <h6 class="border-bottom fw-bold text-light my-3">Browse Archive</h6>
         <div class="my-4">
             <app-browse-search-filter
               [(filterValues)]="filterValues"
@@ -48,19 +48,17 @@
                     </fieldset>
                     <fieldset class="col-auto" style="color: white;">
                         <label >View</label>
-                        <select class="mx-2" id="viewSelect" aria-label="View select" (change)="onViewChange()">
+                        <select class="mx-2" id="viewSelect" aria-label="View select" [(ngModel)]="curView">
                             <option selected>List</option>
                             <option>Grid</option>
                         </select>
                     </fieldset>
             
                 </form>  
-                <div class="mb-1 text-light">|   Order by: A-Z</div>
-                
 
-              
-
+                <div class="mb-1 text-light">|&emsp;Order by: A-Z</div>           
             </div>
+
 
             <div class="d-flex  border-bottom justify-content-between">
                 <div class="p-2 rounded-circle bg-light fw-bolder mb-2">
@@ -74,42 +72,40 @@
                         {{letter}}
                     </button>
                 </div>
-
             </div>
 
             <!-- display search results -->
 
             <div *ngIf="curView === 'List'; else elseBlock">
-                <div class="d-flex m-3 " style="height:150px; border-radius: 28px; background-color: #dbdde2"
-                    name="searchLayout" *ngFor="let result of display">
-                    <div class="m-4" >
-                        <img src="assets\browsepage\tempprofile.png"
-                            class="rounded-circle border border-dark img-responsive center-block" width="100vw" height="100vw">
-                    </div>
-                    <div class="flex-grow-1 m-3">
-                        <div>{{result.full_name}}</div>
-                        <div class="pb-3">{{result.workplace}}</div>
-                        <div>{{result.description}}</div>
-                    </div>
-
-                </div>
-            </div>
-            <ng-template #elseBlock>
-                <div class="row " name="searchLayout" *ngFor="let results of display| UpdateRowsPipe:5">
-                    <div class="px-4 m-3 text-truncate"
-                        style="height: 15vw; width: 20vw; border-radius: 28px;background-color: #dbdde2"
-                        *ngFor="let result of results">
-
-                        <img src="assets\browsepage\tempprofile.png" class="rounded-circle border border-dark" width="50vw"
-                            height="50vw">
-
-                        <div>
+                <a routerLink="/browse-archive" routerLinkActive="active" ariaCurrentWhenActive="page">
+                    <div class="d-flex m-3 " style="height:150px; border-radius: 28px; background-color: #dbdde2" name="searchLayout"
+                        *ngFor="let result of display" (click)="showBrowseArchive()">
+                        <div class="m-4">
+                            <img src="assets\browsepage\tempprofile.png"
+                                class="rounded-circle border border-dark img-responsive center-block" width="100vw" height="100vw">
+                        </div>
+                        <div class="flex-grow-1 m-3">
                             <div>{{result.full_name}}</div>
                             <div class="pb-3">{{result.workplace}}</div>
-                            <div class="text-wrap">{{result.description}}</div>
+                            <div>{{result.description}}</div>
                         </div>
+                    </div>
+                </a>
+            </div>
+            <ng-template #elseBlock>
+                <div class="d-flex " name="searchLayout" *ngFor="let results of display| UpdateRowsPipe:5">
+                    <div class="m-3 d-flex flex-column align-items-center"
+                        style="flex: 1;height: 15vw; border-radius: 28px;background-color: #dbdde2"
+                        *ngFor="let result of results">
 
+                        <img src="assets\browsepage\tempprofile.png" class="my-3 rounded-circle border border-dark" width="40%"
+                            height="40%">
 
+                        <div>
+                            <div>Surname: {{result.full_name}}</div>
+                            <div class="pb-3 border-bottom border-dark">Occupation: {{result.workplace}}</div>
+                            <div >{{result.description}}</div>
+                        </div>
                     </div>
                 </div>
             </ng-template>
@@ -117,7 +113,6 @@
             <!-- search nav -->
 
             <div class="d-flex flex-row-reverse text-light">
-
                 <nav aria-label="Page navigation">
                     <pagination class="bg-light" [rotate]=true [totalItems]="db_result.length" [boundaryLinks]="true"
                         [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
@@ -129,10 +124,8 @@
 
                 <div class="p-2 bd-highlight">page {{this.currentPage}} of {{this.maxPage}}</div>
             </div>
-
-
+            
         </div>
-
     </div>
 </div>
 
