@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
+  UntypedFormBuilder,
   FormGroup,
   ValidationErrors,
   ValidatorFn,
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   isSignIn: 'signin' | 'signup' | 'forgetpassword' = 'signup';
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private authService: AuthServiceService,
     private modalService: BsModalService
   ) {}

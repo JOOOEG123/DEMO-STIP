@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FilterTypes } from 'src/app/core/types/filters.type';
 import { GROUPS } from './browse-search-filter.constant';
@@ -37,7 +37,7 @@ export class BrowseSearchFilterComponent implements OnInit {
     this.subForm();
   }
 
-  constructor(private formgroup: FormBuilder) {}
+  constructor(private formgroup: UntypedFormBuilder) {}
 
   ngOnDestroy(): void {
     this.formSub?.unsubscribe();
