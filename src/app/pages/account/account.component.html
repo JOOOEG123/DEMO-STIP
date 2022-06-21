@@ -94,10 +94,7 @@
 <hr />
 <!-- upload content -->
 
-<div
-  class="container-fluid"
-  style="width: 80%; padding-bottom: 20px"
->
+<div class="container-fluid" style="width: 80%; padding-bottom: 20px">
   <h3 class="text-center" style="padding-bottom: 80px">Upload Content</h3>
 
   <div class="row">
@@ -180,7 +177,6 @@
         <label class="form-check-label" for="inlineCheckbox1">Female</label>
       </div>
     </div>
-
   </div>
   <br />
 
@@ -198,23 +194,28 @@
   </div>
 
   <!-- upload a picture -->
-  <div style="padding-bottom: 20px">
-    <h4>Upload a picture:</h4>
-    <input type="file" multiple="false" accept="image/*" />
-    Add to gallery?
-    <div class="form-check form-check-inline mx-5">
-      <input class="form-check-input" type="radio" name="addToGallery" />
-      <label class="form-check-label" for="inlineCheckbox1">Yes</label>
+  <div class="row" style="padding-bottom:50px;">
+    <!-- radio buttons -->
+    <div class="col-lg-4 col-md-8 col-sm-12">
+      <h4>Upload a picture:</h4>
+      <input type="file" multiple="false" accept="image/*" />
     </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="addToGallery" />
-      <label class="form-check-label" for="inlineCheckbox1">No</label>
+    <div class="col-lg-4 col-md-8 col-sm-12">
+      Add to gallery?
+      <div class="form-check form-check-inline mx-5">
+        <input class="form-check-input" type="radio" name="addToGallery" />
+        <label class="form-check-label" for="inlineCheckbox1">Yes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="addToGallery" />
+        <label class="form-check-label" for="inlineCheckbox1">No</label>
+      </div>
     </div>
   </div>
 
   <!-- memoir detail -->
+  <h4>Add Memoir</h4>
   <div class="border border-dark border-1" style="padding: 30px">
-    <h4>Add Memoir</h4>
     <div class="form-floating" style="padding-bottom: 25px">
       <textarea class="form-control" placeholder="Leave title here"></textarea>
       <label for="floatingTextarea">Memoir Title</label>
