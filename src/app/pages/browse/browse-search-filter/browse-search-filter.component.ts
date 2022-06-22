@@ -47,7 +47,12 @@ export class BrowseSearchFilterComponent implements OnInit {
 
   subForm() {
     this.formSub = this.formValues.valueChanges.subscribe((value) => {
-      this.filterValues = value;
+      let date = undefined;
+      if ( value.year) {
+        date = new Date(value.year);
+
+      }
+      this.filterValues = {...value, date} as any;
       this.filterValuesChange.emit(value);
     });
   }
