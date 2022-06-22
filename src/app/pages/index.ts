@@ -77,12 +77,20 @@ export const pagesRoutes = [
     },
   },
   {
-    path: 'browse/archive',
+    path: 'browse/main',
     component: MainBrowseComponent,
     data: {
       title: 'Archive',
     },
   },
+  {
+    path: 'browse/archive',
+    component: BrowseArchiveComponent,
+    data: {
+      title: 'Browse Archive',
+    },
+  },
+
   {
     path: 'account',
     component: AccountComponent,

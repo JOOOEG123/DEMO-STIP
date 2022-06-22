@@ -33,7 +33,7 @@ export const NavBar = [
     dropdown: [
       {
         title: 'Archive',
-        url: '/browse/archive',
+        url: '/browse/main',
         icon: 'home',
       },
       {

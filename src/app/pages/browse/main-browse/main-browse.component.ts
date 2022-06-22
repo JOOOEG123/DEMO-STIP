@@ -47,15 +47,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.lettersBtnClick('All');
   }
 
-  onViewChange() {
-    console.log("onViewChange clicked")
-    var select_option = (<HTMLInputElement>document.getElementById("viewSelect")).value;
-    var search_layout = document.getElementsByName("searchLayout");
-    
-    this.curView = select_option
 
-
-  }
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
