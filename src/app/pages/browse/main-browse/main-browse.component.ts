@@ -19,7 +19,7 @@ import { LETTERS } from './main-browse.constant';
 })
 export class MainBrowseComponent implements OnInit, OnDestroy {
   //search result panel variables
-  currentLetter = 'All';
+  currentLetter = 'A';
   currentPage = 1;
   curView = 'List';
   display: any[] = [];
@@ -42,7 +42,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.lettersBtnClick('All');
+    this.lettersBtnClick('A');
   }
 
 
@@ -77,6 +77,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   callAPI(l: string) {
+    //reset display
+    this.display = []
+    
     const alpha = l === 'All' ? '' : l;
     const archKey = `person_arch_${l}`;
     if (this.archCacheAPI[archKey]) {
