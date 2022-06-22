@@ -88,7 +88,7 @@
             </div>
             <ng-template #elseBlock>
                 <app-stip-spinner [isLoading]="isloading"></app-stip-spinner>
-                <div class="d-flex " name="searchLayout" *ngFor="let results of display| UpdateRowsPipe:5">
+                <div class="d-flex " name="searchLayout" *ngFor="let results of display| UpdateRows:5">
 
                     <div class="card d-flex flex-column  m-3"
                         style="flex: 1;border-radius: 28px;background-color: #dbdde2"

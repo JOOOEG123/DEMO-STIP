@@ -10,8 +10,6 @@ import { Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { FilterTypes } from 'src/app/core/types/filters.type';
 
-import { UpdateRowsPipe } from 'src/app/core/pipes/update-rows-pipe.pipe'
-
 import { LETTERS } from './main-browse.constant';
 
 @Component({
