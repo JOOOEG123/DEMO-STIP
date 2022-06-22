@@ -26,24 +26,23 @@
                     Search Results {{this.db_result.length}}
                 </div>
 
-                <form class="row mb-2 mx-2">
-                    <fieldset class="col-auto" style="color: white;">
-                        <label>Result per page</label>
-                        <select class="mx-2" aria-label="Result per page select" [(ngModel)]="itemsPerPage"
+                <div class="row mb-2 mx-2">
+                    <div class="col-auto">
+                        <label for="per_page_result" class="text-white">Result per page</label>
+                        <select class="mx-2" aria-label="Result per page select" id="per_page_result" [(ngModel)]="itemsPerPage"
                             (change)="itemPerPageChanged()">
-                            <option selected value=50>50</option>
-                            <option value=100>100</option>
+                            <option selected value="50">50</option>
+                            <option value="100">100</option>
                         </select>
-                    </fieldset>
-                    <fieldset class="col-auto" style="color: white;">
-                        <label>View</label>
+                    </div>
+                    <div class="col-auto">
+                        <label for="viewSelect" class="text-white">View</label>
                         <select class="mx-2" id="viewSelect" aria-label="View select" [(ngModel)]="curView">
-                            <option selected>List</option>
-                            <option>Grid</option>
+                            <option value="List" selected>List</option>
+                            <option value="Grid">Grid</option>
                         </select>
-                    </fieldset>
-
-                </form>
+                    </div>
+                </div>
 
                 <div class="mb-1 text-light">|&emsp;Order by: A-Z</div>
             </div>
