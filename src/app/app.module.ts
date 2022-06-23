@@ -29,7 +29,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { UpdateRowsPipe } from './core/pipes/update-rows-pipe.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareComponent } from './pages/browse/share/share.component';
-import { MemoirComponent } from './memoir/memoir.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +38,6 @@ import { MemoirComponent } from './memoir/memoir.component';
     ...sharedComponents,
     UpdateRowsPipe,
     ShareComponent,
-    MemoirComponent,
   ],
   imports: [
     AngularFireAuthModule,
