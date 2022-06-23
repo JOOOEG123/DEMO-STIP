@@ -1,10 +1,18 @@
-  <div class="container-fluid">
-    <div class="container-fluid" style="padding-top:80px; padding-bottom:80px;">
-      <h2 class="text-center">Meet the team behind the research</h2>
+  
+  <div class="container-fluid" style="background-color:rgb(9,54,60);">
+    <div class="container-fluid" style="padding-top:80px; padding-bottom:30px;">
+      <h2 class="text-center text-white">Meet the team behind the research</h2>
+    </div>
+    <div class="text-center" style="padding-bottom:40px;">
+      <img
+            class="img-fluid"
+            src="/assets/aboutpage/small_flower.svg"
+            style="width: 50px; height: 50px"
+          />
     </div>
     <div class="container-fluid">
       <div class="row text-center" style="padding-left:25%; padding-right:25%">
-        <div class="col-lg-4 col-md-7 mb-4" *ngFor="let profile of fakeProfile">
+        <div class="col" *ngFor="let profile of fakeProfile" style="padding-bottom:30px;">
           <img
                   src="assets/homepage/{{ profile.profile }}"
                   class="rounded-circle"
@@ -15,9 +23,9 @@
     </div>
   </div>
 
-  <div class="container-fluid text-center" style="padding-top:80px; padding-bottom:80px;">
+  <div class="container-fluid text-center" style="padding-top:80px; padding-bottom:80px; background-color:rgb(9,54,60);">
     <!-- Button trigger contact us -->
-    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#contactUsModal" style="width:20%;">
+    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#contactUsModal" style="width:20%;">
       Contact Us
     </button>
   </div>
