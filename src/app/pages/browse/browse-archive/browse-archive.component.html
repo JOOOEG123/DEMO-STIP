@@ -46,7 +46,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Share file</h5>
+              <h5 class="modal-title" id="shareModalLabel">Share file</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -91,13 +91,15 @@
             >
           </li>
           <li class="list-group-item border-0">
-            <img
+            <button type="button" class="btn" (click)="goToMemoir()">
+              <img
               src="assets\browsepage\fileIcon.png"
               class="border border-white d-inline"
               width="20"
               height="20"
             />
-            <div class="d-inline ps-2">Memoir</div>
+            Memoir
+            </button>
           </li>
           <li class="list-group-item border-0">
             <img
