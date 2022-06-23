@@ -24,8 +24,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   curView = 'List';
   display: any[] = [];
   filterValues: FilterTypes = {} as FilterTypes;
+  test: string = "50"
   itemsPerPage = 50;
-  keyword = '';
+  searchInput = '';
   letters = LETTERS;
   maxPage = 1;
   olditemsPerPage = 50;
@@ -39,7 +40,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   constructor(
     private archApi: ArchieveApiService,
     private changeDetection: ChangeDetectorRef
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit(): void {
     this.lettersBtnClick('A');
@@ -51,6 +54,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.itemsPerPage = +this.itemsPerPage;
     this.setDisplayInfo(this.olditemsPerPage);
     this.olditemsPerPage = this.itemsPerPage;
+    
+    console.log("testing", this.itemsPerPage)
+    console.log(this.curView)
   }
 
   setDisplayInfo(startItemsPerPage: number) {
@@ -77,9 +83,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   callAPI(l: string) {
-    //reset display
+    //clear up display
     this.display = []
-    
+
     const alpha = l === 'All' ? '' : l;
     const archKey = `person_arch_${l}`;
     if (this.archCacheAPI[archKey]) {
@@ -113,30 +119,54 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.archCacheAPI = {};
   }
 
-  searchResultClick() {}
-
-  filterByFilterValues() {
-    console.log(this.filterValues);
+  searchBar() {
+    const tokens = this.searchInput.split(" ");
+    this.db_result = this.filterByKeyword(tokens);
+    this.db_result = this.db_result.concat(this.filterByFilterValues)
   }
 
-  //implement later
-  filterByKeyword() {
-    if (this.keyword) {
-      console.log(this.keyword);
-      this.db_result = this.db_result.filter((x) =>
-        x.full_name.includes(this.keyword)
-      );
-    } else {
+  filterByFilterValues(valueEmitted: any) {
+    console.log("in main parent ")
+    const tokens = [this.filterValues.date,
+      this.filterValues.gender,
+      this.filterValues.group,
+      this.filterValues.occupation,
+      this.filterValues.status,
+      "full_name"
+    ];
+    console.log(Object.keys(valueEmitted))
+    console.log(this.filter(Object.keys(valueEmitted)[0]),"---------------")
+    return this.filterByKeyword(tokens)
+
+
+  }
+
+
+  filter(keyword: any) {
+    // keyword = "full_name"
+    let seen = new Set<any>();
+    seen.add(this.db_result.filter((record) =>
+    record[keyword].includes("an")));
+
+    return seen
+  
+  }
+  filterByKeyword(tokens: any []) {
+    let seen = new Set<any>();
+    console.log(this.db_result)
+    for (var token of tokens) {
+      seen.add(this.db_result.filter((record) =>
+        record.full_name.includes(token)
+      ));
+      
     }
+    return Array.from(seen);
   }
+
 
   filterValueschanges(filterValues: FilterTypes) {
     console.log(filterValues);
   }
 
-
-  showBrowseArchive() {
-
-  }
   
 }

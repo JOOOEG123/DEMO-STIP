@@ -1,7 +1,7 @@
 export type FilterTypes = {
-  gender: string;
-  occupation: string;
-  group: string;
-  status: string;
-  date: Date;
+  gender: string | null | undefined;
+  occupation: string | null | undefined;
+  group: string | null | undefined;
+  status: string | null | undefined;
+  date: Date | undefined;
 };

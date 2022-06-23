@@ -2,10 +2,10 @@
     <!-- search bar -->
     <div class="input-group m-5">
         <input type="search" class="form-control rounded-end rounded-pill" placeholder="Search for ... "
-            [(ngModel)]="keyword" (search)="filterByKeyword()" aria-label="Search for ... "
+            [(ngModel)]="searchInput" (search)="searchBar()" aria-label="Search for ... "
             aria-describedby="button-addon2" />
         <button class="btn border border-start-0 bg-white rounded-start rounded-pill" type="button"
-            (click)="searchResultClick()">
+            (click)="searchBar()">
             <img src="assets/global/search.svg" alt="" width="20" />
         </button>
     </div>
@@ -15,7 +15,7 @@
     <div class="col-10 border" style="border-color:#caa372">
         <h6 class="border-bottom fw-bold text-light my-3">Browse Archive</h6>
         <div class="my-4">
-            <app-browse-search-filter [(filterValues)]="filterValues" (filterValuesChange)="filterByFilterValues()">
+            <app-browse-search-filter [(filterValues)]="filterValues" (filterValuesChange)="filterByFilterValues($event)">
             </app-browse-search-filter>
         </div>
 
@@ -49,12 +49,13 @@
 
 
             <div class="d-flex  border-bottom justify-content-between">
-                <div>
-                    <span class="p-2fw-bolder mb-2 position-relative" style="z-index: 2;">
+                <div class="position-relative" >
+
+                    <img src="assets\browsepage\tempprofile.png"
+                    class="rounded-circle border border-dark"  width="20">
+                    <span class="fw-bolder position-absolute movem" >
                         {{this.currentLetter}}
                     </span>
-                    <img src="assets\browsepage\tempprofile.png"
-                    class="rounded-circle border border-dark img-responsive center-block position-relative "  style="z-index:1 ; width:10% ;">
                 </div>
 
 
@@ -81,9 +82,9 @@
                                 height="100vw">
                         </div>
                         <div class="flex-grow-1 m-3">
-                            <div>{{result.full_name}}</div>
-                            <div class="pb-3">{{result.workplace}}</div>
-                            <div>{{result.description}}</div>
+                            <div class="text-start">{{result.full_name}}</div>
+                            <div class="pb-3 text-start">{{result.workplace}}</div>
+                            <div class="text-start">{{result.description}}</div>
                         </div>
                     </div>
                 </a>

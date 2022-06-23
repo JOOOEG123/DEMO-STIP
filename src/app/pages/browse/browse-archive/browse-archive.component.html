@@ -1,137 +1,64 @@
 <div class="bg-dark">
-  <div class="row">
     <div class="row">
-      <div class="position-relative" style="z-index: 3;">
-        <img
-          src="assets\browsepage\tempprofile.png"
-          class="rounded-circle border"
-        />
-      </div>
-      <div
-        class="d-flex align-items-center position-relative"
-        style="height: 25vh; z-index: 1 ;"
-      >
-        <div class="col-4 bg-light rounded-pill align-items-center">
-          <div class="">
-            <div>Name</div>
-            <div class="pb-3">Occupation</div>
-          </div>
-        </div>
-      </div>
 
-      
-    
-      <!-- share function -->
-      <button
-        type="button"
-        class="btn btn-light"
-        data-bs-toggle="modal"
-        data-bs-target="#shareModal"
-        style="border-radius: 50%; width:100px;"
+            <div class=" row ">
 
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
-          <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
-        </svg>
-      </button>
+                <div class="mt-5 row position-relative align-items-center container-fluid">
 
-      <!-- Share Overlay/Modal -->
-      <div
-        class="modal fade"
-        id="shareModal"
-        tabindex="-1"
-        aria-labelledby="shareModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="shareModalLabel">Share file</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <p>Copy Link</p>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-link-45deg" viewBox="0 0 16 16">
-                                <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
-                                <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
-                              </svg>
-                        </span>
-                        <input type="text" class="form-control" placeholder="URL" aria-label="URL" aria-describedby="basic-addon1">
-                        <button class="btn btn-outline-secondary" type="button">Copy</button>
+                    <img src="assets\browsepage\tempprofile.png" class="rounded-circle position-absolute mx-5"
+                        style="width:10% ;">
+                    <div class="col-9 bg-light rounded-pill align-items-center "
+                        style="height: 100%;">
+                        <div class="">
+                            <div>Name</div>
+                            <div class="pb-3">Occupation</div>
+                        </div>
+
                     </div>
-                    <button type="button" class="btn btn-dark">
-                        Print
-                    </button>
-                    <br>
-                    <div style="padding-bottom:10px;"></div>
-                    <button type="button" class="btn btn-dark">
-                        Download PDF
-                    </button>
                 </div>
+
+
+                <div class="col-3 d-inline-block">
+                    <a class="btn btn-primary " href="#" role="button">Link</a>
+                </div>
+
             </div>
-          </div>
-        </div>
-      </div>
+
+            <div class="row bg-light  my-3">
+                <div class="col-1 ">
+                    <ul class="list-group ">
+                        <li class="list-group-item border-0">
+                            <label class="border-bottom border-dark fw-bold"> Additional Files&emsp;</label>
+                        </li>
+                        <li class="list-group-item border-0">
+                            <img src="assets\browsepage\fileIcon.png" class="border border-white d-inline " width="20"
+                                height="20">
+                            <div class="d-inline ps-2">Memoir</div>
+                        </li>
+                        <li class="list-group-item border-0">
+                            <img src="assets\browsepage\fileIcon.png" class="border border-white d-inline" width="20"
+                                height="20">
+                            <div class="d-inline ps-2">Link Name</div>
+                        </li>
+                        <li class="list-group-item border-0">
+                            <img src="assets\browsepage\fileIcon.png" class="border border-white d-inline" width="20"
+                                height="20">
+                            <div class="d-inline ps-2">Link Name</div>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="vertical-line mx-4" style="height: 50vh;"></div>
+
+                <div class="card col-9 border border-warning" style="height:50vh ; width:50vw;">
+                    <div class="card-body">
+                        <p class="card-text ">Paragraph Text</p>
+                    </div>
+                </div>
+
+
+            </div>
+        
     </div>
 
-    <div class="row bg-light my-3">
-      <div class="col-1">
-        <ul class="list-group">
-          <li class="list-group-item border-0">
-            <label class="border-bottom border-dark fw-bold">
-              Additional Files&emsp;</label
-            >
-          </li>
-          <li class="list-group-item border-0">
-            <button type="button" class="btn">
-              <img
-              src="assets\browsepage\fileIcon.png"
-              class="border border-white d-inline"
-              width="20"
-              height="20"
-            />
-            Memoir
-            </button>
-          </li>
-          <li class="list-group-item border-0">
-            <img
-              src="assets\browsepage\fileIcon.png"
-              class="border border-white d-inline"
-              width="20"
-              height="20"
-            />
-            <div class="d-inline ps-2">Link Name</div>
-          </li>
-          <li class="list-group-item border-0">
-            <img
-              src="assets\browsepage\fileIcon.png"
-              class="border border-white d-inline"
-              width="20"
-              height="20"
-            />
-            <div class="d-inline ps-2">Link Name</div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="vertical-line mx-4" style="height: 50vh"></div>
-
-      <div
-        class="card col-9 border border-warning"
-        style="height: 50vh; width: 50vw"
-      >
-        <div class="card-body">
-          <p class="card-text">Paragraph Text</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>

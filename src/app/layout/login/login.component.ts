@@ -49,9 +49,12 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm.value);
-    this.authService.signInWithEmail(this.loginForm.value)?.then(() => {
-      this.modalRef?.hide();
-    });
+    const { email, password } = this.loginForm.value;
+    if (email && password && typeof email === 'string') {
+      this.authService.signInWithEmail({ email, password })?.then(() => {
+        this.modalRef?.hide();
+      });
+    }
   }
 
   switchState() {
@@ -77,16 +80,29 @@ export class LoginComponent implements OnInit {
   signInWithEmail() {}
 
   signUpwithEmail() {
-    if (this.isSignIn === 'signup') {
-      this.authService.signUpwithEmail(this.loginForm.value)?.then((x) => {
-        console.log('Sign up: ', x);
-        this.modalRef?.hide();
-      });
-    } else if (this.isSignIn === 'signin') {
-      this.authService.signInWithEmail(this.loginForm.value)?.then(() => {
-        this.modalRef?.hide();
-      });
+    if (this.loginForm?.value?.email && this.loginForm.value.password) {
+      if (this.isSignIn === 'signup') {
+        this.authService
+          .signUpwithEmail({
+            email: this.loginForm.value.email,
+            password: this.loginForm.value.password,
+          })
+          ?.then((x) => {
+            console.log('Sign up: ', x);
+            this.modalRef?.hide();
+          });
+      } else if (this.isSignIn === 'signin') {
+        this.authService
+          .signInWithEmail({
+            email: this.loginForm.value.email,
+            password: this.loginForm.value.password,
+          })
+          ?.then(() => {
+            this.modalRef?.hide();
+          });
+      }
     }
+
     // this.modalRef?.hide();
   }
   checkEmails(group: AbstractControl) {
