@@ -109,15 +109,14 @@
         <div class="col-12 col-md-3">
           <div class="form-group">
             <label for="date-of-birth" class="form-label col fw-bold"
-              >Date of Birth</label
+              >Year of Becoming A Rightest</label
             >
-            <input
-              type="text"
-              id="date-of-birth"
-              formControlName="year"
-              placeholder="MM/DD/YYYY-MM/DD/YYYY"
-              class="form-control form-control-sm"
-              bsDaterangepicker
+            <input type="text"
+                  id="year-of-becoming-rightest"
+                   placeholder="MM/DD/YYYY"
+                   class="form-control"
+                   formControlName="year"
+                   bsDatepicker
             />
           </div>
         </div>
@@ -130,9 +129,7 @@
             >
               Clear
             </button>
-            <button class="btn btn-outline-secondary" type="submit" (click) = "submit()">
-              Submit
-            </button>
+
           </div>
         </div>
       </form>

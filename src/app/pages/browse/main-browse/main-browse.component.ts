@@ -4,6 +4,7 @@ import {
   ChangeDetectorRef,
   Input,
   OnDestroy,
+  Attribute,
 } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
@@ -24,12 +25,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   curView = 'List';
   display: any[] = [];
   filterValues: FilterTypes = {} as FilterTypes;
-  test: string = "50"
-  itemsPerPage = 50;
+
+  itemsPerPage = 25;
   searchInput = '';
   letters = LETTERS;
   maxPage = 1;
-  olditemsPerPage = 50;
+  olditemsPerPage = 25;
 
   //variables for search functionalities
   db_result: any[] = [];
@@ -119,49 +120,97 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.archCacheAPI = {};
   }
 
-  searchBar() {
-    const tokens = this.searchInput.split(" ");
-    this.db_result = this.filterByKeyword(tokens);
-    this.db_result = this.db_result.concat(this.filterByFilterValues)
-  }
-
   filterByFilterValues(valueEmitted: any) {
-    console.log("in main parent ")
-    const tokens = [this.filterValues.date,
-      this.filterValues.gender,
-      this.filterValues.group,
-      this.filterValues.occupation,
-      this.filterValues.status,
-      "full_name"
-    ];
-    console.log(Object.keys(valueEmitted))
-    console.log(this.filter(Object.keys(valueEmitted)[0]),"---------------")
-    return this.filterByKeyword(tokens)
+    let seen = new Set<any>();
 
+    console.log("triggering")
 
+    this.getfilterData(seen)
+    this.db_result = Array.from(seen)
+    this.currentPage=1
+    this.setDisplayInfo(this.itemsPerPage);
   }
 
+  getfilterData(seen: Set<any>) {
+    console.log("get gender")
+    var genderValue = this.filterValues.gender;
+    var statusValue = this.filterValues.status;
+    var groupValue = this.filterValues.group;
+    var occupationValue = this.filterValues.occupation;
+    var dateValue = this.filterValues.date;
 
-  filter(keyword: any) {
-    // keyword = "full_name"
-    let seen = new Set<any>();
-    seen.add(this.db_result.filter((record) =>
-    record[keyword].includes("an")));
-
-    return seen
-  
-  }
-  filterByKeyword(tokens: any []) {
-    let seen = new Set<any>();
-    console.log(this.db_result)
-    for (var token of tokens) {
-      seen.add(this.db_result.filter((record) =>
-        record.full_name.includes(token)
-      ));
+    seen.add(this.db_result.filter((record) => {
       
+      if (genderValue) {
+        record.gender.includes(genderValue)
+      }
+      if (statusValue) {
+        //this.getStatus(record,statusValue)
+      }
+      if (groupValue) {
+        record.nationality.includes(groupValue)
+      }
+      if(occupationValue) {
+        record.workplace.includes(occupationValue)
+      }
+      if (dateValue) {
+        //record.year_rightist.includes(dateValue)
+      }
+  }));
+  }
+
+  getStatus(record:any, value: string) {
+
+    if (record.year_of_death==0 && record.year_of_birth==0 && value=="Unknown") {
+      return true
     }
+    else if ( record.year_of_death >0 && value=="Deceased"){
+      return true
+    }
+    else if (record.year_of_death == 0 && record.year_of_birth > 0 && value == "Alive") {
+      return true
+    }
+    else {
+      return false
+    }
+    
+  }
+
+
+
+  searchBar() {
+    let seen = new Set<any>();
+
+    const tokens = this.searchInput.split(" ");
+
+    for (var token of tokens) {
+      seen.add(this.filterByKeyword(tokens));
+    }
+
+  }
+
+  filterByKeyword(token: any) {
+    const attributes = [this.filterValues.date,
+      "gender",
+      "nationality",
+      "workplace",
+      "year",
+    ];
+
+    let seen = new Set<any>();
+    let keys = Object.keys(this.filterValues)
+    console.log(keys,"printing keys")
+    for (var key of keys) {
+      seen.add(this.db_result.filter((record) =>
+        record[key].includes(token)
+      ));
+    }
+
+    console.log(seen)
     return Array.from(seen);
   }
+
+
 
 
   filterValueschanges(filterValues: FilterTypes) {
