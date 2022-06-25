@@ -1,4 +1,4 @@
-import { LogoutComponent } from './logout/logout.component';
+import { ModalTemplateComponent } from './modal-template/modal-template.component';
 import { StipSpinnerComponent } from './stip-spinner/stip-spinner.component';
 
-export const sharedComponents = [LogoutComponent, StipSpinnerComponent];
+export const sharedComponents = [ModalTemplateComponent, StipSpinnerComponent];
