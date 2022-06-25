@@ -18,7 +18,11 @@ export class HeaderComponent implements OnInit {
   count = 15;
   timeId: any;
   message: unknown;
-  constructor(private auth: AuthServiceService, private annoucement: AnnouncementService, private outsideScope: NgZone,) {}
+  constructor(
+    private auth: AuthServiceService,
+    private annoucement: AnnouncementService,
+    private outsideScope: NgZone
+  ) {}
 
   ngOnInit(): void {
     this.auth.isLoggedIn.subscribe((isLoggedIn) => {
@@ -26,11 +30,11 @@ export class HeaderComponent implements OnInit {
       console.log('isLoggedIn', this.isLoggedIn);
     });
 
-    this.annoucement.message.subscribe(x => {
+    this.annoucement.message.subscribe((x) => {
       this.message = x;
       this.createCounter();
-      this.outsideScope.run(this.createCounter)
-    })
+      this.outsideScope.run(this.createCounter);
+    });
   }
   loginLogin() {
     console.log('loginLogin', this.isLoggedIn);
@@ -47,6 +51,5 @@ export class HeaderComponent implements OnInit {
         clearInterval(timeId);
       }
     }, 2000);
-
   }
 }
