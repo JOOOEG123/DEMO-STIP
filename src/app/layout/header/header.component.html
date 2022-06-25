@@ -133,7 +133,7 @@
   <alert
     type="info mb-0"
     [dismissible]="true"
-    [hidden]="count === 0 || !message"
+    [hidden]="count <= 0 || !message"
     (onClose)="count = 0"
   >
     <div class="d-flex">

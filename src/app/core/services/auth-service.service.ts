@@ -136,7 +136,7 @@ export class AuthServiceService {
   }
 
   getUserDetails() {
-    return JSON.parse(localStorage.getItem('user') || '{}');
+    return JSON.parse(localStorage.getItem('user') || '{}')?.user;
   }
 
   editProfile(profile: Profile) {

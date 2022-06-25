@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { AnnouncementService } from 'src/app/core/services/announcement.service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { LoginComponent } from 'src/app/layout/login/login.component';
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   count = 15;
   timeId: any;
   message: unknown;
-  constructor(private auth: AuthServiceService, private annoucement: AnnouncementService) {}
+  constructor(private auth: AuthServiceService, private annoucement: AnnouncementService, private outsideScope: NgZone,) {}
 
   ngOnInit(): void {
     this.auth.isLoggedIn.subscribe((isLoggedIn) => {
@@ -28,8 +28,8 @@ export class HeaderComponent implements OnInit {
 
     this.annoucement.message.subscribe(x => {
       this.message = x;
-      this.count = 15;
       this.createCounter();
+      this.outsideScope.run(this.createCounter)
     })
   }
   loginLogin() {
@@ -37,11 +37,16 @@ export class HeaderComponent implements OnInit {
     this.login.openModal();
   }
   createCounter() {
-    this.timeId = setInterval(() => {
-      this.count--;
-      if (this.count === 0) {
-        clearInterval(this.timeId);
+    let count = 15;
+    let timeId = setInterval(() => {
+      count--;
+      if (this?.count !== undefined) {
+        this.count = count;
       }
-    }, 1000);
+      if (count <= 0) {
+        clearInterval(timeId);
+      }
+    }, 2000);
+
   }
 }
