@@ -1,0 +1,38 @@
+<ng-template #logoutModal>
+  <div class="modal-body text-center">
+    <p>Do you want to log out?</p>
+    <button
+      type="button"
+      class="btn btn-outline-dark px-3 me-3"
+      (click)="logout()"
+    >
+      Yes
+    </button>
+    <button type="button" class="btn btn-dark px-3" (click)="modalRef?.hide()">
+      No
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #announceModal>
+  <div class="modal-body text-center">
+    <h1>Edit Announcement</h1>
+    <div class="form-floating mb-2 ">
+      <textarea
+        class="form-control"
+        placeholder="make changes here"
+        id="announcement"
+        [(ngModel)]="announceText"
+      ></textarea>
+      <label for="announcement">Add/Change Announcement</label>
+    </div>
+    <button
+      type="button"
+      class="btn btn-outline-dark px-3 me-3"
+      (click)="modalRef?.hide()"
+    >
+      Cancel
+    </button>
+    <button type="button" class="btn btn-dark px-3" (click)="updateAnnouncement()">Save</button>
+  </div>
+</ng-template>

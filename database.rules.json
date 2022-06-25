@@ -15,6 +15,14 @@
             ".read": "$uid === auth.uid || auth.token.admin === true"
           }
       }
+    },
+    "announcement": {
+      ".read": "auth.token.admin === true",
+      ".write": "auth.token.admin === true",
+        "announce": {
+          ".read": true,
+          ".write": "auth.token.admin === true"
+        }
     }
   }
 }

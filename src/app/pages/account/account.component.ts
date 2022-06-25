@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
@@ -10,6 +10,7 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 export class AccountComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   isAdmin = false;
+  // @ViewChild('modalTemplates') modalTemplates!: LogoutComponent;
   constructor(private auth: AuthServiceService) {}
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
