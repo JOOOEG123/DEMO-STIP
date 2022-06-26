@@ -14,6 +14,8 @@ import { BrowseArchiveComponent } from './browse/browse-archive/browse-archive.c
 import { BrowseSearchFilterComponent } from './browse/browse-search-filter/browse-search-filter.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { ShareComponent } from './browse/share/share.component';
+
 
 // AuthGuard pipe for admin pages
 const adminOnly = () =>
