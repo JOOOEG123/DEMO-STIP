@@ -64,7 +64,7 @@
                 <div class="btn-group d-inline-block btn-group-sm">
                     <button class="btn button-no-outline  " *ngFor="let letter of letters"
                         [ngClass]="currentLetter === letter ? 'btn-outline-light text-danger text-decoration-underline' : 'text-light'"
-                        (click)="lettersBtnClick(letter)">
+                        (click)="lettersBtnClickOrReset(letter)">
                         {{letter}}
                     </button>
                 </div>

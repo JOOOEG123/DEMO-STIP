@@ -99,25 +99,23 @@
               aria-label=".form-select-lg example"
             >
               <!-- This should be iterative *ngFor create the constant in -->
-              <option selected value="" disabled>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option selected value="" disabled *ngFor = "let occupation of occupations" [value] = "occupation.viewValue">{{occupation.viewValue}}</option>
             </select>
           </div>
         </div>
         <div class="col-12 col-md-3">
           <div class="form-group">
-            <label for="date-of-birth" class="form-label col fw-bold"
+            <label for="year-of-becoming-rightest" class="form-label col fw-bold"
               >Year of Becoming A Rightest</label
             >
-            <input type="text"
-                  id="year-of-becoming-rightest"
-                   placeholder="MM/DD/YYYY"
-                   class="form-control"
-                   formControlName="year"
-                   bsDatepicker
-            />
+            <input
+            type="text"
+            id="year-of-becoming-rightest"
+            formControlName="date"
+            placeholder="MM/DD/YYYY-MM/DD/YYYY"
+            class="form-control form-control-sm"
+            bsDaterangepicker
+          />
           </div>
         </div>
         <div class="col-12 d-flex">

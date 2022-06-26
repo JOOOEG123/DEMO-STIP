@@ -41,23 +41,20 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   constructor(
     private archApi: ArchieveApiService,
     private changeDetection: ChangeDetectorRef
-  ) {
-    
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.lettersBtnClick('A');
+    this.lettersBtnClickOrReset('A');
   }
-
 
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
     this.setDisplayInfo(this.olditemsPerPage);
     this.olditemsPerPage = this.itemsPerPage;
-    
-    console.log("testing", this.itemsPerPage)
-    console.log(this.curView)
+
+    console.log('testing', this.itemsPerPage);
+    console.log(this.curView);
   }
 
   setDisplayInfo(startItemsPerPage: number) {
@@ -76,7 +73,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.setDisplayInfo(this.itemsPerPage);
   }
 
-  lettersBtnClick(letter: string) {
+  lettersBtnClickOrReset(letter: string) {
     this.currentPage = 1;
     this.currentLetter = letter;
     // const alpha = letter === 'All' ? '' : letter;
@@ -85,7 +82,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   callAPI(l: string) {
     //clear up display
-    this.display = []
+    this.display = [];
 
     const alpha = l === 'All' ? '' : l;
     const archKey = `person_arch_${l}`;
@@ -123,99 +120,97 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   filterByFilterValues(valueEmitted: any) {
     let seen = new Set<any>();
 
-    console.log("triggering")
+    console.log('triggering');
 
-    this.getfilterData(seen)
-    this.db_result = Array.from(seen)
-    this.currentPage=1
+    this.getfilterData(seen);
+    this.currentPage = 1;
     this.setDisplayInfo(this.itemsPerPage);
+    console.log(this.display);
   }
 
   getfilterData(seen: Set<any>) {
-    console.log("get gender")
-    var genderValue = this.filterValues.gender;
-    var statusValue = this.filterValues.status;
-    var groupValue = this.filterValues.group;
-    var occupationValue = this.filterValues.occupation;
-    var dateValue = this.filterValues.date;
+    console.log('get gender');
+  
 
-    seen.add(this.db_result.filter((record) => {
-      
-      if (genderValue) {
-        record.gender.includes(genderValue)
-      }
-      if (statusValue) {
-        //this.getStatus(record,statusValue)
-      }
-      if (groupValue) {
-        record.nationality.includes(groupValue)
-      }
-      if(occupationValue) {
-        record.workplace.includes(occupationValue)
-      }
-      if (dateValue) {
-        //record.year_rightist.includes(dateValue)
-      }
-  }));
+    console.log([
+      this.filterValues.date[0].getFullYear(),
+      this.filterValues.date[1].getFullYear(),
+    ]);
+
+    seen.add(
+      this.db_result.filter((record): boolean => {
+        //get values from record->check whether contains same words-> filter out
+        let values: any[] = [
+          record.gender,
+          record.nationality,
+          record.workplace,
+        ];
+        let userValues: any[] = [this.filterValues.gender, this.filterValues.group, this.filterValues.occupation];
+        //remove empty strings
+        userValues = userValues.filter((element) => {
+          return element !== '';
+        });
+
+        var containsAll = userValues.every((element) => {
+          return values.includes(element);
+        }) && this.getYearBecameRightist(record) && this.getStatus(record);
+        containsAll = this.getYearBecameRightist(record)
+        return containsAll;
+      })
+    );
+
+    this.db_result = [...seen][0];
   }
 
-  getStatus(record:any, value: string) {
+  getYearBecameRightist(record: any) {
+    var from = this.filterValues.date[0].getFullYear();
+    var to = this.filterValues.date[1].getFullYear();
 
-    if (record.year_of_death==0 && record.year_of_birth==0 && value=="Unknown") {
-      return true
-    }
-    else if ( record.year_of_death >0 && value=="Deceased"){
-      return true
-    }
-    else if (record.year_of_death == 0 && record.year_of_birth > 0 && value == "Alive") {
-      return true
-    }
-    else {
-      return false
-    }
-    
+    return from <= record.year_rightist && record.year_rightist <= to;
   }
-
-
+  getStatus(record: any) {
+    var value = this.filterValues.status;
+    if (
+      record.year_of_death == 0 &&
+      record.year_of_birth == 0 &&
+      value == 'Unknown'
+    ) {
+      return true;
+    } else if (record.year_of_death > 0 && value == 'Deceased') {
+      return true;
+    } else if (
+      record.year_of_death == 0 &&
+      record.year_of_birth > 0 &&
+      value == 'Alive'
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   searchBar() {
-    let seen = new Set<any>();
+    console.log('in search bars');
+    //reset db
+    this.lettersBtnClickOrReset(this.currentLetter);
+    console.log(this.db_result.length);
+    const userValues = this.searchInput.split(' ');
 
-    const tokens = this.searchInput.split(" ");
+    this.db_result = this.db_result.filter((record): boolean => {
+      let values = Object.values(record).map((value): string =>
+        String(value).toLowerCase()
+      );
+      console.log(values);
+      return userValues.every((element) =>
+        values.includes(element.toLowerCase())
+      );
+    });
 
-    for (var token of tokens) {
-      seen.add(this.filterByKeyword(tokens));
-    }
-
+    this.currentPage = 1;
+    this.setDisplayInfo(this.itemsPerPage);
   }
-
-  filterByKeyword(token: any) {
-    const attributes = [this.filterValues.date,
-      "gender",
-      "nationality",
-      "workplace",
-      "year",
-    ];
-
-    let seen = new Set<any>();
-    let keys = Object.keys(this.filterValues)
-    console.log(keys,"printing keys")
-    for (var key of keys) {
-      seen.add(this.db_result.filter((record) =>
-        record[key].includes(token)
-      ));
-    }
-
-    console.log(seen)
-    return Array.from(seen);
-  }
-
-
-
 
   filterValueschanges(filterValues: FilterTypes) {
     console.log(filterValues);
   }
-
-  
 }

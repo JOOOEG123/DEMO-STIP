@@ -3,5 +3,5 @@ export type FilterTypes = {
   occupation: string | null | undefined;
   group: string | null | undefined;
   status: string | null | undefined;
-  date: Date | undefined;
+  date: Array<Date>;
 };
