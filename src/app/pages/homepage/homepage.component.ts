@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
-import { ContributionsService } from 'src/app/core/services/contributions.service';
 
 @Component({
   selector: 'app-homepage',
@@ -9,11 +8,7 @@ import { ContributionsService } from 'src/app/core/services/contributions.servic
   styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent implements OnInit {
-  constructor(
-    private arch: ArchieveApiService,
-    private router: Router,
-    private contribute: ContributionsService
-  ) {}
+  constructor(private arch: ArchieveApiService, private router: Router) {}
   searchTerm: string = '';
 
   fakeProfile = [
@@ -34,13 +29,7 @@ export class HomepageComponent implements OnInit {
     },
   ];
 
-  ngOnInit() {
-    // this.contribute.addUserContributions({ name: 'new objetc' }).then((x) => {
-    //   console.log(x);
-    // });
-    // this.contribute.removeContributionById('28c889a52c1a0c02be13dfdb7eb634');
-    // this.contribute.fetchAllContribution();
-  }
+  ngOnInit(): void {}
 
   onKey(event: any) {
     this.searchTerm = (event.target as HTMLInputElement).value;
