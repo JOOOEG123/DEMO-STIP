@@ -1,16 +1,78 @@
 <div class="container-fluid">
   <h2 class="text-center pb-5">Request Form</h2>
   <div>
-    <ul class="nav nav-tabs justify-content-center">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Upload</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Add</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Delete</a>
-      </li>
-    </ul>
+    <tabset [justified]="true">
+      <tab heading="Upload" id="tab1">
+        <br>
+        <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">
+            <label for="Name" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="Name"
+              placeholder="First and Last name"
+            />
+          </div>
+          <div class="col">
+            <label for="ethnicGroup" class="form-label">Chinese Ethnic Group</label>
+            <input
+              [(ngModel)]="selected"
+              [typeahead]="ethnicGroup"
+              class="form-control"
+            />
+          </div>
+          <div class="col">
+            <label for="occupation" class="form-label">Occupation</label>
+            <input
+              [(ngModel)]="selected2"
+              [typeahead]="occupation"
+              class="form-control"
+            />
+          </div>
+          <div class="col">
+            <label for="Year" class="form-label">Year of event</label>
+            <input
+              type="text"
+              class="form-control"
+              id="Year"
+              placeholder="year"
+            />
+          </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">
+            <br>
+            <label class="form-label">Gender</label>
+            <br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+              <label class="form-check-label" for="inlineCheckbox1">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+              <label class="form-check-label" for="inlineCheckbox2">Female</label>
+            </div>
+          </div>
+          <div class="col">
+            <br>
+            <label class="form-label">Status</label>
+            <br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+              <label class="form-check-label" for="inlineCheckbox1">Alive</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+              <label class="form-check-label" for="inlineCheckbox2">Deceased</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      </tab>
+      <tab heading="Add">Basic content 1</tab>
+      <tab heading="Delete">Basic content 2</tab>
+    </tabset>
   </div>
 </div>
