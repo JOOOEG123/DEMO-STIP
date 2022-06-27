@@ -34,6 +34,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   //variables for search functionalities
   db_result: any[] = [];
+  nonFilterData:any[] = [];
   archCacheAPI: any = {};
   archSubAPI: Subscription[] = [];
   isloading!: boolean;
@@ -118,27 +119,21 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   filterByFilterValues(valueEmitted: any) {
-    let seen = new Set<any>();
-
+    //reset db
+    this.db_result = this.nonFilterData
     console.log('triggering');
 
-    this.getfilterData(seen);
+    this.getfilterData();
     this.currentPage = 1;
     this.setDisplayInfo(this.itemsPerPage);
     console.log(this.display);
   }
 
-  getfilterData(seen: Set<any>) {
+  getfilterData() {
     console.log('get gender');
   
 
-    console.log([
-      this.filterValues.date[0].getFullYear(),
-      this.filterValues.date[1].getFullYear(),
-    ]);
-
-    seen.add(
-      this.db_result.filter((record): boolean => {
+      this.db_result = this.db_result.filter((record): boolean => {
         //get values from record->check whether contains same words-> filter out
         let values: any[] = [
           record.gender,
@@ -154,12 +149,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         var containsAll = userValues.every((element) => {
           return values.includes(element);
         }) && this.getYearBecameRightist(record) && this.getStatus(record);
-        containsAll = this.getYearBecameRightist(record)
         return containsAll;
-      })
-    );
-
-    this.db_result = [...seen][0];
+      });
   }
 
   getYearBecameRightist(record: any) {
@@ -168,6 +159,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
     return from <= record.year_rightist && record.year_rightist <= to;
   }
+
   getStatus(record: any) {
     var value = this.filterValues.status;
     if (
@@ -193,7 +185,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     console.log('in search bars');
     //reset db
     this.lettersBtnClickOrReset(this.currentLetter);
-    console.log(this.db_result.length);
+    
+
     const userValues = this.searchInput.split(' ');
 
     this.db_result = this.db_result.filter((record): boolean => {
@@ -204,8 +197,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       return userValues.every((element) =>
         values.includes(element.toLowerCase())
       );
+
     });
 
+    this.nonFilterData = this.db_result
     this.currentPage = 1;
     this.setDisplayInfo(this.itemsPerPage);
   }
