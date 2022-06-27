@@ -98,78 +98,152 @@
     </div>
   </div>
 </div>
-<br><br><br><hr>
-<div class="container-fluid">
-  <div class="text-center">
-    <h2 class="text-center">Upload Content</h2>
-    <p>Name Surname</p>
-    <input size=";">
-    <br><br>
-    <p>Occupation</p>
-    <select style="width:100px;">
-      <option value="volvo">Student</option>
-      <option value="volvo">Other</option>
-    </select>
-    <br><br>
-    <p>Chinese Ethnic Group</p>
-    <select>
-      <option value="volvo">Han</option>
-      <option value="volvo">Other</option>
-    </select>
-  </div>
-  <br><br>
-  <div class="text-center">
-    <p>Status: 
-      <input type="radio" name="status" value="huey">
-      <label for="huey">Alive</label>
-      <input type="radio" name="status" value="dewey">
-      <label for="dewey">Deceased</label>
-    </p>
-  </div>
-  <div class="text-center">
-    <p>Gender: 
-      <input type="radio" name="gender" value="huey">
-      <label for="huey">Male</label>
-      <input type="radio" name="gender" value="dewey">
-      <label for="dewey">Female</label>
-    </p>
-  </div>
-  <div class="text-center">
-    <h4>Add Content</h4>
-    <textarea name="content" rows="10" cols="30"></textarea>
-  </div>
-  <div class="text-center">
-    <h4>Add Memoir</h4>
-    <textarea name="content" rows="5" cols="30"></textarea>
-    
-  </div>
-  <div class="text-center">
-    <textarea name="content" rows="10" cols="30"></textarea>
-  </div>
-  <br>
-  <div class="text-center border" style="margin-left:25%; margin-right:25%;">
-    <br>
-    <p>
-      Upload a picture
-    </p>
-    <input type="file"
-    id="avatar" name="avatar"
-    accept="image/png, image/jpeg">
-    <p>
-      <br>
-      Include this image in gallery
-      <button>Yes</button>
-      <button>No</button>
-    </p>
+
+<br /><br /><br />
+<hr />
+<!-- upload content -->
+
+<div class="container-fluid pb-2 w-80">
+  <h3 class="text-center" style="padding-bottom: 80px">Upload Content</h3>
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <!-- enter name form -->
+      <div class="form-floating pb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Firstname Surname"
+          required
+        />
+        <label for="floatingInput">Name Surname</label>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <!-- enter Occupation drop down -->
+      <div class="form-floating pb-3">
+        <select
+        class="form-select"
+        id="floatingSelect"
+        aria-label="Floating label select example"
+        required
+      >
+        <option selected>Occupation</option>
+        <option value="1">Professor</option>
+        <option value="2">Student</option>
+        <option value="3">Landlord</option>
+      </select>
+      <label for="floatingSelect">Select Occupation</label>
+    </div>
   </div>
 
-  <br><br>
-  <div class="text-center">
-    <button>Add another memoir</button>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <!-- enter ethnic group drop down -->
+    <div class="form-floating pb-3">
+      <select
+        class="form-select"
+        id="floatingSelect"
+        aria-label="Floating label select example"
+        required
+      >
+        <option selected>Ethnicity</option>
+        <option value="1">Han</option>
+        <option value="2">Zhuang</option>
+        <option value="3">Hui</option>
+      </select>
+      <label for="floatingSelect">Chinese ethnic group</label>
+    </div>
   </div>
-  <br>
-  <div class="text-center">
-    <button>Clear</button>
-    <button>Submit</button>
+
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <!-- year -->
+    <div class="form-floating pb-3">
+      <input type="text" class="form-control" placeholder="Year" />
+      <label for="floatingInput">Year Of Events</label>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <!-- radio buttons -->
+  <div class="col-lg-5 col-md-8 col-sm-12">
+    Status:
+    <div class="form-check form-check-inline mx-5">
+      <input class="form-check-input" type="radio" name="statusRadios" />
+      <label class="form-check-label">Alive</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="statusRadios" />
+      <label class="form-check-label">Deceased</label>
+    </div>
+  </div>
+
+  <div class="col-lg-5 col-md-8 col-sm-12">
+    Gender:
+    <div class="form-check form-check-inline mx-5">
+      <input class="form-check-input" type="radio" name="genderRadios" />
+      <label class="form-check-label" for="inlineCheckbox1">Male</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="genderRadios" />
+      <label class="form-check-label" for="inlineCheckbox1">Female</label>
+    </div>
+  </div>
+</div>
+<br />
+
+<br />
+
+<!-- Add content -->
+<h4>Add Content</h4>
+<div class="form-floating text-left" style="padding-bottom: 25px">
+  <textarea
+    class="form-control"
+    placeholder="Leave content here"
+    row="3"
+    ></textarea>
+    <label for="floatingTextarea">Content Detail</label>
+  </div>
+  <!-- upload a picture -->
+  <div class="row pb-5">
+    <!-- radio buttons -->
+    <div class="col-lg-4 col-md-8 col-sm-12">
+      <h4>Upload a picture:</h4>
+      <input type="file" multiple="false" accept="image/*" />
+    </div>
+    <div class="col-lg-4 col-md-8 col-sm-12">
+      Add to gallery?
+      <div class="form-check form-check-inline mx-5">
+        <input class="form-check-input" type="radio" name="addToGallery" />
+        <label class="form-check-label" for="inlineCheckbox1">Yes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="addToGallery" />
+        <label class="form-check-label" for="inlineCheckbox1">No</label>
+      </div>
+    </div>
+  </div>
+  <!-- memoir detail -->
+  <h4>Add Memoir</h4>
+  <div class="border border-dark border-1 p-3" >
+    <div class="form-floating pb-3">
+      <textarea class="form-control" placeholder="Leave title here" required></textarea>
+      <label for="floatingTextarea">Memoir Title</label>
+    </div>
+    <div class="form-floating pb-3">
+      <textarea
+        class="form-control"
+        placeholder="Leave memoir detail here"
+        row="5"
+      ></textarea>
+      <label for="floatingTextarea">Memoir Detail</label>
+    </div>
+  </div>
+  <div style="padding-top: 20px">
+    <button class="btn btn-dark">Add another memoir</button>
+  </div>
+  <div>
+    <div style="padding-top: 50px">
+      <button class="btn btn-dark" style="width: 200px">Submit</button>
+    </div>
   </div>
 </div>
