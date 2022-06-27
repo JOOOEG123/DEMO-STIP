@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { randomUID, UUID } from '../utils/uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,62 @@ export class ArchieveApiService {
     private http: HttpClient
   ) {}
 
-  async getArchieveByAlphabet(alphabet: string) {
+  /** New API */
+  getAllArchieve() {
+    return this.db.object('/persons/requestArchieve/persons').valueChanges();
+  }
+
+  getPersonById(id: string) {
+    return this.db
+      .object(`/persons/requestArchieve/persons/${id}`)
+      .valueChanges();
+  }
+
+  // Admin Update arch
+  editArchieveById(obj: any, id: string) {
+    const arch = this.db.database
+      .ref(`/persons/requestArchieve/persons`)
+      .once('value', (v) => {
+        const o = v.val();
+        console.log('New ', o);
+        if (!o?.[id]) {
+          throw new Error(`${id} is not found`);
+        } else {
+          v.ref.update({ [id]: obj });
+        }
+      });
+    // return arch.update({ A001: obj})
+    return arch;
+  }
+
+  removeArchieveById(id: string) {
+    const arch = this.db.database
+      .ref(`/persons/requestArchieve/persons`)
+      .once('value', (v) => {
+        const o = v.val();
+        console.log('New ', o);
+        if (!o?.[id]) {
+          throw new Error(`${id} is not found`);
+        } else {
+          delete o[id];
+          v.ref.set(o);
+        }
+      });
+    // return arch.update({ A001: obj})
+    return arch;
+  }
+
+  addNewArchieve(obj: any) {
+    // update function with type and required value
+    return this.db
+      .object(`/persons/requestArchieve/persons`)
+      .update({ [UUID()]: obj });
+  }
+
+  /**
+   * There follow api is for the old schema.
+   */
+  getArchieveByAlphabet(alphabet: string) {
     return this.db.list(`/persons/publics/${alphabet}`).valueChanges();
   }
 
@@ -30,7 +86,6 @@ export class ArchieveApiService {
 
   getArchievePersonByAlphabet(alphabet: string) {
     const path = alphabet ? `${alphabet}/persons` : alphabet;
-
     return this.db.list(`/persons/publics/${path}`).valueChanges();
   }
 
@@ -102,6 +157,4 @@ export class ArchieveApiService {
       )
       .valueChanges();
   }
-
-  //   getPersonEventsByLetter(letter: string)
 }
