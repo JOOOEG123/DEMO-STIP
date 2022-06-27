@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+
 // Index Components
 import { allLayoutComponents } from './layout';
 import { pagesComponents } from './pages';

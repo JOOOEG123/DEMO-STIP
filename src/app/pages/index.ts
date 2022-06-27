@@ -15,6 +15,7 @@ import { BrowseSearchFilterComponent } from './browse/browse-search-filter/brows
 import { GalleryComponent } from './gallery/gallery.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ShareComponent } from './browse/share/share.component';
+import { UploadComponent } from './account/upload/upload.component';
 
 
 // AuthGuard pipe for admin pages
@@ -101,6 +102,16 @@ export const pagesRoutes = [
       title: 'Account',
     },
   },
+
+  {
+    path: 'account/upload',
+    component: UploadComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      title: 'upload',
+    },
+  },
+
 ];
 
 export const adminRoutes = [
