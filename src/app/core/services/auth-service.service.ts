@@ -24,8 +24,7 @@ export class AuthServiceService {
     private store: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
-    private outsideScope: NgZone,
-    private http: HttpClient
+    private outsideScope: NgZone
   ) {
     this.auth.authState.subscribe((user) => {
       if (user) {

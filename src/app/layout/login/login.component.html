@@ -9,127 +9,71 @@
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div> -->
-  <div class="modal-body">
+  <div class="modal-body" *ngIf="isSignIn === 'signup' || isSignIn === 'signin'">
     <h3 class="modal-title text-center my-3">
       {{ isSignIn === "signup" ? "Create an account" : "Log In" }}
     </h3>
     <form [formGroup]="loginForm" (ngSubmit)="signUpwithEmail()">
       <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
-        <input
-          type="text"
-          class="form-control"
-          id="firstName"
-          formControlName="firstName"
-          placeholder="First name"
-        />
-        <label for="firstName"
-          >First name <span class="text-danger">*</span></label
-        >
+        <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="First name" />
+        <label for="firstName">First name <span class="text-danger">*</span></label>
       </div>
       <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
-        <input
-          type="text"
-          class="form-control"
-          id="lastname"
-          formControlName="lastName"
-          placeholder="Last name"
-        />
-        <label for="lastname"
-          >Last name <span class="text-danger">*</span></label
-        >
+        <input type="text" class="form-control" id="lastname" formControlName="lastName" placeholder="Last name" />
+        <label for="lastname">Last name <span class="text-danger">*</span></label>
       </div>
 
       <div class="form-floating mb-3">
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          formControlName="email"
-          placeholder="name@example.com"
-        />
-        <label for="email"
-          >Email address <span class="text-danger">*</span></label
-        >
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="name@example.com" />
+        <label for="email">Email address <span class="text-danger">*</span></label>
       </div>
       <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
-        <input
-          type="email"
-          class="form-control"
-          id="confirmEmail"
-          formControlName="confirmEmail"
-          placeholder="name@example.com"
-        />
-        <label for="confirmEmail"
-          >Confirm Email address <span class="text-danger">*</span></label
-        >
+        <input type="email" class="form-control" id="confirmEmail" formControlName="confirmEmail"
+          placeholder="name@example.com" />
+        <label for="confirmEmail">Confirm Email address <span class="text-danger">*</span></label>
       </div>
       <div class="form-floating mb-3">
-        <input
-          type="password"
-          class="form-control"
-          formControlName="password"
-          id="password"
-          placeholder="Password"
-        />
-        <label for="password"
-          >Password <span class="text-danger">*</span></label
-        >
+        <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password" />
+        <label for="password">Password <span class="text-danger">*</span></label>
       </div>
       <button type="button" class="btn btn-link link-dark p-0 my-2">
         Forget your password?
       </button>
 
       <div class="d-grid gap-2 col-10 mx-auto">
-        <button
-          class="btn btn-primary rounded-pill"
-          [disabled]="loginForm.invalid"
-          type="submit"
-        >
+        <button class="btn btn-primary rounded-pill" [disabled]="loginForm.invalid" type="submit">
           Log in
         </button>
         <div class="linebtntext w-100">OR</div>
         <!-- <button class="btn btn-primary" type="button" (click)="logout()">temp log out</button> -->
-        <button
-          class="btn btn-light rounded-pill border"
-          type="button"
-          (click)="userGoogleLogin()"
-        >
-          <img
-            src="assets/login/facebook1.png"
-            alt="facebook"
-            class="img-fluid"
-            width="25"
-          />
+        <button class="btn btn-light rounded-pill border" type="button" (click)="userGoogleLogin()">
+          <img src="assets/login/facebook1.png" alt="facebook" class="img-fluid" width="25" />
           {{ isSignIn === "signup" ? "Sign Up " : "Log In " }}with Facebook
         </button>
-        <button
-          class="btn btn-light rounded-pill border"
-          type="button"
-          (click)="userGoogleLogin()"
-        >
-          <img
-            src="assets/login/google.png"
-            alt="google"
-            class="img-fluid"
-            width="20"
-          />
+        <button class="btn btn-light rounded-pill border" type="button" (click)="userGoogleLogin()">
+          <img src="assets/login/google.png" alt="google" class="img-fluid" width="20" />
           {{ isSignIn === "signup" ? "Sign Up " : "Log In " }}with Google
         </button>
         <div class="">
           {{
-            isSignIn === "signin"
-              ? "Don't have an account?"
-              : "Already have an account?"
+          isSignIn === "signin"
+          ? "Don't have an account?"
+          : "Already have an account?"
           }}
-          <button
-            class="btn btn-link p-0"
-            type="button"
-            (click)="switchState()"
-          >
+          <button class="btn btn-link p-0" type="button" (click)="switchState()">
             {{ isSignIn === "signup" ? "Log In" : "Sign Up" }}
           </button>
         </div>
       </div>
     </form>
   </div>
+  <div class="modal-body" *ngIf="isSignIn === 'forgetpassword'">
+    <h3 class="modal-title text-center my-3">
+      Forget your password
+    </h3>
+    <form [formGroup]="forgetPasswordForm" *nfIf="isSignIn === 'forgetpassword'" (ngSubmit)="forgetPassword()">
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter your email..." />
+        <label for="email">Email address <span class="text-danger">*</span></label>
+      </div>
 </ng-template>

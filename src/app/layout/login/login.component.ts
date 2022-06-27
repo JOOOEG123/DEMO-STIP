@@ -23,6 +23,9 @@ export class LoginComponent implements OnInit {
     lastName: [''],
     confirmEmail: [''],
   });
+  forgetForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+  });
   modalRef?: BsModalRef;
 
   @ViewChild('template') template!: TemplateRef<any>;
@@ -124,5 +127,9 @@ export class LoginComponent implements OnInit {
 
   logout() {
     console.log('logout');
+  }
+
+  forgetPassword() {
+
   }
 }
