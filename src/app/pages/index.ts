@@ -40,6 +40,7 @@ export const pagesComponents = [
   HomepageComponent,
   ResourcesComponent,
   BrowseArchiveComponent,
+  UploadComponent
 ];
 
 // Page routes
