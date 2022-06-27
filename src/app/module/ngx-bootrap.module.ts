@@ -11,7 +11,6 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { TabsetComponent, TabDirective } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [],
