@@ -1,14 +1,12 @@
 <app-login #login></app-login>
-<app-logout #logoutModal></app-logout>
+<app-modal-template #modalTemplates></app-modal-template>
 <header class="sticky-top">
   <nav
     class="navbar p-0 m-0 navbar-expand-lg navbar-light bg-dark-blue mw-100 row"
   >
     <div class="container-fluid">
       <a class="navbar-brand h2 text-white px-4" routerLink="/home">
-        <img
-          src="assets/homepage/logo.svg"
-        />
+        <img src="assets/homepage/logo.svg" />
       </a>
       <button
         class="navbar-toggler"
@@ -98,7 +96,10 @@
                 LOG IN / SIGN UP
               </button>
             </div>
-            <div class="nav nav-underline nav-fill dropdown mx-3" *ngIf="isLoggedIn">
+            <div
+              class="nav nav-underline nav-fill dropdown mx-3"
+              *ngIf="isLoggedIn"
+            >
               <a
                 aria-expanded="false"
                 class="nav-link text-white rounded-top dropdown-toggle"
@@ -118,7 +119,7 @@
                   <a
                     class="dropdown-item"
                     routerLink=""
-                    (click)="logoutModal?.openModal()"
+                    (click)="modalTemplates?.openLogoutModal()"
                     >Log out</a
                   >
                 </li>
@@ -129,4 +130,15 @@
       </div>
     </div>
   </nav>
+  <alert
+    type="info mb-0"
+    [dismissible]="true"
+    [hidden]="count <= 0 || !message"
+    (onClose)="count = 0"
+  >
+    <div class="d-flex">
+      <div class="flex-grow-1 message ml-4">{{ message }}</div>
+      <div>{{ count }}</div>
+    </div>
+  </alert>
 </header>
