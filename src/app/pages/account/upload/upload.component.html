@@ -134,8 +134,271 @@
         </div>
       </div>
       </tab>
-      <tab heading="Add">Basic content 1</tab>
-      <tab heading="Delete">Basic content 2</tab>
+
+      <tab heading="Add">
+        <br>
+        <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">
+            <label for="Name" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="Name"
+              placeholder="First and Last name"
+            />
+          </div>
+          <div class="col">
+            <label for="ethnicGroup" class="form-label">Chinese Ethnic Group</label>
+            <input
+              [(ngModel)]="selected"
+              [typeahead]="ethnicGroup"
+              class="form-control"
+            />
+          </div>
+          <div class="col">
+            <label for="occupation" class="form-label">Occupation</label>
+            <input
+              [(ngModel)]="selected2"
+              [typeahead]="occupation"
+              class="form-control"
+            />
+          </div>
+          <div class="col">
+            <label for="Year" class="form-label">Year of event</label>
+            <input
+              type="text"
+              class="form-control"
+              id="Year"
+              placeholder="year"
+            />
+          </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">
+            <br>
+            <label class="form-label">Gender</label>
+            <br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+              <label class="form-check-label" for="flexRadioDefault1">
+                Male
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+              <label class="form-check-label" for="flexRadioDefault2">
+                Female
+              </label>
+            </div>
+          </div>
+          <div class="col">
+            <br>
+            <label class="form-label">Status</label>
+            <br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1">
+              <label class="form-check-label" for="flexRadioDefault1">
+                Alive
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="status" id="flexRadioDefault2" checked>
+              <label class="form-check-label" for="flexRadioDefault2">
+                Deceased
+              </label>
+            </div>
+          </div>
+          <div class="col">
+            <br>
+            <label for="fileID" class="form-label">File ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="fileID"
+              placeholder="ID"
+            />
+          </div>
+          <div class="col">
+            <br><br>
+            <button type="button" class="btn btn-outline-dark me-3">Clear</button>
+            <button type="button" class="btn btn-outline-dark">Submit</button>
+          </div>
+        </div>
+      </div>
+      <br><br><br>
+      <div class="cotainer-fluid">
+        <div class="row">
+          <div class="col"c>
+            <label for="exampleFormControlTextarea1" class="form-label">Add Content</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <p>Add Event</p>
+              <input [bsConfig]="{startView: 'year'}"
+                     bsDatepicker
+                     class="form-control"
+                     placeholder="Datepicker">
+            </div>
+            <br>
+            <button type="button" class="btn btn-dark">Add Event</button>
+          </div>
+          <div class="col">
+            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <h4>Add Memoir, book, or other information</h4>
+        <input type="text" class="form-control" placeholder="Add title here..." aria-label="title" aria-describedby="basic-addon1">
+        <br>
+        <input type="text" class="form-control" placeholder="Add author here.." aria-label="author" aria-describedby="basic-addon1">
+        <br>
+        <textarea class="form-control" id="memoir" placeholder="Add memoir here..." rows="3"></textarea>
+        <div>
+
+        </div>
+      </div>
+
+      </tab>
+
+      <tab heading="Delete">
+        <br>
+        <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">
+            <label for="Name" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="Name"
+              placeholder="First and Last name"
+            />
+          </div>
+          <div class="col">
+            <label for="ethnicGroup" class="form-label">Chinese Ethnic Group</label>
+            <input
+              [(ngModel)]="selected"
+              [typeahead]="ethnicGroup"
+              class="form-control"
+            />
+          </div>
+          <div class="col">
+            <label for="occupation" class="form-label">Occupation</label>
+            <input
+              [(ngModel)]="selected2"
+              [typeahead]="occupation"
+              class="form-control"
+            />
+          </div>
+          <div class="col">
+            <label for="Year" class="form-label">Year of event</label>
+            <input
+              type="text"
+              class="form-control"
+              id="Year"
+              placeholder="year"
+            />
+          </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+          <div class="col">
+            <br>
+            <label class="form-label">Gender</label>
+            <br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+              <label class="form-check-label" for="flexRadioDefault1">
+                Male
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+              <label class="form-check-label" for="flexRadioDefault2">
+                Female
+              </label>
+            </div>
+          </div>
+          <div class="col">
+            <br>
+            <label class="form-label">Status</label>
+            <br>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="status" id="flexRadioDefault1">
+              <label class="form-check-label" for="flexRadioDefault1">
+                Alive
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="status" id="flexRadioDefault2" checked>
+              <label class="form-check-label" for="flexRadioDefault2">
+                Deceased
+              </label>
+            </div>
+          </div>
+          <div class="col">
+            <br>
+            <label for="fileID" class="form-label">File ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="fileID"
+              placeholder="ID"
+            />
+          </div>
+          <div class="col">
+            <br><br>
+            <button type="button" class="btn btn-outline-dark me-3">Clear</button>
+            <button type="button" class="btn btn-outline-dark">Submit</button>
+          </div>
+        </div>
+      </div>
+      <br><br><br>
+      <div class="cotainer-fluid">
+        <div class="row">
+          <div class="col"c>
+            <label for="exampleFormControlTextarea1" class="form-label">Add Content</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <p>Add Event</p>
+              <input [bsConfig]="{startView: 'year'}"
+                     bsDatepicker
+                     class="form-control"
+                     placeholder="Datepicker">
+            </div>
+            <br>
+            <button type="button" class="btn btn-dark">Add Event</button>
+          </div>
+          <div class="col">
+            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <h4>Add Memoir, book, or other information</h4>
+        <input type="text" class="form-control" placeholder="Add title here..." aria-label="title" aria-describedby="basic-addon1">
+        <br>
+        <input type="text" class="form-control" placeholder="Add author here.." aria-label="author" aria-describedby="basic-addon1">
+        <br>
+        <textarea class="form-control" id="memoir" placeholder="Add memoir here..." rows="3"></textarea>
+        <div>
+
+        </div>
+      </div>
+      </tab>
     </tabset>
   </div>
 </div>
