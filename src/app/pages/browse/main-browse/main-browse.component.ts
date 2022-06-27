@@ -4,11 +4,13 @@ import {
   ChangeDetectorRef,
   Input,
   OnDestroy,
+  Attribute,
 } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { FilterTypes } from 'src/app/core/types/filters.type';
+
 import { LETTERS } from './main-browse.constant';
 
 @Component({
@@ -18,19 +20,21 @@ import { LETTERS } from './main-browse.constant';
 })
 export class MainBrowseComponent implements OnInit, OnDestroy {
   //search result panel variables
-  currentLetter = 'All';
+  currentLetter = 'A';
   currentPage = 1;
   curView = 'List';
   display: any[] = [];
   filterValues: FilterTypes = {} as FilterTypes;
-  itemsPerPage = 50;
-  keyword = '';
+
+  itemsPerPage = 25;
+  searchInput = '';
   letters = LETTERS;
   maxPage = 1;
-  olditemsPerPage = 50;
+  olditemsPerPage = 25;
 
   //variables for search functionalities
   db_result: any[] = [];
+  nonFilterData:any[] = [];
   archCacheAPI: any = {};
   archSubAPI: Subscription[] = [];
   isloading!: boolean;
@@ -41,7 +45,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.lettersBtnClick('All');
+    this.lettersBtnClickOrReset('A');
   }
 
   itemPerPageChanged() {
@@ -49,6 +53,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.itemsPerPage = +this.itemsPerPage;
     this.setDisplayInfo(this.olditemsPerPage);
     this.olditemsPerPage = this.itemsPerPage;
+
+    console.log('testing', this.itemsPerPage);
+    console.log(this.curView);
   }
 
   setDisplayInfo(startItemsPerPage: number) {
@@ -67,7 +74,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.setDisplayInfo(this.itemsPerPage);
   }
 
-  lettersBtnClick(letter: string) {
+  lettersBtnClickOrReset(letter: string) {
     this.currentPage = 1;
     this.currentLetter = letter;
     // const alpha = letter === 'All' ? '' : letter;
@@ -75,6 +82,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   callAPI(l: string) {
+    //clear up display
+    this.display = [];
+
     const alpha = l === 'All' ? '' : l;
     const archKey = `person_arch_${l}`;
     if (this.archCacheAPI[archKey]) {
@@ -108,21 +118,91 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.archCacheAPI = {};
   }
 
-  searchResultClick() {}
+  filterByFilterValues(valueEmitted: any) {
+    //reset db
+    this.db_result = this.nonFilterData
+    console.log('triggering');
 
-  filterByFilterValues() {
-    console.log(this.filterValues);
+    this.getfilterData();
+    this.currentPage = 1;
+    this.setDisplayInfo(this.itemsPerPage);
+    console.log(this.display);
   }
 
-  //implement later
-  filterByKeyword() {
-    if (this.keyword) {
-      console.log(this.keyword);
-      this.db_result = this.db_result.filter((x) =>
-        x.full_name.includes(this.keyword)
-      );
+  getfilterData() {
+    console.log('get gender');
+  
+
+      this.db_result = this.db_result.filter((record): boolean => {
+        //get values from record->check whether contains same words-> filter out
+        let values: any[] = [
+          record.gender,
+          record.nationality,
+          record.workplace,
+        ];
+        let userValues: any[] = [this.filterValues.gender, this.filterValues.group, this.filterValues.occupation];
+        //remove empty strings
+        userValues = userValues.filter((element) => {
+          return element !== '';
+        });
+
+        var containsAll = userValues.every((element) => {
+          return values.includes(element);
+        }) && this.getYearBecameRightist(record) && this.getStatus(record);
+        return containsAll;
+      });
+  }
+
+  getYearBecameRightist(record: any) {
+    var from = this.filterValues.date[0].getFullYear();
+    var to = this.filterValues.date[1].getFullYear();
+
+    return from <= record.year_rightist && record.year_rightist <= to;
+  }
+
+  getStatus(record: any) {
+    var value = this.filterValues.status;
+    if (
+      record.year_of_death == 0 &&
+      record.year_of_birth == 0 &&
+      value == 'Unknown'
+    ) {
+      return true;
+    } else if (record.year_of_death > 0 && value == 'Deceased') {
+      return true;
+    } else if (
+      record.year_of_death == 0 &&
+      record.year_of_birth > 0 &&
+      value == 'Alive'
+    ) {
+      return true;
     } else {
+      return false;
     }
+  }
+
+  searchBar() {
+    console.log('in search bars');
+    //reset db
+    this.lettersBtnClickOrReset(this.currentLetter);
+    
+
+    const userValues = this.searchInput.split(' ');
+
+    this.db_result = this.db_result.filter((record): boolean => {
+      let values = Object.values(record).map((value): string =>
+        String(value).toLowerCase()
+      );
+      console.log(values);
+      return userValues.every((element) =>
+        values.includes(element.toLowerCase())
+      );
+
+    });
+
+    this.nonFilterData = this.db_result
+    this.currentPage = 1;
+    this.setDisplayInfo(this.itemsPerPage);
   }
 
   filterValueschanges(filterValues: FilterTypes) {

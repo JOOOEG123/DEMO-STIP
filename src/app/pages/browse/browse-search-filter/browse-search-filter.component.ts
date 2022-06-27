@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FilterTypes } from 'src/app/core/types/filters.type';
-import { GROUPS } from './browse-search-filter.constant';
+import { GROUPS,OCCUPATIONS } from './browse-search-filter.constant';
 
 
 
@@ -19,9 +19,10 @@ export class BrowseSearchFilterComponent implements OnInit {
     occupation: [''],
     status: [''],
     group: [''],
-    year: [''],
+    date: [''],
   });
   groups = GROUPS;
+  occupations = OCCUPATIONS
   formSub!: Subscription;
 
   @Output() filterValuesChange = new EventEmitter<any>();
@@ -48,9 +49,8 @@ export class BrowseSearchFilterComponent implements OnInit {
   subForm() {
     this.formSub = this.formValues.valueChanges.subscribe((value) => {
       let date = undefined;
-      if ( value.year) {
-        date = new Date(value.year);
-
+      if ( value.date) {
+        value.date = [new Date(value.date[0]),new Date(value.date[1])];
       }
       this.filterValues = {...value, date} as any;
       this.filterValuesChange.emit(value);
@@ -62,7 +62,9 @@ export class BrowseSearchFilterComponent implements OnInit {
   }
 
   submit() {
+  
     this.filterValuesChange.emit(this.formValues.value);
+    
   }
 
   clear() {
@@ -71,7 +73,7 @@ export class BrowseSearchFilterComponent implements OnInit {
       occupation: '',
       status: '',
       group: '',
-      year: '',
+      date: [],
     });
   }
 }

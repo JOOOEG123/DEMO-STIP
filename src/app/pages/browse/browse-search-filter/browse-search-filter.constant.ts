@@ -1,5 +1,5 @@
 export const GROUPS = [
-    {value: '1', viewValue: 'Han Chinese'},
+    {value: '1', viewValue: 'Han'},
     {value: '2', viewValue: 'Zhuang'},
     {value: '3', viewValue: 'Hui'},
     {value: '4', viewValue: 'Manchu'},
@@ -58,3 +58,36 @@ export const GROUPS = [
     {value: '57', viewValue: 'Undistinguished'},
     {value: '58', viewValue: 'Naturalized Citizen'}
   ];
+
+export  const OCCUPATIONS = [
+    {value: '1', viewValue: 'Deputy'},
+    {value: '2', viewValue: 'Director'},
+    {value: '3', viewValue: 'Professor'},
+    {value: '4', viewValue: 'Worker'},
+    {value: '5', viewValue: 'Actress'},
+    {value: '6', viewValue: 'Agent'},
+    {value: '7', viewValue: 'Assistant'},
+    {value: '8', viewValue: 'Editor-in-Chief'},
+    {value: '9', viewValue: 'Assistant Lieutenant'},
+    {value: '10', viewValue: 'Assistant Professor'},
+    {value: '11', viewValue: 'Associate Professor'},
+    {value: '12', viewValue: 'Cadre'},
+    {value: '13', viewValue: 'Chairman'},
+    {value: '14', viewValue: 'Chief'},
+    {value: '15', viewValue: 'Chief Engineer'},
+    {value: '16', viewValue: 'Christian Priest'},
+    {value: '17', viewValue: 'Clerk'},
+    {value: '18', viewValue: 'Deputy Director'},
+    {value: '19', viewValue: 'Deputy Secretary'},
+    {value: '20', viewValue: 'Deputy Secretary General'},
+    {value: '21', viewValue: 'Lisu'},
+    {value: '22', viewValue: 'Dongxiang'},
+    {value: '23', viewValue: 'Gelao'},
+    {value: '24', viewValue: 'Lahu'},
+    {value: '25', viewValue: 'Wa'},
+    {value: '26', viewValue: 'Sui'},
+    {value: '27', viewValue: 'Nakhi'},
+    {value: '28', viewValue: 'Qiang'},
+    {value: '29', viewValue: 'Tu'},
+    {value: '30', viewValue: 'Mulao'},
+  ]

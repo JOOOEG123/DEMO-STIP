@@ -1,5 +1,5 @@
-<div class="container border px-0 rounded">
-    <div class="d-flex bd-highlight bg-secondary bg-opacity-25 ps-2">
+<div class="container border px-0 rounded w-100">
+    <div class="d-flex bd-highlight bg-light ps-2">
       <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">Filter</h6>
       <div class="bd-highlight">
         <button
@@ -20,7 +20,7 @@
         </button>
       </div>
     </div>
-    <div id="collapseBasic" [collapse]="drop" [isAnimated]="true">
+    <div class="bg-white" id="collapseBasic" [collapse]="drop" [isAnimated]="true">
       <form class="row p-2" [formGroup]="formValues">
         <fieldset class="col-12 col-md-2">
           <legend class="h6 fw-bold">Gender</legend>
@@ -99,26 +99,23 @@
               aria-label=".form-select-lg example"
             >
               <!-- This should be iterative *ngFor create the constant in -->
-              <option selected value="" disabled>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option selected value="" disabled *ngFor = "let occupation of occupations" [value] = "occupation.viewValue">{{occupation.viewValue}}</option>
             </select>
           </div>
         </div>
         <div class="col-12 col-md-3">
           <div class="form-group">
-            <label for="date-of-birth" class="form-label col fw-bold"
-              >Date of Birth</label
+            <label for="year-of-becoming-rightest" class="form-label col fw-bold"
+              >Year of Becoming A Rightest</label
             >
             <input
-              type="text"
-              id="date-of-birth"
-              formControlName="year"
-              placeholder="MM/DD/YYYY-MM/DD/YYYY"
-              class="form-control form-control-sm"
-              bsDaterangepicker
-            />
+            type="text"
+            id="year-of-becoming-rightest"
+            formControlName="date"
+            placeholder="MM/DD/YYYY-MM/DD/YYYY"
+            class="form-control form-control-sm"
+            bsDaterangepicker
+          />
           </div>
         </div>
         <div class="col-12 d-flex">
@@ -130,9 +127,7 @@
             >
               Clear
             </button>
-            <button class="btn btn-outline-secondary" type="submit">
-              Submit
-            </button>
+
           </div>
         </div>
       </form>

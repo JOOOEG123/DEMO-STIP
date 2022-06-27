@@ -1,163 +1,153 @@
 <div class="bg-khaki bg-opacity-25 d-flex">
-  <!-- search bar -->
-  <div class="input-group m-5">
-    <input
-      type="search"
-      class="form-control rounded-end rounded-pill"
-      placeholder="Search for ... "
-      [(ngModel)]="keyword"
-      (search)="filterByKeyword()"
-      aria-label="Search for ... "
-      aria-describedby="button-addon2"
-    />
-    <button
-      class="btn border border-start-0 bg-white rounded-start rounded-pill"
-      type="button"
-      (click)="searchResultClick()"
-    >
-      <img src="assets/global/search.svg" alt="" width="20" />
-    </button>
-  </div>
+    <!-- search bar -->
+    <div class="input-group m-5">
+        <input type="search" class="form-control rounded-end rounded-pill" placeholder="Search for ... "
+            [(ngModel)]="searchInput" (search)="searchBar()" aria-label="Search for ... "
+            aria-describedby="button-addon2" />
+        <button class="btn border border-start-0 bg-white rounded-start rounded-pill" type="button"
+            (click)="searchBar()">
+            <img src="assets/global/search.svg" alt="" width="20" />
+        </button>
+    </div>
 </div>
 
-<!-- search result -->
-<div class="container-fluid">
-  <div class="my-4">
-    <app-browse-search-filter
-      [(filterValues)]="filterValues"
-      (filterValuesChange)="filterByFilterValues()"
-    ></app-browse-search-filter>
-  </div>
-  <div class="m-4">
-    <div class="d-flex">
-      <div class="col mt-3">Search Results {{ this.db_result.length }}</div>
-
-      <div class="d-flex flex-row-reverse">
-        <div class="m-3">| Order by: A-Z</div>
-        <div class="p-2">
-          <select
-            class="form-select m-0"
-            style="max-height: 40px"
-            id="viewSelect"
-            aria-label="View select"
-            [(ngModel)]="curView"
-          >
-            <option value="List" selected>List</option>
-            <option value="Grid">Grid</option>
-          </select>
+<div class="row justify-content-center" style="background-color: rgb(12, 19, 48)">
+    <div class="col-10 border" style="border-color:#caa372">
+        <h6 class="border-bottom fw-bold text-light my-3">Browse Archive</h6>
+        <div class="my-4">
+            <app-browse-search-filter [(filterValues)]="filterValues"
+                (filterValuesChange)="filterByFilterValues($event)">
+            </app-browse-search-filter>
         </div>
-        <div class="my-3 ps-3">View</div>
 
-        <div class="p-2">
-          <select
-            class="form-select m-0"
-            style="max-height: 40px"
-            aria-label="Result per page select"
-            [(ngModel)]="itemsPerPage"
-            (change)="itemPerPageChanged()"
-          >
-            <option selected value="50">50</option>
-            <option value="100">100</option>
-            <option value="10">10</option>
-          </select>
+        <!-- search result -->
+        <div class="container-fluid">
+            <div class="d-flex">
+
+                <!-- <div class="row mb-2 mx-2 row-col-auto"> -->
+                <div class="me-auto p-2 text-light text-nowrap">
+                    Search Results {{this.db_result.length}}
+                </div>
+
+                <div class="col-auto flex-shrink-0">
+                    <label for="per_page_result" class="text-white">Result per page</label>
+                    <select class="mx-2" aria-label="Result per page select" id="per_page_result"
+                        [(ngModel)]="itemsPerPage" (change)="itemPerPageChanged()">
+                        <option selected value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div class="col-auto flex-shrink-0">
+                    <label for="viewSelect" class="text-white">View</label>
+                    <select class="mx-2" id="viewSelect" aria-label="View select" [(ngModel)]="curView">
+                        <option value="List" selected>List</option>
+                        <option value="Grid">Grid</option>
+                    </select>
+                </div>
+
+
+                <div class="mb-1 text-light text-nowrap">|&emsp;Order by: A-Z</div>
+            </div>
+
+
+            <div class="d-flex  border-bottom justify-content-between">
+                <div class="position-relative">
+
+                    <img src="assets\browsepage\tempprofile.png" class="rounded-circle border border-dark" width="20">
+                    <span class="fw-bolder position-absolute movem">
+                        {{this.currentLetter}}
+                    </span>
+                </div>
+
+
+                <div class="btn-group d-inline-block btn-group-sm">
+                    <button class="btn button-no-outline  " *ngFor="let letter of letters"
+                        [ngClass]="currentLetter === letter ? 'btn-outline-light text-danger text-decoration-underline' : 'text-light'"
+                        (click)="lettersBtnClickOrReset(letter)">
+                        {{letter}}
+                    </button>
+                </div>
+            </div>
+
+            <!-- display search results -->
+            <app-stip-spinner [isLoading]="isloading"></app-stip-spinner>
+            <div *ngIf="curView === 'List'; else elseBlock">
+
+                <a style="color: black;text-decoration: none;" routerLink="/browse/archive" routerLinkActive="active"
+                    ariaCurrentWhenActive="page" *ngIf="display.length ;else elseEmptyBlock">
+                    <div class="d-flex m-3 " style="height:150px; border-radius: 28px; background-color: #dbdde2"
+                        name="searchLayout" *ngFor="let result of display">
+
+                        <div class="m-4">
+                            <img src="assets\browsepage\tempprofile.png"
+                                class="rounded-circle border border-dark img-responsive center-block" width="100vw"
+                                height="100vw">
+                        </div>
+                        <div class="flex-grow-1 m-3">
+                            <div class="text-start">{{result.full_name}}</div>
+                            <div class="pb-3 text-start">{{result.workplace}}</div>
+                            <div class="text-start">{{result.description}}</div>
+                        </div>
+
+                    </div>
+                </a>
+                <ng-template #elseEmptyBlock>
+                    <div *ngIf="isloading==false" class="bg-light">
+                        No record has been found. 
+                    </div>
+                </ng-template>
+            </div>
+
+            <ng-template #elseBlock>
+
+                <div *ngIf="display.length ;else elseEmptyBlock">
+                    <div class="d-flex " name="searchLayout" *ngFor="let results of display| UpdateRows:5">
+
+                        <div class="card d-flex flex-column  m-3"
+                            style="flex: 1;border-radius: 28px;background-color: #dbdde2"
+                            *ngFor="let result of results">
+                            <a routerLink="/browse/archive" routerLinkActive="active" ariaCurrentWhenActive="page"
+                                style="color: black;text-decoration: none;">
+                                <div class="d-flex justify-content-center flex-shrink-0">
+                                    <img src="assets\browsepage\tempprofile.png"
+                                        class="card-img-top rounded-circle img-responsive border border-dark w-75">
+                                </div>
+                                <div class="card-body mt-auto">
+                                    <div class="card-body">
+                                        <div>{{result.full_name}}</div>
+                                        <div class="pb-3">{{result.workplace}}</div>
+                                        <div>{{result.nationality}}</div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <ng-template #elseEmptyBlock>
+                    <div *ngIf="isloading" class="bg-light">
+                        No record has been found. 
+                    </div>
+                </ng-template>
+            </ng-template>
+
+
+            <!-- search nav -->
+
+            <div class="d-flex flex-row-reverse text-light">
+                <nav aria-label="Page navigation">
+                    <pagination class="bg-light" [rotate]=true [totalItems]="db_result.length" [boundaryLinks]="true"
+                        [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
+                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                        [maxSize]="10">
+
+                    </pagination>
+                </nav>
+
+                <div class="p-2 bd-highlight">page {{this.currentPage}} of {{this.maxPage}}</div>
+            </div>
+
         </div>
-        <div class="mt-3">Result per page</div>
-      </div>
     </div>
-
-    <div class="d-flex border-bottom border-danger">
-      <div class="col text-primary">
-        {{ this.currentLetter }}
-      </div>
-
-      <div class="btn-group">
-        <button
-          class="btn btn-link"
-          *ngFor="let letter of letters"
-          [ngClass]="currentLetter === letter ? 'btn-danger' : ''"
-          (click)="lettersBtnClick(letter)"
-        >
-          {{ letter }}
-        </button>
-      </div>
-    </div>
-
-    <!-- display search results -->
-
-    <div *ngIf="curView === 'List'; else elseBlock">
-      <app-stip-spinner
-        [isLoading]="isloading"
-        ></app-stip-spinner>
-      <div
-        class="row p-4 my-1 bg-primary rounded-pill"
-        name="searchLayout"
-        *ngFor="let result of display"
-      >
-        <div class="pe-5">
-          <img
-            src="assets\browsepage\tempprofile.png"
-            class="rounded-circle border"
-            width="100vw"
-            height="100vw"
-          />
-        </div>
-        <div class="flex-grow-1">
-          <div>{{ result.full_name }}</div>
-          <div class="pb-3">{{ result.workplace }}</div>
-          <div>{{ result.description }}</div>
-        </div>
-      </div>
-    </div>
-    <ng-template #elseBlock>
-      <div
-        class="row"
-        name="searchLayout"
-        *ngFor="let results of display | updateRows: 5"
-      >
-        <div
-          class="p-4 my-1 bg-primary text-truncate"
-          style="height: 20vw; width: 20%"
-          *ngFor="let result of results"
-        >
-          <img
-            src="assets\browsepage\tempprofile.png"
-            class="rounded-circle border"
-            width="50vw"
-            height="50vw"
-          />
-
-          <div>
-            <div>{{ result.full_name }}</div>
-            <div class="pb-3">{{ result.workplace }}</div>
-            <div class="text-wrap">{{ result.description }}</div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-
-    <!-- search nav -->
-
-    <div class="d-flex flex-row-reverse">
-      <nav aria-label="Page navigation">
-        <pagination
-          [rotate]="true"
-          [totalItems]="db_result.length"
-          [boundaryLinks]="true"
-          [itemsPerPage]="itemsPerPage"
-          [(ngModel)]="currentPage"
-          (pageChanged)="pageChanged($event)"
-          previousText="&lsaquo;"
-          nextText="&rsaquo;"
-          firstText="&laquo;"
-          lastText="&raquo;"
-          [maxSize]="10"
-        >
-        </pagination>
-      </nav>
-
-      <div class="p-2 bd-highlight">
-        page {{ this.currentPage }} of {{ this.maxPage }}
-      </div>
-    </div>
-  </div>
 </div>

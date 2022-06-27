@@ -1,5 +1,4 @@
 export const LETTERS: string[] = [
-    'All',
     'A',
     'B',
     'C',
@@ -26,4 +25,5 @@ export const LETTERS: string[] = [
     'X',
     'Y',
     'Z',
+    'All',
   ];
