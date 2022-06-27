@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { NgxMasonryOptions } from 'ngx-masonry';
 
@@ -102,7 +102,9 @@ export class GalleryComponent implements OnInit {
   currentPage?: number;
   showBoundaryLinks: boolean = true;
   itemsPerPage: number = 5;
-  display?: Array<Image>;
+  display: Image[] = []
+
+  @ViewChild('image') imageRef?: ElementRef;
 
   constructor() {
     this.selectedCategory = 'All';
@@ -130,5 +132,7 @@ export class GalleryComponent implements OnInit {
     var start = (this.currentPage - 1) * this.itemsPerPage;
     var end = start + this.itemsPerPage;
     this.display = this.images.slice(start, end);
+    window.scroll(0, 0)
+    this.imageRef?.nativeElement.focus()
   }
 }

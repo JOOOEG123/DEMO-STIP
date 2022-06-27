@@ -6,7 +6,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import {
   Categories,
   CategoryList,
@@ -79,7 +80,59 @@ export class ApprovalComponent implements OnInit {
     },
   ];
 
-  approvedContribution: Contribution[] = [];
+  pendingContributions: Contribution[] = [
+    {
+      id: 'victim100',
+      imgSrc: 'assets/homepage/theguy.png',
+      surname: 'Pending Doe',
+      occupation: 'Butcher',
+      ethnicGroup: 'Han',
+      gender: 'female',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      date: new Date(),
+      state: 'void',
+    }
+  ]
+
+  approvedContributions: Contribution[] = [
+    {
+      id: 'victim10',
+      imgSrc: 'assets/homepage/theguy.png',
+      surname: 'Joshua Doe',
+      occupation: 'Butcher',
+      ethnicGroup: 'Han',
+      gender: 'female',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      date: new Date(),
+      state: 'void',
+    },
+    {
+      id: 'victim11',
+      imgSrc: 'assets/homepage/theguy.png',
+      surname: 'Jenny Doe',
+      occupation: 'Butcher',
+      ethnicGroup: 'Han',
+      gender: 'female',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      date: new Date(),
+      state: 'void',
+    },
+    {
+      id: 'victim12',
+      imgSrc: 'assets/homepage/theguy.png',
+      surname: 'Jap Doe',
+      occupation: 'Butcher',
+      ethnicGroup: 'Han',
+      gender: 'female',
+      content:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      date: new Date(),
+      state: 'void',
+    },
+  ];
   rejectedContributions: Contribution[] = [];
   selectedContributions: Contribution[] = [];
 
@@ -93,28 +146,39 @@ export class ApprovalComponent implements OnInit {
   ];
   categories: CategoryList = {
     'New Contributions': this.newContributions,
-    'Approved Contributions': this.approvedContribution,
+    'Approved Contributions': this.approvedContributions,
     'Rejected Contributions': this.rejectedContributions,
   };
 
-  constructor() {
+  disabled: boolean = false
+  modalRef?: BsModalRef;
+  
+  constructor(private modalService: BsModalService) {
     this.selectedContributions = this.newContributions;
     this.activeCategory = 'New Contributions';
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onApprove(victimId: string) {
-    const index = this.newContributions.findIndex(
+    const index = this.pendingContributions.findIndex(
       (contribution) => contribution.id == victimId
     );
-    this.selectedContribution = this.newContributions[index];
+    this.selectedContribution = this.pendingContributions[index];
     this.selectedContribution.state = 'removed';
-    this.approvedContribution.unshift(this.selectedContribution);
   }
 
-  onEdit(victimId: string) {
-    alert(victimId);
+  onEdit(template: TemplateRef<any>, victimId: string) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  onPending(victimId: string) {
+    const index = this.newContributions.findIndex(
+      (contribution) => contribution.id == victimId
+    )
+    this.selectedContribution = this.newContributions[index];
+    this.selectedContribution.state = 'removed';
+    this.pendingContributions.unshift(this.selectedContribution);
   }
 
   onReject(victimId: string) {
@@ -126,6 +190,15 @@ export class ApprovalComponent implements OnInit {
     this.rejectedContributions.unshift(this.selectedContribution);
   }
 
+  onReconsider(victimId: string) {
+    const index = this.rejectedContributions.findIndex(
+      (contribution) => contribution.id = victimId
+    )
+    this.selectedContribution = this.rejectedContributions[index]
+    this.selectedContribution.state = 'removed'
+    this.pendingContributions.unshift(this.selectedContribution)
+  }
+
   setActiveCategory(category: Categories) {
     this.activeCategory = category;
     this.selectedContributions = this.categories[this.activeCategory];
@@ -133,10 +206,32 @@ export class ApprovalComponent implements OnInit {
 
   animationStart(event: AnimationEvent) {
     console.log(event);
+    this.disabled = true
   }
 
   animationDone(event: AnimationEvent) {
-    if (this.selectedContribution) {
+    if (this.activeCategory == 'Rejected Contributions') {
+      if (event.toState == 'removed') {
+        const index = this.rejectedContributions.findIndex(
+          (contribution) => contribution.id == this.selectedContribution.id
+        )
+        this.rejectedContributions.splice(index, 1)
+        this.selectedContribution.state = 'void'
+      }
+    }
+
+    if (this.activeCategory == 'Approved Contributions') {
+      if (event.toState == 'removed') {
+        const index = this.pendingContributions.findIndex(
+          (contribution) => contribution.id == this.selectedContribution.id
+        )
+        this.pendingContributions.splice(index, 1)
+        this.approvedContributions.unshift(this.selectedContribution);
+        this.selectedContribution.state = 'void'
+      }
+    }
+
+    if (this.activeCategory == 'New Contributions') {
       if (event.toState == 'removed') {
         const index = this.newContributions.findIndex(
           (contribution) => contribution.id == this.selectedContribution?.id
@@ -145,5 +240,7 @@ export class ApprovalComponent implements OnInit {
         this.selectedContribution.state = 'void';
       }
     }
+
+    this.disabled = false
   }
 }
