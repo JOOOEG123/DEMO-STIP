@@ -16,6 +16,7 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ShareComponent } from './browse/share/share.component';
 import { EditAccountComponent } from './account/edit-account/edit-account.component';
+import { AuthGuard } from '../core/services/auth-guard.service';
 
 // AuthGuard pipe for admin pages
 const adminOnly = () =>
@@ -97,7 +98,7 @@ export const pagesRoutes = [
   {
     path: 'account',
     component: AccountComponent,
-    canActivate: [AngularFireAuthGuard],
+    canActivate: [AngularFireAuthGuard, AuthGuard],
     data: {
       title: 'Account',
     },
@@ -105,7 +106,7 @@ export const pagesRoutes = [
   {
     path: 'edit-account',
     component: EditAccountComponent,
-    canActivate: [AngularFireAuthGuard],
+    canActivate: [AngularFireAuthGuard, AuthGuard],
     data: {
       title: 'Edit Account',
     },
