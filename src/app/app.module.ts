@@ -33,6 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareComponent } from './pages/browse/share/share.component';
 import { MemoirComponent } from './pages/browse/memoir/memoir.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { UploadComponent } from './pages/upload/upload.component';
 
 import { AppComponent } from './app.component';
 import { EditAccountComponent } from './pages/account/edit-account/edit-account.component';
@@ -47,6 +48,7 @@ import { EditAccountComponent } from './pages/account/edit-account/edit-account.
     ShareComponent,
     MemoirComponent,
     EditAccountComponent,
+    UploadComponent,
   ],
   imports: [
     AngularFireAuthModule,
