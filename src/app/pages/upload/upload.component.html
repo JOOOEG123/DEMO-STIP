@@ -1,9 +1,12 @@
-<h2 class="text-center pb-5">Request Form</h2>
+<h2 class="text-center pb-5 pt-5 mt-5">Request Form</h2>
+<h3 class="text-center pt-3 pb-5">Upload</h3>
 <div class="container-fluid">
   <br />
   <div class="container">
     <!-- Row for name, ethnic group, occupation, and year of event -->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+    <div
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-4 ms-5 me-5 pt-3 bg-secondary"
+    >
       <!-- col for name selection -->
       <div class="col">
         <label for="Name" class="form-label">Name</label>
@@ -40,7 +43,9 @@
     </div>
 
     <!-- Row containing gender, status, file ID, and clear/submit buttons -->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+    <div
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-4 ms-5 me-5 pb-3 bg-secondary"
+    >
       <!-- col for gender selection -->
       <div class="col">
         <br />
@@ -104,24 +109,22 @@
       <!-- col for clear/submit buttons -->
       <div class="col">
         <br /><br />
-        <button type="button" class="btn btn-outline-dark me-3">Clear</button>
-        <button type="button" class="btn btn-outline-dark">Submit</button>
+        <button type="button" class="btn btn-outline-light me-5">Clear</button>
       </div>
     </div>
   </div>
-  <hr />
   <br /><br /><br />
 
   <!-- upload photo and add content section -->
-  <div class="row ms-5 me-5">
-    <div class="col">
+  <div class="row ms-5 me-5 ps-5 pe-5">
+    <div class="col col-lg-4">
       <!-- photo upload section -->
-      <h4>Upload a photo for this file</h4>
+      <h4>Upload a photo</h4>
 
       <img alt="" [src]="url" height="200" width="200" />
       <input type="file" (change)="onselectFile($event)" />
 
-      <br />
+      <br /><br />
       <p>Include this image in gallery</p>
       <div class="form-check form-check-inline">
         <input
@@ -144,18 +147,17 @@
         <label class="form-check-label" for="inlineRadio2">No</label>
       </div>
     </div>
-    <div class="col-9">
+    <div class="col">
       <!-- add content section -->
       <div class="cotainer-fluid">
         <div class="row">
           <div class="col">
-            <label for="exampleFormControlTextarea1" class="form-label"
-              >Add Content</label
-            >
+            <h4>Add Content</h4>
             <textarea
               class="form-control"
               id="exampleFormControlTextarea1"
-              rows="3"
+              rows="5"
+              placeholder="Add content/description here..."
             ></textarea>
           </div>
         </div>
@@ -163,75 +165,74 @@
         <div class="row">
           <div class="col">
             <div class="form-group">
-              <p>Add Event Date</p>
+              <h4>Add Event Date</h4>
               <input
                 [bsConfig]="{ startView: 'year' }"
                 bsDatepicker
                 class="form-control"
-                placeholder="Datepicker"
+                placeholder="year"
               />
             </div>
             <br />
             <button type="button" class="btn btn-dark">Add Event</button>
           </div>
-          <div class="col">
-            <label for="exampleFormControlTextarea1" class="form-label"
-              >Event Content</label
-            >
+          <div class="col pt-4">
             <textarea
               class="form-control"
               id="exampleFormControlTextarea1"
-              rows="3"
+              rows="5"
+              placeholder="Add event details here..."
             ></textarea>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- memoir section -->
+<!-- memoir section -->
+<hr />
+<br /><br />
+<div class="container-fluid pb-5" id="memoir">
+  <br />
+  <h4>Add Memoir, book, or other information</h4>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Add title here..."
+    aria-label="title"
+    aria-describedby="basic-addon1"
+  />
+  <br />
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Add author here.."
+    aria-label="author"
+    aria-describedby="basic-addon1"
+  />
+  <br />
+  <textarea
+    type="text"
+    class="form-control"
+    placeholder="Add memoir here..."
+    rows="5"
+  ></textarea>
+</div>
+
+<div class="container-fluid text-center">
+  <div class="row">
+    <div class="col">
+      <br />
+      <button type="button" class="btn btn-dark">Add Another Entry</button>
+    </div>
+  </div>
   <hr />
-  <br /><br />
-  <div class="text-center ms-5 me-5">
-    <br />
-    <h4>Add Memoir, book, or other information</h4>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Add title here..."
-      aria-label="title"
-      aria-describedby="basic-addon1"
-    />
-    <br />
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Add author here.."
-      aria-label="author"
-      aria-describedby="basic-addon1"
-    />
-    <br />
-    <textarea
-      class="form-control"
-      id="memoir"
-      placeholder="Add memoir here..."
-      rows="3"
-    ></textarea>
-    <div class="container">
-      <div class="row">
-        <div class="col-3">
-          <br />
-          <button type="button" class="btn btn-dark">Add Another Entry</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <hr />
-          <br />
-          <button type="button" class="btn btn-dark me-3">Clear</button>
-          <button type="button" class="btn btn-dark me-3">Submit</button>
-        </div>
-      </div>
+  <div class="row">
+    <div class="col">
+      <br />
+      <button type="button" class="btn btn-dark me-3">Clear</button>
+      <button type="button" class="btn btn-dark me-3">Submit</button>
     </div>
   </div>
 </div>
