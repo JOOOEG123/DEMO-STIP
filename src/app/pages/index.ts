@@ -101,6 +101,13 @@ export const pagesRoutes = [
       title: 'Account',
     },
   },
+  {
+    path: 'share',
+    component: ShareComponent,
+    data: {
+      title: 'Share',
+    },
+  }
 ];
 
 export const adminRoutes = [

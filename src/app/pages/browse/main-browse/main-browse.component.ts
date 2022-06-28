@@ -54,8 +54,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.setDisplayInfo(this.olditemsPerPage);
     this.olditemsPerPage = this.itemsPerPage;
 
-    console.log('testing', this.itemsPerPage);
-    console.log(this.curView);
+
   }
 
   setDisplayInfo(startItemsPerPage: number) {
@@ -118,20 +117,42 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.archCacheAPI = {};
   }
 
-  filterByFilterValues(valueEmitted: any) {
-    //reset db
-    this.db_result = this.nonFilterData
-    console.log('triggering');
+  filterValueschanges(valueEmitted: any) {
 
+
+    const empty = Object.values(this.filterValues).every((element) => {
+      return element ==='';
+    })
+    if (empty) {
+      console.log("clear button trigger")
+      this.searchBar()
+      // this.db_result = this.nonFilterData
+      // this.currentPage = 1;
+      // console.log(this.db_result)
+      // this.setDisplayInfo(this.itemsPerPage);
+    }
+    else {
+      console.log("user input feed trigger")
+      this.filterByFilterValues()
+    }
+
+
+  }
+  
+  filterByFilterValues() {
+    //reset db
+    this.nonFilterData = this.db_result
+  
+
+    // console.log(valueEmitted)
     this.getfilterData();
     this.currentPage = 1;
     this.setDisplayInfo(this.itemsPerPage);
-    console.log(this.display);
+
   }
 
   getfilterData() {
-    console.log('get gender');
-  
+
 
       this.db_result = this.db_result.filter((record): boolean => {
         //get values from record->check whether contains same words-> filter out
@@ -154,10 +175,18 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   getYearBecameRightist(record: any) {
-    var from = this.filterValues.date[0].getFullYear();
-    var to = this.filterValues.date[1].getFullYear();
 
-    return from <= record.year_rightist && record.year_rightist <= to;
+    let res = true
+
+    if (this.filterValues.date) {
+      
+      var from = this.filterValues.date[0].getFullYear();
+      var to = this.filterValues.date[1].getFullYear();
+
+      res = from <= record.year_rightist && record.year_rightist <= to;
+    }
+
+    return res
   }
 
   getStatus(record: any) {
@@ -165,15 +194,15 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     if (
       record.year_of_death == 0 &&
       record.year_of_birth == 0 &&
-      value == 'Unknown'
+      value == 'unknown'
     ) {
       return true;
-    } else if (record.year_of_death > 0 && value == 'Deceased') {
+    } else if (record.year_of_death > 0 && value == 'deceased') {
       return true;
     } else if (
       record.year_of_death == 0 &&
       record.year_of_birth > 0 &&
-      value == 'Alive'
+      value == 'alive'
     ) {
       return true;
     } else {
@@ -182,18 +211,17 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   searchBar() {
-    console.log('in search bars');
+    
     //reset db
     this.lettersBtnClickOrReset(this.currentLetter);
     
-
     const userValues = this.searchInput.split(' ');
 
     this.db_result = this.db_result.filter((record): boolean => {
       let values = Object.values(record).map((value): string =>
         String(value).toLowerCase()
       );
-      console.log(values);
+     
       return userValues.every((element) =>
         values.includes(element.toLowerCase())
       );
@@ -205,7 +233,5 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.setDisplayInfo(this.itemsPerPage);
   }
 
-  filterValueschanges(filterValues: FilterTypes) {
-    console.log(filterValues);
-  }
+
 }
