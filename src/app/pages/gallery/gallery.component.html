@@ -1,8 +1,10 @@
 <div class="container">
   <h2 class="text-center my-4 fw-bold">Gallery</h2>
+
   <div class="d-flex justify-content-center flex-wrap">
     <div *ngFor="let gallery of galleries" class="p-2 mx-4">
       <button
+        #image
         [ngClass]="{
           'border-3 btn-underline-orange-red ': selectedCategory == gallery,
           btn: selectedCategory != gallery
@@ -22,13 +24,14 @@
     [options]="masonryOptions"
     [ordered]="true"
     [ngStyle]="{ width: '100%' }"
+    
   >
     <div
       ngxMasonryItem
       class="masonry-item my-2 responsive-columns"
       *ngFor="let image of display; let i = index"
     >
-      <div>
+      <div class="images">
         <img
           [src]="image.src"
           width="100%"
@@ -38,9 +41,11 @@
           [ngStyle]="{ opacity: currentImageIndex == i ? '0.4' : '1' }"
         />
         <button
+          (focus)="onEnter(i)"
           class="hovered-button"
           (mouseover)="onEnter(i)"
           [ngStyle]="{ opacity: currentImageIndex == i ? '1.0' : '0.0' }"
+          (blur)="onLeave()"
         >
           LEARN MORE
         </button>

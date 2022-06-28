@@ -3,6 +3,7 @@
   <div class="container">
     <div class="d-flex flex-md-row flex-column justify-content-center">
       <button
+        [disabled]="disabled"
         *ngFor="let category of categoriesList"
         class="my-2 mx-4 p-2 category-button bg-warning fw-bold position-relative"
         (click)="setActiveCategory(category)"
@@ -19,15 +20,108 @@
           class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
           >{{ categories[category].length }}</span
         >
+        <span
+          *ngIf="category == 'Approved Contributions' && pendingContributions.length != 0"
+          class="bg-danger position-absolute top-0 start-0 translate-middle badge rounded-pill"
+          >{{ pendingContributions.length }}</span
+        >
       </button>
     </div>
   </div>
 
   <div class="container-fluid">
+
+    <div class="container my-4" *ngIf="selectedContributions.length == 0">
+      <div class="card">
+        <div class="card-header text-center p-4">
+          No contributions for YOU!!!!
+        </div>
+      </div>
+    </div>
+
+     <!-- Pending Contributions -->
+    <div class="container" *ngIf="activeCategory == 'Approved Contributions' && pendingContributions.length != 0">
+      <div
+        class="row my-4 contribution-container border border-danger border-2"
+        *ngFor="let victim of pendingContributions"
+        [@contributionAnimation]="victim.state"
+        (@contributionAnimation.start)="animationStart($event)"
+        (@contributionAnimation.done)="animationDone($event)"
+      >
+        <div class="col-5">
+      
+          <div class="card border-0">
+            <div class="row no-gutters my-2">
+              <div
+                class="col-md-6 d-flex align-items-center justify-content-center"
+              >
+                <img
+                  [src]="victim.imgSrc"
+                  class="card-img image-fluid w-50 rounded-pill"
+                  alt="..."
+                />
+              </div>
+              <div class="col-md-6 d-flex align-items-center">
+                <div class="card-body text-md-start text-center">
+                  <h5 class="card-title fw-bold display-6">
+                    {{ victim.surname }}
+                  </h5>
+                  <p
+                    class="card-text m-0 text-uppercase"
+                    *ngIf="victim.occupation"
+                  >
+                    {{ victim.occupation }}
+                  </p>
+                  <p
+                    class="card-text m-0 text-uppercase"
+                    *ngIf="victim.ethnicGroup"
+                  >
+                    {{ victim.ethnicGroup }}
+                  </p>
+                  <p class="card-text m-0 text-uppercase" *ngIf="victim.gender">
+                    {{ victim.gender }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-5 align-self-center">
+          <h4 class="fw-bold">Content:</h4>
+          <p>{{ victim.content }}</p>
+        </div>
+        <div
+          class="col-lg-2 col-12 d-flex align-items-center justify-content-center"
+        >
+          <button 
+            (click)="onEdit(editTemplate, victim.id)" 
+            class="btn btn-transparent mx-2"
+          >
+            <span class="pencil-icon text-warning">&#9998;</span>
+          </button>
+          
+          <button 
+            (click)="onApprove(victim.id)" 
+            class="btn btn-transparent mx-2"
+          >
+            <span class="merge-icon">&#8694;</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="divider pt-1 bg-warning"></div>
+    </div>
+
+      <!-- Categorized Contributions -->
     <div class="container">
       <div
-        class="row my-4 contribution-container border border-warning border-3"
+        class="row my-4 contribution-container border border-2"
         *ngFor="let victim of selectedContributions"
+        [ngClass]="
+          {'border-danger': activeCategory == 'New Contributions', 
+          'border-success': activeCategory == 'Approved Contributions',
+          'border-warning': activeCategory == 'Rejected Contributions'} 
+        "
         [@contributionAnimation]="victim.state"
         (@contributionAnimation.start)="animationStart($event)"
         (@contributionAnimation.done)="animationDone($event)"
@@ -73,27 +167,56 @@
           <h4 class="fw-bold">Content:</h4>
           <p>{{ victim.content }}</p>
         </div>
+
         <div
           class="col-lg-2 col-12 d-flex align-items-center justify-content-center"
-          *ngIf="activeCategory == 'New Contributions'"
         >
           <button
-            (click)="onApprove(victim.id)"
+            (click)="onPending(victim.id)"
             class="btn btn-transparent mx-2"
+            *ngIf="activeCategory == 'New Contributions'"
           >
             <span class="check-icon">&checkmark;</span>
           </button>
-          <button (click)="onEdit(victim.id)" class="btn btn-transparent mx-2">
+
+          <button
+          (click)="onReject(victim.id)"
+          class="btn btn-transparent mx-2"
+          *ngIf="activeCategory == 'New Contributions'"
+        >
+          <span class="cross-icon">&cross;</span>
+        </button>
+
+          <button 
+            (click)="onEdit(editTemplate, victim.id)" 
+            class="btn btn-transparent mx-2"
+            *ngIf="activeCategory == 'Approved Contributions'"
+          >
             <span class="pencil-icon text-warning">&#9998;</span>
           </button>
-          <button
-            (click)="onReject(victim.id)"
-            class="btn btn-transparent mx-2"
+
+          <button 
+          (click)="onReconsider(victim.id)" 
+          class="btn btn-transparent mx-2"
+          *ngIf="activeCategory == 'Rejected Contributions'"
           >
-            <span class="cross-icon">&cross;</span>
+          <span class="pencil-icon text-warning">&#8634;</span>
           </button>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #editTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    This is a modal.
+  </div>  
+</ng-template>
