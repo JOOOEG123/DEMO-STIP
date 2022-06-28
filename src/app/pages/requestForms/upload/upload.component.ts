@@ -27,6 +27,7 @@ export class UploadComponent implements OnInit {
         this.ethnic = '',
         this.occupation2 = '';
       });
+      
    }
 
   selected?: string;

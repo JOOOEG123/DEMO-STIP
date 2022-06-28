@@ -44,7 +44,7 @@
       <div class="col">
         <label for="Year" class="form-label">Year of becoming a rightest</label>
         <input
-                [bsConfig]="{ startView: 'year', minMode:'year', dateInputFormat: 'YYYY'}"
+                [bsConfig]="{ startView: 'year', minMode:'year', dateInputFormat: 'YYYY', showClearButton: true}"
                 bsDatepicker
                 class="form-control"
                 placeholder="year"
@@ -118,6 +118,7 @@
         <button type="button" class="btn btn-outline-light me-5" (click)="clearInputMethod2()" (click)="clear()">Clear</button>
       </div>
     </div>
+    
   
   </div>
   <br /><br /><br />
