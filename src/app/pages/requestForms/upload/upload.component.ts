@@ -11,10 +11,23 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 export class UploadComponent implements OnInit {
 
+  public ethnic: any;
+  public occupation2: any;
+
   form = new FormGroup({
     name: new FormControl(''),
   });
-  clearInputMethod2() { this.form.setValue({name:''}); }
+  
+  clearInputMethod2() { 
+    this.form.setValue({name:''}); 
+  }
+
+  clear(){
+    setTimeout(()=>{
+        this.ethnic = '',
+        this.occupation2 = '';
+      });
+   }
 
   selected?: string;
   ethnicGroup: string[] = [

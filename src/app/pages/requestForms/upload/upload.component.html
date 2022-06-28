@@ -25,16 +25,17 @@
       <div class="col">
         <label for="ethnicGroup" class="form-label">Chinese Ethnic Group</label>
         <input
-          [(ngModel)]="selected"
+          [(ngModel)]="ethnic"
           [typeahead]="ethnicGroup"
           class="form-control"
+          
         />
       </div>
       <!-- col for occupation -->
       <div class="col">
         <label for="occupation" class="form-label">Occupation</label>
         <input
-          [(ngModel)]="selected2"
+          [(ngModel)]="occupation2"
           [typeahead]="occupation"
           class="form-control"
         />
@@ -114,7 +115,7 @@
       <!-- col for clear/submit buttons -->
       <div class="col">
         <br /><br />
-        <button type="button" class="btn btn-outline-light me-5" (click)="clearInputMethod2()">Clear</button>
+        <button type="button" class="btn btn-outline-light me-5" (click)="clearInputMethod2()" (click)="clear()">Clear</button>
       </div>
     </div>
   
