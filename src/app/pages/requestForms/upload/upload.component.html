@@ -7,15 +7,19 @@
     <div
       class="row row-cols-1 row-cols-sm-2 row-cols-md-4 ms-5 me-5 pt-3 bg-secondary"
     >
+      
       <!-- col for name selection -->
       <div class="col">
+        <form [formGroup]="form">
         <label for="Name" class="form-label">Name</label>
         <input
           type="text"
           class="form-control"
           id="Name"
+          formControlName="name"
           placeholder="First and Last name"
         />
+        </form>
       </div>
       <!-- col for ethnic group -->
       <div class="col">
@@ -37,8 +41,15 @@
       </div>
       <!-- col for year of event -->
       <div class="col">
-        <label for="Year" class="form-label">Year of event</label>
-        <input type="text" class="form-control" id="Year" placeholder="Year" />
+        <label for="Year" class="form-label">Year of becoming a rightest</label>
+        <input
+                [bsConfig]="{ startView: 'year', minMode:'year', dateInputFormat: 'YYYY'}"
+                bsDatepicker
+                class="form-control"
+                placeholder="year"
+                autocomplete="off"
+                
+              />
       </div>
     </div>
 
@@ -100,18 +111,13 @@
           </label>
         </div>
       </div>
-      <!-- col for file ID -->
-      <div class="col">
-        <br />
-        <label for="fileID" class="form-label">File ID</label>
-        <input type="text" class="form-control" id="fileID" placeholder="ID" />
-      </div>
       <!-- col for clear/submit buttons -->
       <div class="col">
         <br /><br />
-        <button type="button" class="btn btn-outline-light me-5">Clear</button>
+        <button type="button" class="btn btn-outline-light me-5" (click)="clearInputMethod2()">Clear</button>
       </div>
     </div>
+  
   </div>
   <br /><br /><br />
 
@@ -167,7 +173,7 @@
             <div class="form-group">
               <h4>Add Event Date</h4>
               <input
-                [bsConfig]="{ startView: 'year' }"
+                [bsConfig]="{ startView: 'year', minMode:'year', dateInputFormat: 'YYYY'}"
                 bsDatepicker
                 class="form-control"
                 placeholder="year"

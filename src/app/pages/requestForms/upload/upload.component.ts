@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -9,6 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class UploadComponent implements OnInit {
+
+  form = new FormGroup({
+    name: new FormControl(''),
+  });
+  clearInputMethod2() { this.form.setValue({name:''}); }
 
   selected?: string;
   ethnicGroup: string[] = [
