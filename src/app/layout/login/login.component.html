@@ -137,7 +137,7 @@
         <button
           class="btn btn-light rounded-pill border"
           type="button"
-          (click)="userGoogleLogin();"
+          (click)="userGoogleLogin()"
         >
           <img
             src="assets/login/google.png"
@@ -160,6 +160,12 @@
           >
             {{ isSignIn === "signup" ? "Log In" : "Sign Up" }}
           </button>
+        </div>
+        <div class="text-center col-6 mx-auto">
+          By continuing, you agree to our
+          <a routerLink="/" class="link-dark fw-bold">Terms of Service</a> and
+          acknowledge you've read our
+          <a routerLink="/" class="link-dark fw-bold">Privacy Policy</a>.
         </div>
       </div>
     </form>
@@ -218,6 +224,5 @@
     (close)="errorMessage = ''"
   >
     {{ errorMessage }}
-</alert>
-
+  </alert>
 </ng-template>
