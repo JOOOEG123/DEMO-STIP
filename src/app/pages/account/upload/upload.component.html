@@ -3,7 +3,6 @@
 <div class="container-fluid">
   <div>
     <tabset [justified]="true">
-
       <!-- Upload tab -->
       <tab heading="Upload" id="tab1">
         <br />
@@ -131,84 +130,88 @@
             </div>
           </div>
         </div>
-        <hr>
+        <hr />
         <br /><br /><br />
 
-        <!-- photo upload section -->
-        <p>Upload a photo for this file</p>
-        <form>
-          <label for="img">Select image:</label>
-          <input type="file" id="img" name="img" accept="image/*" />
-        </form>
-        <br />
-        <p>Include this image in gallery</p>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio1"
-            value="yes"
-          />
-          <label class="form-check-label" for="inlineRadio1">Yes</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio2"
-            value="no"
-          />
-          <label class="form-check-label" for="inlineRadio2">No</label>
+        <!-- upload photo and add content section -->
+        <div class="row m-5 p-5">
+          <div class="col-4">
+            <!-- photo upload section -->
+            <h4>Upload a photo for this file</h4>
+            <form>
+              <label for="img">Select image:</label>
+              <input type="file" id="img" name="img" accept="image/*" />
+            </form>
+            <br />
+            <p>Include this image in gallery</p>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio1"
+                value="yes"
+              />
+              <label class="form-check-label" for="inlineRadio1">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio2"
+                value="no"
+              />
+              <label class="form-check-label" for="inlineRadio2">No</label>
+            </div>
+          </div>
+          <div class="col-8">
+            <!-- add content section -->
+            <div class="cotainer-fluid">
+              <div class="row">
+                <div class="col">
+                  <label for="exampleFormControlTextarea1" class="form-label"
+                    >Add Content</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="3"
+                  ></textarea>
+                </div>
+              </div>
+              <br /><br />
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <p>Add Event Date</p>
+                    <input
+                      [bsConfig]="{ startView: 'year' }"
+                      bsDatepicker
+                      class="form-control"
+                      placeholder="Datepicker"
+                    />
+                  </div>
+                  <br />
+                  <button type="button" class="btn btn-dark">Add Event</button>
+                </div>
+                <div class="col">
+                  <label for="exampleFormControlTextarea1" class="form-label"
+                    >Event Content</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="3"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- add content section -->
-        <div class="cotainer-fluid">
-          <div class="row">
-            <div class="col">
-              <br><br>
-              <label for="exampleFormControlTextarea1" class="form-label"
-                >Add Content</label
-              >
-              <textarea
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-              ></textarea>
-            </div>
-          </div>
-          <br /><br />
-          <div class="row">
-            <div class="col">
-              <div class="form-group">
-                <p>Add Event</p>
-                <input
-                  [bsConfig]="{ startView: 'year' }"
-                  bsDatepicker
-                  class="form-control"
-                  placeholder="Datepicker"
-                />
-              </div>
-              <br />
-              <button type="button" class="btn btn-dark">Add Event</button>
-            </div>
-            <div class="col">
-              <label for="exampleFormControlTextarea1" class="form-label"
-                >Example textarea</label
-              >
-              <textarea
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-              ></textarea>
-            </div>
-          </div>
-        </div>
-        <br />
-        
         <!-- memoir section -->
-        <div class="text-center">
+        <div class="text-center m-5 p-5">
           <h4>Add Memoir, book, or other information</h4>
           <input
             type="text"
