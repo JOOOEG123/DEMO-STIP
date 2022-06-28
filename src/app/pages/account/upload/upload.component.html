@@ -66,7 +66,6 @@
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault2"
-                  checked
                 />
                 <label class="form-check-label" for="flexRadioDefault2">
                   Female
@@ -94,7 +93,6 @@
                   type="radio"
                   name="status"
                   id="flexRadioDefault2"
-                  checked
                 />
                 <label class="form-check-label" for="flexRadioDefault2">
                   Deceased
@@ -121,6 +119,33 @@
           </div>
         </div>
         <br /><br /><br />
+        <p>Upload a photo for this file</p>
+        <form>
+          <label for="img">Select image:</label>
+          <input type="file" id="img" name="img" accept="image/*" />
+        </form>
+        <br />
+        <p>Include this image in gallery</p>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="inlineRadioOptions"
+            id="inlineRadio1"
+            value="option1"
+          />
+          <label class="form-check-label" for="inlineRadio1">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="inlineRadioOptions"
+            id="inlineRadio2"
+            value="option2"
+          />
+          <label class="form-check-label" for="inlineRadio2">No</label>
+        </div>
         <div class="cotainer-fluid">
           <div class="row">
             <div class="col" c>
