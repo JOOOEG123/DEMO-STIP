@@ -1,6 +1,7 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   modalRef?: BsModalRef;
 
   errorMessage = '';
+  sub: Subscription[] = [];
 
   get loginControls() {
     return this.loginForm.controls;
@@ -36,23 +38,39 @@ export class LoginComponent implements OnInit {
     private authService: AuthServiceService,
     private modalService: BsModalService
   ) {}
+  ngOnDestroy(): void {
+    this.sub.forEach((x) => x.unsubscribe());
+  }
 
   openModal(template: TemplateRef<any> = this.template) {
     this.modalRef = this.modalService.show(template);
     this.isSignIn = 'signin';
+    if (this.modalRef?.onHide) {
+      this.sub.push(
+        this.modalRef.onHide.subscribe(() => {
+          this.loginForm.reset();
+          this.forgetForm.reset();
+          this.errorMessage = '';
+          this.sub.forEach((x) => x.unsubscribe());
+        })
+      );
+    }
   }
 
   ngOnInit(): void {
-    this.loginForm.valueChanges.subscribe((value) => {
-      this.errorMessage = '';
-      if (
-        this.loginForm?.errors?.['notValid'] &&
-        value.email &&
-        value.confirmEmail
-      ) {
-        this.errorMessage = this.loginForm?.errors?.['notValid'];
-      }
-    });
+    this.sub.push(
+      this.loginForm.valueChanges.subscribe((value) => {
+        this.errorMessage = '';
+        if (
+          this.loginForm?.errors?.['notValid'] &&
+          value.email &&
+          value.confirmEmail
+        ) {
+          this.errorMessage = this.loginForm?.errors?.['notValid'];
+        }
+      })
+    );
+
     this.loginForm.updateValueAndValidity();
   }
 
