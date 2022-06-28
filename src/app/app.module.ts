@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareComponent } from './pages/browse/share/share.component';
 import { MemoirComponent } from './pages/browse/memoir/memoir.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { UploadComponent } from './pages/upload/upload.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     UpdateRowsPipe,
     ShareComponent,
     MemoirComponent,
+    UploadComponent,
   ],
   imports: [
     AngularFireAuthModule,
