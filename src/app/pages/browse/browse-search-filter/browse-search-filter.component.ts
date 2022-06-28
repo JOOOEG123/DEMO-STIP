@@ -5,10 +5,7 @@ import { FilterTypes } from 'src/app/core/types/filters.type';
 import { GROUPS,OCCUPATIONS} from './browse-search-filter.constant';
 import {MainBrowseComponent} from 'src/app/pages/browse/main-browse/main-browse.component';
 
-var STATUS = [
-  { id:1, value: 'deceased', name: 'Deceased', checked:false},
-  { id:2, value: 'unknown', name: 'Unknown', checked: false},
-];
+
 
 @Component({
   selector: 'app-browse-search-filter',
@@ -60,7 +57,7 @@ export class BrowseSearchFilterComponent implements OnInit {
         value.date = [new Date(value.date[0]),new Date(value.date[1])];
       }
 
-      console.log("subforming")
+      console.log("subforming",value)
       this.filterValues = {...value, date} as any;
       this.filterValuesChange.emit(value);
     });

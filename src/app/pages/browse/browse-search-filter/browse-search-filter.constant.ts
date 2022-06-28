@@ -55,7 +55,7 @@ export const GROUPS = [
   { value: '54', viewValue: 'Gaoshan' },
   { value: '55', viewValue: 'Lhoba' },
   { value: '56', viewValue: 'Tatars' },
-  { value: '57', viewValue: 'Undistinguished' },
+  { value: '57', viewValue: 'Unknown' },
   { value: '58', viewValue: 'Naturalized Citizen' },
 ];
 

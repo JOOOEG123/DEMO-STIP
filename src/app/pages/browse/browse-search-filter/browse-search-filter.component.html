@@ -46,12 +46,12 @@
             id="unknown" />
           <label class="form-check-label" for="unknown"> Unknown </label>
         </div>
-    </fieldset>
+      </fieldset>
 
 
 
 
-      
+
 
       <div class="col-12 col-md-2">
         <label for="chinese-ethic-group" class="form-label col fw-bold">Chinese Ethnic Group</label>
@@ -64,12 +64,14 @@
       <div class="col-12 col-md-3">
         <label for="chinese-ethic-group fw-bold" class="form-label col fw-bold">Occupation</label>
         <div class="col-auto">
-          <select class="form-select form-select-sm mb-3" formControlName="occupation"
-            aria-label=".form-select-lg example">
-            <!-- This should be iterative *ngFor create the constant in -->
-            <option selected value="" disabled *ngFor="let occupation of occupations" [value]="occupation.viewValue">
-              {{occupation.viewValue}}</option>
+
+          <select  class="form-select form-select-sm mb-3"
+            formControlName="occupation" aria-label=".form-select-lg example">
+            <option *ngFor="let occupation of occupations" [value]="occupation.viewValue">
+              {{occupation.viewValue}}
+            </option>
           </select>
+
         </div>
 
 

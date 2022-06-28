@@ -170,14 +170,15 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.db_result = this.db_result.filter((record): boolean => {
       let values: any[] = [
         record.gender,
-        // record.nationality,
-        record.workplace,
+        record.nationality,
+        record.title,
         record.status,
       ];
       let userValues: any[] = [
         this.filterValues.gender,
         this.filterValues.group,
         this.filterValues.occupation,
+        this.filterValues.status,
       ].filter((element) => {
         return element !== '';
       });
