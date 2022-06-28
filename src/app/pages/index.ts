@@ -15,7 +15,7 @@ import { BrowseSearchFilterComponent } from './browse/browse-search-filter/brows
 import { GalleryComponent } from './gallery/gallery.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ShareComponent } from './browse/share/share.component';
-import { UploadComponent } from './upload/upload.component';
+import { UploadComponent } from './requestForms/upload/upload.component';
 
 
 // AuthGuard pipe for admin pages

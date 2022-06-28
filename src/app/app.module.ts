@@ -32,7 +32,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareComponent } from './pages/browse/share/share.component';
 import { MemoirComponent } from './pages/browse/memoir/memoir.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { UploadComponent } from './pages/upload/upload.component';
+import { UploadComponent } from './pages/requestForms/upload/upload.component';
+import { DeleteComponent } from './pages/requestForms/delete/delete.component';
+import { AddComponent } from './pages/requestForms/add/add.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { UploadComponent } from './pages/upload/upload.component';
     ShareComponent,
     MemoirComponent,
     UploadComponent,
+    DeleteComponent,
+    AddComponent,
   ],
   imports: [
     AngularFireAuthModule,
