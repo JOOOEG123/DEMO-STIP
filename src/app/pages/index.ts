@@ -15,7 +15,7 @@ import { BrowseSearchFilterComponent } from './browse/browse-search-filter/brows
 import { GalleryComponent } from './gallery/gallery.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ShareComponent } from './browse/share/share.component';
-import { UploadComponent } from './account/upload/upload.component';
+import { UploadComponent } from './upload/upload.component';
 
 import { EditAccountComponent } from './account/edit-account/edit-account.component';
 import { AuthGuard } from '../core/services/auth-guard.service';
@@ -43,7 +43,7 @@ export const pagesComponents = [
   HomepageComponent,
   ResourcesComponent,
   BrowseArchiveComponent,
-  UploadComponent
+  UploadComponent,
 ];
 
 // Page routes
@@ -110,6 +110,11 @@ export const pagesRoutes = [
     path: 'edit-account',
     component: EditAccountComponent,
     canActivate: [AngularFireAuthGuard, AuthGuard],
+  },
+  {
+    path: 'upload',
+    component: UploadComponent,
+    canActivate: [AngularFireAuthGuard],
     data: {
       title: 'Edit Account',
     },
