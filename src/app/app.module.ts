@@ -1,12 +1,13 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+
 import { NgxBootstrapModule } from './module/ngx-bootrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 // Index Components
 import { allLayoutComponents } from './layout';
@@ -30,6 +31,9 @@ import { UpdateRowsPipe } from './core/pipes/update-rows-pipe.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareComponent } from './pages/browse/share/share.component';
 import { MemoirComponent } from './pages/browse/memoir/memoir.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
@@ -57,10 +61,12 @@ import { MemoirComponent } from './pages/browse/memoir/memoir.component';
     NgxBootstrapModule,
     HttpClientModule,
     NgxMasonryModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    TabsModule.forRoot()
   ],
   providers: [AuthServiceService],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
+
 })
 export class AppModule {}

@@ -80,30 +80,63 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.callAPI(letter);
   }
 
-  callAPI(l: string) {
+  // callAPI(l: string) {
+  //   //clear up display
+  //   this.display = [];
+  //   getTestDataByPersons
+  //   const alpha = l === 'All' ? '' : l;
+  //   const archKey = `person_arch_${l}`;
+  //   if (this.archCacheAPI[archKey]) {
+  //     this.db_result = this.archCacheAPI[archKey];
+  //     this.setDisplayInfo(this.itemsPerPage);
+  //     console.log('from cache');
+  //   } else {
+  //     this.isloading = true;
+  //     this.archSubAPI.push(
+  //       this.archApi
+  //         .getArchievePersonByAlphabet(alpha)
+  //         .subscribe((datas: any) => {
+  //           console.log(datas);
+  //           this.db_result =
+  //             l === 'All'
+  //               ? datas
+  //                   .map((alphabet: any) => [].concat(alphabet.persons))
+  //                   .flat()
+  //               : datas;
+  //           this.archCacheAPI[archKey] = this.db_result;
+  //           //reset current page
+  //           this.setDisplayInfo(this.itemsPerPage);
+  //           this.isloading = false;
+  //         })
+  //     );
+  //   }
+  // }
+
+  //for testing data
+  callAPI(letter: string) {
     //clear up display
     this.display = [];
+    
+    const alpha = letter === 'All' ? '' : letter;
+    const archKey = `person_arch_${letter}`;
 
-    const alpha = l === 'All' ? '' : l;
-    const archKey = `person_arch_${l}`;
+    //'from cache data'
     if (this.archCacheAPI[archKey]) {
       this.db_result = this.archCacheAPI[archKey];
       this.setDisplayInfo(this.itemsPerPage);
-      console.log('from cache');
     } else {
       this.isloading = true;
       this.archSubAPI.push(
         this.archApi
-          .getArchievePersonByAlphabet(alpha)
+          .getTestDataByPersons()
           .subscribe((datas: any) => {
             console.log(datas);
             this.db_result =
-              l === 'All'
-                ? datas
-                    .map((alphabet: any) => [].concat(alphabet.persons))
-                    .flat()
-                : datas;
+            letter === 'All'? datas:this.categorizeDataByLetter(alpha,datas)
+            console.log(this.db_result)
             this.archCacheAPI[archKey] = this.db_result;
+            //   letter === 'All'? datas.map((alphabet: any) => [].concat(alphabet.persons)).flat(): datas;
+            // this.archCacheAPI[archKey] = this.db_result;
             //reset current page
             this.setDisplayInfo(this.itemsPerPage);
             this.isloading = false;
@@ -111,6 +144,17 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       );
     }
   }
+
+  categorizeDataByLetter(letter: string,datas:any []) {
+    console.log("in categroy", letter, this.db_result)
+    return datas.filter((record) => {
+      // console.log(record.initial)
+      // console.log(letter)
+      return record.initial ===letter
+    });
+    
+  }
+
 
   ngOnDestroy(): void {
     this.archSubAPI.forEach((sub) => sub.unsubscribe());

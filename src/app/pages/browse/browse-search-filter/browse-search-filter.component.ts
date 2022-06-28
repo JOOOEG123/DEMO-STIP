@@ -18,7 +18,7 @@ var STATUS = [
 export class BrowseSearchFilterComponent implements OnInit {
   private FILTERS: FilterTypes = {} as FilterTypes;
   drop!: boolean;
-  radioSelected: any;
+
   formValues = this.formgroup.group({
     gender: [''],
     occupation: [''],
@@ -28,7 +28,7 @@ export class BrowseSearchFilterComponent implements OnInit {
   });
   groups = GROUPS;
   occupations = OCCUPATIONS
-  statues= STATUS
+  
   formSub!: Subscription;
 
   @Output() filterValuesChange = new EventEmitter<any>();
@@ -86,36 +86,4 @@ export class BrowseSearchFilterComponent implements OnInit {
     });
   }
 
-  resetRadio(index: any){
-    console.log("in reset ratio",this.formValues)
-    //this.formValues.controls['status'].reset()
-    console.log(this.statues[index].checked)
-    console.log(this.statues[index])
-      // this.statues[index].checked = !this.statues[index].checked
-      // this.formValues.controls['status'].reset('')
-      // console.log("printing formvalues",this.formValues.value)
-
-    
-    console.log("end reset ratio")
-
-    if (index == 1) {
-      // deselect
-
-        this.statues[index].checked = !this.statues[index].checked
-      
-
-      if (this.statues[2].checked) {
-        this.statues[2].checked = !this.statues[2].checked
-      }
-    }
-    else {
-      // deselect
-  
-        this.statues[index].checked = !this.statues[index].checked
-      
-      if (this.statues[1].checked) {
-        this.statues[1].checked = !this.statues[1].checked
-      }
-    }
- }
 }

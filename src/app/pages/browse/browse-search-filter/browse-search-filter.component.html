@@ -29,14 +29,7 @@
       <fieldset class="col-12 col-md-2">
         <legend class="h6 fw-bold">Status</legend>
 
-        <div class="form-check ms-3" *ngFor="let s of statues; let i = index">
-          <input class="form-check-input" [value]="s.value" type="radio" formControlName="status" name="status"
-          [id]="s.value" [checked]="statues[i].checked" />
-        <label class="form-check-label" [for]="s.value"> {{s.name}} </label>
-
-      </div>
-    </fieldset>
-        <!-- <div class="form-check ms-3">
+        <div class="form-check ms-3">
           <input class="form-check-input" value="alive" type="radio" formControlName="status" name="status"
             id="alive" />
           <label class="form-check-label" for="alive"> Alive </label>
@@ -52,7 +45,10 @@
           <input class="form-check-input" value="unknown" type="radio" formControlName="status" name="status"
             id="unknown" />
           <label class="form-check-label" for="Unknown"> Unknown </label>
-        </div> -->
+        </div>
+    </fieldset>
+
+
 
 
       

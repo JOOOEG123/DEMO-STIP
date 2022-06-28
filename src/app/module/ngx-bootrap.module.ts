@@ -7,9 +7,10 @@ import {
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [],
@@ -22,6 +23,7 @@ import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
     ModalModule.forRoot(),
     TypeaheadModule.forRoot(),
     PaginationModule.forRoot(),
+    TabsModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
@@ -31,8 +33,10 @@ import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
     BsDatepickerModule,
     TypeaheadModule,
     PaginationModule,
+    TabsModule
   ],
   providers: [BsDatepickerConfig, PaginationConfig],
   bootstrap: [],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class NgxBootstrapModule {}
