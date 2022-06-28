@@ -1,0 +1,127 @@
+<app-modal-template #modaltemplate></app-modal-template>
+<div class="container">
+  <div class="row my-3">
+    <div class="col-12 col-md-3">
+      <div class="d-flex flex-column">
+        <div class="d-flex justify-content-center">
+        <img
+          src="/assets/homepage/default-profile.png"
+          class="img-fluid rounded-circle"
+          alt="user profile"
+        />
+        </div>
+        <small class="linebtntext w-100">User ID</small>
+        <small class="my-2 text-center">{{ userId }}</small>
+      </div>
+    </div>
+    <div class="col-12 col-md-9">
+      <h4 class="col-12 text-center">Edit Account Information</h4>
+      <div>
+        <div class="form-group">
+          <label for="surname" class="form-label">Full Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="surname"
+            placeholder="Enter name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="view email"
+            disabled
+          />
+        </div>
+        <div class="form-group">
+          <label for="occupation" class="form-label">Occupation</label>
+          <input
+            type="text"
+            class="form-control"
+            id="occupation"
+            placeholder="Enter Occupation"
+          />
+        </div>
+        <div class="form-group">
+          <label for="occupation" class="form-label"
+            >Chinese Ethnic Group</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="occupation"
+            placeholder="Enter Occupation"
+          />
+        </div>
+        <fieldset class="form-group d-flex flex-row my-1">
+          <legend class="h6 fw-light m-0 p-0 col-1">Gender</legend>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              formControlName="gender"
+              value="male"
+              type="radio"
+              name="gender"
+              id="gender-male"
+            />
+            <label class="form-check-label" for="gender-male"> Male </label>
+          </div>
+          <div class="form-check ms-2">
+            <input
+              class="form-check-input"
+              value="female"
+              type="radio"
+              formControlName="gender"
+              name="gender"
+              id="gender-female"
+            />
+            <label class="form-check-label" for="gender-female"> Female </label>
+          </div>
+        </fieldset>
+
+        <div class="my-3 row">
+          <div class="col-12 col-md-3">
+            <button
+              class="btn btn-outline-dark rounded-pill w-100"
+              (click)="modaltemplate?.openChangeEmailModal()"
+            >
+              Change Email
+            </button>
+          </div>
+          <div class="col-12 col-md-3">
+            <button class="btn btn-outline-dark rounded-pill w-100">
+              Change Password
+            </button>
+          </div>
+        </div>
+        <hr class="border border-1 border-dark" />
+        <div class="my-3 row">
+          <div class="col-12 col-md">
+            <a
+              class="btn btn-link link-primary rounded-pill w-100"
+              routerLink="/account"
+            >
+              Go back Account
+            </a>
+          </div>
+          <div class="col-12 col-md">
+            <button
+              class="btn btn-outline-danger rounded-pill w-100"
+              (click)="modaltemplate?.openDeleteConfirmModal()"
+            >
+              Delete Account
+            </button>
+          </div>
+          <div class="col-12 col-md">
+            <button class="btn btn-outline-success rounded-pill w-100">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
