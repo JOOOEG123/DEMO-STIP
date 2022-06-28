@@ -24,8 +24,7 @@ export class AuthServiceService {
     private store: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
-    private outsideScope: NgZone,
-    private http: HttpClient
+    private outsideScope: NgZone
   ) {
     this.auth.authState.subscribe((user) => {
       if (user) {
@@ -83,6 +82,15 @@ export class AuthServiceService {
         this.saveUser(user.user as Profile | null);
       });
   }
+
+  facebookSignIn() {
+    return this.auth
+      .signInWithPopup(new provider.FacebookAuthProvider())
+      .then((user) => {
+        this.saveUser(user.user as Profile | null);
+      });
+  }
+  
   signInWithPopup(providers: provider.AuthProvider) {
     return this.auth.signInWithPopup(providers).then((user) => {
       console.log('user', user);

@@ -1,13 +1,7 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
 @Component({
@@ -15,7 +9,7 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -23,7 +17,17 @@ export class LoginComponent implements OnInit {
     lastName: [''],
     confirmEmail: [''],
   });
+  forgetForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+  });
   modalRef?: BsModalRef;
+
+  errorMessage = '';
+  sub: Subscription[] = [];
+
+  get loginControls() {
+    return this.loginForm.controls;
+  }
 
   @ViewChild('template') template!: TemplateRef<any>;
   @ViewChild('templateLogout') templateLogout!: TemplateRef<any>;
@@ -34,30 +38,44 @@ export class LoginComponent implements OnInit {
     private authService: AuthServiceService,
     private modalService: BsModalService
   ) {}
+  ngOnDestroy(): void {
+    this.sub.forEach((x) => x.unsubscribe());
+  }
 
   openModal(template: TemplateRef<any> = this.template) {
     this.modalRef = this.modalService.show(template);
     this.isSignIn = 'signin';
-  }
-
-  ngOnInit(): void {
-    this.loginForm.valueChanges.subscribe((value) => {
-      console.log(value);
-    });
-    this.loginForm.updateValueAndValidity();
-  }
-
-  onSubmit() {
-    console.log(this.loginForm.value);
-    const { email, password } = this.loginForm.value;
-    if (email && password && typeof email === 'string') {
-      this.authService.signInWithEmail({ email, password })?.then(() => {
-        this.modalRef?.hide();
-      });
+    if (this.modalRef?.onHide) {
+      this.sub.push(
+        this.modalRef.onHide.subscribe(() => {
+          this.loginForm.reset();
+          this.forgetForm.reset();
+          this.errorMessage = '';
+          this.sub.forEach((x) => x.unsubscribe());
+        })
+      );
     }
   }
 
+  ngOnInit(): void {
+    this.sub.push(
+      this.loginForm.valueChanges.subscribe((value) => {
+        this.errorMessage = '';
+        if (
+          this.loginForm?.errors?.['notValid'] &&
+          value.email &&
+          value.confirmEmail
+        ) {
+          this.errorMessage = this.loginForm?.errors?.['notValid'];
+        }
+      })
+    );
+
+    this.loginForm.updateValueAndValidity();
+  }
+
   switchState() {
+    this.errorMessage = '';
     this.isSignIn = this.isSignIn === 'signin' ? 'signup' : 'signin';
     if (this.isSignIn === 'signin') {
       this.loginForm.get('confirmEmail')?.clearValidators();
@@ -88,8 +106,11 @@ export class LoginComponent implements OnInit {
             password: this.loginForm.value.password,
           })
           ?.then((x) => {
-            console.log('Sign up: ', x);
+            this.loginForm.reset();
             this.modalRef?.hide();
+          })
+          .catch((e) => {
+            this.errorMessage = e.message;
           });
       } else if (this.isSignIn === 'signin') {
         this.authService
@@ -98,31 +119,56 @@ export class LoginComponent implements OnInit {
             password: this.loginForm.value.password,
           })
           ?.then(() => {
+            this.loginForm.reset();
             this.modalRef?.hide();
+            this.errorMessage = '';
+          })
+          .catch((e) => {
+            this.errorMessage = e.message;
           });
       }
     }
-
-    // this.modalRef?.hide();
   }
   checkEmails(group: AbstractControl) {
     const email = group?.get('email')?.value;
     const confirmEmail = group?.get('confirmEmail')?.value;
-    console.log(email, confirmEmail);
-    return email === confirmEmail ? null : { notSame: true };
+    return email === confirmEmail ? null : { notValid: 'Email does not match' };
   }
 
   userGoogleLogin() {
-    this.authService.googleSignIn().then(() => {
-      this.modalRef?.hide();
-    });
+    this.errorMessage = '';
+    this.authService
+      .googleSignIn()
+      .then(() => {
+        this.modalRef?.hide();
+      })
+      .catch((e) => {
+        this.errorMessage = e.message;
+      });
   }
 
   userFacebookLogin() {
-    console.log('facebook auth');
+    this.errorMessage = '';
+    this.authService
+      .facebookSignIn()
+      .then(() => {
+        this.modalRef?.hide();
+      })
+      .catch((e) => {
+        this.errorMessage = e.message;
+      });
   }
 
-  logout() {
-    console.log('logout');
+  forgetPassword() {
+    this.authService
+      .forgetPassword(this.forgetForm.value.email)
+      .then(() => {
+        this.modalRef?.hide();
+        this.forgetForm.reset();
+        this.errorMessage = '';
+      })
+      .catch((e) => {
+        this.errorMessage = e.message;
+      });
   }
 }
