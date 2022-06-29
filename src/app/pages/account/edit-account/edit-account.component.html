@@ -4,11 +4,55 @@
     <div class="col-12 col-md-3">
       <div class="d-flex flex-column">
         <div class="d-flex justify-content-center">
-        <img
+          <!-- <img
           src="/assets/homepage/default-profile.png"
           class="img-fluid rounded-circle"
           alt="user profile"
-        />
+        /> -->
+          <div class="main-canvas">
+            <input
+              type="file"
+              #uploadFile
+              id="profile-image"
+              class="visually-hidden"
+              accept="image/*"
+              (change)="uploadImage($event)"
+            />
+            <img
+              *ngIf="imageUrl | async; let srcUrl"
+              [src]="srcUrl"
+              alt="profile image"
+              class="img-fluid rounded-circle border shadow"
+            />
+            <img
+              *ngIf="!(imageUrl | async)"
+              src="/assets/homepage/default-profile.png"
+              alt="user"
+              class="img-fluid rounded-circle border shadow"
+            />
+            <button
+              type="button"
+              class="btn rounded-circle icon-bl"
+              aria-label="upload profile"
+              aria-labelledby="profile-image"
+              (click)="uploadFile.click()"
+            >
+              <img
+                src="assets/icons/profile/camera.svg"
+                alt="user"
+                width="45"
+              />
+            </button>
+          </div>
+        </div>
+        <div class="mt-1" *ngIf="uploadImgProg | async; let prog">
+          <!-- <progress max="100" class="w-100" [value]="prog">{{ prog }}%</progress> -->
+          <progressbar
+            class="progress-striped active"
+            [value]="prog"
+            type="success"
+            ><i>{{ prog }}%</i></progressbar
+          >
         </div>
         <small class="linebtntext w-100">User ID</small>
         <small class="my-2 text-center">{{ userId }}</small>
