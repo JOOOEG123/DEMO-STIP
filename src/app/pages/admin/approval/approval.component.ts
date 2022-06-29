@@ -8,10 +8,12 @@ import {
 } from '@angular/animations';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import {
   Categories,
   CategoryList,
   Contribution,
+  ContributionSchema,
 } from 'src/app/core/types/adminpage.types';
 
 @Component({
@@ -29,112 +31,12 @@ import {
 export class ApprovalComponent implements OnInit {
   currentState: string = 'void';
 
-  newContributions: Contribution[] = [
-    {
-      id: 'victim1',
-      imgSrc: 'assets/homepage/theguy.png',
-      surname: 'John Doe',
-      occupation: 'Student',
-      ethnicGroup: '',
-      gender: 'male',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      date: new Date(),
-      state: 'void',
-    },
-    {
-      id: 'victim2',
-      imgSrc: 'assets/homepage/theguy.png',
-      surname: 'Jane Doe',
-      occupation: 'Butcher',
-      ethnicGroup: 'Han',
-      gender: 'female',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      date: new Date(),
-      state: 'void',
-    },
-    {
-      id: 'victim3',
-      imgSrc: 'assets/homepage/theguy.png',
-      surname: 'Joe Doe',
-      occupation: 'Butcher',
-      ethnicGroup: 'Han',
-      gender: 'female',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      date: new Date(),
-      state: 'void',
-    },
-    {
-      id: 'victim4',
-      imgSrc: 'assets/homepage/theguy.png',
-      surname: 'Josh Doe',
-      occupation: 'Butcher',
-      ethnicGroup: 'Han',
-      gender: 'female',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      date: new Date(),
-      state: 'void',
-    },
-  ];
+  newContributions: Contribution[] = []
+  approvedContributions: Contribution[] = []
+  rejectedContributions: Contribution[] = []
 
-  pendingContributions: Contribution[] = [
-    {
-      id: 'victim100',
-      imgSrc: 'assets/homepage/theguy.png',
-      surname: 'Pending Doe',
-      occupation: 'Butcher',
-      ethnicGroup: 'Han',
-      gender: 'female',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      date: new Date(),
-      state: 'void',
-    }
-  ]
-
-  approvedContributions: Contribution[] = [
-    {
-      id: 'victim10',
-      imgSrc: 'assets/homepage/theguy.png',
-      surname: 'Joshua Doe',
-      occupation: 'Butcher',
-      ethnicGroup: 'Han',
-      gender: 'female',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      date: new Date(),
-      state: 'void',
-    },
-    {
-      id: 'victim11',
-      imgSrc: 'assets/homepage/theguy.png',
-      surname: 'Jenny Doe',
-      occupation: 'Butcher',
-      ethnicGroup: 'Han',
-      gender: 'female',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      date: new Date(),
-      state: 'void',
-    },
-    {
-      id: 'victim12',
-      imgSrc: 'assets/homepage/theguy.png',
-      surname: 'Jap Doe',
-      occupation: 'Butcher',
-      ethnicGroup: 'Han',
-      gender: 'female',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-      date: new Date(),
-      state: 'void',
-    },
-  ];
-  rejectedContributions: Contribution[] = [];
-  selectedContributions: Contribution[] = [];
+  pendingContributions: Contribution[] = []
+  selectedContributions: Contribution[] = []
 
   activeCategory!: Categories;
   selectedContribution!: Contribution;
@@ -153,19 +55,119 @@ export class ApprovalComponent implements OnInit {
   disabled: boolean = false
   modalRef?: BsModalRef;
   
-  constructor(private modalService: BsModalService) {
+  contributions: any[] = []
+
+  constructor(
+    private modalService: BsModalService,
+    private archApi: ArchieveApiService
+  ) {
     this.selectedContributions = this.newContributions;
     this.activeCategory = 'New Contributions';
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    // var result: ContributionSchema = {
+    //   contributionId: 'victim101',
+    //   contributorId: 'pL8BFnZxdSeSWSIuyAkTBQZuNbf2',
+    //   publish: 'new',
+    //   contributedAt: new Date().toString(),
+    //   rightist: {
+    //     rightistId: 'A800',
+    //     birthYear: 1922,
+    //     deathYear: 0,
+    //     description: "",
+    //     events: [
+    //         {
+    //           content: "Something happened!",
+    //           endYear: 0,
+    //           startYear: 1955
+    //         },
+    //         {
+    //           content: "Something happened!",
+    //           endYear: 0,
+    //           startYear: 1955
+    //         },
+    //         {
+    //           content: "Something happened!",
+    //           endYear: 0,
+    //           startYear: 1955
+    //         },
+    //         {
+    //           content: "Something happened!",
+    //           endYear: 0,
+    //           startYear: 1955
+    //         },
+    //         {
+    //           content: "Something happened!",
+    //           endYear: 0,
+    //           startYear: 1955
+    //         },
+    //         {
+    //           content: "Something happened!",
+    //           endYear: 0,
+    //           startYear: 1955
+    //         }
+    //       ],
+    //       firstName: "Ai",
+    //       gender: "Male",
+    //       imagePath: "https://firebasestorage.googleapis.com/v0/b/stip-demo.appspot.com/o/theguy.png?alt=media&token=8d31edbb-cda0-4cc2-999d-dffd59f6b747",
+    //       initial: "A",
+    //       job: "student",
+    //       lastName: "fang",
+    //       memoirs: [
+    //         "Something",
+    //         "Something else"
+    //       ],
+    //       nationality: "Han",
+    //       publish: "new",
+    //       reference: "",
+    //       rightistYear: 1957,
+    //       status: "Unknown",
+    //       workplace: "Department of Physics"
+    //     }
+    //   }
+    //   console.log(this.archApi.addContribution(result))
+    // this.archApi.getContributions().snapshotChanges((data: any) => {
+    //   console.log(data)
+    // })
+
+    this.archApi.getContributions().valueChanges().subscribe(data => {
+      this.contributions = data as any[]
+
+      console.log(this.contributions)
+      for (var contribution of this.contributions) {
+        contribution.state = 'void'
+        contribution.limit = 3
+        contribution.contributedAt = new Date(contribution.contributedAt)
+
+        if (contribution.publish == 'new') {
+          this.newContributions.push(contribution)
+        }
+
+        if (contribution.publish == 'approved') {
+          this.approvedContributions.push(contribution)
+        }
+
+        if (contribution.publish == 'rejected') {
+          this.rejectedContributions.push(contribution)
+        }
+
+        if (contribution.publish == 'pending') {
+          this.pendingContributions.push(contribution)
+        }
+      }
+    })
+  }
+  
 
   onApprove(victimId: string) {
     const index = this.pendingContributions.findIndex(
-      (contribution) => contribution.id == victimId
+      (contribution) => contribution.contributionId == victimId
     );
     this.selectedContribution = this.pendingContributions[index];
     this.selectedContribution.state = 'removed';
+
+    
   }
 
   onEdit(template: TemplateRef<any>, victimId: string) {
@@ -173,26 +175,37 @@ export class ApprovalComponent implements OnInit {
   }
 
   onPending(victimId: string) {
-    const index = this.newContributions.findIndex(
-      (contribution) => contribution.id == victimId
+    const index = this.selectedContributions.findIndex(
+      (contribution) => contribution.contributionId == victimId
     )
     this.selectedContribution = this.newContributions[index];
     this.selectedContribution.state = 'removed';
     this.pendingContributions.unshift(this.selectedContribution);
   }
 
-  onReject(victimId: string) {
-    const index = this.newContributions.findIndex(
-      (contribution) => contribution.id == victimId
+  onReject(contributionId: string) {
+    
+    const index = this.selectedContributions.findIndex(
+      (contribution) => contribution.contributionId == contributionId
     );
-    this.selectedContribution = this.newContributions[index];
-    this.selectedContribution.state = 'removed';
-    this.rejectedContributions.unshift(this.selectedContribution);
+    if (index == -1) {
+      const i = this.pendingContributions.findIndex(
+        (contribution) => contribution.contributionId == contributionId
+      )
+      this.selectedContribution = this.pendingContributions[i]
+      this.selectedContribution.state = 'removed'
+      this.rejectedContributions.unshift(this.selectedContribution)
+    }
+    else {
+      this.selectedContribution = this.newContributions[index];
+      this.selectedContribution.state = 'removed';
+      this.rejectedContributions.unshift(this.selectedContribution);
+    } 
   }
 
   onReconsider(victimId: string) {
     const index = this.rejectedContributions.findIndex(
-      (contribution) => contribution.id = victimId
+      (contribution) => contribution.contributionId = victimId
     )
     this.selectedContribution = this.rejectedContributions[index]
     this.selectedContribution.state = 'removed'
@@ -200,8 +213,17 @@ export class ApprovalComponent implements OnInit {
   }
 
   setActiveCategory(category: Categories) {
+    const index = this.selectedContributions.findIndex(
+      (contribution) => contribution.contributionId == this.selectedContribution?.contributionId
+    )
+
+    if (index != -1) {
+      this.selectedContributions[index].limit = 3
+    }
+
     this.activeCategory = category;
     this.selectedContributions = this.categories[this.activeCategory];
+    
   }
 
   animationStart(event: AnimationEvent) {
@@ -213,7 +235,7 @@ export class ApprovalComponent implements OnInit {
     if (this.activeCategory == 'Rejected Contributions') {
       if (event.toState == 'removed') {
         const index = this.rejectedContributions.findIndex(
-          (contribution) => contribution.id == this.selectedContribution.id
+          (contribution) => contribution.contributionId == this.selectedContribution.contributionId
         )
         this.rejectedContributions.splice(index, 1)
         this.selectedContribution.state = 'void'
@@ -223,10 +245,13 @@ export class ApprovalComponent implements OnInit {
     if (this.activeCategory == 'Approved Contributions') {
       if (event.toState == 'removed') {
         const index = this.pendingContributions.findIndex(
-          (contribution) => contribution.id == this.selectedContribution.id
+          (contribution) => contribution.contributionId == this.selectedContribution.contributionId
         )
         this.pendingContributions.splice(index, 1)
-        this.approvedContributions.unshift(this.selectedContribution);
+        if (this.selectedContribution.contributionId != this.rejectedContributions[0]?.contributionId) {
+          console.log("Inside")
+          this.approvedContributions.unshift(this.selectedContribution); 
+        }
         this.selectedContribution.state = 'void'
       }
     }
@@ -234,7 +259,7 @@ export class ApprovalComponent implements OnInit {
     if (this.activeCategory == 'New Contributions') {
       if (event.toState == 'removed') {
         const index = this.newContributions.findIndex(
-          (contribution) => contribution.id == this.selectedContribution?.id
+          (contribution) => contribution.contributionId == this.selectedContribution?.contributionId
         );
         this.newContributions.splice(index, 1);
         this.selectedContribution.state = 'void';
@@ -242,5 +267,25 @@ export class ApprovalComponent implements OnInit {
     }
 
     this.disabled = false
+    if (this.selectedContribution) {
+      this.selectedContribution.limit = 3
+    }
+  }
+
+  onReadMore(contributionId: string) {
+    const index = this.selectedContributions.findIndex(
+      (contribution) => contribution.contributionId == contributionId
+    )
+    this.selectedContribution = this.selectedContributions[index]
+
+    if (index == -1) {
+      const i = this.pendingContributions.findIndex(
+        (contribution) => contribution.contributionId == contributionId
+      )
+      this.pendingContributions[i].limit = this.pendingContributions[i].victim.events.length
+    }
+    else {
+      this.selectedContributions[index].limit = this.selectedContributions[index].victim.events.length
+    }
   }
 }

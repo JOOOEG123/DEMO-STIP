@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { ContributionJson } from '../types/adminpage.types';
 import { UUID } from '../utils/uuid';
 
 @Injectable({
@@ -149,7 +150,26 @@ export class ArchieveApiService {
       .valueChanges();
   }
 
+  getContributions() {
+    return this.db
+      .list(`/persons/requestArchieve/contributions`)
+  }
 
+  getContributionById(contributionId: string) {
+    return this.db
+      .list(`/persons/requestArchieve/contributions/${contributionId}`)
+  }
+
+  updateContributionById(contributionId: string, data: ContributionJson) {
+    return this.db
+      .object(`/persons/requestArchieve/contributions/${contributionId}`)
+      .update(data)
+  }
+
+  addContribution(contribution: ContributionJson) {
+    return this.db
+      .list(`/persons/requestArchieve/contributions`).push(contribution)
+  }
 
   // new APIs: for sample data and need fix if the db data changes. 
   getTestDataPersonByIntial(letter: string) {
