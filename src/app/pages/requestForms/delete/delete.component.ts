@@ -1,14 +1,34 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
-  selector: 'delete-add',
+  selector: 'app-delete',
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.scss']
   
 })
 
 export class DeleteComponent implements OnInit {
+
+  public ethnic: any;
+  public occupation2: any;
+
+
+  form = new FormGroup({
+    name: new FormControl(''),
+  });
+  
+  clearInputMethod2() { 
+    this.form.setValue({name:''}); 
+  }
+
+  clear(){
+    setTimeout(()=>{
+        this.ethnic = '',
+        this.occupation2 = '';
+      });
+   }
 
   selected?: string;
   ethnicGroup: string[] = [
