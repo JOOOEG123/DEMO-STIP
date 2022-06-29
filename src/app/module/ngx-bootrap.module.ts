@@ -9,8 +9,18 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgModule } from '@angular/core';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
-import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import {
+  ProgressbarConfig,
+  ProgressbarModule,
+} from 'ngx-bootstrap/progressbar';
 import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
+
+export const getProgressbarConfig = (): ProgressbarConfig =>
+  Object.assign(new ProgressbarConfig(), {
+    animate: true,
+    striped: true,
+    max: 100,
+  });
 
 @NgModule({
   declarations: [],
@@ -33,9 +43,13 @@ import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
     BsDatepickerModule,
     TypeaheadModule,
     PaginationModule,
-    ProgressbarModule
+    ProgressbarModule,
   ],
-  providers: [BsDatepickerConfig, PaginationConfig],
+  providers: [
+    BsDatepickerConfig,
+    PaginationConfig,
+    { provide: ProgressbarConfig, useFactory: getProgressbarConfig },
+  ],
   bootstrap: [],
 })
 export class NgxBootstrapModule {}
