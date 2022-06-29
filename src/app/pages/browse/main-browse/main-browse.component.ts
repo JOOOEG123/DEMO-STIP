@@ -5,6 +5,7 @@ import {
   Input,
   OnDestroy,
   Attribute,
+  ViewChild,
 } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
@@ -12,6 +13,7 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { FilterTypes } from 'src/app/core/types/filters.type';
 
 import { LETTERS } from './main-browse.constant';
+import { BrowseSearchFilterComponent } from 'src/app/pages/browse/browse-search-filter/browse-search-filter.component';
 
 @Component({
   selector: 'app-main-browse',
@@ -39,6 +41,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   archSubAPI: Subscription[] = [];
   isloading!: boolean;
   original: any;
+
+  @ViewChild(BrowseSearchFilterComponent)
+  private browseSearchFilterComponent!: BrowseSearchFilterComponent;
 
   constructor(
     private archApi: ArchieveApiService,
@@ -103,13 +108,13 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
           .getTestDataPersonByPersons()
           .subscribe((datas: any) => {
             this.db_result = datas;
-            console.log(this.db_result);
+
             this.archCacheAPI[archKey] = this.db_result;
-          
+
             this.setDisplayInfo(this.itemsPerPage);
-            this.setNonFilterData("filterPanel");
-            this.setNonFilterData("searchBar");
-            this.original = JSON.parse(JSON.stringify(this.db_result));
+            this.setNonFilterData('filterPanel');
+            this.setNonFilterData('searchBar');
+
             this.isloading = false;
           });
       } else {
@@ -119,8 +124,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             this.db_result = datas;
             this.archCacheAPI[archKey] = this.db_result;
             this.setDisplayInfo(this.itemsPerPage);
-            this.setNonFilterData("filterPanel");
-            this.setNonFilterData("searchBar");
+            this.setNonFilterData('filterPanel');
+            this.setNonFilterData('searchBar');
+
             this.isloading = false;
           });
       }
@@ -129,6 +135,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   searchBar() {
+    this.browseSearchFilterComponent.clear()
     const userValues = this.searchInput.split(' ');
 
     var db_attr = [
@@ -147,32 +154,44 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       'year_rightist',
     ];
 
-    this.db_result = this.original.filter((record: any): boolean => {
+    this.getNonFilterData('searchBar');
+    this.db_result = this.db_result.filter((record: any): boolean => {
       return userValues.every((keyword) => {
         var res: boolean = false;
         Object.values(record).forEach((element) => {
-          res = res || JSON.stringify(element, db_attr).includes(keyword);
+          res =
+            res ||
+            this.containKeyword(JSON.stringify(element, db_attr), keyword);
         });
         return res;
       });
     });
     if (!userValues.length) {
-      this.getNonFilterData("searchBar")
+      this.getNonFilterData('searchBar');
     }
 
     //save search bar filtered values
-    this.setNonFilterData("filterPanel");
+    this.setNonFilterData('filterPanel');
     this.currentPage = 1;
     this.setDisplayInfo(this.itemsPerPage);
   }
 
+  containKeyword(word: any, keyword: any) {
+    let res;
+    if (typeof word === 'string' && typeof keyword === 'string') {
+      res = word.toLowerCase().includes(keyword.toLowerCase());
+    } else {
+      res = word.includes(keyword);
+    }
+    return res;
+  }
   filterValueschanges(valueEmitted: any) {
     const empty = Object.values(this.filterValues).every((element) => {
       return element === '';
     });
 
     //reset db
-    this.getNonFilterData("filterPanel");
+    this.getNonFilterData('filterPanel');
 
     if (!empty) {
       let attr: any[] = ['gender', 'nationality', 'title', 'status'];
@@ -199,12 +218,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       userValues = userValues.filter((element) => {
         return element !== '';
       });
-      // userValues.map(f=>{ return f.toUpperCase(); });
-      // values.map(f=>{ return f.toUpperCase(); });
 
-      var containsAll = userValues.every((element) => {
+      var containsAll = userValues.every((keyword) => {
         return (
-          values.includes(element.toLowerCase()) &&
+          this.containKeyword(values, keyword) &&
           this.getYearBecameRightist(record)
         );
       });
@@ -214,23 +231,19 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   getNonFilterData(dataType: string) {
-    if (dataType === "searchBar") {
+    if (dataType === 'searchBar') {
       this.db_result = this.original;
-    }
-    else {
+    } else {
       this.db_result = this.nonFilterData;
     }
-    
   }
 
   setNonFilterData(dataType: string) {
-    if (dataType === "searchBar") {
+    if (dataType === 'searchBar') {
       this.original = JSON.parse(JSON.stringify(this.db_result));
-    }
-    else {
+    } else {
       this.nonFilterData = this.db_result;
     }
-    
   }
 
   getYearBecameRightist(record: any) {
