@@ -24,6 +24,9 @@
   padding-left: 1rem;
   animation: floatText 10s alternate-reverse ease-in-out;
 }
+header {
+  margin-bottom: 0.033rem;
+}
 
 @keyframes floatText {
   from {
