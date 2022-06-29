@@ -14,6 +14,7 @@ export class UploadComponent implements OnInit {
   public ethnic: any;
   public occupation2: any;
 
+
   form = new FormGroup({
     name: new FormControl(''),
   });
@@ -27,7 +28,6 @@ export class UploadComponent implements OnInit {
         this.ethnic = '',
         this.occupation2 = '';
       });
-      
    }
 
   selected?: string;
