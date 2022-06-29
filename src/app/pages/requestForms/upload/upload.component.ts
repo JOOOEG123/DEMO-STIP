@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
-  
+  styleUrls: ['./upload.component.scss'],
 })
-
 export class UploadComponent implements OnInit {
-
   public ethnic: any;
   public occupation2: any;
+  //image url
+  url = '';
 
   form = new FormGroup({
     name: new FormControl(''),
@@ -33,13 +31,14 @@ export class UploadComponent implements OnInit {
     memoirContent: new FormControl(''),
     memoirAuthor: new FormControl(''),
   });
-  
-  clear() { 
+
+  clear() {
     this.form.reset();
   }
 
-  clear2(){
-    this.form2.reset()
+  clear2() {
+    this.url = '';
+    this.form2.reset();
   }
 
   selected?: string;
@@ -100,8 +99,8 @@ export class UploadComponent implements OnInit {
     'Lhoba',
     'Tatars',
     'Undistinguished',
-    'Naturalized Citizen'
-  ]
+    'Naturalized Citizen',
+  ];
 
   selected2?: string;
   occupation: string[] = [
@@ -124,25 +123,20 @@ export class UploadComponent implements OnInit {
     'Clerk',
     'Deputy Director',
     'Deputy Secretary',
-    'Deputy Secretary General'
-  ]
+    'Deputy Secretary General',
+  ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  url=""
-
-  onselectFile(e){
-    if(e.target.files){
+  onselectFile(e) {
+    if (e.target.files) {
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
-      reader.onload=(event:any)=>{
-        this.url=event.target.result;
-      }
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      };
     }
   }
-
 }
-
