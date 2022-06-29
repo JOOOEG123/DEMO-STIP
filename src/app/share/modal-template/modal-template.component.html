@@ -17,7 +17,7 @@
 <ng-template #announceModal>
   <div class="modal-body text-center">
     <h1>Edit Announcement</h1>
-    <div class="form-floating mb-2 ">
+    <div class="form-floating mb-2">
       <textarea
         class="form-control"
         placeholder="make changes here"
@@ -33,6 +33,97 @@
     >
       Cancel
     </button>
-    <button type="button" class="btn btn-dark px-3" (click)="updateAnnouncement()">Save</button>
+    <button
+      type="button"
+      class="btn btn-dark px-3"
+      (click)="updateAnnouncement()"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteConfirmation>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Delete Account</h4>
+    <button type="button" class="btn-close close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to delete your account? This action cannot be
+      undone. All your data and Contribution will be permanently deleted.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-danger rounded-pill"
+      (click)="deleteAccount()"
+    >
+      Delete Account
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary rounded-pill"
+      (click)="modalRef?.hide()"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #changeEmailTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Change Email</h4>
+    <button type="button" class="btn-close close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="changeEmailForm">
+      <div class="form-floating mb-2">
+        <input
+          class="form-control"
+          type="email"
+          placeholder="Enter new email"
+          id="oldEmail"
+          formControlName="oldEmail"
+        />
+        <label for="oldEmail"
+          >Old Email <span class="text-danger">*</span></label
+        >
+      </div>
+      <div class="form-floating mb-2">
+        <input
+          class="form-control"
+          type="email"
+          placeholder="Enter new email"
+          id="newEmail"
+          formControlName="newEmail"
+        />
+        <label for="newEmail"
+          >New Email <span class="text-danger">*</span></label
+        >
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-success rounded-pill"
+      [disabled]="!changeEmailForm.valid"
+      (click)="changeEmail()"
+    >
+      Change Account
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary rounded-pill"
+      (click)="modalRef?.hide()"
+    >
+      Cancel
+    </button>
   </div>
 </ng-template>

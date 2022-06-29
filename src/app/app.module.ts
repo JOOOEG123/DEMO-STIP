@@ -30,6 +30,7 @@ import { UpdateRowsPipe } from './core/pipes/update-rows-pipe.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareComponent } from './pages/browse/share/share.component';
 import { MemoirComponent } from './pages/browse/memoir/memoir.component';
+import { EditAccountComponent } from './pages/account/edit-account/edit-account.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { MemoirComponent } from './pages/browse/memoir/memoir.component';
     UpdateRowsPipe,
     ShareComponent,
     MemoirComponent,
+    EditAccountComponent,
   ],
   imports: [
     AngularFireAuthModule,

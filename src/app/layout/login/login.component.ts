@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
@@ -50,6 +56,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.modalRef.onHide.subscribe(() => {
           this.loginForm.reset();
           this.forgetForm.reset();
+          this.isSignIn = 'signup';
+          this.switchState();
           this.errorMessage = '';
           this.sub.forEach((x) => x.unsubscribe());
         })

@@ -1,10 +1,6 @@
-import { Injectable, NgZone } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { randomUID, UUID } from '../utils/uuid';
+import { UUID } from '../utils/uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +9,7 @@ export class ArchieveApiService {
   user: any;
   cache: any = {};
   constructor(
-    private store: AngularFirestore,
-    private auth: AngularFireAuth,
-    private db: AngularFireDatabase,
-    private router: Router,
-    private outsideScope: NgZone,
-    private http: HttpClient
+    private db: AngularFireDatabase
   ) {}
 
   /** New API */

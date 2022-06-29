@@ -1,6 +1,5 @@
-@import '~bootstrap/scss/bootstrap'; // Import Bootstrap
-@import './styles/animation.scss';
-
+@import "~bootstrap/scss/bootstrap"; // Import Bootstrap
+@import "./styles/animation.scss";
 
 /* You can add global styles to this file, and also import other style files */
 $khaki: #cea374;
@@ -16,155 +15,155 @@ $light-grey: #f5f5f5;
 //     font-family: "Times New Roman", Times, serif !important;
 // }
 body {
-    // font-family: 'DO Futuristic', sans-serif;
-    font-family: "Times New Roman", Times, serif !important;
-    // font-size: 16px;
+  // font-family: 'DO Futuristic', sans-serif;
+  font-family: "Times New Roman", Times, serif !important;
+  // font-size: 16px;
 }
 
 .bg-image-blue {
-    background-image: url("/assets/homepage/stip-design.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  background-image: url("/assets/homepage/stip-design.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 // border color
 .border-khaki {
-    border-color: $khaki;
-    border: 2px solid $khaki;
+  border-color: $khaki;
+  border: 2px solid $khaki;
 }
 
 .border-orange-red {
-    border-color: $orange-red;
-    border: 2px solid $orange-red;
+  border-color: $orange-red;
+  border: 2px solid $orange-red;
 }
 
 .btn-underline-orange-red {
-    @extend .btn;
-    color: $orange-red;
-    border-bottom: 2px solid $orange-red;
+  @extend .btn;
+  color: $orange-red;
+  border-bottom: 2px solid $orange-red;
 }
 
-// btn color 
-.btn-khali {
-    @extend .btn;
-    border: 2px solid $khaki;
-    background-color: white;
-    color: $khaki-dark;
+// btn color
+.btn, .btn-close {
+  &:hover {
+    @extend .shadow-lg;
+    animation: shake-left-right 0.8s;
+  }
+}
 
-    &:hover {
-        @extend .shadow-lg;
-        background-color: $khaki;
-        color: white;
-        animation: shake-left-right 0.8s;
-    }
+.btn-khali {
+  @extend .btn;
+  border: 2px solid $khaki;
+  background-color: white;
+  color: $khaki-dark;
+
+  &:hover {
+    background-color: $khaki;
+    color: white;
+  }
 }
 
 .btn-orange-red {
-    @extend .btn;
-    border: 2px solid $orange-red;
-    background-color: white;
-    color: $orange-red;
+  @extend .btn;
+  border: 2px solid $orange-red;
+  background-color: white;
+  color: $orange-red;
 
-    &:hover {
-        @extend .shadow-lg;
-        background-color: $orange-red;
-        color: white;
-        animation: shake-left-right 0.8s;
-    }
+  &:hover {
+    background-color: $orange-red;
+    color: white;
+  }
 }
 
 .btn-secondary:hover {
-    animation: shake-left-right 0.8s;
+  animation: shake-left-right 0.8s;
 }
 
 // rounded border
 .rounded-bottom {
-    &-left {
-        border-bottom-left-radius: 6rem;
-    }
+  &-left {
+    border-bottom-left-radius: 6rem;
+  }
 
-    &-right {
-        border-bottom-right-radius: 6rem;
-    }
+  &-right {
+    border-bottom-right-radius: 6rem;
+  }
 }
 
 // nav bar
 .nav-underline .nav-link.active {
-    border-bottom: 1px solid white;
-    padding-bottom: 5px;
-
+  border-bottom: 1px solid white;
+  padding-bottom: 5px;
 }
 
 .nav-underline .nav-link.active:hover {
-    background-color: white !important;
-    color: $medium-blue  !important;
+  background-color: white !important;
+  color: $medium-blue !important;
 }
 
 .nav-underline .nav-link {
-    color: white;
+  color: white;
 }
 
 .nav-underline .nav-link:hover {
-    border-bottom: 1px dashed white;
-    padding-bottom: 5px;
-    animation: shake-up-down 0.8s;
+  border-bottom: 1px dashed white;
+  padding-bottom: 5px;
+  animation: shake-up-down 0.8s;
 }
 
 // center div in container
 .center-div {
-    display: grid;
-    place-items: center;
+  display: grid;
+  place-items: center;
 }
 
 // background color
 .bg {
-    &-orangish-red {
-        color: white !important;
-        background-color: $orange-red;
-    }
+  &-orangish-red {
+    color: white !important;
+    background-color: $orange-red;
+  }
 
-    &-khaki {
-        color: white !important;
-        background-color: $khaki;
-    }
+  &-khaki {
+    color: white !important;
+    background-color: $khaki;
+  }
 
-    &-dark-blue {
-        color: white !important;
-        background-color: $dark-blue;
-    }
+  &-dark-blue {
+    color: white !important;
+    background-color: $dark-blue;
+  }
 
-    &-medium-blue {
-        color: white !important;
-        background-color: $medium-blue;
-    }
+  &-medium-blue {
+    color: white !important;
+    background-color: $medium-blue;
+  }
 }
 
 // word between lines
 .linebtntext {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .linebtntext:before,
 .linebtntext:after {
-    content: "";
-    flex: 1 1;
-    border-bottom: 1px solid #000;
-    margin: auto 0.5em;
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid #000;
+  margin: auto 0.5em;
 }
 
-// date design 
+// date design
 .form-control,
 .form-control-sm {
-    transition: none !important;
+  transition: none !important;
 
-    &[bsdatepiker],
-    &[bsDaterangepicker] {
-        background-image: url("/assets/filters/date.svg");
-        background-repeat: no-repeat;
-        background-position: right 0.0rem center;
-
-    }
-
+  &[bsdatepiker],
+  &[bsDaterangepicker] {
+    background-image: url("/assets/filters/date.svg");
+    background-repeat: no-repeat;
+    background-position: right 0rem center;
+  }
 }
