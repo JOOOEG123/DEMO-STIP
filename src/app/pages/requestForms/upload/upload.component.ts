@@ -14,7 +14,6 @@ export class UploadComponent implements OnInit {
   public ethnic: any;
   public occupation2: any;
 
-
   form = new FormGroup({
     name: new FormControl(''),
     gender: new FormControl(''),
@@ -23,9 +22,24 @@ export class UploadComponent implements OnInit {
     occupation: new FormControl(''),
     rightestYear: new FormControl(''),
   });
+
+  form2 = new FormGroup({
+    imageUpload: new FormControl(''),
+    image: new FormControl(''),
+    content: new FormControl(''),
+    eventYear: new FormControl(''),
+    eventContent: new FormControl(''),
+    memoirTitle: new FormControl(''),
+    memoirContent: new FormControl(''),
+    memoirAuthor: new FormControl(''),
+  });
   
   clear() { 
     this.form.reset();
+  }
+
+  clear2(){
+    this.form2.reset()
   }
 
   selected?: string;
