@@ -30,7 +30,7 @@ export class ArchieveApiService {
 
   getArchievePersonByAlphabet(alphabet: string) {
     const path = alphabet ? `${alphabet}/persons` : alphabet;
- 
+
     return this.db.list(`/persons/publics/${path}`).valueChanges();
   }
 
@@ -103,10 +103,25 @@ export class ArchieveApiService {
       .valueChanges();
   }
 
+  getTestDataPersonByIntial(letter: string) {
+    
+    return this.db
+      .list(`/persons/requestArchieve/persons`, (ref) =>
+        ref.orderByChild('initial').equalTo(letter)
+      )
+      .valueChanges();
+  }
 
-  getTestDataByPersons() {
-
+  getTestDataPersonByPersons() {
     return this.db.list(`/persons/requestArchieve/persons`).valueChanges();
   }
-  //   getPersonEventsByLetter(letter: string)
+
+  getTestDataPersonByEvent(word:string) {
+    return this.db.list(`/persons/requestArchieve/persons`, (ref) =>
+    ref.orderByChild('event').equalTo(word)).valueChanges();
+  }
+
+  getTestDataPersonByFilterValues(userValues:any) {
+
+  }
 }
