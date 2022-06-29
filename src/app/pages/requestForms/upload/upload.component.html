@@ -23,45 +23,49 @@
       <!-- col for ethnic group -->
       <div class="col">
         <form [formGroup]="form">
-        <label for="ethnicGroup" class="form-label">Chinese Ethnic Group</label>
-        <input
-          [(ngModel)]="ethnic"
-          [typeahead]="ethnicGroup"
-          class="form-control"
-          formControlName="ethnic"
-        />
-      </form>
+          <label for="ethnicGroup" class="form-label"
+            >Chinese Ethnic Group</label
+          >
+          <input
+            [(ngModel)]="ethnic"
+            [typeahead]="ethnicGroup"
+            class="form-control"
+            formControlName="ethnic"
+          />
+        </form>
       </div>
       <!-- col for occupation -->
       <div class="col">
         <form [formGroup]="form">
-        <label for="occupation" class="form-label">Occupation</label>
-        <input
-          [(ngModel)]="occupation2"
-          [typeahead]="occupation"
-          class="form-control"
-          formControlName="occupation"
-        />
-      </form>
+          <label for="occupation" class="form-label">Occupation</label>
+          <input
+            [(ngModel)]="occupation2"
+            [typeahead]="occupation"
+            class="form-control"
+            formControlName="occupation"
+          />
+        </form>
       </div>
       <!-- col for year of event -->
       <div class="col">
         <form [formGroup]="form">
-        <label for="Year" class="form-label">Year of becoming a rightest</label>
-        <input
-          [bsConfig]="{
-            startView: 'year',
-            minMode: 'year',
-            dateInputFormat: 'YYYY',
-            showClearButton: true
-          }"
-          bsDatepicker
-          class="form-control"
-          placeholder="Year"
-          autocomplete="off"
-          formControlName="rightestYear"
-        />
-      </form>
+          <label for="Year" class="form-label"
+            >Year of becoming a rightest</label
+          >
+          <input
+            [bsConfig]="{
+              startView: 'year',
+              minMode: 'year',
+              dateInputFormat: 'YYYY',
+              showClearButton: true
+            }"
+            bsDatepicker
+            class="form-control"
+            placeholder="Year"
+            autocomplete="off"
+            formControlName="rightestYear"
+          />
+        </form>
       </div>
     </div>
 
@@ -168,115 +172,119 @@
     <!-- photo upload section -->
     <h4>Upload a photo</h4>
     <form [formGroup]="form2">
-    <img alt="" [src]="url" height="200" width="200" />
-    <input type="file" (change)="onselectFile($event)" formControlName="image"/>
+      <img alt="" [src]="url" height="200" width="200" formControlName="image"/>
+      <input
+        type="file"
+        (change)="onselectFile($event)"
+        formControlName="image"
+      />
 
-    <br /><br />
-    <p>Include this image in gallery</p>
-    <div class="form-check form-check-inline">
-      <input
-        class="form-check-input"
-        type="radio"
-        name="inlineRadioOptions"
-        id="inlineRadio1"
-        value="yes"
-        formControlName="imageUpload"
-      />
-      <label class="form-check-label" for="inlineRadio1">Yes</label>
-    </div>
-    <div class="form-check form-check-inline">
-      <input
-        class="form-check-input"
-        type="radio"
-        name="inlineRadioOptions"
-        id="inlineRadio2"
-        value="no"
-        formControlName="imageUpload"
-      />
-      <label class="form-check-label" for="inlineRadio2">No</label>
-    </div>
-  </form>
+      <br /><br />
+      <p>Include this image in gallery</p>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="inlineRadioOptions"
+          id="inlineRadio1"
+          value="yes"
+          formControlName="imageUpload"
+        />
+        <label class="form-check-label" for="inlineRadio1">Yes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="inlineRadioOptions"
+          id="inlineRadio2"
+          value="no"
+          formControlName="imageUpload"
+        />
+        <label class="form-check-label" for="inlineRadio2">No</label>
+      </div>
+    </form>
   </div>
 
   <div class="col-8 me-5 pe-5">
     <div>
       <form [formGroup]="form2">
-      <h4>Add Content</h4>
-      <textarea
-        class="form-control"
-        id="exampleFormControlTextarea1"
-        rows="5"
-        placeholder="Add content/description here..."
-        formControlName="content"
-      ></textarea>
-    </form>
+        <h4>Add Content</h4>
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="5"
+          placeholder="Add content/description here..."
+          formControlName="content"
+        ></textarea>
+      </form>
     </div>
     <!-- event detail and date -->
     <div class="row">
       <div class="col">
         <div class="form-group">
           <form [formGroup]="form2">
-          <h4>Add Event Date</h4>
-          <input
-            [bsConfig]="{
-              startView: 'year',
-              minMode: 'year',
-              dateInputFormat: 'YYYY'
-            }"
-            bsDatepicker
-            class="form-control"
-            placeholder="year"
-            formControlName="eventYear"
-          />
-          <br />
-          <button type="button" class="btn btn-dark">Add Event</button>
-        </form>
+            <h4>Add Event Date</h4>
+            <input
+              [bsConfig]="{
+                startView: 'year',
+                minMode: 'year',
+                dateInputFormat: 'YYYY'
+              }"
+              bsDatepicker
+              class="form-control"
+              placeholder="year"
+              formControlName="eventYear"
+            />
+            <br />
+            <button type="button" class="btn btn-dark">Add Event</button>
+          </form>
         </div>
       </div>
       <div class="col">
         <form [formGroup]="form2">
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="5"
-          placeholder="Add event details here..."
-          formControlName="eventContent"
-        ></textarea>
-      </form>
+          <textarea
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="5"
+            placeholder="Add event details here..."
+            formControlName="eventContent"
+          ></textarea>
+        </form>
       </div>
     </div>
     <!-- memoir section -->
     <br />
     <h4>Add Memoir, book, or other information</h4>
     <form [formGroup]="form2">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Add title here..."
-      aria-label="title"
-      aria-describedby="basic-addon1"
-      formControlName="memoirTitle"
-    />
-    <br />
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Add author here.."
-      aria-label="author"
-      aria-describedby="basic-addon1"
-      formControlName="memoirAuthor"
-    />
-    <br />
-    <textarea
-      type="text"
-      class="form-control"
-      placeholder="Add memoir here..."
-      rows="5"
-      formControlName="memoirContent"
-    ></textarea>
-    <br />
-    <button type="button" class="btn btn-dark">Add Another Entry</button>
-  </form>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Add title here..."
+        aria-label="title"
+        aria-describedby="basic-addon1"
+        formControlName="memoirTitle"
+      />
+      <br />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Add author here.."
+        aria-label="author"
+        aria-describedby="basic-addon1"
+        formControlName="memoirAuthor"
+      />
+      <br />
+      <textarea
+        type="text"
+        class="form-control"
+        placeholder="Add memoir here..."
+        rows="5"
+        formControlName="memoirContent"
+      ></textarea>
+      <br />
+      <button type="button" class="btn btn-dark">Add Another Entry</button>
+    </form>
   </div>
 </div>
 <br /><br />
@@ -284,7 +292,9 @@
   <div class="row">
     <div class="col">
       <br />
-      <button type="button" class="btn btn-dark me-3" (click)="clear2()">Clear</button>
+      <button type="button" class="btn btn-dark me-3" (click)="clear2()">
+        Clear
+      </button>
       <button type="button" class="btn btn-dark me-3">Submit</button>
     </div>
   </div>
