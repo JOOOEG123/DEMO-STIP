@@ -17,18 +17,16 @@ export class UploadComponent implements OnInit {
 
   form = new FormGroup({
     name: new FormControl(''),
+    gender: new FormControl(''),
+    status: new FormControl(''),
+    ethnic: new FormControl(''),
+    occupation: new FormControl(''),
+    rightestYear: new FormControl(''),
   });
   
-  clearInputMethod2() { 
-    this.form.setValue({name:''}); 
+  clear() { 
+    this.form.reset();
   }
-
-  clear(){
-    setTimeout(()=>{
-        this.ethnic = '',
-        this.occupation2 = '';
-      });
-   }
 
   selected?: string;
   ethnicGroup: string[] = [
