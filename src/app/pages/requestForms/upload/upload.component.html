@@ -148,7 +148,7 @@
 </div>
 
 <div class="row">
-  <div class="col">
+  <div class="col-3 ms-5 ps-5">
     <!-- photo upload section -->
     <h4>Upload a photo</h4>
 
@@ -179,7 +179,7 @@
     </div>
   </div>
 
-  <div class="col">
+  <div class="col-8 me-5 pe-5">
     <div>
       <h4>Add Content</h4>
       <textarea
@@ -189,28 +189,35 @@
         placeholder="Add content/description here..."
       ></textarea>
     </div>
-    <div class="form-group">
-      <h4>Add Event Date</h4>
-      <input
-        [bsConfig]="{
-          startView: 'year',
-          minMode: 'year',
-          dateInputFormat: 'YYYY'
-        }"
-        bsDatepicker
-        class="form-control"
-        placeholder="year"
-      />
+    <!-- event detail and date -->
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <h4>Add Event Date</h4>
+          <input
+            [bsConfig]="{
+              startView: 'year',
+              minMode: 'year',
+              dateInputFormat: 'YYYY'
+            }"
+            bsDatepicker
+            class="form-control"
+            placeholder="year"
+          />
+          <br />
+        <button type="button" class="btn btn-dark">Add Event</button>
+        </div>
+      </div>
+      <div class="col">
+        
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="5"
+          placeholder="Add event details here..."
+        ></textarea>
+      </div>
     </div>
-    <br />
-    <button type="button" class="btn btn-dark">Add Event</button>
-
-    <textarea
-      class="form-control"
-      id="exampleFormControlTextarea1"
-      rows="5"
-      placeholder="Add event details here..."
-    ></textarea>
     <!-- memoir section -->
     <br />
     <h4>Add Memoir, book, or other information</h4>
