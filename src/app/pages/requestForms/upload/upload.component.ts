@@ -129,14 +129,10 @@ export class UploadComponent implements OnInit {
 
 
   public moreEvent: any[] = [{
-    eventYear: '',
-    eventContent: '',
   }];
 
   addEvent() {
     this.moreEvent.push({
-      eventYear: '',
-      eventContent: '',
     });
   }
 
@@ -145,16 +141,10 @@ export class UploadComponent implements OnInit {
   }
 
   public moreMemoir: any[] = [{
-    memoirYear: '',
-    memoirContent: '',
-    memoirAuthor: '',
   }];
 
   addMemoir(){
     this.moreMemoir.push({
-      memoirYear: '',
-      memoirContent: '',
-      memoirAuthor: '',
     })
   }
 
