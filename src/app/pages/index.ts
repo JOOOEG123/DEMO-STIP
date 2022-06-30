@@ -90,7 +90,7 @@ export const pagesRoutes = [
     },
   },
   {
-    path: 'browse/archive',
+    path: 'browse/main/memoir/:id',
     component: BrowseArchiveComponent,
     data: {
       title: 'Browse Archive',

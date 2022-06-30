@@ -15,6 +15,8 @@ import { FilterTypes } from 'src/app/core/types/filters.type';
 import { LETTERS } from './main-browse.constant';
 import { BrowseSearchFilterComponent } from 'src/app/pages/browse/browse-search-filter/browse-search-filter.component';
 
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+
 @Component({
   selector: 'app-main-browse',
   templateUrl: './main-browse.component.html',

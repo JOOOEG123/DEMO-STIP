@@ -73,11 +73,13 @@
             <!-- display search results -->
             <app-stip-spinner [isLoading]="isloading"></app-stip-spinner>
             <div *ngIf="curView === 'List'; else elseBlock">
+                <div *ngIf="display.length ;else elseEmptyBlock">
 
-                <a style="color: black;text-decoration: none;" routerLink="/browse/archive" routerLinkActive="active"
-                    ariaCurrentWhenActive="page" *ngIf="display.length ;else elseEmptyBlock">
-                    <div class="d-flex m-3 " style="height:150px; border-radius: 28px; background-color: #dbdde2"
-                        name="searchLayout" *ngFor="let result of display">
+                    <a class="d-flex m-3 "
+                        style="height:150px; border-radius: 28px;color: black;text-decoration: none; background-color:white;"
+                        name="searchLayout" *ngFor="let result of display" routerLink="/browse/main/memoir/{{result.initial + result.full_name}}"
+                        routerLinkActive="active" ariaCurrentWhenActive="page">
+
 
                         <div class="m-4">
                             <img src="assets\browsepage\tempprofile.png"
@@ -85,16 +87,17 @@
                                 height="100vw">
                         </div>
                         <div class="flex-grow-1 m-3">
-                            <div class="text-start">{{result.full_name}}</div>
+
+                            <div class="text-start">{{result.first_name + result.last_name}}</div>
                             <div class="pb-3 text-start">{{result.workplace}}</div>
                             <div class="text-start">{{result.description}}</div>
                         </div>
+                    </a>
+                </div>
 
-                    </div>
-                </a>
                 <ng-template #elseEmptyBlock>
                     <div *ngIf="isloading==false" class="bg-light">
-                        No record has been found. 
+                        No record has been found.
                     </div>
                 </ng-template>
             </div>
@@ -127,7 +130,7 @@
                 </div>
                 <ng-template #elseEmptyBlock>
                     <div *ngIf="isloading" class="bg-light">
-                        No record has been found. 
+                        No record has been found.
                     </div>
                 </ng-template>
             </ng-template>
