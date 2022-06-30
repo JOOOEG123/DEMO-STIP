@@ -144,6 +144,26 @@ export class UploadComponent implements OnInit {
     this.moreEvent.splice(i, 1);
   }
 
+  public moreMemoir: any[] = [{
+    memoirYear: '',
+    memoirContent: '',
+    memoirAuthor: '',
+  }];
+
+  addMemoir(){
+    this.moreMemoir.push({
+      memoirYear: '',
+      memoirContent: '',
+      memoirAuthor: '',
+    })
+  }
+
+  removeMemoir(i: number){
+    this.moreMemoir.splice(i, 1);
+  }
+
+
+
   constructor() {
   }
 
