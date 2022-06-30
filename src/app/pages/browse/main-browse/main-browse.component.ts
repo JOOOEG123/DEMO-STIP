@@ -135,7 +135,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   searchBar() {
-    this.browseSearchFilterComponent.clear()
+    this.browseSearchFilterComponent.clear();
     const userValues = this.searchInput.split(' ');
 
     var db_attr = [
@@ -194,7 +194,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.getNonFilterData('filterPanel');
 
     if (!empty) {
-      let attr: any[] = ['gender', 'nationality', 'title', 'status'];
+      let attr: any[] = ['gender', 'group', 'occupation', 'status'];
       let userValues: any[] = [
         this.filterValues.gender,
         this.filterValues.group,
@@ -209,22 +209,21 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   filterByFilterValues(valuesAttr: any[], userValues: any[]) {
+    
     this.db_result = this.db_result.filter((record): boolean => {
       var values: any = [];
       valuesAttr.forEach((value, index) => {
         values[index] = record[value];
       });
-
+      
       userValues = userValues.filter((element) => {
         return element !== '';
       });
-
-      var containsAll = userValues.every((keyword) => {
-        return (
-          this.containKeyword(values, keyword) &&
-          this.getYearBecameRightist(record)
-        );
-      });
+    
+      var containsAll =
+        userValues.every((keyword) => {
+          return this.containKeyword(values, keyword);
+        })  && this.getYearBecameRightist(record);
 
       return containsAll;
     });
@@ -248,14 +247,13 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   getYearBecameRightist(record: any) {
     let res = true;
-
+   
     if (this.filterValues.date) {
       var from = this.filterValues.date[0].getFullYear();
       var to = this.filterValues.date[1].getFullYear();
-
+    
       res = from <= record.year_rightist && record.year_rightist <= to;
     }
-
     return res;
   }
 }

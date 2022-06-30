@@ -115,5 +115,3 @@ export const OCCUPATIONS = [
   { value: '51', viewValue: 'Writer' },
   { value: '52', viewValue: 'Unknown' },
 ];
-
-
