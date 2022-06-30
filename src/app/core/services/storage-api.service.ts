@@ -12,7 +12,7 @@ export class StorageApIService {
   ) {}
 
   profileImage(fileName: string, uid = this.auth.uid) {
-    return this.afs.ref(`userProfile/${uid}/${fileName}`);
+    return this.afs.ref(`userProfile/${fileName}/${uid}`);
   }
 
   profileImgeUrl(uid = this.auth.uid) {
