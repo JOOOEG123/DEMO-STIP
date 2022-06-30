@@ -78,14 +78,14 @@
                     ariaCurrentWhenActive="page" *ngIf="display.length ;else elseEmptyBlock">
                     <div class="d-flex m-3 " style="height:150px; border-radius: 28px; background-color: #dbdde2"
                         name="searchLayout" *ngFor="let result of display">
-
+                        {{result.key}}
                         <div class="m-4">
                             <img src="assets\browsepage\tempprofile.png"
                                 class="rounded-circle border border-dark img-responsive center-block" width="100vw"
                                 height="100vw">
                         </div>
                         <div class="flex-grow-1 m-3">
-                            <div class="text-start">{{result.full_name}}</div>
+                            <div class="text-start">{{result.first_name + result.last_name}}</div>
                             <div class="pb-3 text-start">{{result.workplace}}</div>
                             <div class="text-start">{{result.description}}</div>
                         </div>

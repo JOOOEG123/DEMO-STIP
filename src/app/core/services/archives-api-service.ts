@@ -149,6 +149,9 @@ export class ArchieveApiService {
       .valueChanges();
   }
 
+
+
+  // new APIs: for sample data and need fix if the db data changes. 
   getTestDataPersonByIntial(letter: string) {
     
     return this.db
@@ -167,7 +170,9 @@ export class ArchieveApiService {
     ref.orderByChild('event').equalTo(word)).valueChanges();
   }
 
-  getTestDataPersonByFilterValues(userValues:any) {
-
-  }
+  // getPersonID() {
+  //   var adaRef = this.db.ref("users/ada");
+  //   var key = adaRef.key;  // key === "ada"
+  //   key = adaRef.child("name/last").key;
+  // }
 }
