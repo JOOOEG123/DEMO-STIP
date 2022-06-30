@@ -20,17 +20,23 @@
           />
         </form>
       </div>
-      <!-- col for ethnic group -->
       <div class="col">
         <form [formGroup]="form">
-          <label for="ethnicGroup" class="form-label"
-            >Chinese Ethnic Group</label
+          <label for="birthYear" class="form-label"
+            >Birth year</label
           >
           <input
-            [(ngModel)]="ethnic"
-            [typeahead]="ethnicGroup"
+            [bsConfig]="{
+              startView: 'year',
+              minMode: 'year',
+              dateInputFormat: 'YYYY',
+              showClearButton: true
+            }"
+            bsDatepicker
             class="form-control"
-            formControlName="ethnic"
+            placeholder="Year"
+            autocomplete="off"
+            formControlName="birthYear"
           />
         </form>
       </div>
@@ -69,10 +75,24 @@
       </div>
     </div>
 
-    <!-- Row containing gender, status, file ID, and clear/submit buttons -->
+    <!-- Row containing gender, status, and clear buttons -->
     <div
       class="row row-cols-1 row-cols-sm-2 row-cols-md-4 ms-5 me-5 pb-3 bg-secondary"
     >
+    <!-- col for ethnic group -->
+    <div class="col">
+      <form [formGroup]="form">
+        <label for="ethnicGroup" class="form-label"
+          >Chinese Ethnic Group</label
+        >
+        <input
+          [(ngModel)]="ethnic"
+          [typeahead]="ethnicGroup"
+          class="form-control"
+          formControlName="ethnic"
+        />
+      </form>
+    </div>
       <!-- col for gender selection -->
       <div class="col">
         <br />
