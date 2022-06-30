@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FilterTypes } from 'src/app/core/types/filters.type';
-import { GROUPS,OCCUPATIONS } from './browse-search-filter.constant';
+import { GROUPS,OCCUPATIONS} from './browse-search-filter.constant';
+import {MainBrowseComponent} from 'src/app/pages/browse/main-browse/main-browse.component';
 
 
 
@@ -14,6 +15,7 @@ import { GROUPS,OCCUPATIONS } from './browse-search-filter.constant';
 export class BrowseSearchFilterComponent implements OnInit {
   private FILTERS: FilterTypes = {} as FilterTypes;
   drop!: boolean;
+
   formValues = this.formgroup.group({
     gender: [''],
     occupation: [''],
@@ -23,6 +25,7 @@ export class BrowseSearchFilterComponent implements OnInit {
   });
   groups = GROUPS;
   occupations = OCCUPATIONS
+  
   formSub!: Subscription;
 
   @Output() filterValuesChange = new EventEmitter<any>();
@@ -48,10 +51,15 @@ export class BrowseSearchFilterComponent implements OnInit {
 
   subForm() {
     this.formSub = this.formValues.valueChanges.subscribe((value) => {
-      let date = undefined;
+      let date='';
       if ( value.date) {
+        console.log(value.date)
+        //value.date = [new Date(1999),new Date(2010)];
+        //console.log(value.date[0].gettime())
         value.date = [new Date(value.date[0]),new Date(value.date[1])];
       }
+
+      console.log("subforming",value)
       this.filterValues = {...value, date} as any;
       this.filterValuesChange.emit(value);
     });
@@ -73,7 +81,8 @@ export class BrowseSearchFilterComponent implements OnInit {
       occupation: '',
       status: '',
       group: '',
-      date: [],
+      date: '',
     });
   }
+
 }

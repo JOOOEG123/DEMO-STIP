@@ -5,6 +5,7 @@ import {
   Input,
   OnDestroy,
   Attribute,
+  ViewChild,
 } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
@@ -12,6 +13,7 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { FilterTypes } from 'src/app/core/types/filters.type';
 
 import { LETTERS } from './main-browse.constant';
+import { BrowseSearchFilterComponent } from 'src/app/pages/browse/browse-search-filter/browse-search-filter.component';
 
 @Component({
   selector: 'app-main-browse',
@@ -34,10 +36,14 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   //variables for search functionalities
   db_result: any[] = [];
-  nonFilterData:any[] = [];
+  nonFilterData: any[] = [];
   archCacheAPI: any = {};
   archSubAPI: Subscription[] = [];
   isloading!: boolean;
+  original: any;
+
+  @ViewChild(BrowseSearchFilterComponent)
+  private browseSearchFilterComponent!: BrowseSearchFilterComponent;
 
   constructor(
     private archApi: ArchieveApiService,
@@ -47,15 +53,16 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.lettersBtnClickOrReset('A');
   }
+  ngOnDestroy(): void {
+    this.archSubAPI.forEach((sub) => sub.unsubscribe());
+    this.archCacheAPI = {};
+  }
 
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
     this.setDisplayInfo(this.olditemsPerPage);
     this.olditemsPerPage = this.itemsPerPage;
-
-    console.log('testing', this.itemsPerPage);
-    console.log(this.curView);
   }
 
   setDisplayInfo(startItemsPerPage: number) {
@@ -77,135 +84,176 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   lettersBtnClickOrReset(letter: string) {
     this.currentPage = 1;
     this.currentLetter = letter;
-    // const alpha = letter === 'All' ? '' : letter;
+
     this.callAPI(letter);
   }
 
-  callAPI(l: string) {
+  //for testing data
+  callAPI(letter: string) {
     //clear up display
     this.display = [];
 
-    const alpha = l === 'All' ? '' : l;
-    const archKey = `person_arch_${l}`;
+    const alpha = letter === 'All' ? '' : letter;
+    const archKey = `person_arch_${letter}`;
+
+    //'from cache data'
     if (this.archCacheAPI[archKey]) {
       this.db_result = this.archCacheAPI[archKey];
       this.setDisplayInfo(this.itemsPerPage);
-      console.log('from cache');
     } else {
+      let res;
       this.isloading = true;
-      this.archSubAPI.push(
-        this.archApi
-          .getArchievePersonByAlphabet(alpha)
+      if (letter === 'All') {
+        res = this.archApi
+          .getTestDataPersonByPersons()
           .subscribe((datas: any) => {
-            console.log(datas);
-            this.db_result =
-              l === 'All'
-                ? datas
-                    .map((alphabet: any) => [].concat(alphabet.persons))
-                    .flat()
-                : datas;
+            this.db_result = datas;
+
             this.archCacheAPI[archKey] = this.db_result;
-            //reset current page
+
             this.setDisplayInfo(this.itemsPerPage);
+            this.setNonFilterData('filterPanel');
+            this.setNonFilterData('searchBar');
+
             this.isloading = false;
-          })
-      );
-    }
-  }
+          });
+      } else {
+        res = this.archApi
+          .getTestDataPersonByIntial(letter)
+          .subscribe((datas: any) => {
+            this.db_result = datas;
+            this.archCacheAPI[archKey] = this.db_result;
+            this.setDisplayInfo(this.itemsPerPage);
+            this.setNonFilterData('filterPanel');
+            this.setNonFilterData('searchBar');
 
-  ngOnDestroy(): void {
-    this.archSubAPI.forEach((sub) => sub.unsubscribe());
-    this.archCacheAPI = {};
-  }
-
-  filterByFilterValues(valueEmitted: any) {
-    //reset db
-    this.db_result = this.nonFilterData
-    console.log('triggering');
-
-    this.getfilterData();
-    this.currentPage = 1;
-    this.setDisplayInfo(this.itemsPerPage);
-    console.log(this.display);
-  }
-
-  getfilterData() {
-    console.log('get gender');
-  
-
-      this.db_result = this.db_result.filter((record): boolean => {
-        //get values from record->check whether contains same words-> filter out
-        let values: any[] = [
-          record.gender,
-          record.nationality,
-          record.workplace,
-        ];
-        let userValues: any[] = [this.filterValues.gender, this.filterValues.group, this.filterValues.occupation];
-        //remove empty strings
-        userValues = userValues.filter((element) => {
-          return element !== '';
-        });
-
-        var containsAll = userValues.every((element) => {
-          return values.includes(element);
-        }) && this.getYearBecameRightist(record) && this.getStatus(record);
-        return containsAll;
-      });
-  }
-
-  getYearBecameRightist(record: any) {
-    var from = this.filterValues.date[0].getFullYear();
-    var to = this.filterValues.date[1].getFullYear();
-
-    return from <= record.year_rightist && record.year_rightist <= to;
-  }
-
-  getStatus(record: any) {
-    var value = this.filterValues.status;
-    if (
-      record.year_of_death == 0 &&
-      record.year_of_birth == 0 &&
-      value == 'Unknown'
-    ) {
-      return true;
-    } else if (record.year_of_death > 0 && value == 'Deceased') {
-      return true;
-    } else if (
-      record.year_of_death == 0 &&
-      record.year_of_birth > 0 &&
-      value == 'Alive'
-    ) {
-      return true;
-    } else {
-      return false;
+            this.isloading = false;
+          });
+      }
+      this.archSubAPI.push(res);
     }
   }
 
   searchBar() {
-    console.log('in search bars');
-    //reset db
-    this.lettersBtnClickOrReset(this.currentLetter);
-    
-
+    this.browseSearchFilterComponent.clear();
     const userValues = this.searchInput.split(' ');
 
-    this.db_result = this.db_result.filter((record): boolean => {
-      let values = Object.values(record).map((value): string =>
-        String(value).toLowerCase()
-      );
-      console.log(values);
-      return userValues.every((element) =>
-        values.includes(element.toLowerCase())
-      );
+    var db_attr = [
+      'birthplace',
+      'description',
+      'education',
+      'events',
+      'first_name',
+      'last_name',
+      'gender',
+      'memoir',
+      'reference',
+      'workplace',
+      'year_of_birth',
+      'year_of_death',
+      'year_rightist',
+    ];
 
+    this.getNonFilterData('searchBar');
+    this.db_result = this.db_result.filter((record: any): boolean => {
+      return userValues.every((keyword) => {
+        var res: boolean = false;
+        Object.values(record).forEach((element) => {
+          res =
+            res ||
+            this.containKeyword(JSON.stringify(element, db_attr), keyword);
+        });
+        return res;
+      });
     });
+    if (!userValues.length) {
+      this.getNonFilterData('searchBar');
+    }
 
-    this.nonFilterData = this.db_result
+    //save search bar filtered values
+    this.setNonFilterData('filterPanel');
     this.currentPage = 1;
     this.setDisplayInfo(this.itemsPerPage);
   }
 
-  filterValueschanges(filterValues: FilterTypes) {
-    console.log(filterValues);
+  containKeyword(word: any, keyword: any) {
+    let res;
+    if (typeof word === 'string' && typeof keyword === 'string') {
+      res = word.toLowerCase().includes(keyword.toLowerCase());
+    } else {
+      res = word.includes(keyword);
+    }
+    return res;
+  }
+  filterValueschanges(valueEmitted: any) {
+    const empty = Object.values(this.filterValues).every((element) => {
+      return element === '';
+    });
+
+    //reset db
+    this.getNonFilterData('filterPanel');
+
+    if (!empty) {
+      let attr: any[] = ['gender', 'group', 'occupation', 'status'];
+      let userValues: any[] = [
+        this.filterValues.gender,
+        this.filterValues.group,
+        this.filterValues.occupation,
+        this.filterValues.status,
+      ];
+      this.filterByFilterValues(attr, userValues);
+    }
+
+    this.currentPage = 1;
+    this.setDisplayInfo(this.itemsPerPage);
+  }
+
+  filterByFilterValues(valuesAttr: any[], userValues: any[]) {
+    
+    this.db_result = this.db_result.filter((record): boolean => {
+      var values: any = [];
+      valuesAttr.forEach((value, index) => {
+        values[index] = record[value];
+      });
+      
+      userValues = userValues.filter((element) => {
+        return element !== '';
+      });
+    
+      var containsAll =
+        userValues.every((keyword) => {
+          return this.containKeyword(values, keyword);
+        })  && this.getYearBecameRightist(record);
+
+      return containsAll;
+    });
+  }
+
+  getNonFilterData(dataType: string) {
+    if (dataType === 'searchBar') {
+      this.db_result = this.original;
+    } else {
+      this.db_result = this.nonFilterData;
+    }
+  }
+
+  setNonFilterData(dataType: string) {
+    if (dataType === 'searchBar') {
+      this.original = JSON.parse(JSON.stringify(this.db_result));
+    } else {
+      this.nonFilterData = this.db_result;
+    }
+  }
+
+  getYearBecameRightist(record: any) {
+    let res = true;
+   
+    if (this.filterValues.date) {
+      var from = this.filterValues.date[0].getFullYear();
+      var to = this.filterValues.date[1].getFullYear();
+    
+      res = from <= record.year_rightist && record.year_rightist <= to;
+    }
+    return res;
   }
 }

@@ -127,7 +127,7 @@ export class ArchieveApiService {
     // return this.db.list(`/persons/publics/${alphabet}/persons`, (ref) =>  ref.orderByChild('person_id').equalTo(data.person_id)).update(data.person_id, data);
   }
 
-  // key value pair is person_id: data. Scenario: update person_id: 1 to data: {name: "new name"}
+  // key value pair is person_id: data. Scenario: update person_id--1 to data--{name: "new name"}
   // if we use object. key is person_id, we can use update() to update person_id: 1 to data: {name: "new name"}
   // Ex : {A1: {}, A2: {}, A3: {}}
   adminUpdateEventByAlphabetAndEventId(alphabet: string, data: any) {
@@ -147,5 +147,27 @@ export class ArchieveApiService {
         ref.limitToFirst(limit)
       )
       .valueChanges();
+  }
+
+  getTestDataPersonByIntial(letter: string) {
+    
+    return this.db
+      .list(`/persons/requestArchieve/persons`, (ref) =>
+        ref.orderByChild('initial').equalTo(letter)
+      )
+      .valueChanges();
+  }
+
+  getTestDataPersonByPersons() {
+    return this.db.list(`/persons/requestArchieve/persons`).valueChanges();
+  }
+
+  getTestDataPersonByEvent(word:string) {
+    return this.db.list(`/persons/requestArchieve/persons`, (ref) =>
+    ref.orderByChild('event').equalTo(word)).valueChanges();
+  }
+
+  getTestDataPersonByFilterValues(userValues:any) {
+
   }
 }
