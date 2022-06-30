@@ -20,6 +20,7 @@ export class UploadComponent implements OnInit {
     ethnic: new FormControl(''),
     occupation: new FormControl(''),
     rightestYear: new FormControl(''),
+    birthYear: new FormControl(''),
   });
 
   form2 = new FormGroup({
