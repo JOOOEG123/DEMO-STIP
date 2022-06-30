@@ -230,37 +230,47 @@
       <div class="col">
         <div class="form-group">
           <form [formGroup]="form2">
-            <br />
-            <h4>Add Event Date</h4>
-            <input
-              [bsConfig]="{
-                startView: 'year',
-                minMode: 'year',
-                dateInputFormat: 'YYYY'
-              }"
-              bsDatepicker
-              class="form-control"
-              placeholder="Year"
-              formControlName="eventYear"
-            />
-            <br />
-            <button type="button" class="btn btn-dark">
-              Add Another Event
-            </button>
+            <section *ngFor="let event of moreEvent; let i = index">
+              <!-- input fields inside the *ngFor -->
+              <form [formGroup]="form2">
+                <br />
+                <h4>Event year and event content</h4>
+                <input
+                  [bsConfig]="{
+                    startView: 'year',
+                    minMode: 'year',
+                    dateInputFormat: 'YYYY'
+                  }"
+                  bsDatepicker
+                  class="form-control"
+                  placeholder="Year"
+                  formControlName="eventYear"
+                />
+                <textarea
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="5"
+                  placeholder="Add event details here..."
+                  formControlName="eventContent"
+                ></textarea>
+              </form>
+              <!-- Remove button -->
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                (click)="removeEvent(i)"
+              >
+                Remove
+              </button>
+            </section>
+            <form>
+              <br />
+              <button type="button" (click)="addEvent()" class="btn btn-dark">
+                Add Another Event
+              </button>
+            </form>
           </form>
         </div>
-      </div>
-      <div class="col">
-        <form [formGroup]="form2">
-          <br />
-          <textarea
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="5"
-            placeholder="Add event details here..."
-            formControlName="eventContent"
-          ></textarea>
-        </form>
       </div>
     </div>
     <!-- memoir section -->
@@ -309,43 +319,4 @@
     </div>
   </div>
 </div>
-<hr />
-<div>
-  <section *ngFor="let event of moreEvent; let i = index">
-    <!-- input fields inside the *ngFor -->
-    <form [formGroup]="form2">
-      <br />
-      <input
-        [bsConfig]="{
-          startView: 'year',
-          minMode: 'year',
-          dateInputFormat: 'YYYY'
-        }"
-        bsDatepicker
-        class="form-control"
-        placeholder="Year"
-        formControlName="eventYear"
-      />
-      <textarea
-        class="form-control"
-        id="exampleFormControlTextarea1"
-        rows="5"
-        placeholder="Add event details here..."
-        formControlName="eventContent"
-      ></textarea>
-    </form>
-    <!-- Remove button -->
-    <button
-      type="button"
-      class="btn btn-danger btn-sm"
-      (click)="removeEvent(i)"
-    >
-      Remove
-    </button>
-  </section>
 
-  <form>
-    <!-- Add button -->
-    <button type="button" (click)="addEvent()">Add Event</button>
-  </form>
-</div>
