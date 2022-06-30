@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 
@@ -8,7 +10,8 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
   styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent implements OnInit {
-  constructor(private arch: ArchieveApiService, private router: Router) {}
+  data$: any;
+  constructor(private arch: ArchieveApiService, private router: Router, private customApi: AngularFireFunctions, private http: HttpClient) {}
   searchTerm: string = '';
 
   fakeProfile = [
@@ -29,7 +32,17 @@ export class HomepageComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.customApi
+    //   .httpsCallable('getArchives')
+    //   .subscribe((result) => console.log(result));
+
+    const callable = this.customApi.httpsCallable('app');
+    this.data$ = callable({ name: 'John' });
+    this.data$.subscribe((result: any) => console.log(result));
+
+    this.http.get('https://us-central1-stip-demo.cloudfunctions.net/app').subscribe((result: any) => console.log(result));
+  }
 
   onKey(event: any) {
     this.searchTerm = (event.target as HTMLInputElement).value;
