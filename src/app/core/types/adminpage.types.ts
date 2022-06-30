@@ -6,7 +6,7 @@ export type Categories =
 export type CategoryList = Record<Categories, Contribution[]>;
 
 type Gender = 'Male' | 'Female'
-type Nationality = 
+type Ethnicity = 
   'Han' | 'Zhuang' | 'Hui' | 'Man' | 'Uygur' | 'Miao' | 'Yi' | 'Tujia' | 'Zang' | 'Mongol' |
   'Dong' | 'Bouyei' | 'Yao' | 'Chosŏn' | 'Hani' | 'Li' | 'Kazak' | 'Dai' | 
   'She' | 'Lisu' | 'Dongxiang' | 'Gelao' | 'Lahu' | 'Wa' | 'Sui' |  'Naxi' |'Qiang' | 
@@ -14,20 +14,21 @@ type Nationality =
   'Maonan' | 'Tajik' | 'Pumi' |'Achang' | 'Nu' | 'Ewenki' | 'Gin' | 'Jino' | 'Deang' | 'Bonan' |
   'Russ' | 'Yugur' | 'Uzbek' | 'Monba' | 'Oroqen' | 'Derung' | 'Hezhen' | 'Gaoshan' | 'Lhoba' | 'Tatar'
 
-type Status = 'Dead' | 'Alive' | 'Unknown'
+export type Status = 'Dead' | 'Alive' | 'Unknown'
 
-type State = 'void' | 'removed'
+export type State = 'void' | 'removed'
 
-type Publish = 'new' | 'approved' | 'rejected' | 'pending'
+export type Publish = 'new' | 'approved' | 'rejected'
 
 interface Event {
+  eventId: string,
   startYear: number,
   endYear: number,
   content: string
 }
 
-export interface Victim {
-  rightistId: string;
+export interface Rightist {
+  rightistId: string,
   imagePath: string;
   initial: string;
   firstName: string;
@@ -37,7 +38,7 @@ export interface Victim {
   deathYear: number;
   rightistYear: number;
   status: Status,
-  nationality: Nationality
+  ethnicity: Ethnicity
   publish: string,
   job: string,
   workplace: string,
@@ -46,22 +47,51 @@ export interface Victim {
   reference: string,
   description: string
 }
-
+ 
 export interface Contribution {
   contributionId: string;
   contributorId: string;
-  victim: Victim;
+  rightist: Rightist;
   contributedAt: Date;
   state: State,
-  limit: number,
 }
 
 export interface ContributionSchema {
-  contributionId: string;
-  contributorId: string;
-  victim: Victim;
-  contributedAt: string;
-  publish: Publish
+  [contributionId: string]: {
+    contributorId: string;
+    rightist: Rightist;
+    contributedAt: string;
+    publish: Publish
+  }
+}
+
+export interface RightistSchema {
+  [rightistId: string]: {
+    imagePath: string;
+    initial: string;
+    firstName: string;
+    lastName: string;
+    gender: Gender;
+    birthYear: number;
+    deathYear: number;
+    rightistYear: number;
+    status: Status,
+    ethnicity: Ethnicity
+    publish: string,
+    job: string,
+    workplace: string,
+    events: Event[],
+    memoirs: string[],
+    reference: string,
+    description: string
+  }
+}
+
+export interface Image {
+  [imageId: string]: {
+    imagePath: string,
+    rightistId: string,
+  }
 }
 
 // export interface ContributionJson {

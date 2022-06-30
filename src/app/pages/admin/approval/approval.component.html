@@ -1,5 +1,8 @@
 <div class="container-fluid px-0">
   <div class="display-1 text-center my-4">Public Contributions</div>
+  <!-- <pre>{{ selectedContributions | json }}</pre>
+  <pre>New: {{ newContributions | json }}</pre>
+  <pre>New: {{ approvedContributions | json }}</pre> -->
   <div class="container">
     <div class="d-flex flex-md-row flex-column justify-content-center">
       <button
@@ -20,11 +23,11 @@
           class="position-absolute top-0 start-100 translate-middle badge rounded-pill"
           >{{ categories[category].length }}</span
         >
-        <span
+        <!-- <span
           *ngIf="category == 'Approved Contributions' && pendingContributions.length != 0"
           class="bg-danger position-absolute top-0 start-0 translate-middle badge rounded-pill"
           >{{ pendingContributions.length }}</span
-        >
+        > -->
       </button>
     </div>
   </div>
@@ -32,7 +35,7 @@
   <div class="container-fluid">
 
      <!-- Pending Contributions -->
-    <div class="container" *ngIf="activeCategory == 'Approved Contributions' && pendingContributions.length != 0">
+    <!-- <div class="container" *ngIf="activeCategory == 'Approved Contributions' && pendingContributions.length != 0">
       <div
         class="row my-4 contribution-container border border-danger border-2"
         *ngFor="let contribution of pendingContributions"
@@ -122,15 +125,15 @@
       </div>
 
       <div class="divider pt-1 bg-warning"></div>
-    </div>
+    </div> -->
 
     <div class="container my-4" *ngIf="selectedContributions.length == 0">
       <div class="card">
         <div class="card-header text-center p-4">
-          No contributions for YOU!!!!
+          {{ this.emptyContributionMessage }}
         </div>
       </div>
-    </div>
+    </div> 
 
       <!-- Categorized Contributions -->
     <div class="container">
@@ -153,7 +156,7 @@
                 class="col-md-6"
               >
                 <img
-                  [src]="contribution.victim.imagePath"
+                  [src]="contribution.rightist.imagePath"
                   class="card-img image-fluid w-75 rounded-pill"
                   alt="..."
                 />
@@ -161,22 +164,22 @@
               <div class="col-md-6">
                 <div class="card-body text-md-start text-center">
                   <h5 class="card-title fw-bold display-6">
-                    {{ contribution.victim.firstName }} {{ contribution.victim.lastName }}
+                    {{ contribution.rightist.firstName }} {{ contribution.rightist.lastName }}
                   </h5>
                   <p
                     class="card-text m-0 text-uppercase"
-                    *ngIf="contribution.victim.job"
+                    *ngIf="contribution.rightist.job"
                   >
-                    {{ contribution.victim.job }}
+                    {{ contribution.rightist.job }}
                   </p>
                   <p
                     class="card-text m-0 text-uppercase"
-                    *ngIf="contribution.victim.nationality"
+                    *ngIf="contribution.rightist.ethnicity"
                   >
-                    {{ contribution.victim.nationality }}
+                    {{ contribution.rightist.ethnicity }}
                   </p>
-                  <p class="card-text m-0 text-uppercase" *ngIf="contribution.victim.gender">
-                    {{ contribution.victim.gender }}
+                  <p class="card-text m-0 text-uppercase" *ngIf="contribution.rightist.gender">
+                    {{ contribution.rightist.gender }}
                   </p>
                 </div>
               </div>
@@ -184,11 +187,14 @@
           </div>
         </div>
         <div class="col-5 d-flex flex-column align-items-start justify-content-center">
-          <div *ngFor="let event of contribution.victim.events | slice:0:contribution.limit">
-            In {{ event.startYear }}, {{ event.content }}
+          <div *ngFor="let event of contribution.rightist.events | slice:0:limit">
+            <span>In {{ event.startYear }}, {{ event.content }}</span>
           </div>
-          <div class="align-self-end" *ngIf="contribution.victim.events.length > contribution.limit">
-            <button class="btn btn-transparent" (click)="onReadMore(contribution.contributionId)"><i class="display-6">&#8595;</i></button>
+          <div *ngIf="contribution.rightist.events.length > limit">...</div>
+          <div class="align-self-end">
+            <button class="btn btn-transparent" (click)="onReadMore(readMoreTemplate, contribution)">
+              <span class="display-6">Read More...</span>
+            </button>
           </div>
         </div>
 
@@ -204,7 +210,7 @@
           <div class="d-flex justify-content-center my-2">
 
           <button
-            (click)="onPending(contribution.contributionId)"
+            (click)="onApprove(contribution.contributionId)"
             class="btn btn-transparent mx-2"
             *ngIf="activeCategory == 'New Contributions'"
           >
@@ -220,7 +226,6 @@
         </button>
 
           <button 
-            (click)="onEdit(editTemplate, contribution.contributionId)" 
             class="btn btn-transparent mx-2"
             *ngIf="activeCategory == 'Approved Contributions'"
           >
@@ -241,7 +246,7 @@
   </div>
 </div>
 
-<ng-template #editTemplate>
+<ng-template #readMoreTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Modal</h4>
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">

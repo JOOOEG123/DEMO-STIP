@@ -152,12 +152,12 @@ export class ArchieveApiService {
 
   getContributions() {
     return this.db
-      .list(`/persons/requestArchieve/contributions`)
+      .object(`/persons/requestArchieve/contributions`).valueChanges()
   }
 
   getContributionById(contributionId: string) {
     return this.db
-      .list(`/persons/requestArchieve/contributions/${contributionId}`)
+      .object(`/persons/requestArchieve/contributions/${contributionId}`)
   }
 
   updateContributionById(contributionId: string, data: ContributionJson) {
@@ -168,7 +168,14 @@ export class ArchieveApiService {
 
   addContribution(contribution: ContributionJson) {
     return this.db
-      .list(`/persons/requestArchieve/contributions`).push(contribution)
+      .object(`/persons/requestArchieve/contributions`).update(contribution)
+  }
+
+  updateContributionByPublish(contributionId: string, updatedPublish: string) {
+    console.log(contributionId)
+    return this.db
+      .object(`/persons/requestArchieve/contributions/${contributionId}`)
+      .update({ publish: updatedPublish })
   }
 
   // new APIs: for sample data and need fix if the db data changes. 
