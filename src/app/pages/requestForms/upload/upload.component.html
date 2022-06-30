@@ -276,35 +276,46 @@
     <!-- memoir section -->
     <br />
     <h4>Add Memoir, book, or other information</h4>
-    <form [formGroup]="form2">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Add title here..."
-        aria-label="title"
-        aria-describedby="basic-addon1"
-        formControlName="memoirTitle"
-      />
-      <br />
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Add author here.."
-        aria-label="author"
-        aria-describedby="basic-addon1"
-        formControlName="memoirAuthor"
-      />
-      <br />
-      <textarea
-        type="text"
-        class="form-control"
-        placeholder="Add memoir here..."
-        rows="5"
-        formControlName="memoirContent"
-      ></textarea>
-      <br />
-      <button type="button" class="btn btn-dark">Add Another Memoir</button>
-    </form>
+    <section *ngFor="let memoir of moreMemoir; let i = index">
+      <form [formGroup]="form2">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Add title here..."
+          aria-label="title"
+          aria-describedby="basic-addon1"
+          formControlName="memoirTitle"
+        />
+        <br />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Add author here.."
+          aria-label="author"
+          aria-describedby="basic-addon1"
+          formControlName="memoirAuthor"
+        />
+        <br />
+        <textarea
+          type="text"
+          class="form-control"
+          placeholder="Add memoir here..."
+          rows="5"
+          formControlName="memoirContent"
+        ></textarea>
+        <br />
+        <button
+          type="button"
+          class="btn btn-danger btn-sm"
+          (click)="removeMemoir(i)"
+        >
+          Remove
+        </button>
+      </form>
+    </section>
+    <button type="button" class="btn btn-dark" (click)="addMemoir()">
+      Add Another Memoir
+    </button>
   </div>
 </div>
 <br /><br />
@@ -319,4 +330,3 @@
     </div>
   </div>
 </div>
-
