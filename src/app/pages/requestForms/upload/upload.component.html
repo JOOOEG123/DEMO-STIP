@@ -172,7 +172,13 @@
     <!-- photo upload section -->
     <h4>Upload a photo</h4>
     <form [formGroup]="form2">
-      <img alt="" [src]="url" height="200" width="200" formControlName="image"/>
+      <img
+        alt=""
+        [src]="url"
+        height="200"
+        width="200"
+        formControlName="image"
+      />
       <input
         type="file"
         (change)="onselectFile($event)"
@@ -224,7 +230,7 @@
       <div class="col">
         <div class="form-group">
           <form [formGroup]="form2">
-            <br>
+            <br />
             <h4>Add Event Date</h4>
             <input
               [bsConfig]="{
@@ -234,18 +240,19 @@
               }"
               bsDatepicker
               class="form-control"
-              placeholder="year"
+              placeholder="Year"
               formControlName="eventYear"
-              
             />
             <br />
-            <button type="button" class="btn btn-dark">Add Another Event</button>
+            <button type="button" class="btn btn-dark">
+              Add Another Event
+            </button>
           </form>
         </div>
       </div>
       <div class="col">
         <form [formGroup]="form2">
-          <br>
+          <br />
           <textarea
             class="form-control"
             id="exampleFormControlTextarea1"
@@ -301,4 +308,44 @@
       <button type="button" class="btn btn-dark me-3">Submit</button>
     </div>
   </div>
+</div>
+<hr />
+<div>
+  <section *ngFor="let event of moreEvent; let i = index">
+    <!-- input fields inside the *ngFor -->
+    <form [formGroup]="form2">
+      <br />
+      <input
+        [bsConfig]="{
+          startView: 'year',
+          minMode: 'year',
+          dateInputFormat: 'YYYY'
+        }"
+        bsDatepicker
+        class="form-control"
+        placeholder="Year"
+        formControlName="eventYear"
+      />
+      <textarea
+        class="form-control"
+        id="exampleFormControlTextarea1"
+        rows="5"
+        placeholder="Add event details here..."
+        formControlName="eventContent"
+      ></textarea>
+    </form>
+    <!-- Remove button -->
+    <button
+      type="button"
+      class="btn btn-danger btn-sm"
+      (click)="removeEvent(i)"
+    >
+      Remove
+    </button>
+  </section>
+
+  <form>
+    <!-- Add button -->
+    <button type="button" (click)="addEvent()">Add Event</button>
+  </form>
 </div>

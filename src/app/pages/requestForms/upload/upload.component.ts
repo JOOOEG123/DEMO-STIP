@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, FormArray, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-upload',
@@ -127,7 +127,25 @@ export class UploadComponent implements OnInit {
     'Deputy Secretary General',
   ];
 
-  constructor() {}
+
+  public moreEvent: any[] = [{
+    eventYear: '',
+    eventContent: '',
+  }];
+
+  addEvent() {
+    this.moreEvent.push({
+      eventYear: '',
+      eventContent: '',
+    });
+  }
+
+  removeEvent(i: number) {
+    this.moreEvent.splice(i, 1);
+  }
+
+  constructor() {
+  }
 
   ngOnInit(): void {}
 
