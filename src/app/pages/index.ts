@@ -113,6 +113,15 @@ export const pagesRoutes = [
     },
   },
 
+  {
+    path: 'share',
+    component: ShareComponent,
+    canActivate: [AngularFireAuthGuard],
+    data:{
+      title: 'share',
+    },
+  },
+
 ];
 
 export const adminRoutes = [
