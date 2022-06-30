@@ -9,6 +9,77 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
   styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit, OnDestroy {
+
+  //typeahead options:
+  selected?: string;
+  options: string[] =[
+    'option1',
+    'option2',
+    'option3'
+  ];
+
+  selected2?: string;
+  options2: string[] =[
+    'Han Chinese',
+    'Zhuang',
+    'Hui',
+    'Manchu',
+    'Uyghur',
+    'Miao',
+    'Yi',
+    'Tujia',
+    'Tibetan',
+    'Mongol',
+    'Dong',
+    'Bouyei',
+    'Yao',
+    'Bai',
+    'Joseonjok',
+    'Hani',
+    'Li',
+    'Kazakh',
+    'Dai',
+    'She',
+    'Lisu',
+    'Dangxiang',
+    'Gelao',
+    'Lahu',
+    'Wa',
+    'Sui',
+    'Nakhi',
+    'Qiang',
+    'Tu',
+    'Mulao',
+    'Xibe',
+    'Kyrgyz',
+    'Jingpo',
+    'Daur',
+    'Salar',
+    'Blang',
+    'Maonan',
+    'Tajik',
+    'Pumi',
+    'Achang',
+    'Nu',
+    'Evenki',
+    'Vietnamese',
+    'Jino',
+    'De ang',
+    'Bonan',
+    'Russian',
+    'Yugur',
+    'Uzbek',
+    'Monba',
+    'Orogen',
+    'Derung',
+    'Hezhen',
+    'Gaoshan',
+    'Lhoba',
+    'Tatars',
+    'Undistinguished',
+    'Naturalized Citizen'
+    ];
+
   subscription: Subscription[] = [];
   isAdmin = false;
   // @ViewChild('modalTemplates') modalTemplates!: LogoutComponent;

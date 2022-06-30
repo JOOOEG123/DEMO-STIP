@@ -9,8 +9,19 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import {
+  ProgressbarConfig,
+  ProgressbarModule,
+} from 'ngx-bootstrap/progressbar';
 import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+
+export const getProgressbarConfig = (): ProgressbarConfig =>
+  Object.assign(new ProgressbarConfig(), {
+    animate: true,
+    striped: true,
+    max: 100,
+  });
 
 @NgModule({
   declarations: [],
@@ -23,7 +34,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     ModalModule.forRoot(),
     TypeaheadModule.forRoot(),
     PaginationModule.forRoot(),
-    TabsModule.forRoot()
+    ProgressbarModule.forRoot(),
   ],
   exports: [
     BsDropdownModule,
@@ -33,9 +44,13 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     BsDatepickerModule,
     TypeaheadModule,
     PaginationModule,
-    TabsModule
+    ProgressbarModule,
   ],
-  providers: [BsDatepickerConfig, PaginationConfig],
+  providers: [
+    BsDatepickerConfig,
+    PaginationConfig,
+    { provide: ProgressbarConfig, useFactory: getProgressbarConfig },
+  ],
   bootstrap: [],
   schemas: [NO_ERRORS_SCHEMA]
 })

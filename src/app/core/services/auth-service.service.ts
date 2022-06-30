@@ -15,6 +15,7 @@ export class AuthServiceService {
 
   user: any;
   isLoggedIn = new Subject<boolean>();
+  readonly uid = this.getUserDetails()?.uid;
 
   isAdmin = new BehaviorSubject<boolean>(false);
   get hasAdminRole() {
@@ -24,8 +25,7 @@ export class AuthServiceService {
     private store: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
-    private outsideScope: NgZone,
-    private http: HttpClient
+    private outsideScope: NgZone
   ) {
     this.auth.authState.subscribe((user) => {
       if (user) {
@@ -41,7 +41,7 @@ export class AuthServiceService {
           this.isLoggedIn.next(this.isLoggedInCheck);
         });
       } else {
-        localStorage.setItem('user', '');
+        localStorage.clear();
         this.isLoggedIn.next(this.isLoggedInCheck);
       }
       console.log('user', user);
@@ -83,6 +83,15 @@ export class AuthServiceService {
         this.saveUser(user.user as Profile | null);
       });
   }
+
+  facebookSignIn() {
+    return this.auth
+      .signInWithPopup(new provider.FacebookAuthProvider())
+      .then((user) => {
+        this.saveUser(user.user as Profile | null);
+      });
+  }
+  
   signInWithPopup(providers: provider.AuthProvider) {
     return this.auth.signInWithPopup(providers).then((user) => {
       console.log('user', user);
@@ -141,5 +150,34 @@ export class AuthServiceService {
 
   editProfile(profile: Profile) {
     return this.store.doc<any>(`users/${profile.uid}`).update(profile);
+  }
+
+  deleteAccount() {
+    return this.auth.currentUser.then((user: any) => {
+      if (user) {
+        // need to delete all the data from the database and api.
+        this.store.doc<any>(`users/${this.uid}`).delete().then(() => {
+          user.delete();
+          this.signOut();
+        });
+      }
+    });
+  }
+
+  changeEmail(email: string) {
+    return this.auth.currentUser.then((user: any) => {
+      if (user) {
+        this.store.doc<any>(`users/${this.uid}`).update({ email });
+        user.updateEmail(email);
+      }
+    });
+  }
+
+  changePassword(password: string) {
+    return this.auth.currentUser.then((user: any) => {
+      if (user) {
+        user.updatePassword(password);
+      }
+    });
   }
 }

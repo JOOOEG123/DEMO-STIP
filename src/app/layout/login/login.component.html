@@ -9,7 +9,10 @@
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div> -->
-  <div class="modal-body">
+  <div
+    class="modal-body"
+    *ngIf="isSignIn === 'signup' || isSignIn === 'signin'"
+  >
     <h3 class="modal-title text-center my-3">
       {{ isSignIn === "signup" ? "Create an account" : "Log In" }}
     </h3>
@@ -20,6 +23,11 @@
           class="form-control"
           id="firstName"
           formControlName="firstName"
+          [ngClass]="{
+            'is-invalid':
+              loginControls['firstName'].invalid &&
+              loginControls['firstName'].touched
+          }"
           placeholder="First name"
         />
         <label for="firstName"
@@ -33,6 +41,11 @@
           id="lastname"
           formControlName="lastName"
           placeholder="Last name"
+          [ngClass]="{
+            'is-invalid':
+              loginControls['lastName'].invalid &&
+              loginControls['lastName'].touched
+          }"
         />
         <label for="lastname"
           >Last name <span class="text-danger">*</span></label
@@ -46,6 +59,10 @@
           id="email"
           formControlName="email"
           placeholder="name@example.com"
+          [ngClass]="{
+            'is-invalid':
+              loginControls['email'].invalid && loginControls['email'].touched
+          }"
         />
         <label for="email"
           >Email address <span class="text-danger">*</span></label
@@ -58,6 +75,11 @@
           id="confirmEmail"
           formControlName="confirmEmail"
           placeholder="name@example.com"
+          [ngClass]="{
+            'is-invalid':
+              loginControls['confirmEmail'].invalid &&
+              loginControls['confirmEmail'].touched
+          }"
         />
         <label for="confirmEmail"
           >Confirm Email address <span class="text-danger">*</span></label
@@ -70,18 +92,28 @@
           formControlName="password"
           id="password"
           placeholder="Password"
+          [ngClass]="{
+            'is-invalid':
+              loginControls['password'].invalid &&
+              loginControls['password'].touched
+          }"
         />
         <label for="password"
           >Password <span class="text-danger">*</span></label
         >
       </div>
-      <button type="button" class="btn btn-link link-dark p-0 my-2">
+      <button
+        type="button"
+        class="btn btn-link link-dark p-0 my-2"
+        (click)="isSignIn = 'forgetpassword'; errorMessage = ''"
+      >
         Forget your password?
       </button>
 
-      <div class="d-grid gap-2 col-10 mx-auto">
+      <div class="d-grid gap-2 col-12">
+        <ng-container *ngTemplateOutlet="errorBanner"></ng-container>
         <button
-          class="btn btn-primary rounded-pill"
+          class="btn btn-dark rounded-pill my-2"
           [disabled]="loginForm.invalid"
           type="submit"
         >
@@ -92,7 +124,7 @@
         <button
           class="btn btn-light rounded-pill border"
           type="button"
-          (click)="userGoogleLogin()"
+          (click)="userFacebookLogin()"
         >
           <img
             src="assets/login/facebook1.png"
@@ -115,7 +147,7 @@
           />
           {{ isSignIn === "signup" ? "Sign Up " : "Log In " }}with Google
         </button>
-        <div class="">
+        <div class="text-center">
           {{
             isSignIn === "signin"
               ? "Don't have an account?"
@@ -129,7 +161,68 @@
             {{ isSignIn === "signup" ? "Log In" : "Sign Up" }}
           </button>
         </div>
+        <div class="text-center col-6 mx-auto">
+          By continuing, you agree to our
+          <a routerLink="/" class="link-dark fw-bold">Terms of Service</a> and
+          acknowledge you've read our
+          <a routerLink="/" class="link-dark fw-bold">Privacy Policy</a>.
+        </div>
       </div>
     </form>
   </div>
+  <div class="modal-body" *ngIf="isSignIn === 'forgetpassword'">
+    <h3 class="modal-title text-center my-3">Forget your password</h3>
+    <form [formGroup]="forgetForm" (ngSubmit)="forgetPassword()">
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          placeholder="Enter your email..."
+          [ngClass]="{
+            'is-invalid':
+              forgetForm.controls['email'].invalid &&
+              forgetForm.controls['email'].touched
+          }"
+        />
+        <label for="email"
+          >Email address <span class="text-danger">*</span></label
+        >
+        <small class="text-small text-muted">
+          Enter the email address you use to sign in to our website and we'll
+          send you a link to reset your password.
+        </small>
+      </div>
+
+      <div class="d-grid gap-2 col-12">
+        <ng-container *ngTemplateOutlet="errorBanner"></ng-container>
+        <button
+          class="btn btn-dark rounded-pill my-2"
+          [disabled]="forgetForm.invalid"
+          type="submit"
+        >
+          Send
+        </button>
+        <button
+          type="button"
+          class="btn btn-link link-dark p-0 my-2"
+          (click)="isSignIn = 'signin'; errorMessage = ''"
+        >
+          Back to log in
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #errorBanner>
+  <alert
+    type="danger"
+    *ngIf="errorMessage"
+    [dismissible]="true"
+    (close)="errorMessage = ''"
+  >
+    {{ errorMessage }}
+  </alert>
 </ng-template>

@@ -34,6 +34,7 @@ import { MemoirComponent } from './pages/browse/memoir/memoir.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { AppComponent } from './app.component';
+import { EditAccountComponent } from './pages/account/edit-account/edit-account.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AppComponent } from './app.component';
     UpdateRowsPipe,
     ShareComponent,
     MemoirComponent,
+    EditAccountComponent,
   ],
   imports: [
     AngularFireAuthModule,
