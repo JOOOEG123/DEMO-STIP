@@ -11,7 +11,7 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 })
 export class HomepageComponent implements OnInit {
   data$: any;
-  constructor(private arch: ArchieveApiService, private router: Router, private customApi: AngularFireFunctions, private http: HttpClient) {}
+  constructor(private arch: ArchieveApiService, private func: AngularFireFunctions, private router: Router, private customApi: AngularFireFunctions, private http: HttpClient) {}
   searchTerm: string = '';
 
   fakeProfile = [
@@ -37,11 +37,23 @@ export class HomepageComponent implements OnInit {
     //   .httpsCallable('getArchives')
     //   .subscribe((result) => console.log(result));
 
-    const callable = this.customApi.httpsCallable('app');
-    this.data$ = callable({ name: 'John' });
-    this.data$.subscribe((result: any) => console.log(result));
+    // const callable = this.customApi.httpsCallable('app');
+    // this.data$ = callable({ name: 'John' });
+    // this.data$.subscribe((result: any) => console.log(result));
 
-    this.http.get('https://us-central1-stip-demo.cloudfunctions.net/app').subscribe((result: any) => console.log(result));
+  //   this.http.get('https://us-central1-stip-demo.cloudfunctions.net/app/allArchies', {}).subscribe((result: any) => {
+  //     console.log(result);
+  //     result.data.forEach((item: any) => {
+  //       console.log(item);
+  //     }
+  //     );
+  // })
+  this.func.httpsCallable('app')({respo: ''}).subscribe((result: any) => {
+    console.log(result);
+    // result.data.forEach((item: any) => {
+    //   console.log(item);
+    // })
+  })
   }
 
   onKey(event: any) {
