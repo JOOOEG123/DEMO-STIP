@@ -15,7 +15,8 @@ import {MainBrowseComponent} from 'src/app/pages/browse/main-browse/main-browse.
 export class BrowseSearchFilterComponent implements OnInit {
   private FILTERS: FilterTypes = {} as FilterTypes;
   drop!: boolean;
-
+  minDate:Date = new Date("1956-01-01")
+  maxDate: Date = new Date("1961-01-01")
   formValues = this.formgroup.group({
     gender: [''],
     occupation: [''],
@@ -84,5 +85,19 @@ export class BrowseSearchFilterComponent implements OnInit {
       date: '',
     });
   }
+
+  modelDate = '';
+  
+  onOpenCalendar(container:any) {
+    console.log("testing calender")
+    container.monthSelectHandler = (event: any): void => {
+      container._store.dispatch(container._actions.select(event.date));
+    };     
+    console.log(container)
+    console.log(container.placement)
+    container.setViewMode('year');
+    container.displayMonths = 1
+    container.isMobile = true
+   }
 
 }

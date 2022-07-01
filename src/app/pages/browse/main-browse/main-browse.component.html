@@ -160,7 +160,7 @@
               *ngFor="let result of results; let j= index"
             >
               <a
-                routerLink="/browse/archive"
+                routerLink="/browse/main/memoir/{{ result.profileId }}"
                 routerLinkActive="active"
                 ariaCurrentWhenActive="page"
                 style="color: black; text-decoration: none"
