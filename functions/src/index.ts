@@ -14,12 +14,28 @@ app.get('/', (req, res) => res.status(200).send('Hello World!'));
 app.get('/allArchies', allArchies);
 export const add = functions.https.onCall(async (data, context) => {
   // eslint-disable-next-line max-len
-  const result = fireStore.collection('/publics').doc();
-  return {
-    message: 'Hello World!',
-    status: 'success',
-    data: result,
-  };
+  const j = (await fireStore.collection(`publics`).get());
+  try {
+    return j.docs.map((item) => item.data());
+  } catch (error) {
+    return error;
+  }
+  // t.then((v) => {
+  //   const o = v.val();
+  //   return {
+  //     message: 'Hello World!',
+  //     status: 'success',
+  //     data: o,
+  //     h: v,
+  //   };
+  // }).catch((error) => {
+  //   return {
+  //     message: 'Hello World!',
+  //     status: 'error',
+  //     data: error,
+  //   };
+  // }
+  // );
 }
 );
 

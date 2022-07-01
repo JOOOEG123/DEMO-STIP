@@ -48,7 +48,7 @@ export class HomepageComponent implements OnInit {
   //     }
   //     );
   // })
-  this.func.httpsCallable('app')({respo: ''}).subscribe((result: any) => {
+  this.func.httpsCallable('add')({respo: ''}).subscribe((result: any) => {
     console.log(result);
     // result.data.forEach((item: any) => {
     //   console.log(item);
