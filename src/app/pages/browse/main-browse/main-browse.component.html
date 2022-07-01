@@ -85,7 +85,7 @@
                                 height="100vw">
                         </div>
                         <div class="flex-grow-1 m-3">
-                            <div class="text-start">{{result.first_name + result.last_name}}</div>
+                            <div class="text-start">{{result.first_name +' ' + result.last_name}}</div>
                             <div class="pb-3 text-start">{{result.workplace}}</div>
                             <div class="text-start">{{result.description}}</div>
                         </div>
@@ -135,9 +135,9 @@
 
             <!-- search nav -->
 
-            <div class="d-flex flex-row-reverse text-light">
-                <nav aria-label="Page navigation">
-                    <pagination class="bg-light" [rotate]=true [totalItems]="db_result.length" [boundaryLinks]="true"
+            <div class="d-flex flex-row-reverse">
+                <nav aria-label="Page navigation " >
+                    <pagination class="my-pagination" [rotate]=true [totalItems]="db_result.length" [boundaryLinks]="true"
                         [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
                         previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
                         [maxSize]="10">

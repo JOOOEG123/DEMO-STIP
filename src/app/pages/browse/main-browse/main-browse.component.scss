@@ -4,15 +4,6 @@
     box-shadow: none !important;
 }
 
-// .pot {
-//     position: abs
-//     top: 1;
-//     left: 2;
-//     bottom: 2;
-//     right: 2;
-    
-// }
-
 
 .movem {
     position: absolute;
@@ -21,3 +12,20 @@
     bottom: 2;
     right: 2;
 }
+
+
+
+
+  .my-pagination::ng-deep .ngx-pagination {
+    color: white;
+    }
+    
+    /* sets font color for number color when hovering */
+    .my-pagination::ng-deep .ngx-pagination a:hover {
+    color: red;
+    }
+    
+    /* sets font color for disabled previous or next words */
+    .my-pagination::ng-deep .ngx-pagination .disabled {
+    color: white !important;
+    }
