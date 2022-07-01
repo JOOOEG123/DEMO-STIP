@@ -24,7 +24,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class MainBrowseComponent implements OnInit, OnDestroy {
   //search result panel variables
-  currentLetter = 'A';
+  currentLetter = 'All';
   currentPage = 1;
   curView = 'List';
   display: any[] = [];
@@ -53,7 +53,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.lettersBtnClickOrReset('A');
+    this.lettersBtnClickOrReset('All');
   }
   ngOnDestroy(): void {
     this.archSubAPI.forEach((sub) => sub.unsubscribe());
@@ -98,18 +98,19 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     const alpha = letter === 'All' ? '' : letter;
     const archKey = `person_arch_${letter}`;
 
+    let res;
     //'from cache data'
     if (this.archCacheAPI[archKey]) {
       this.db_result = this.archCacheAPI[archKey];
       this.setDisplayInfo(this.itemsPerPage);
     } else {
-      let res;
       this.isloading = true;
       if (letter === 'All') {
+        // replace api when database change. An we need to add profileId to json data.
         res = this.archApi
-          .getTestDataPersonByPersons()
+          .getAllArchieve()
           .subscribe((datas: any) => {
-            this.db_result = datas;
+            this.db_result = Object.entries(datas).map(([key, value]: any) => { return {profileId: key, ...value}; });
 
             this.archCacheAPI[archKey] = this.db_result;
 
@@ -120,23 +121,27 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             this.isloading = false;
           });
       } else {
-        res = this.archApi
-          .getTestDataPersonByIntial(letter)
-          .subscribe((datas: any) => {
-            this.db_result = datas;
+        // replace api when database change. An we need to add profileId to json data.
+        // res = this.archApi
+        //   .getAllArchieve()
+        //   .subscribe((datas: any) => {
+            this.db_result =this.archCacheAPI['person_arch_All'].filter((r: any) => r.initial == letter);
             this.archCacheAPI[archKey] = this.db_result;
             this.setDisplayInfo(this.itemsPerPage);
             this.setNonFilterData('filterPanel');
             this.setNonFilterData('searchBar');
-
             this.isloading = false;
-          });
+          // });
       }
+    }
+    if(res) {
       this.archSubAPI.push(res);
     }
   }
 
   searchBar() {
+    // Good filter, however, I think clearing filter is not a good idea. This means the user have to type the filter again. Think about it.
+    // Just think about how annoying it will be if you have to type the filter again, however in the other hand we can use the clear filter if we need to clear it.
     this.browseSearchFilterComponent.clear();
     const userValues = this.searchInput.split(' ');
 
@@ -211,17 +216,17 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   filterByFilterValues(valuesAttr: any[], userValues: any[]) {
-    
+
     this.db_result = this.db_result.filter((record): boolean => {
       var values: any = [];
       valuesAttr.forEach((value, index) => {
         values[index] = record[value];
       });
-      
+
       userValues = userValues.filter((element) => {
         return element !== '';
       });
-    
+
       var containsAll =
         userValues.every((keyword) => {
           return this.containKeyword(values, keyword);
@@ -249,11 +254,11 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   getYearBecameRightist(record: any) {
     let res = true;
-   
+
     if (this.filterValues.date) {
       var from = this.filterValues.date[0].getFullYear();
       var to = this.filterValues.date[1].getFullYear();
-    
+
       res = from <= record.year_rightist && record.year_rightist <= to;
     }
     return res;

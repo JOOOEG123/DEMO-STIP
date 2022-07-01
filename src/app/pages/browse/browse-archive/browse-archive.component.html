@@ -1,114 +1,95 @@
 <div class="container-fluid bg-dark">
-
-    <div class=" row row-col-4">
-
-        <img src="assets\browsepage\tempprofile.png" class="rounded-circle mx-5" style="width:13% ;">
-        <div class="col align-items-center align-self-center text-light" style="height: 100%;">
-
-            <div class="fs-1">Name</div>
-            <div class=" pb-3">Occupation</div>
-
-        </div>
-
-        <app-share class="col align-self-center"> </app-share>
-        <label class="col text-light" style="width: 13%;">ID: </label>
-
+  <div class="row row-col-4">
+    <img
+      src="assets\browsepage\tempprofile.png"
+      class="rounded-circle mx-5"
+      style="width: 13%"
+    />
+    <div
+      class="col align-items-center align-self-center text-light"
+      style="height: 100%"
+    >
+      <div class="fs-1">
+        Name: {{ profile.first_name }} {{ profile.last_name }}
+      </div>
+      <div class="pb-3">Occupation {{ profile.workplace }}</div>
     </div>
+
+    <app-share class="col align-self-center"> </app-share>
+    <label class="col text-light" style="width: 13%">ID: {{ id }}</label>
+  </div>
 </div>
 
-<div class="container ">
-    <div class="row ">
-        <div class="col-2 ">
-            <div class="col align-self-end">
-                <ul class="list-group sticky-sm-top">
-                    <li class="list-group-item border-0 " style="background-color: #E8E8E8;">
-                        <label class="border-bottom border-dark fw-bold"> Additional Files&emsp;</label>
-                    </li>
-                    <li class="list-group-item border-0" style="background-color: #E8E8E8;">
-                        <img src="assets\browsepage\fileIcon.png" class="border border-white d-inline " width="20"
-                            height="20">
-                        <div class="d-inline ps-2">Memoir</div>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-
-
-        <div class="col-7 border-start">
-            <div class="row border-bottom">
-                <li class="list-group-item border-0">
-                    <label class=" fw-bold"> Detail Information:&emsp;</label>
-                </li>
-                <ul class="list-group col-6">
-
-                    <li class="list-group-item border-0">
-                        First Name:
-                    </li>
-                    <li class="list-group-item border-0">
-                        Last Name:
-                    </li>
-                    <li class="list-group-item border-0">
-                        Ethic Group:
-                    </li>
-                    <li class="list-group-item border-0">
-                        Education:
-                    </li>
-                </ul>
-                <ul class="list-group col-6">
-                    <li class="list-group-item border-0">
-                        Occupation:
-                    </li>
-                    <li class="list-group-item border-0">
-                        Year of Birth:
-                    </li>
-                    <li class="list-group-item border-0">
-                        Year of Death:
-                    </li>
-                    <li class="list-group-item border-0">
-                        Rightest Year:
-                    </li>
-                </ul>
-            </div>
-            <div>
-            </div>
-            <div class="card-body">
-                <p class="h6 fw-bold">Description/Timeline:</p>
-                <p>In 1956, the Department of Political Affairs, the Ministry of Political Affairs, was made
-                    with the original Ministry of Culture, the
-                    original manners of the Ministry of Culture, and some of the big bangs, and the beauty of the
-                    people. Ikagai flower pond “Anti”
-                    leaves a little as a man. There is a man, the beauty of the people and the quantum. The director of
-                    the studio is Yu Jian (and Qiao
-                    Ying Yao), Deputy Director Wei Wei, Wen Qianzuo Liu Qi, Ding Yi, Hu Ke, Du Feng, Xu Guangyao,
-                    Xihong, Zhou Qifu, Shi Chao,
-                    Han Liu, Guo Guang Xi, Jiao Jia, Silent Ju, Yao Zongjiang, Ju Zongjiang、Bai Li Bai, Liu Qixiang、Xia
-                    Xinqian, Meizuo Ai Yam,
-                    Gao Fu Sheng, Gao Hon, Peng Bin, Nook, Zuwu. Among them, Hu Ke is a branch of the Xuanqian
-                    committee, Lai Bai is the branch
-                    of the Chen Cheng Tung, by the studio borrowed by the trusting of each of the people of Xu Kong, Lin
-                    Yu, Fan Bin, Guo Liangxin,
-                    Guo Jingrui.
-
-                    In 1958, it was the right. A total of eight people, including Xu Guangyao, Gong Yao, He Kongde, Shen
-                    Meng Jun, Bai Yao, Fan Bin,
-                    and Yao. Among the right molecules and those who were divided or cared for were seven people such as
-                    Chill, Lai Bai, Lin Zi,
-                    Xishui, Liang and Zuwu. With a total of 15 people, nearly half of the people in the studio. There
-                    are only 27 people in the studio, but
-                    there are 5 people out of 6 people, or 32 people.
-                </p>
-            </div>
-
-            <div class="card" >
-                <div class="card-body">
-                  <h5 class="card-title">Blue Skys (1957)</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan </h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-light border-khaki">Memoir PDF Link</a>
-                </div>
-              </div>
-        </div>
-
+<div class="container">
+  <div class="row">
+    <div class="col-2">
+      <div class="col align-self-end">
+        <ul class="list-group sticky-sm-top">
+          <li
+            class="list-group-item border-0"
+            style="background-color: #e8e8e8"
+          >
+            <label class="border-bottom border-dark fw-bold">
+              Additional Files&emsp;</label
+            >
+          </li>
+          <li
+            class="list-group-item border-0"
+            style="background-color: #e8e8e8"
+          >
+            <img
+              src="assets\browsepage\fileIcon.png"
+              class="border border-white d-inline"
+              width="20"
+              height="20"
+            />
+            <div class="d-inline ps-2">Memoir</div>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <div class="col-7 border-start">
+      <div class="row border-bottom">
+        <div class="col-12">
+          <label class="fw-bold"> Detail Information:&emsp;</label>
+        </div>
+        <div class="col-12 col-md-6 row mt-2">
+          <div class="col-12 py-2">First Name: {{ profile.first_name }}</div>
+          <div class="col-12 py-2">Last Name: {{ profile.last_name }}</div>
+          <div class="col-12 py-2">Ethic Group:</div>
+          <div class="col-12 py-2">Education:</div>
+        </div>
+        <div class="col-12 col-md-6 row mt-2">
+          <div class="col-12 py-2">Occupation:</div>
+          <div class="col-12 py-2">
+            Year of Birth: {{ profile.year_of_birth || "-" }}
+          </div>
+          <div class="col-12 py-2">
+            Year of Death: {{ profile.year_of_death || "-" }}
+          </div>
+          <div class="col-12 py-2">
+            Rightest Year: {{ profile.year_rightist || "-" }}
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <div class="card-body">
+        <p class="h6 fw-bold">Description/Timeline:</p>
+        <p>{{ profile.description }}</p>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Blue Skys (1957)</h5>
+          <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+          <a href="#" class="btn btn-light border-khaki">Memoir PDF Link</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
