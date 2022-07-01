@@ -26,7 +26,7 @@ export class EditAccountComponent implements OnInit {
     this.imageUrl = undefined;
     // this.profileErrors = [];
     // create ref
-    const ref = this.storage.profileImage('profile_img', this.userId);
+    const ref = this.storage.profileImage(this.userId);
     const upload = ref.put(file);
     // oberserver per changes
     this.uploadImgProg = upload.percentageChanges();
