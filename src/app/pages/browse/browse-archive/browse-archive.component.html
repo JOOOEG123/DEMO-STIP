@@ -1,64 +1,95 @@
-<div class="bg-dark">
-    <div class="row">
-
-            <div class=" row ">
-
-                <div class="mt-5 row position-relative align-items-center container-fluid">
-
-                    <img src="assets\browsepage\tempprofile.png" class="rounded-circle position-absolute mx-5"
-                        style="width:10% ;">
-                    <div class="col-9 bg-light rounded-pill align-items-center "
-                        style="height: 100%;">
-                        <div class="">
-                            <div>Name</div>
-                            <div class="pb-3">Occupation</div>
-                        </div>
-
-                    </div>
-                </div>
-
-
-                <div class="col-3 d-inline-block">
-                    <a class="btn btn-primary " role="button">Link</a>
-                </div>
-
-            </div>
-
-            <div class="row bg-light  my-3">
-                <div class="col-1 ">
-                    <ul class="list-group ">
-                        <li class="list-group-item border-0">
-                            <label class="border-bottom border-dark fw-bold"> Additional Files&emsp;</label>
-                        </li>
-                        <li class="list-group-item border-0">
-                            <img src="assets\browsepage\fileIcon.png" class="border border-white d-inline " width="20"
-                                height="20">
-                            <div class="d-inline ps-2">Memoir</div>
-                        </li>
-                        <li class="list-group-item border-0">
-                            <img src="assets\browsepage\fileIcon.png" class="border border-white d-inline" width="20"
-                                height="20">
-                            <div class="d-inline ps-2">Link Name</div>
-                        </li>
-                        <li class="list-group-item border-0">
-                            <img src="assets\browsepage\fileIcon.png" class="border border-white d-inline" width="20"
-                                height="20">
-                            <div class="d-inline ps-2">Link Name</div>
-                        </li>
-
-                    </ul>
-                </div>
-
-                <div class="vertical-line mx-4" style="height: 50vh;"></div>
-
-                <div class="card col-9 border border-warning" style="height:50vh ; width:50vw;">
-                    <div class="card-body">
-                        <p class="card-text ">Paragraph Text</p>
-                    </div>
-                </div>
-
-
-            </div>
-        
+<div class="container-fluid bg-dark">
+  <div class="row row-col-4">
+    <img
+      src="assets\browsepage\tempprofile.png"
+      class="rounded-circle mx-5"
+      style="width: 13%"
+    />
+    <div
+      class="col align-items-center align-self-center text-light"
+      style="height: 100%"
+    >
+      <div class="fs-1">
+        Name: {{ profile.first_name }} {{ profile.last_name }}
+      </div>
+      <div class="pb-3">Occupation {{ profile.workplace }}</div>
     </div>
 
+    <app-share class="col align-self-center"> </app-share>
+    <label class="col text-light" style="width: 13%">ID: {{ id }}</label>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-2">
+      <div class="col align-self-end">
+        <ul class="list-group sticky-sm-top">
+          <li
+            class="list-group-item border-0"
+            style="background-color: #e8e8e8"
+          >
+            <label class="border-bottom border-dark fw-bold">
+              Additional Files&emsp;</label
+            >
+          </li>
+          <li
+            class="list-group-item border-0"
+            style="background-color: #e8e8e8"
+          >
+            <img
+              src="assets\browsepage\fileIcon.png"
+              class="border border-white d-inline"
+              width="20"
+              height="20"
+            />
+            <div class="d-inline ps-2">Memoir</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-7 border-start">
+      <div class="row border-bottom">
+        <div class="col-12">
+          <label class="fw-bold"> Detail Information:&emsp;</label>
+        </div>
+        <div class="col-12 col-md-6 row mt-2">
+          <div class="col-12 py-2">First Name: {{ profile.first_name }}</div>
+          <div class="col-12 py-2">Last Name: {{ profile.last_name }}</div>
+          <div class="col-12 py-2">Ethic Group:</div>
+          <div class="col-12 py-2">Education:</div>
+        </div>
+        <div class="col-12 col-md-6 row mt-2">
+          <div class="col-12 py-2">Occupation:</div>
+          <div class="col-12 py-2">
+            Year of Birth: {{ profile.year_of_birth || "-" }}
+          </div>
+          <div class="col-12 py-2">
+            Year of Death: {{ profile.year_of_death || "-" }}
+          </div>
+          <div class="col-12 py-2">
+            Rightest Year: {{ profile.year_rightist || "-" }}
+          </div>
+        </div>
+      </div>
+      <div></div>
+      <div class="card-body">
+        <p class="h6 fw-bold">Description/Timeline:</p>
+        <p>{{ profile.description }}</p>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Blue Skys (1957)</h5>
+          <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+          <a href="#" class="btn btn-light border-khaki">Memoir PDF Link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
