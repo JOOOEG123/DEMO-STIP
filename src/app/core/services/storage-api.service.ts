@@ -11,17 +11,17 @@ export class StorageApIService {
     private auth: AuthServiceService
   ) {}
 
-  profileImage(fileName: string, uid = this.auth.uid) {
-    return this.afs.ref(`userProfile/${uid}/${fileName}`);
+  profileImage(uid = this.auth.uid) {
+    return this.afs.ref(`userProfile/${uid}`);
   }
 
   profileImgeUrl(uid = this.auth.uid) {
     console.log('uid', uid);
-    return this.profileImage(uid, 'profile_img').getDownloadURL();
+    return this.profileImage(uid).getDownloadURL();
   }
 
   uploadProfileImage(file: File, uid = this.auth.uid) {
-    const ref = this.profileImage(uid, 'profile_img');
+    const ref = this.profileImage(uid);
     const upload = ref.put(file);
     return upload;
   }
