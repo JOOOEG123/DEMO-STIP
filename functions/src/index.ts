@@ -12,14 +12,14 @@ app.use(cors({origin: true}));
 
 app.get('/', (req, res) => res.status(200).send('Hello World!'));
 app.get('/allArchies', allArchies);
-export const add = functions.https.onCall(() => {
+export const add = functions.https.onCall(async (data, context) => {
   // eslint-disable-next-line max-len
-  const result = fireStore.collection('publics').doc();
-  return result.set({
-    name: 'John Doe',
-    email: '',
-    profile: '',
-  });
+  const result = fireStore.collection('/publics').doc();
+  return {
+    message: 'Hello World!',
+    status: 'success',
+    data: result,
+  };
 }
 );
 
