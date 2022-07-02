@@ -3,7 +3,7 @@ import { Component, OnInit, } from '@angular/core';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-browse-archive',
@@ -15,6 +15,8 @@ export class BrowseArchiveComponent implements OnInit {
   // solution 1
   id = this.route.snapshot.paramMap.get('id') as string;
   profile =  {} as any;
+
+  
   constructor(  private route: ActivatedRoute,private router: Router,private arch: ArchieveApiService) {}
 
   ngOnInit(): void {
