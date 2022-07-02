@@ -19,7 +19,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFireFunctionsModule } from '@angular/fire/compat/functions';
+// import { AngularFireFunctionsModule, NEW_ORIGIN_BEHAVIOR  } from '@angular/fire/compat/functions';
+import { AngularFireFunctionsModule, ORIGIN, USE_EMULATOR } from '@angular/fire/compat/functions';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 import { environment } from 'src/environments/environment';
@@ -53,6 +54,7 @@ import { EditAccountComponent } from './pages/account/edit-account/edit-account.
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
+    HttpClientModule,
     AngularFirestoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -66,7 +68,7 @@ import { EditAccountComponent } from './pages/account/edit-account/edit-account.
     NgxSpinnerModule,
     TabsModule.forRoot()
   ],
-  providers: [AuthServiceService],
+  providers: [AuthServiceService,  { provide: ORIGIN,  useValue: 'https://us-central1-stip-demo.cloudfunctions.net/' }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 

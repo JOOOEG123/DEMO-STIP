@@ -29,3 +29,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Issue related to firebase 
 run the following command
 npm i firebase@latest
+
+# set environment variable
+firebase functions:config:set someservice.key="THE API KEY" someservice.id="THE CLIENT ID"
