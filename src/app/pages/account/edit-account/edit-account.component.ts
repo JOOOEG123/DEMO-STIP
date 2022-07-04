@@ -1,26 +1,70 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
-import { finalize } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-account',
   templateUrl: './edit-account.component.html',
   styleUrls: ['./edit-account.component.scss'],
 })
-export class EditAccountComponent implements OnInit {
+export class EditAccountComponent implements OnInit, OnDestroy {
   userId = this.auth.uid;
-  imageUrl!: Observable<string> | undefined;
+  imageUrl!: string | undefined;
   uploadImgProg!: Observable<number | undefined>;
+
+  sub: Subscription[] = [];
+
+  edit_form = this.fb.group({
+    nickname: [''],
+    firstName: [''],
+    lastName: [''],
+    email: [''],
+    occupation: [''],
+    ethnic: [''],
+    gender: [''],
+    desc: [''],
+  });
   constructor(
     private auth: AuthServiceService,
-    private storage: StorageApIService
-  ) {
-    this.imageUrl = this.storage.profileImgeUrl();
+    private storage: StorageApIService,
+    private fb: FormBuilder
+  ) {}
+  ngOnDestroy(): void {
+    this.sub.forEach((sub) => sub.unsubscribe());
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const h = this.storage.profileImgeUrl();
+    if (h) {
+      this.sub.push(
+        h.subscribe((url) => {
+          this.imageUrl = url;
+        })
+      );
+    }
+    this.fetchuser();
+  }
+
+  fetchuser() {
+    this.edit_form.get('email')?.disable();
+    this.sub.push(
+      this.auth.userDetaills.subscribe((user: any) => {
+        console.log('Subscribe: ', user);
+        this.edit_form.patchValue({
+          ...user,
+        });
+        if (user['avatarUrl']) {
+          this.imageUrl = user['avatarUrl'].replace('-c', '');
+        }
+        if (user?.['uid']) {
+          this.userId = user['uid'];
+        }
+      })
+    );
+  }
   uploadImage(event: any) {
     const file = event.target.files[0];
     this.imageUrl = undefined;
@@ -35,9 +79,18 @@ export class EditAccountComponent implements OnInit {
       .snapshotChanges()
       .pipe(
         finalize(() => {
-          this.imageUrl = ref.getDownloadURL();
+          ref
+            .getDownloadURL()
+            .pipe(take(1))
+            .subscribe((url) => {
+              this.imageUrl = url;
+            });
         })
       )
       .subscribe();
+  }
+
+  savechanges() {
+    this.auth.editProfile(this.edit_form.value);
   }
 }

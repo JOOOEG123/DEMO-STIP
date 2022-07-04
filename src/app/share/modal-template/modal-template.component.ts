@@ -19,8 +19,7 @@ export class ModalTemplateComponent implements OnInit {
   @ViewChild('logoutModal') logoutModal!: TemplateRef<any>;
 
   changeEmailForm = this.formBuilder.group({
-    newEmail: ['', [Validators.required, Validators.email]],
-    oldEmail: ['', [Validators.required, Validators.email]],
+    newEmail: ['', [Validators.required, Validators.email]]
   });
 
   sub: Subscription[] = [];
@@ -69,7 +68,10 @@ export class ModalTemplateComponent implements OnInit {
   // function to close modal
 
   changeEmail() {
-    this.auth.changeEmail(this.changeEmailForm.value.newEmail);
+    const email = this.changeEmailForm.value.newEmail;
+    this.auth.changeEmail(email).then(() => {
+      this.modalRef?.hide();
+    });
   }
 
   deleteAccount() {

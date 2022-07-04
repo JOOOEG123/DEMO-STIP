@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { StorageApIService } from 'src/app/core/services/storage-api.service';
 
 
 @Component({
@@ -82,16 +83,42 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   subscription: Subscription[] = [];
   isAdmin = false;
+  imageUrl!: Observable<string> | undefined;
+  userId = this.auth.uid;
+  profile: any;
   // @ViewChild('modalTemplates') modalTemplates!: LogoutComponent;
-  constructor(private auth: AuthServiceService) {}
+  constructor(private auth: AuthServiceService,
+    private storage: StorageApIService) {}
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
   }
 
   ngOnInit(): void {
+    this.imageUrl = this.storage.profileImgeUrl();
+    const h = this.storage.profileImgeUrl();
+    if (h) {
+      this.subscription.push(
+        h.subscribe((url) => {
+          this.imageUrl = url;
+        })
+      );
+    }
     this.subscription.push(
       this.auth.isAdmin.subscribe((isAdmin) => {
         this.isAdmin = isAdmin;
+      })
+    );
+
+    this.subscription.push(
+      this.auth.userDetaills.subscribe((user: any) => {
+        this.profile = user;
+        console.log('profile',this.profile);
+        if (user['avatarUrl']) {
+          this.imageUrl = user['avatarUrl'].replace('-c', '');
+        }
+        if (user?.['uid']) {
+          this.userId = user['uid'];
+        }
       })
     );
   }
