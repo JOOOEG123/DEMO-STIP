@@ -115,6 +115,13 @@ export const pagesRoutes = [
       title: 'Edit Account',
     },
   },
+  {
+    path: 'modification-request',
+    component: ModificationRequestComponent,
+    data: {
+      title: 'Modification-Request',
+    }
+  }
 ];
 
 export const adminRoutes = [
