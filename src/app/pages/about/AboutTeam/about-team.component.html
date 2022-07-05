@@ -14,10 +14,53 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid" style="padding-top:80px; padding-bottom:80px;">
-    <h4 class="text-center">Contact Info</h4>
-    <p style="padding-left:30%; padding-right:30%;">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-       incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-       nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
+  <div class="container-fluid text-center">
+  <button
+  type="button"
+  class="btn btn-dark"
+  data-bs-toggle="modal"
+  data-bs-target="#contactModal"
+  
+>
+Contact Us
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="contactModal"
+  tabindex="-1"
+  aria-labelledby="contactModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Name</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="First and last name">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+        </div>
+    </div>
   </div>
+</div>
+</div>
+
+
+
