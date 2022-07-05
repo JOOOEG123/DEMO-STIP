@@ -14,18 +14,15 @@
 }
 
 
+.my-pagination::ng-deep .page-item.active .page-link {
+    z-index: 1;
+    color: black;
+    background-color:white!important;
+    border-color:#FFFFFF !important;
+    column-gap: 2px !important;
+    text-decoration: none !important;
+    text-decoration-color: white!important;
+    
+    
 
-
-// .my-pagination::ng-deep .ngx-pagination {
-//     color: white;
-// }
-
-// /* sets font color for number color when hovering */
-// .my-pagination::ng-deep .ngx-pagination a:hover {
-//     color: red;
-// }
-
-// /* sets font color for disabled previous or next words */
-// .my-pagination::ng-deep .ngx-pagination .disabled {
-//     color: white !important;
-// }
+}

@@ -1,4 +1,8 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,7 +11,6 @@ import { NgxBootstrapModule } from './module/ngx-bootrap.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
 
 // Index Components
 import { allLayoutComponents } from './layout';
@@ -20,7 +23,11 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 // import { AngularFireFunctionsModule, NEW_ORIGIN_BEHAVIOR  } from '@angular/fire/compat/functions';
-import { AngularFireFunctionsModule, ORIGIN, USE_EMULATOR } from '@angular/fire/compat/functions';
+import {
+  AngularFireFunctionsModule,
+  ORIGIN,
+  USE_EMULATOR,
+} from '@angular/fire/compat/functions';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 import { environment } from 'src/environments/environment';
@@ -66,11 +73,16 @@ import { EditAccountComponent } from './pages/account/edit-account/edit-account.
     HttpClientModule,
     NgxMasonryModule,
     NgxSpinnerModule,
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
   ],
-  providers: [AuthServiceService,  { provide: ORIGIN,  useValue: 'https://us-central1-stip-demo.cloudfunctions.net/' }],
+  providers: [
+    AuthServiceService,
+    {
+      provide: ORIGIN,
+      useValue: 'https://us-central1-stip-demo.cloudfunctions.net/',
+    },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-
 })
 export class AppModule {}

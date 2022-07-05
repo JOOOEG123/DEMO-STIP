@@ -8,9 +8,7 @@ import { UUID } from '../utils/uuid';
 export class ArchieveApiService {
   user: any;
   cache: any = {};
-  constructor(
-    private db: AngularFireDatabase
-  ) {}
+  constructor(private db: AngularFireDatabase) {}
 
   /** New API */
   getAllArchieve() {
@@ -149,11 +147,8 @@ export class ArchieveApiService {
       .valueChanges();
   }
 
-
-
-  // new APIs: for sample data and need fix if the db data changes. 
+  // new APIs: for sample data and need fix if the db data changes.
   getTestDataPersonByIntial(letter: string) {
-    
     return this.db
       .list(`/persons/requestArchieve/persons`, (ref) =>
         ref.orderByChild('initial').equalTo(letter)
@@ -165,14 +160,21 @@ export class ArchieveApiService {
     return this.db.list(`/persons/requestArchieve/persons`).valueChanges();
   }
 
-  getTestDataPersonByEvent(word:string) {
-    return this.db.list(`/persons/requestArchieve/persons`, (ref) =>
-    ref.orderByChild('event').equalTo(word)).valueChanges();
+  getTestDataPersonByEvent(word: string) {
+    return this.db
+      .list(`/persons/requestArchieve/persons`, (ref) =>
+        ref.orderByChild('event').equalTo(word)
+      )
+      .valueChanges();
   }
 
   // getPersonID() {
-  //   var adaRef = this.db.ref("users/ada");
-  //   var key = adaRef.key;  // key === "ada"
-  //   key = adaRef.child("name/last").key;
+  //   var dataRef = this.db.ref('/persons/requestArchieve/persons');
+  //   var query = dataRef.orderByChild('email').equalTo(givenEmail);
+  //   dataRef.once('value', (snapshot) => {
+  //       snapshot.forEach((userSnapshot) => {
+  //           console.log(userSnapshot.val().id);
+  //       });
+  //   });
   // }
 }

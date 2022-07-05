@@ -6,12 +6,13 @@ import {
   OnDestroy,
   Attribute,
   ViewChild,
+  SimpleChanges,
+  NgZone,
 } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Subscription } from 'rxjs';
+import { concatAll, Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { FilterTypes } from 'src/app/core/types/filters.type';
-
 import { LETTERS } from './main-browse.constant';
 import { BrowseSearchFilterComponent } from 'src/app/pages/browse/browse-search-filter/browse-search-filter.component';
 
@@ -60,6 +61,22 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.archCacheAPI = {};
   }
 
+  // letterLableChange(result: any) {
+  //   var res = this.currentLetter !== result.initial;
+  //   if (res) {
+  //     // this.ngZone.run(() => {
+  //     //   console.log('anim complete');
+  //     //   this.currentLetter = result.initial;
+  //     // });
+  //     this.currentLetter = result.initial;
+  //     console.log(result);
+  //     // this.changeDetection.detectChanges();
+  //   }
+
+  //   console.log(res);
+  //   return res;
+  // }
+
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
@@ -78,7 +95,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   pageChanged(event: any) {
-    console.log('in page changed');
     this.currentPage = event.page;
     this.setDisplayInfo(this.itemsPerPage);
   }
@@ -107,34 +123,36 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       this.isloading = true;
       if (letter === 'All') {
         // replace api when database change. An we need to add profileId to json data.
-        res = this.archApi
-          .getAllArchieve()
-          .subscribe((datas: any) => {
-            this.db_result = Object.entries(datas).map(([key, value]: any) => { return {profileId: key, ...value}; });
-
-            this.archCacheAPI[archKey] = this.db_result;
-
-            this.setDisplayInfo(this.itemsPerPage);
-            this.setNonFilterData('filterPanel');
-            this.setNonFilterData('searchBar');
-
-            this.isloading = false;
+        res = this.archApi.getAllArchieve().subscribe((datas: any) => {
+          this.db_result = Object.entries(datas).map(([key, value]: any) => {
+            return { profileId: key, ...value };
           });
+
+          this.archCacheAPI[archKey] = this.db_result;
+
+          this.setDisplayInfo(this.itemsPerPage);
+          this.setNonFilterData('filterPanel');
+          this.setNonFilterData('searchBar');
+
+          this.isloading = false;
+        });
       } else {
         // replace api when database change. An we need to add profileId to json data.
         // res = this.archApi
         //   .getAllArchieve()
         //   .subscribe((datas: any) => {
-            this.db_result =this.archCacheAPI['person_arch_All'].filter((r: any) => r.initial == letter);
-            this.archCacheAPI[archKey] = this.db_result;
-            this.setDisplayInfo(this.itemsPerPage);
-            this.setNonFilterData('filterPanel');
-            this.setNonFilterData('searchBar');
-            this.isloading = false;
-          // });
+        this.db_result = this.archCacheAPI['person_arch_All'].filter(
+          (r: any) => r.initial == letter
+        );
+        this.archCacheAPI[archKey] = this.db_result;
+        this.setDisplayInfo(this.itemsPerPage);
+        this.setNonFilterData('filterPanel');
+        this.setNonFilterData('searchBar');
+        this.isloading = false;
+        // });
       }
     }
-    if(res) {
+    if (res) {
       this.archSubAPI.push(res);
     }
   }
@@ -216,7 +234,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   filterByFilterValues(valuesAttr: any[], userValues: any[]) {
-
     this.db_result = this.db_result.filter((record): boolean => {
       var values: any = [];
       valuesAttr.forEach((value, index) => {
@@ -230,7 +247,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       var containsAll =
         userValues.every((keyword) => {
           return this.containKeyword(values, keyword);
-        })  && this.getYearBecameRightist(record);
+        }) && this.getYearBecameRightist(record);
 
       return containsAll;
     });
@@ -263,6 +280,4 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     }
     return res;
   }
-
-  
 }

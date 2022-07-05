@@ -1,36 +1,19 @@
 <div class="bg-khaki bg-opacity-25 d-flex">
   <!-- search bar -->
   <div class="input-group m-5">
-    <input
-      type="search"
-      class="form-control rounded-end rounded-pill"
-      placeholder="Search for ... "
-      [(ngModel)]="searchInput"
-      (search)="searchBar()"
-      aria-label="Search for ... "
-      aria-describedby="button-addon2"
-    />
-    <button
-      class="btn border border-start-0 bg-white rounded-start rounded-pill"
-      type="button"
-      (click)="searchBar()"
-    >
+    <input type="search" class="form-control rounded-end rounded-pill" placeholder="Search for ... "
+      [(ngModel)]="searchInput" (search)="searchBar()" aria-label="Search for ... " aria-describedby="button-addon2" />
+    <button class="btn border border-start-0 bg-white rounded-start rounded-pill" type="button" (click)="searchBar()">
       <img src="assets/global/search.svg" alt="" width="20" />
     </button>
   </div>
 </div>
 
-<div
-  class="row justify-content-center"
-  style="background-color: rgb(12, 19, 48)"
->
+<div class="row justify-content-center" style="background-color: rgb(12, 19, 48)">
   <div class="col-10 border" style="border-color: #caa372">
     <h6 class="border-bottom fw-bold text-light my-3">Browse Archive</h6>
     <div class="my-4">
-      <app-browse-search-filter
-        [(filterValues)]="filterValues"
-        (filterValuesChange)="filterValueschanges($event)"
-      >
+      <app-browse-search-filter [(filterValues)]="filterValues" (filterValuesChange)="filterValueschanges($event)">
       </app-browse-search-filter>
     </div>
 
@@ -43,16 +26,9 @@
         </div>
 
         <div class="col-auto flex-shrink-0">
-          <label for="per_page_result" class="text-white"
-            >Result per page</label
-          >
-          <select
-            class="mx-2"
-            aria-label="Result per page select"
-            id="per_page_result"
-            [(ngModel)]="itemsPerPage"
-            (change)="itemPerPageChanged()"
-          >
+          <label for="per_page_result" class="text-white">Result per page</label>
+          <select class="mx-2" aria-label="Result per page select" id="per_page_result" [(ngModel)]="itemsPerPage"
+            (change)="itemPerPageChanged()">
             <option selected value="25">25</option>
             <option value="50">50</option>
             <option value="100">100</option>
@@ -60,12 +36,7 @@
         </div>
         <div class="col-auto flex-shrink-0">
           <label for="viewSelect" class="text-white">View</label>
-          <select
-            class="mx-2"
-            id="viewSelect"
-            aria-label="View select"
-            [(ngModel)]="curView"
-          >
+          <select class="mx-2" id="viewSelect" aria-label="View select" [(ngModel)]="curView">
             <option value="List" selected>List</option>
             <option value="Grid">Grid</option>
           </select>
@@ -75,28 +46,13 @@
       </div>
 
       <div class="d-flex border-bottom justify-content-between">
-        <div class="position-relative">
-          <img
-            src="assets\browsepage\tempprofile.png"
-            class="rounded-circle border border-dark"
-            width="20"
-          />
-          <span class="fw-bolder position-absolute movem">
-            {{ this.currentLetter }}
-          </span>
-        </div>
 
         <div class="btn-group d-inline-block btn-group-sm">
-          <button
-            class="btn button-no-outline"
-            *ngFor="let letter of letters"
-            [ngClass]="
+          <button class="btn button-no-outline" *ngFor="let letter of letters" [ngClass]="
               currentLetter === letter
                 ? 'btn-outline-light text-danger text-decoration-underline'
                 : 'text-light'
-            "
-            (click)="lettersBtnClickOrReset(letter)"
-          >
+            " (click)="lettersBtnClickOrReset(letter)">
             {{ letter }}
           </button>
         </div>
@@ -104,40 +60,45 @@
 
       <!-- display search results -->
       <app-stip-spinner [isLoading]="isloading"></app-stip-spinner>
+
       <div *ngIf="curView === 'List'; else elseBlock">
         <div *ngIf="display.length; else elseEmptyBlock">
-          <a
-            class="d-flex m-3"
-            style="
+          <div *ngFor="let result of display; let i=index">
+
+            <!-- <div class="position-relative" *ngIf="letterLableChange(result) == true as value">
+              <img src="assets\browsepage\tempprofile.png" class="rounded-circle border border-dark" width="20" />
+              <span class="fw-bolder position-absolute movem bg-light">
+                {{currentLetter}}
+                {{value}}
+
+                {{result.initial}}
+              </span>
+            </div> -->
+
+
+
+            <a class="d-flex m-3" style="
               height: 150px;
               border-radius: 28px;
               color: black;
               text-decoration: none;
               background-color: white;
-            "
-            name="searchLayout"
-            *ngFor="let result of display; let i=index"
-            routerLink="/browse/main/memoir/{{ result.profileId }}"
-            routerLinkActive="active"
-            ariaCurrentWhenActive="page"
-          > 
-            <div class="m-3">{{i+ (currentPage-1) * itemsPerPage}}</div>
-            <div class="m-4">
-              <img
-                src="assets\browsepage\tempprofile.png"
-                class="rounded-circle border border-dark img-responsive center-block"
-                width="100vw"
-                height="100vw"
-              />
-            </div>
-            <div class="flex-grow-1 m-3">
-              <div class="text-start">
-                {{ result.first_name +" "+result.last_name }}
+            " name="searchLayout" routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
+              ariaCurrentWhenActive="page">
+              <div class="m-3">{{i+ (currentPage-1) * itemsPerPage}}</div>
+              <div class="m-4">
+                <img src="assets\browsepage\tempprofile.png"
+                  class="rounded-circle border border-dark img-responsive center-block" width="100vw" height="100vw" />
               </div>
-              <div class="pb-3 text-start">{{ result.workplace }}</div>
-              <div class="text-start">{{ result.description }}</div>
-            </div>
-          </a>
+              <div class="flex-grow-1 m-3">
+                <div class="text-start">
+                  {{ result.first_name +" "+result.last_name }}
+                </div>
+                <div class="pb-3 text-start">{{ result.workplace }}</div>
+                <div class="text-start">{{ result.description }}</div>
+              </div>
+            </a>
+          </div>
         </div>
 
         <ng-template #elseEmptyBlock>
@@ -149,29 +110,16 @@
 
       <ng-template #elseBlock>
         <div *ngIf="display.length; else elseEmptyBlock">
-          <div
-            class="d-flex"
-            name="searchLayout"
-            *ngFor="let results of display | UpdateRows: 5 ; let i = index"
-          >
-            <div
-              class="card d-flex flex-column m-3"
-              style="flex: 1; border-radius: 28px; background-color: #dbdde2"
-              *ngFor="let result of results; let j= index"
-            >
-              <a
-                routerLink="/browse/main/memoir/{{ result.profileId }}"
-                routerLinkActive="active"
-                ariaCurrentWhenActive="page"
-                style="color: black; text-decoration: none"
-              >
-               
+          <div class="d-flex" name="searchLayout" *ngFor="let results of display | UpdateRows: 5 ; let i = index">
+            <div class="card d-flex flex-column m-3" style="flex: 1; border-radius: 28px; background-color: #dbdde2"
+              *ngFor="let result of results; let j= index">
+              <a routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
+                ariaCurrentWhenActive="page" style="color: black; text-decoration: none">
+
                 <div class="m-3">{{(5*i+(j+1)) + (currentPage-1) * itemsPerPage}}</div>
                 <div class="d-flex justify-content-center flex-shrink-0">
-                  <img
-                    src="assets\browsepage\tempprofile.png"
-                    class="card-img-top rounded-circle img-responsive border border-dark w-75"
-                  />
+                  <img src="assets\browsepage\tempprofile.png"
+                    class="card-img-top rounded-circle img-responsive border border-dark w-75" />
                 </div>
                 <div class="card-body mt-auto">
                   <div class="card-body">
@@ -193,22 +141,11 @@
 
       <!-- search nav -->
 
-      <div class="d-flex flex-row-reverse text-light">
+      <div class="d-flex flex-row-reverse">
         <nav aria-label="Page navigation">
-          <pagination
-            class="bg-light"
-            [rotate]="true"
-            [totalItems]="db_result.length"
-            [boundaryLinks]="true"
-            [itemsPerPage]="itemsPerPage"
-            [(ngModel)]="currentPage"
-            (pageChanged)="pageChanged($event)"
-            previousText="&lsaquo;"
-            nextText="&rsaquo;"
-            firstText="&laquo;"
-            lastText="&raquo;"
-            [maxSize]="10"
-          >
+          <pagination class=" my-pagination" [rotate]="true" [totalItems]="db_result.length" [boundaryLinks]="true"
+            [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="10">
           </pagination>
         </nav>
 
