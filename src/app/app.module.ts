@@ -36,6 +36,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { AppComponent } from './app.component';
 import { EditAccountComponent } from './pages/account/edit-account/edit-account.component';
+import { ModificationRequestComponent } from './pages/requestForms/modification-request/modification-request.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { EditAccountComponent } from './pages/account/edit-account/edit-account.
     ShareComponent,
     MemoirComponent,
     EditAccountComponent,
+    ModificationRequestComponent,
   ],
   imports: [
     AngularFireAuthModule,
