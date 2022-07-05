@@ -9,6 +9,7 @@ export class UpdateRowsPipe implements PipeTransform {
     for (let i = 0; i < value.length; i += perRow) {
       updated_db_result.push(value.slice(i, i + perRow));
     }
+
     return updated_db_result;
   }
 }
