@@ -34,6 +34,11 @@ export class UploadComponent implements OnInit {
     memoirAuthor: new FormControl(''),
   });
 
+  imageForm = new FormGroup({
+    imageUpload: new FormControl(''),
+    image: new FormControl(''),
+  });
+
   clear() {
     this.form.reset();
   }
@@ -41,6 +46,11 @@ export class UploadComponent implements OnInit {
   clear2() {
     this.url = '';
     this.form2.reset();
+    this.imageForm.reset();
+  }
+  
+  clearImage(){
+    this.imageForm.reset();
   }
 
   selected?: string;
