@@ -19,6 +19,7 @@ import { UploadComponent } from './account/upload/upload.component';
 
 import { EditAccountComponent } from './account/edit-account/edit-account.component';
 import { AuthGuard } from '../core/services/auth-guard.service';
+import { ModificationRequestComponent } from './requestForms/modification-request/modification-request.component';
 
 // AuthGuard pipe for admin pages
 const adminOnly = () =>
@@ -43,6 +44,7 @@ export const pagesComponents = [
   HomepageComponent,
   ResourcesComponent,
   BrowseArchiveComponent,
+  ModificationRequestComponent
 ];
 
 // Page routes
