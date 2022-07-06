@@ -16,8 +16,11 @@ export class StorageApIService {
   }
 
   profileImgeUrl(uid = this.auth.uid) {
-    console.log('uid', uid);
-    return this.profileImage(uid).getDownloadURL();
+    try {
+      return this.profileImage(uid).getDownloadURL();
+    } catch (error) {
+      return undefined;
+    }
   }
 
   uploadProfileImage(file: File, uid = this.auth.uid) {

@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
       console.log('isLoggedIn', this.isLoggedIn);
     });
 
-    this.annoucement.message.subscribe((x) => {
+    this.annoucement.getAnnounce().subscribe((x) => {
       this.message = x;
       this.createCounter();
       this.outsideScope.run(this.createCounter);

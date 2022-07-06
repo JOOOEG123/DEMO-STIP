@@ -11,6 +11,7 @@ export type Profile = {
   displayName: string;
   createdAt?: string;
   updatedAt: string;
+  [key: string]: any;
 };
 
 
