@@ -63,9 +63,8 @@
 
       <div *ngIf="curView === 'List'; else elseBlock">
         <div *ngIf="display.length; else elseEmptyBlock">
-          <div *ngFor="let result of display; let i=index">
 
-            <!-- <div class="position-relative" *ngIf="letterLableChange(result) == true as value">
+          <!-- <div class="position-relative" *ngIf="letterLableChange(result) == true as value">
               <img src="assets\browsepage\tempprofile.png" class="rounded-circle border border-dark" width="20" />
               <span class="fw-bolder position-absolute movem bg-light">
                 {{currentLetter}}
@@ -75,30 +74,28 @@
               </span>
             </div> -->
 
-
-
-            <a class="d-flex m-3" style="
+          <a class="d-flex m-3" style="
               height: 150px;
               border-radius: 28px;
               color: black;
               text-decoration: none;
               background-color: white;
             " name="searchLayout" routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
-              ariaCurrentWhenActive="page">
-              <div class="m-3">{{i+ (currentPage-1) * itemsPerPage}}</div>
+            ariaCurrentWhenActive="page" *ngFor="let result of display; let i=index">
+            <div class="m-3">{{i+ (currentPage-1) * itemsPerPage}}</div>
 
-              <div class="m-3 d-flex">
-                <div class="text-start">
-                  {{ result.first_name +" "+result.last_name }}
-                </div>
-                <div class="pb-3 text-start">Occupation: {{ result.occupation || "-"}}</div>
-                <div class="text-start">Ethnic Group: {{ result.group || "-"}}</div>
-                <div class="text-start">Gender: {{ result.gender || "-"}}</div>
+            <div class="m-3 d-flex">
+              <div class="text-start">
+                {{ result.firstName +" "+result.lastName }}
               </div>
-              <div class="text-start overflow d-flex align-items-stretch">{{ result.description }}</div>
-              <div class="text-start d-flex align-items-stretch">read more ></div>
-            </a>
-          </div>
+              <div class="pb-3 text-start">Occupation: {{ result.job || "-"}}</div>
+              <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
+              <div class="text-start">Gender: {{ result.gender || "-"}}</div>
+            </div>
+            <div class="text-start overflow d-flex align-items-stretch">{{ result.description }}</div>
+            <div class="text-start d-flex align-items-stretch">read more ></div>
+          </a>
+
         </div>
 
         <ng-template #elseEmptyBlock>
@@ -123,9 +120,9 @@
                 </div>
                 <div class="card-body mt-auto">
                   <div class="card-body">
-                    <div>{{ result.first_name +" "+result.last_name }}</div>
+                    <div>{{ result.firstName +" "+result.lastName }}</div>
                     <div class="pb-3">{{ result.workplace }}</div>
-                    <div>{{ result.nationality }}</div>
+                    <div>{{ result.ethnicity }}</div>
                   </div>
                 </div>
               </a>

@@ -61,22 +61,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.archCacheAPI = {};
   }
 
-  // letterLableChange(result: any) {
-  //   var res = this.currentLetter !== result.initial;
-  //   if (res) {
-  //     // this.ngZone.run(() => {
-  //     //   console.log('anim complete');
-  //     //   this.currentLetter = result.initial;
-  //     // });
-  //     this.currentLetter = result.initial;
-  //     console.log(result);
-  //     // this.changeDetection.detectChanges();
-  //   }
-
-  //   console.log(res);
-  //   return res;
-  // }
-
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
@@ -92,6 +76,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       Math.ceil(this.db_result.length / this.itemsPerPage),
       1
     );
+    console.log(this.db_result);
+    console.log(this.display);
   }
 
   pageChanged(event: any) {
@@ -158,25 +144,28 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   searchBar() {
-    // Good filter, however, I think clearing filter is not a good idea. This means the user have to type the filter again. Think about it.
-    // Just think about how annoying it will be if you have to type the filter again, however in the other hand we can use the clear filter if we need to clear it.
     this.browseSearchFilterComponent.clear();
     const userValues = this.searchInput.split(' ');
 
     var db_attr = [
+      'birthYear',
       'birthplace',
+      'deathYear',
       'description',
+      'detailJob',
       'education',
+      'ethnicity',
       'events',
-      'first_name',
-      'last_name',
+      'firstName',
       'gender',
+      'job',
+      'lastName',
+      'publish',
       'memoir',
       'reference',
+      'rightistYear',
+      'status',
       'workplace',
-      'year_of_birth',
-      'year_of_death',
-      'year_rightist',
     ];
 
     this.getNonFilterData('searchBar');
@@ -211,25 +200,30 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     return res;
   }
   filterValueschanges(valueEmitted: any) {
+    console.log('filtering values');
+    console.log(this.db_result);
     const empty = Object.values(this.filterValues).every((element) => {
       return element === '';
     });
 
     //reset db
     this.getNonFilterData('filterPanel');
-
+    console.log('filtering values');
+    console.log(this.db_result);
     if (!empty) {
-      let attr: any[] = ['gender', 'group', 'occupation', 'status'];
+      let attr: any[] = ['gender', 'ethnicity', 'job', 'status'];
       let userValues: any[] = [
         this.filterValues.gender,
-        this.filterValues.group,
-        this.filterValues.occupation,
+        this.filterValues.ethnicity,
+        this.filterValues.job,
         this.filterValues.status,
       ];
       this.filterByFilterValues(attr, userValues);
     }
 
     this.currentPage = 1;
+    console.log('filtering values');
+    console.log(this.db_result);
     this.setDisplayInfo(this.itemsPerPage);
   }
 
@@ -240,10 +234,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         values[index] = record[value];
       });
 
+      console.log('uservalues before removing empty', userValues);
       userValues = userValues.filter((element) => {
         return element !== '';
       });
 
+      //console.log('uservalues', userValues);
       var containsAll =
         userValues.every((keyword) => {
           return this.containKeyword(values, keyword);
@@ -276,7 +272,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       var from = this.filterValues.date[0].getFullYear();
       var to = this.filterValues.date[1].getFullYear();
 
-      res = from <= record.year_rightist && record.year_rightist <= to;
+      res = from <= record.rightestYear && record.rightestYear <= to;
     }
     return res;
   }
