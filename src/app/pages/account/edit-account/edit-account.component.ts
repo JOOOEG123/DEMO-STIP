@@ -61,9 +61,6 @@ export class EditAccountComponent implements OnInit, OnDestroy {
         this.edit_form.patchValue({
           ...user,
         });
-        // if (user['avatarUrl']) {
-        //   this.imageUrl = user['avatarUrl'].replace('-c', '');
-        // }
         if (user?.['uid']) {
           this.userId = user['uid'];
         }

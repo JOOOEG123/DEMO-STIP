@@ -1,27 +1,18 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { Subject } from 'rxjs';
 import { AuthServiceService } from './auth-service.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AnnouncementService {
-  message = new Subject();
   constructor(
     private db: AngularFireDatabase,
     private auth: AuthServiceService
-  ) {
-    this.getAnnounce();
-  }
+  ) {}
 
-  private getAnnounce() {
-    this.db
-      .object(`/announcement/announce`)
-      .valueChanges()
-      .subscribe((x) => {
-        this.message.next(x);
-      });
+  getAnnounce() {
+    return this.db.object(`/announcement/announce`).valueChanges();
   }
 
   // Update announcement and track which admin made the change.

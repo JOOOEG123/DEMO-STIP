@@ -38,7 +38,7 @@ export class ModalTemplateComponent implements OnInit {
   ngOnInit(): void {
     // For annuncement template.
     this.sub.push(
-      this.announce.message.subscribe((x: any) => {
+      this.announce.getAnnounce().subscribe((x: any) => {
         this.announceText = x;
       })
     );
