@@ -55,7 +55,7 @@
       <div class="col-12 col-md-2">
         <label for="chinese-ethic-group" class="form-label col fw-bold">Chinese Ethnic Group</label>
         <div class="col-auto">
-          <input class="form-control form-control-sm" formControlName="group" id="chinese-ethic-group"
+          <input class="form-control form-control-sm" formControlName="ethnicity" id="chinese-ethic-group"
             [typeahead]="groups" typeaheadOptionField="viewValue" [typeaheadOptionsLimit]="5"
             placeholder="Type to search ethnic groups..." />
         </div>
@@ -64,10 +64,9 @@
         <label for="chinese-ethic-group fw-bold" class="form-label col fw-bold">Occupation</label>
         <div class="col-auto">
 
-          <select class="form-select form-select-sm mb-3" formControlName="occupation"
-            aria-label=".form-select-lg example">
-            <option *ngFor="let occupation of occupations" [value]="occupation.viewValue">
-              {{occupation.viewValue}}
+          <select class="form-select form-select-sm mb-3" formControlName="job" aria-label=".form-select-lg example">
+            <option *ngFor="let job of occupations" [value]="job.viewValue">
+              {{job.viewValue}}
             </option>
           </select>
 

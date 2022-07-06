@@ -76,6 +76,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       Math.ceil(this.db_result.length / this.itemsPerPage),
       1
     );
+    console.log(this.db_result);
+    console.log(this.display);
   }
 
   pageChanged(event: any) {
@@ -161,7 +163,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       'publish',
       'memoir',
       'reference',
-      'rightestYear',
+      'rightistYear',
       'status',
       'workplace',
     ];
@@ -198,13 +200,16 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     return res;
   }
   filterValueschanges(valueEmitted: any) {
+    console.log('filtering values');
+    console.log(this.db_result);
     const empty = Object.values(this.filterValues).every((element) => {
       return element === '';
     });
 
     //reset db
     this.getNonFilterData('filterPanel');
-
+    console.log('filtering values');
+    console.log(this.db_result);
     if (!empty) {
       let attr: any[] = ['gender', 'ethnicity', 'job', 'status'];
       let userValues: any[] = [
@@ -217,6 +222,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     }
 
     this.currentPage = 1;
+    console.log('filtering values');
+    console.log(this.db_result);
     this.setDisplayInfo(this.itemsPerPage);
   }
 
@@ -227,10 +234,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         values[index] = record[value];
       });
 
+      console.log('uservalues before removing empty', userValues);
       userValues = userValues.filter((element) => {
         return element !== '';
       });
 
+      //console.log('uservalues', userValues);
       var containsAll =
         userValues.every((keyword) => {
           return this.containKeyword(values, keyword);

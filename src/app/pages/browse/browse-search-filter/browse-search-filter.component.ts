@@ -18,9 +18,9 @@ export class BrowseSearchFilterComponent implements OnInit {
   maxDate: Date = new Date('1960-01-01');
   formValues = this.formgroup.group({
     gender: [''],
-    occupation: [''],
+    job: [''],
     status: [''],
-    group: [''],
+    ethnicity: [''],
     date: [''],
   });
   groups = GROUPS;
@@ -78,9 +78,9 @@ export class BrowseSearchFilterComponent implements OnInit {
   clear() {
     this.formValues.reset({
       gender: '',
-      occupation: '',
+      job: '',
       status: '',
-      group: '',
+      ethnicity: '',
       date: '',
     });
   }
