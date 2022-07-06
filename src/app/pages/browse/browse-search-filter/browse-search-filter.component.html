@@ -52,7 +52,6 @@
 
 
 
-
       <div class="col-12 col-md-2">
         <label for="chinese-ethic-group" class="form-label col fw-bold">Chinese Ethnic Group</label>
         <div class="col-auto">
@@ -65,8 +64,8 @@
         <label for="chinese-ethic-group fw-bold" class="form-label col fw-bold">Occupation</label>
         <div class="col-auto">
 
-          <select  class="form-select form-select-sm mb-3"
-            formControlName="occupation" aria-label=".form-select-lg example">
+          <select class="form-select form-select-sm mb-3" formControlName="occupation"
+            aria-label=".form-select-lg example">
             <option *ngFor="let occupation of occupations" [value]="occupation.viewValue">
               {{occupation.viewValue}}
             </option>
@@ -80,13 +79,12 @@
       </div>
       <div class="col-12 col-md-3">
         <div class="form-group">
+
           <label for="year-of-becoming-rightest" class="form-label col fw-bold">Year of Becoming A Rightist</label>
           <input type="text" id="year-of-becoming-rightest" formControlName="date" placeholder="YYYY-YYYY"
-            class="form-control form-control-sm" bsDaterangepicker         [bsConfig]="{
-          minMode: 'year',
-          dateInputFormat: 'YYYY-YYYY'
-        }"/>
-        
+            class="form-control form-control-sm " bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
+            [bsConfig]="{containerClass: 'theme-red',minMode: 'year',rangeInputFormat: 'YYYY'}" />
+
         </div>
       </div>
       <div class="col-12 d-flex">
