@@ -2,9 +2,10 @@
 
   <div class=" d-flex ">
     <div class=" flex-column align-items-center flex-shrink-1">
-      <img src="assets\browsepage\tempprofile.png" class="img-fluid rounded-circle mx-5">
-      <figcaption class="text-light">ID:</figcaption>
-
+      <figure>
+        <img src="assets\browsepage\tempprofile.png" class="img-fluid rounded-circle mx-5">
+        <figcaption class="text-light">ID:</figcaption>
+      </figure>
     </div>
     <div class="d-flex flex-column align-self-center text-light flex-fill" style="height: 100%;">
 
@@ -13,7 +14,7 @@
 
     </div>
 
-    <app-share class="flex-fill align-self-center"> </app-share>
+
 
   </div>
 </div>
@@ -37,10 +38,50 @@
 
 
     <div class="col-7 border-start">
-      <div class="row border-bottom">
+      <button type="button" class="btn btn-light share" data-bs-toggle="modal" data-bs-target="#shareModal">
+        <img src="../../../../assets/browsepage/share.svg">
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Share file</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <p>Copy Link</p>
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      class="bi bi-link-45deg" viewBox="0 0 16 16">
+                      <path
+                        d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
+                      <path
+                        d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z" />
+                    </svg>
+                  </span>
+                  <input type="text" class="form-control" placeholder="URL" aria-label="URL"
+                    aria-describedby="basic-addon1" />
+                  <button class="btn btn-outline-secondary" type="button">
+                    Copy
+                  </button>
+                </div>
+                <br />
+                <div style="padding-bottom: 10px"></div>
+                <a (click)="SavePDF('infoContent')" class="btn btn-light border-khaki">Download</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="infoContent" #infoContent>
         <div class="row border-bottom">
           <div class="col-12">
             <label class="fw-bold"> Detail Information:&emsp;</label>
+
           </div>
           <div class="col-12 col-md-6 row mt-2">
             <div class="col-12 py-2">First Name: {{ profile.first_name }}</div>
@@ -61,25 +102,29 @@
             </div>
           </div>
         </div>
-        <div></div>
+
+
         <div class="card-body">
           <p class="h6 fw-bold">Description/Timeline:</p>
           <p>{{ profile.description }}</p>
         </div>
-
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Blue Skys (1957)</h5>
-            <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-            <a href="#" class="btn btn-light border-khaki">Memoir PDF Link</a>
-          </div>
-        </div>
-
       </div>
+
+
+      <div class="card">
+        <div class="card-body" id="memContent" #memContent>
+          <h5 class="card-title">Blue Skys (1957)</h5>
+          <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+
+        </div>
+        <a (click)="SavePDF('memoirContent')" class="btn btn-light border-khaki">Memoir PDF Link</a>
+      </div>
+
+
       <div>
       </div>
 
