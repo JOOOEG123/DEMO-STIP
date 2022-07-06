@@ -74,6 +74,99 @@
   </div>
 </ng-template>
 
+<ng-template #saveAccountChanges>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Save Account Changes</h4>
+    <button type="button" class="btn-close close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to Save account changes? This action cannot be
+      undone. This will update your account details.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-success rounded-pill"
+      (click)="saveAllAccountChanges()"
+    >
+      Save Account Changes
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary rounded-pill"
+      (click)="modalRef?.hide()"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #saveAccountChanges>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Save Account Changes</h4>
+    <button type="button" class="btn-close close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to Save account changes? This action cannot be
+      undone. This will update your account details.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-success rounded-pill"
+      (click)="saveAllAccountChanges()"
+    >
+      Save Account Changes
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary rounded-pill"
+      (click)="modalRef?.hide()"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #sentEmailResetPassword>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Change Password</h4>
+    <button type="button" class="btn-close close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Please check your email for a link to reset your password. If you do not
+      receive an email, please check your spam folder.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-success rounded-pill"
+      (click)="sendEmailResetPassword()"
+    >
+      Send Email verification
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary rounded-pill"
+      (click)="modalRef?.hide()"
+    >
+      Cancel
+    </button>
+  </div>
+</ng-template>
+
 <ng-template #changeEmailTemplate>
   <div class="modal-header">
     <h4 class="modal-title text-center">Change Email</h4>

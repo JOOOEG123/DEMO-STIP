@@ -16,7 +16,7 @@
 
             <img
               *ngIf="imageUrl"
-              src="{{imageUrl}}"
+              src="{{ imageUrl }}"
               alt="profile image"
               class="image"
             />
@@ -32,9 +32,7 @@
                 class="middle"
                 width="50"
               /> -->
-              <div class="middle mt-5">
-                ADD PHOTO
-              </div>
+            <div class="middle mt-5">ADD PHOTO</div>
           </button>
         </div>
         <div class="mt-1" *ngIf="uploadImgProg | async; let prog">
@@ -162,7 +160,10 @@
             </button>
           </div>
           <div class="col-12 col-md-3">
-            <button class="btn btn-outline-dark rounded-pill w-100">
+            <button
+              class="btn btn-outline-dark rounded-pill w-100"
+              (click)="modaltemplate?.openSendEmailResettModal(edit_form.value)"
+            >
               Change Password
             </button>
           </div>
@@ -188,7 +189,7 @@
           <div class="col-12 col-md">
             <button
               class="btn btn-outline-success rounded-pill w-100"
-              (click)="savechanges()"
+              (click)="modaltemplate?.openSaveAccountModal(edit_form.value)"
             >
               Save Changes
             </button>
