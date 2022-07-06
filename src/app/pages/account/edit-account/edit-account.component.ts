@@ -37,15 +37,20 @@ export class EditAccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const h = this.storage.profileImgeUrl();
-    if (h) {
-      this.sub.push(
-        h.subscribe((url) => {
-          this.imageUrl = url;
-        })
-      );
+    try {
+      const h = this.storage.profileImgeUrl();
+      if (h) {
+        this.sub.push(
+          h.subscribe((url) => {
+            this.imageUrl = url;
+          })
+        );
+      }
+      this.fetchuser();
+    } catch (error) {
+      console.log(error);
+      this.fetchuser();
     }
-    this.fetchuser();
   }
 
   fetchuser() {
@@ -56,9 +61,9 @@ export class EditAccountComponent implements OnInit, OnDestroy {
         this.edit_form.patchValue({
           ...user,
         });
-        if (user['avatarUrl']) {
-          this.imageUrl = user['avatarUrl'].replace('-c', '');
-        }
+        // if (user['avatarUrl']) {
+        //   this.imageUrl = user['avatarUrl'].replace('-c', '');
+        // }
         if (user?.['uid']) {
           this.userId = user['uid'];
         }

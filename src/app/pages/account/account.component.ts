@@ -94,7 +94,6 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.imageUrl = this.storage.profileImgeUrl();
     const h = this.storage.profileImgeUrl();
     if (h) {
       this.subscription.push(
@@ -113,9 +112,9 @@ export class AccountComponent implements OnInit, OnDestroy {
       this.auth.userDetaills.subscribe((user: any) => {
         this.profile = user;
         console.log('profile',this.profile);
-        if (user['avatarUrl']) {
-          this.imageUrl = user['avatarUrl'].replace('-c', '');
-        }
+        // if (user['avatarUrl']) {
+        //   this.imageUrl = user['avatarUrl'].replace('-c', '');
+        // }
         if (user?.['uid']) {
           this.userId = user['uid'];
         }

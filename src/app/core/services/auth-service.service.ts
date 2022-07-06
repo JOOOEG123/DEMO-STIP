@@ -15,15 +15,17 @@ export class AuthServiceService {
 
   user: any;
   isLoggedIn = new Subject<boolean>();
-  readonly uid = this.getUserDetails()?.uid;
   userDetaills = new BehaviorSubject<Profile>({} as Profile);
 
   isAdmin = new BehaviorSubject<boolean>(false);
   get hasAdminRole() {
     return this._hasAdminRole;
   }
+  get uid() {
+    return this.getUserDetails()?.uid;
+  }
   private userDocs(uid: string = this.uid) {
-    return this.store.doc<any>(`users/${ uid }`);
+    return this.store.doc<any>(`users/${uid}`);
   }
 
   constructor(
@@ -43,9 +45,11 @@ export class AuthServiceService {
             'user',
             JSON.stringify({ user: this.user, token: token })
           );
-          this.userDocs().valueChanges().subscribe((user) => {
-            this.userDetaills.next(user);
-          });
+          this.userDocs()
+            .valueChanges()
+            .subscribe((user) => {
+              this.userDetaills.next(user);
+            });
           this.isLoggedIn.next(this.isLoggedInCheck);
         });
       } else {
@@ -53,9 +57,7 @@ export class AuthServiceService {
         this.isLoggedIn.next(this.isLoggedInCheck);
       }
       console.log('user', user);
-
     });
-
   }
 
   get isLoggedInCheck(): boolean {
@@ -127,7 +129,7 @@ export class AuthServiceService {
     console.log('saveUser', p);
     return this.userDocs(p?.uid || '').ref.onSnapshot((snapshot) => {
       if (snapshot.exists && p) {
-        snapshot.ref.update({uid: p.uid});
+        snapshot.ref.update({ uid: p.uid });
       } else {
         if (p) {
           console.log('save user', p);
@@ -145,10 +147,13 @@ export class AuthServiceService {
             updatedAt: p.updatedAt || '',
           };
           console.log('profile', profile);
-          this.store.doc<any>(`users/${p.uid}`).set(profile, { merge: true }).then(() => {
-            console.log('user saved', profile);
-            this.userDetaills.next({ ...profile as any });
-          });
+          this.store
+            .doc<any>(`users/${p.uid}`)
+            .set(profile, { merge: true })
+            .then(() => {
+              console.log('user saved', profile);
+              this.userDetaills.next({ ...(profile as any) });
+            });
         }
       }
     });
@@ -181,7 +186,8 @@ export class AuthServiceService {
           .then(() => {
             user.delete();
             this.signOut();
-          }).catch((error) => {
+          })
+          .catch((error) => {
             console.log('error', error);
             location.reload();
           });
