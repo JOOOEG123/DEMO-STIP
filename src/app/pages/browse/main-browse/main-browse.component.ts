@@ -61,22 +61,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.archCacheAPI = {};
   }
 
-  // letterLableChange(result: any) {
-  //   var res = this.currentLetter !== result.initial;
-  //   if (res) {
-  //     // this.ngZone.run(() => {
-  //     //   console.log('anim complete');
-  //     //   this.currentLetter = result.initial;
-  //     // });
-  //     this.currentLetter = result.initial;
-  //     console.log(result);
-  //     // this.changeDetection.detectChanges();
-  //   }
-
-  //   console.log(res);
-  //   return res;
-  // }
-
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
@@ -158,8 +142,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   searchBar() {
-    // Good filter, however, I think clearing filter is not a good idea. This means the user have to type the filter again. Think about it.
-    // Just think about how annoying it will be if you have to type the filter again, however in the other hand we can use the clear filter if we need to clear it.
     this.browseSearchFilterComponent.clear();
     const userValues = this.searchInput.split(' ');
 
