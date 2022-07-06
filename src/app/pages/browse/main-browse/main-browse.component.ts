@@ -146,19 +146,24 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     const userValues = this.searchInput.split(' ');
 
     var db_attr = [
+      'birthYear',
       'birthplace',
+      'deathYear',
       'description',
+      'detailJob',
       'education',
+      'ethnicity',
       'events',
-      'first_name',
-      'last_name',
+      'firstName',
       'gender',
+      'job',
+      'lastName',
+      'publish',
       'memoir',
       'reference',
+      'rightestYear',
+      'status',
       'workplace',
-      'year_of_birth',
-      'year_of_death',
-      'year_rightist',
     ];
 
     this.getNonFilterData('searchBar');
@@ -201,11 +206,11 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.getNonFilterData('filterPanel');
 
     if (!empty) {
-      let attr: any[] = ['gender', 'group', 'occupation', 'status'];
+      let attr: any[] = ['gender', 'ethnicity', 'job', 'status'];
       let userValues: any[] = [
         this.filterValues.gender,
-        this.filterValues.group,
-        this.filterValues.occupation,
+        this.filterValues.ethnicity,
+        this.filterValues.job,
         this.filterValues.status,
       ];
       this.filterByFilterValues(attr, userValues);
@@ -258,7 +263,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       var from = this.filterValues.date[0].getFullYear();
       var to = this.filterValues.date[1].getFullYear();
 
-      res = from <= record.year_rightist && record.year_rightist <= to;
+      res = from <= record.rightestYear && record.rightestYear <= to;
     }
     return res;
   }

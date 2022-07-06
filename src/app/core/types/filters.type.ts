@@ -1,7 +1,7 @@
 export type FilterTypes = {
   gender: string | null | undefined;
-  occupation: string | null | undefined;
-  group: string | null | undefined;
+  job: string | null | undefined;
+  ethnicity: string | null | undefined;
   status: string | null | undefined;
   date: Array<Date>;
 };
