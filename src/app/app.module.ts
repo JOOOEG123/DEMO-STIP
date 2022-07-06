@@ -34,8 +34,6 @@ import { ShareComponent } from './pages/browse/share/share.component';
 import { MemoirComponent } from './pages/browse/memoir/memoir.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { UploadComponent } from './pages/requestForms/upload/upload.component';
-import { DeleteComponent } from './pages/requestForms/delete/delete.component';
-import { AddComponent } from './pages/requestForms/add/add.component';
 
 import { AppComponent } from './app.component';
 import { EditAccountComponent } from './pages/account/edit-account/edit-account.component';
@@ -51,8 +49,6 @@ import { EditAccountComponent } from './pages/account/edit-account/edit-account.
     MemoirComponent,
     EditAccountComponent,
     UploadComponent,
-    DeleteComponent,
-    AddComponent,
   ],
   imports: [
     AngularFireAuthModule,
