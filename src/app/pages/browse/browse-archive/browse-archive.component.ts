@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Input } from '@angular/core';
 
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -11,7 +11,8 @@ import { jsPDF } from 'jspdf';
   styleUrls: ['./browse-archive.component.scss'],
 })
 export class BrowseArchiveComponent implements OnInit {
-  @ViewChild('content') content!: ElementRef;
+  @ViewChild('memContent') memContent!: ElementRef;
+  @ViewChild('infoContent') infoContent!: ElementRef;
 
   [x: string]: any;
   // solution 1
@@ -36,20 +37,23 @@ export class BrowseArchiveComponent implements OnInit {
     // });
   }
 
-  public SavePDF(): void {
-    let content = this.content.nativeElement;
+  SavePDF(pdfName: string): void {
+    let content;
+    if (pdfName === 'memoirContent') {
+      content = this.memContent.nativeElement;
+    } else {
+      content = this.infoContent.nativeElement;
+    }
+
     console.log(content);
     let doc = new jsPDF('p', 'pt', 'a4');
-    let _elementHandlers = {
-      '#editor': function (element: any, renderer: any) {
-        return true;
-      },
-    };
+
     doc.html(content, {
       callback: function (doc) {
-        doc.save('profile.pdf');
+        doc.save(pdfName + '.pdf');
       },
     });
+
     //doc.output('dataurlnewwindow'); // just open it
   }
 }

@@ -38,11 +38,12 @@
 
 
     <div class="col-7 border-start">
-      <div class="row border-bottom">
+      <app-share class="float-end"> </app-share>
+      <div id="infoContent" #infoContent>
         <div class="row border-bottom">
           <div class="col-12">
             <label class="fw-bold"> Detail Information:&emsp;</label>
-            <app-share class="float-end"> </app-share>
+
           </div>
           <div class="col-12 col-md-6 row mt-2">
             <div class="col-12 py-2">First Name: {{ profile.first_name }}</div>
@@ -63,26 +64,29 @@
             </div>
           </div>
         </div>
-        <div></div>
+
+
         <div class="card-body">
           <p class="h6 fw-bold">Description/Timeline:</p>
           <p>{{ profile.description }}</p>
         </div>
-
-        <div class="card">
-          <div class="card-body" id="content" #content>
-            <h5 class="card-title">Blue Skys (1957)</h5>
-            <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-
-          </div>
-          <a (click)="SavePDF()" class="btn btn-light border-khaki">Memoir PDF Link</a>
-        </div>
-
       </div>
+
+
+      <div class="card">
+        <div class="card-body" id="memContent" #memContent>
+          <h5 class="card-title">Blue Skys (1957)</h5>
+          <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
+          <p class="card-text">
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </p>
+
+        </div>
+        <a (click)="SavePDF('memoirContent')" class="btn btn-light border-khaki">Memoir PDF Link</a>
+      </div>
+
+
       <div>
       </div>
 
