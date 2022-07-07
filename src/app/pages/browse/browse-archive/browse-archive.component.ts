@@ -27,10 +27,12 @@ export class BrowseArchiveComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.id);
+
     this.arch.getPersonById(this.id).subscribe((res) => {
       console.log(res);
       this.profile = res;
     });
+
     // solution 2
     // this.route.paramMap.subscribe((params: ParamMap) => {
     //   console.log(params.get('id'));

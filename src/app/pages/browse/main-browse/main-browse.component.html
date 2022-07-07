@@ -84,16 +84,16 @@
             ariaCurrentWhenActive="page" *ngFor="let result of display; let i=index">
             <div class="m-3">{{i+ (currentPage-1) * itemsPerPage}}</div>
 
-            <div class="m-3 d-flex">
-              <div class="text-start">
+            <div class="m-3 col-3 text-capitalize">
+              <div class="text-start fw-bold">
                 {{ result.firstName +" "+result.lastName }}
               </div>
-              <div class="pb-3 text-start">Occupation: {{ result.job || "-"}}</div>
+              <div class="text-start">Occupation: {{ result.job || "-"}}</div>
               <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
               <div class="text-start">Gender: {{ result.gender || "-"}}</div>
             </div>
-            <div class="text-start overflow d-flex align-items-stretch">{{ result.description }}</div>
-            <div class="text-start d-flex align-items-stretch">read more ></div>
+            <div class="text-start col-6 m-3">{{ result.description }}</div>
+            <div class="col align-self-end fw-bold">read more ></div>
           </a>
 
         </div>
