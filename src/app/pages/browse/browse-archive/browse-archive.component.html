@@ -4,13 +4,13 @@
     <div class=" flex-column align-items-center flex-shrink-1">
       <figure>
         <img src="assets\browsepage\tempprofile.png" class="img-fluid rounded-circle mx-5">
-        <figcaption class="text-light">ID:</figcaption>
+        <figcaption class="text-light">ID: {{id}} </figcaption>
       </figure>
     </div>
     <div class="d-flex flex-column align-self-center text-light flex-fill" style="height: 100%;">
 
-      <div class="fs-1">Name: {{ profile.first_name }} {{ profile.last_name }}</div>
-      <div class=" pb-3">Occupation {{ profile.workplace }}</div>
+      <div class="fs-1">{{ profile.firstName }} {{ profile.lastName }}</div>
+      <div class=" pb-3">{{ profile.detailJob }}</div>
 
                     <img src="assets\browsepage\tempprofile.png" class="rounded-circle position-absolute mx-5"
                         style="width:10% ;">
@@ -72,11 +72,7 @@
       <div class="col align-self-end">
         <ul class="list-group sticky-sm-top">
           <li class="list-group-item border-0 " style="background-color: #E8E8E8;">
-            <label class="border-bottom border-dark fw-bold"> Additional Files&emsp;</label>
-          </li>
-          <li class="list-group-item d-inline-flex d-border-0" style="background-color: #E8E8E8;">
-            <img src="assets\browsepage\fileIcon.png" class="border border-white d-inline " width="20" height="20">
-            <div class="d-inline ps-2">Memoir</div>
+            <label class="border-bottom border-dark fw-bold"> Gallery&emsp;</label>
           </li>
 
         </ul>
@@ -131,13 +127,13 @@
 
           </div>
           <div class="col-12 col-md-6 row mt-2">
-            <div class="col-12 py-2">First Name: {{ profile.firstName }}</div>
-            <div class="col-12 py-2">Last Name: {{ profile.lastName }}</div>
-            <div class="col-12 py-2">Ethic Group:</div>
-            <div class="col-12 py-2">Education:</div>
+            <div class="col-12 py-2">First Name: {{ profile.firstName|| "-"}}</div>
+            <div class="col-12 py-2">Last Name: {{ profile.lastName || "-"}}</div>
+            <div class="col-12 py-2">Ethic Group:{{profile.ethnicity || "-"}}</div>
+            <div class="col-12 py-2">Education:{{profile.education|| "-"}}</div>
           </div>
           <div class="col-12 col-md-6 row mt-2">
-            <div class="col-12 py-2">Occupation:</div>
+            <div class="col-12 py-2">Occupation: {{profile.detailJob|| "-"}}</div>
             <div class="col-12 py-2">
               Year of Birth: {{ profile.birthYear || "-" }}
             </div>
@@ -145,7 +141,7 @@
               Year of Death: {{ profile.deathYear || "-" }}
             </div>
             <div class="col-12 py-2">
-              Rightist Year: {{ profile.righttistYear || "-" }}
+              "Rightist" Year: {{ profile.righttistYear || "-" }}
             </div>
           </div>
         </div>
@@ -153,7 +149,8 @@
 
         <div class="card-body">
           <p class="h6 fw-bold">Description/Timeline:</p>
-          <p>{{ profile.description }}</p>
+          <p>{{ profile.description || "-" }}</p>
+          <p *ngFor="let event of profile.events">{{event.event || "-"}}</p>
         </div>
       </div>
 
@@ -162,9 +159,8 @@
         <div class="card-body" id="memContent" #memContent>
           <h5 class="card-title">Blue Skys (1957)</h5>
           <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+          <p class="card-text" *ngFor="let memoir of profile.memoirs">
+            {{memoir.memoir || "-"}}
           </p>
 
         </div>

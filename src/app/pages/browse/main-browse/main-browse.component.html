@@ -82,18 +82,18 @@
               background-color: white;
             " name="searchLayout" routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
             ariaCurrentWhenActive="page" *ngFor="let result of display; let i=index">
-            <div class="m-3">{{i+ (currentPage-1) * itemsPerPage}}</div>
+            <div class="m-3">{{(i+1)+ (currentPage-1) * itemsPerPage}}</div>
 
-            <div class="m-3 d-flex">
-              <div class="text-start">
+            <div class="m-3 col-3 text-capitalize">
+              <div class="text-start fw-bold">
                 {{ result.firstName +" "+result.lastName }}
               </div>
-              <div class="pb-3 text-start">Occupation: {{ result.job || "-"}}</div>
+              <div class="text-start">Occupation: {{ result.job || "-"}}</div>
               <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
               <div class="text-start">Gender: {{ result.gender || "-"}}</div>
             </div>
-            <div class="text-start overflow d-flex align-items-stretch">{{ result.description }}</div>
-            <div class="text-start d-flex align-items-stretch">read more ></div>
+            <div class="text-start col-6 m-3">{{ result.description }}</div>
+            <div class="col align-self-end fw-bold">read more ></div>
           </a>
 
         </div>
@@ -114,15 +114,13 @@
                 ariaCurrentWhenActive="page" style="color: black; text-decoration: none">
 
                 <div class="m-3">{{(5*i+(j+1)) + (currentPage-1) * itemsPerPage}}</div>
-                <div class="d-flex justify-content-center flex-shrink-0">
-                  <img src="assets\browsepage\tempprofile.png"
-                    class="card-img-top rounded-circle img-responsive border border-dark w-75" />
-                </div>
-                <div class="card-body mt-auto">
+
+                <div class="card-body mt-auto text-capitalize">
                   <div class="card-body">
-                    <div>{{ result.firstName +" "+result.lastName }}</div>
-                    <div class="pb-3">{{ result.workplace }}</div>
-                    <div>{{ result.ethnicity }}</div>
+                    <div class="fw-bold">{{ result.firstName +" "+result.lastName }}</div>
+                    <div>{{ result.workplace }}</div>
+                    <div class="pb-3">{{ result.ethnicity }}</div>
+                    <div class="fw-bold">read more ></div>
                   </div>
                 </div>
               </a>
