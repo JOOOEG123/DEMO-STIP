@@ -1,23 +1,23 @@
 {
   "homepage.component": {
-    "featured_victims_of_the_anti-rightists_movement": "反右运动的特色被害者"
+    "featured_victims_of_the_anti-rightists_movement": "首页“右派”人物"
   },
   "header.component" : {
     "home_page": "主页",
     "about_page": "关于",
-    "about_movement": "关于反右运动",
+    "about_movement": "反右运动简介",
     "projects_overview": "项目概况",
-    "resources_page": "资源",
-    "broswer_page": "浏览器",
-    "archive_page": "文档",
-    "gallery_page": "画廊",
+    "resources_page": "更多资源",
+    "broswer_page": "查询",
+    "archive_page": "“右派”人物",
+    "gallery_page": "图片",
     "login_signup": "登录或注册"
   },
   "login.component": {
 
   },
   "common": {
-    "chinese_anti_rightist_archives": "中国反右档案",
-    "movement_brief": "反右运动的简介"
+    "chinese_anti_rightist_archives": "中国“右派”档案",
+    "movement_brief": "反右运动简介"
   }
 }

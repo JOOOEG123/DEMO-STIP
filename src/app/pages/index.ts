@@ -58,7 +58,7 @@ export const pagesRoutes = [
     path: 'about/resources',
     component: ResourcesComponent,
     data: {
-      title: 'Resources',
+      title: 'Other Resources',
     },
   },
   {
