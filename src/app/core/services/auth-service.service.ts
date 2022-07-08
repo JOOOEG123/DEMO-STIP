@@ -53,7 +53,9 @@ export class AuthServiceService {
           this.isLoggedIn.next(this.isLoggedInCheck);
         });
       } else {
-        localStorage.clear();
+        if (localStorage.getItem('user')) {
+          localStorage.removeItem('user');
+        }
         this.isLoggedIn.next(this.isLoggedInCheck);
       }
       console.log('user', user);

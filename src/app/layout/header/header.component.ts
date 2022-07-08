@@ -1,4 +1,5 @@
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { AnnouncementService } from 'src/app/core/services/announcement.service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { LoginComponent } from 'src/app/layout/login/login.component';
@@ -18,11 +19,18 @@ export class HeaderComponent implements OnInit {
   count = 15;
   timeId: any;
   message: unknown;
+  transPath = 'header.component.';
   constructor(
     private auth: AuthServiceService,
     private annoucement: AnnouncementService,
-    private outsideScope: NgZone
+    private outsideScope: NgZone,
+    private translate: TranslateService,
   ) {}
+  h = 'home_page';
+
+  get lang () {
+    return localStorage.getItem('lang') || 'en';
+  }
 
   ngOnInit(): void {
     this.auth.isLoggedIn.subscribe((isLoggedIn) => {
@@ -51,5 +59,10 @@ export class HeaderComponent implements OnInit {
         clearInterval(timeId);
       }
     }, 2000);
+  }
+
+  changeLanguage(lang: string) {
+    localStorage.setItem('lang', lang);
+    this.translate.use(lang);
   }
 }

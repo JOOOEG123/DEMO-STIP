@@ -1,0 +1,24 @@
+{
+  "homepage.component": {
+    "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
+    "featured_victims_of_the_anti-rightists_movement": "Featured “Rightists”"
+  },
+  "header.component" : {
+    "home_page": "Home",
+    "about_page": "About",
+    "about_movement": "About the movement",
+    "projects_overview": "Projects overview",
+    "resources_page": "Other Resources",
+    "broswer_page": " Browse Archives",
+    "archive_page": "Archive",
+    "gallery_page": "Gallery",
+    "login_signup": "Login/Signup"
+  },
+  "login.component": {
+
+  },
+  "common": {
+    "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
+    "movement_brief": "Brief History"
+  }
+}
