@@ -1,5 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, FormArray, Validators} from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder,
+  FormArray,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { ContributionsService } from 'src/app/core/services/contributions.service';
+import { UUID } from 'src/app/core/utils/uuid';
 
 @Component({
   selector: 'app-upload',
@@ -23,18 +33,40 @@ export class UploadComponent implements OnInit {
   form2 = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
-    content: new FormControl(''),
-    eventYear: new FormControl(''),
-    eventContent: new FormControl(''),
-    memoirTitle: new FormControl(''),
-    memoirContent: new FormControl(''),
-    memoirAuthor: new FormControl(''),
+    content: new FormControl('')
   });
+
+  eventArray = new FormArray([this.newEvent()]);
+
+  memiorArray = new FormArray([this.newMemoir()]);
 
   imageForm = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
   });
+
+  private newEvent() {
+    return new FormGroup({
+      startYear: new FormControl(''),
+      endYear: new FormControl(''),
+      event: new FormControl(''),
+    });
+  }
+  private newMemoir() {
+    return new FormGroup({
+      memoirTitle: new FormControl(''),
+      memoirContent: new FormControl(''),
+      memoirAuthor: new FormControl(''),
+    });
+  }
+
+  get eventControls() {
+    return this.eventArray.controls as FormGroup[];
+  }
+
+  get memiorControls() {
+    return this.memiorArray.controls as FormGroup[];
+  }
 
   clear() {
     this.form.reset();
@@ -44,9 +76,11 @@ export class UploadComponent implements OnInit {
     this.url = '';
     this.form2.reset();
     this.imageForm.reset();
+    this.eventArray.reset();
+    this.memiorArray.reset();
   }
 
-  clearImage(){
+  clearImage() {
     this.imageForm.reset();
   }
 
@@ -135,35 +169,27 @@ export class UploadComponent implements OnInit {
     'Deputy Secretary General',
   ];
 
-
-  public moreEvent: any[] = [{
-  }];
-
   addEvent() {
-    this.moreEvent.push({
-    });
+    this.eventArray.push(this.newEvent());
   }
 
   removeEvent(i: number) {
-    this.moreEvent.splice(i, 1);
+    this.eventArray.removeAt(i);
   }
 
-  public moreMemoir: any[] = [{
-  }];
-
-  addMemoir(){
-    this.moreMemoir.push({
-    })
+  addMemoir() {
+    this.memiorArray.push(this.newMemoir());
   }
 
-  removeMemoir(i: number){
-    this.moreMemoir.splice(i, 1);
+  removeMemoir(i: number) {
+    this.memiorArray.removeAt(i);
   }
 
-
-
-  constructor() {
-  }
+  constructor(
+    private contributionService: ContributionsService,
+    private auth: AuthServiceService,
+    private route: Router
+  ) {}
 
   ngOnInit(): void {}
 
@@ -175,5 +201,40 @@ export class UploadComponent implements OnInit {
         this.url = event.target.result;
       };
     }
+  }
+
+  onSubmit() {
+    console.log(this.form.value, this.form2.value);
+    const {name, gender, status, enthic} = this.form.value;
+    this.contributionService.addUserContributions({
+      contributionId: this.auth.uid,
+      contributedAt: new Date(),
+      approvedAt: new Date(), // update model with An
+      rightist: {
+        rightistId: `Rghtist-${UUID()}`,
+        imagePath: [this.url],
+        initial: name.substring(0, 1),
+        firstName: name,
+        lastName: '',
+        gender: gender || '',
+        birthYear: 0,
+        deathYear: 0,
+        rightistYear: 0,
+        status: status || 'Unknown',
+        ethnicity: enthic || '',
+        publish: 'new',
+        job: '',
+        detailJob: '',
+        workplace: '',
+        events: this.eventArray.value,
+        memoirs: this.memiorArray.value,
+        reference: '',
+        description: '',
+      },
+    }).then(() => {
+      this.clear();
+      this.clear2();
+      this.route.navigateByUrl('/account');
+    });
   }
 }

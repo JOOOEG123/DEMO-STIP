@@ -235,22 +235,27 @@
             <h4>Event year and event content</h4>
             <section
               class="my-4"
-              *ngFor="let event of moreEvent; let i = index; last as last"
+              *ngFor="
+                let event of eventControls;
+                let i = index;
+                last as last;
+                first as first
+              "
             >
               <!-- input fields inside the *ngFor, allows user to add/remove input boxes -->
-              <div class="border p-2 shadow my-4 rounded">
+              <div [formGroup]="event" class="border p-2 shadow my-4 rounded">
                 <label [for]="'event_year' + i">Year of event</label>
                 <input
                   [bsConfig]="{
                     startView: 'year',
                     minMode: 'year',
-                    rangeInputFormat: 'YYYY'
+                    dateInputFormat: 'YYYY'
                   }"
-                  bsDaterangepicker
+                  bsDatepicker
                   class="form-control"
                   placeholder="Year"
                   [id]="'event_year' + i"
-                  formControlName="eventYear"
+                  formControlName="startYear"
                 />
                 <label [for]="'event_content' + i"
                   >Event content/Description</label
@@ -260,7 +265,7 @@
                   [id]="'event_content' + i"
                   rows="5"
                   placeholder="Add event details here..."
-                  formControlName="eventContent"
+                  formControlName="event"
                 ></textarea>
               </div>
 
@@ -269,6 +274,7 @@
                 type="button"
                 tooltip="Remove this event"
                 placement="auto"
+                *ngIf="!first || !last"
                 class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
                 (click)="removeEvent(i)"
               >
@@ -304,9 +310,14 @@
       <!-- allows uses to add/remove input boxes -->
       <section
         class="my-4"
-        *ngFor="let memoir of moreMemoir; let i = index; last as last"
+        *ngFor="
+          let memoir of memiorControls;
+          let i = index;
+          last as last;
+          first as first
+        "
       >
-        <div class="border p-2 shadow my-4 rounded">
+        <div [formGroup]="memoir" class="border p-2 shadow my-4 rounded">
           <!-- memoir title -->
           <label [for]="'memior_title' + i">Title</label>
           <input
@@ -346,6 +357,7 @@
           type="button"
           tooltip="Remove this Memoir"
           placement="auto"
+          *ngIf="!first || !last"
           class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
           (click)="removeMemoir(i)"
         >
@@ -380,6 +392,7 @@
       type="button"
       class="btn btn-lg btn-outline-dark me-3 rounded-pill mx-2 px-4"
       [disabled]="form.invalid || form2.invalid"
+      (click)="onSubmit()"
     >
       Submit
     </button>
