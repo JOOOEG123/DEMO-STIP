@@ -161,7 +161,7 @@ body {
 .form-control-sm {
   transition: none !important;
 
-  &[bsdatepiker],
+  &[bsDatepicker],
   &[bsDaterangepicker] {
     background-image: url("/assets/filters/date.svg");
     background-repeat: no-repeat;

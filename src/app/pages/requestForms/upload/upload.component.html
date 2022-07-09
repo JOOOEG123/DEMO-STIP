@@ -1,372 +1,387 @@
 <h2 class="text-center pb-5 pt-5 mt-5">Request Form</h2>
 <h3 class="text-center pt-3 pb-5">Upload</h3>
 <div class="container-fluid">
-  <br />
-  <div class="container">
+  <form
+    [formGroup]="form"
+    class="col-11 mx-auto bg-secondary bg-opacity-10 p-5 rounded shadow mb-4"
+  >
     <!-- Row for name, ethnic group, occupation, and year of event -->
-    <div
-      class="row row-cols-1 row-cols-sm-2 row-cols-md-4 ms-5 me-5 pt-3 bg-secondary"
-    >
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 m-3">
       <!-- col for name selection -->
       <div class="col">
-        <form [formGroup]="form">
-          <label for="Name" class="form-label">Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="Name"
-            formControlName="name"
-            placeholder="First and Last name"
-          />
-        </form>
+        <label for="Name" class="form-label"
+          >Name <span class="text-danger">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="Name"
+          formControlName="name"
+          placeholder="First and Last name"
+        />
       </div>
       <!-- col for birth year -->
       <div class="col">
-        <form [formGroup]="form">
-          <label for="birthYear" class="form-label">Birth year</label>
-          <!-- year selector -->
-          <input
-            [bsConfig]="{
-              startView: 'year',
-              minMode: 'year',
-              dateInputFormat: 'YYYY',
-              showClearButton: true
-            }"
-            bsDatepicker
-            class="form-control"
-            placeholder="Year"
-            autocomplete="off"
-            formControlName="birthYear"
-          />
-        </form>
+        <label for="birthYear" class="form-label"
+          >Birth year <span class="text-danger">*</span></label
+        >
+        <!-- year selector -->
+        <input
+          [bsConfig]="{
+            startView: 'year',
+            minMode: 'year',
+            dateInputFormat: 'YYYY',
+            showClearButton: true
+          }"
+          bsDatepicker
+          class="form-control"
+          placeholder="Year"
+          autocomplete="off"
+          formControlName="birthYear"
+        />
       </div>
       <!-- col for occupation -->
       <div class="col">
-        <form [formGroup]="form">
-          <label for="occupation" class="form-label">Occupation</label>
-          <!-- occupation typeahead -->
-          <input
-            [(ngModel)]="occupation2"
-            [typeahead]="occupation"
-            class="form-control"
-            formControlName="occupation"
-          />
-        </form>
+        <label for="occupation" class="form-label"
+          >Occupation <span class="text-danger">*</span></label
+        >
+        <!-- occupation typeahead -->
+        <input
+          [typeahead]="occupation"
+          class="form-control"
+          formControlName="occupation"
+        />
       </div>
       <!-- col for year of event -->
       <div class="col">
-        <form [formGroup]="form">
-          <label for="Year" class="form-label"
-            >Year of becoming a rightest</label
-          >
-          <!-- year selector -->
-          <input
-            [bsConfig]="{
-              startView: 'year',
-              minMode: 'year',
-              dateInputFormat: 'YYYY',
-              showClearButton: true
-            }"
-            bsDatepicker
-            class="form-control"
-            placeholder="Year"
-            autocomplete="off"
-            formControlName="rightestYear"
-          />
-        </form>
+        <label for="Year" class="form-label"
+          >Year of becoming a rightest <span class="text-danger">*</span></label
+        >
+        <!-- year selector -->
+        <input
+          [bsConfig]="{
+            startView: 'year',
+            minMode: 'year',
+            dateInputFormat: 'YYYY',
+            showClearButton: true
+          }"
+          bsDatepicker
+          class="form-control"
+          placeholder="Year"
+          autocomplete="off"
+          formControlName="rightestYear"
+        />
       </div>
     </div>
 
     <!-- Row containing gender, status, and clear buttons -->
-    <div
-      class="row row-cols-1 row-cols-sm-2 row-cols-md-4 ms-5 me-5 pb-3 bg-secondary"
-    >
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 m-3">
       <!-- col for ethnic group -->
       <div class="col">
-        <form [formGroup]="form">
-          <label for="ethnicGroup" class="form-label"
-            >Chinese Ethnic Group</label
-          >
-          <!-- ethnic group typeahead -->
-          <input
-            [(ngModel)]="ethnic"
-            [typeahead]="ethnicGroup"
-            class="form-control"
-            formControlName="ethnic"
-          />
-        </form>
+        <label for="ethnicGroup" class="form-label">Chinese Ethnic Group</label>
+        <!-- ethnic group typeahead -->
+        <input
+          [typeahead]="ethnicGroup"
+          class="form-control"
+          formControlName="ethnic"
+        />
       </div>
       <!-- col for gender selection -->
-      <div class="col">
-        <br />
-        <form [formGroup]="form">
-          <label class="form-label">Gender</label>
-          <br />
-          <!-- male button  -->
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              formControlName="gender"
-              name="gender"
-              value="male"
-              id="male"
-            />
-            <label class="form-check-label" for="male"> Male </label>
-          </div>
-          <!-- female button -->
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              formControlName="gender"
-              name="gender"
-              value="female"
-              id="female"
-            />
-            <label class="form-check-label" for="female"> Female </label>
-          </div>
-        </form>
-      </div>
+      <fieldset class="col">
+        <legend class="h6 fw-normal">Gender</legend>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            formControlName="gender"
+            value="male"
+            type="radio"
+            name="gender"
+            id="gender-male"
+          />
+          <label class="form-check-label" for="gender-male"> Male </label>
+        </div>
+        <div class="form-check form-check-inline mx-3">
+          <input
+            class="form-check-input"
+            value="female"
+            type="radio"
+            formControlName="gender"
+            name="gender"
+            id="gender-female"
+          />
+          <label class="form-check-label" for="gender-female"> Female </label>
+        </div>
+      </fieldset>
       <!-- col for status -->
-      <div class="col">
-        <br />
-        <form [formGroup]="form">
-          <label class="form-label">Status</label>
-          <br />
-          <!-- alive button -->
-          <div class="form-check form-check-inline">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="status"
-              formControlName="status"
-              value="alive"
-              id="alive"
-            />
-            <label class="form-check-label" for="alive"> Alive </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <!-- deceased button -->
-            <input
-              class="form-check-input"
-              type="radio"
-              name="status"
-              formControlName="status"
-              value="deceased"
-              id="deceased"
-            />
-            <label class="form-check-label" for="deceased"> Deceased </label>
-          </div>
-        </form>
-      </div>
+      <fieldset class="col">
+        <legend class="h6 fw-normal">Status</legend>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="status"
+            formControlName="status"
+            value="alive"
+            id="alive"
+          />
+          <label class="form-check-label" for="alive"> Alive </label>
+        </div>
+        <div class="form-check form-check-inline mx-3">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="status"
+            formControlName="status"
+            value="deceased"
+            id="deceased"
+          />
+          <label class="form-check-label" for="deceased"> Deceased </label>
+        </div>
+      </fieldset>
       <!-- col for clear button -->
-      <div class="col">
-        <br /><br />
-        <button
-          type="button"
-          class="btn btn-outline-light me-5"
-          (click)="clear()"
-        >
-          Clear
-        </button>
-      </div>
     </div>
-  </div>
-  <br /><br /><br />
-</div>
+    <div class="d-flex">
+      <button
+        type="button"
+        class="btn btn-lg btn-outline-dark rounded-pill ms-auto px-4"
+        (click)="clear()"
+      >
+        Clear
+      </button>
+    </div>
+  </form>
 
-<div class="row">
-  <div class="col-md-4 ms-5 ps-5">
-    <!-- photo upload section -->
-    <h4>Upload a photo</h4>
-    <form [formGroup]="form2">
-      <img
-        alt=""
-        [src]="url"
-        height="200"
-        width="200"
-        formControlName="image"
-      />
-      <!-- select photo section -->
-      <input
-        type="file"
-        (change)="onselectFile($event)"
-        formControlName="image"
-        multiple
-      />
-      <br /><br />
-      <button class="btn btn-dark" (click)="clearImage()">Remove photo</button>
-      <!-- instruction for selecting photos -->
-      <p>
-        <br />
-        (hold 'Ctrl' ('command' on Mac) to select <br />
-        multiple images when choosing files)
-      </p>
-      <!-- radio buttons for choosing if user wants to include photo in gallery -->
-      <br />
-      <p>Include this image in gallery</p>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="galleryNo"
-          id="galleryYes"
-          value="yes"
-          formControlName="imageUpload"
-        />
-        <!-- yes button -->
-        <label class="form-check-label" for="inlineRadio1">Yes</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="galleryNo"
-          id="galleryNo"
-          value="no"
-          formControlName="imageUpload"
-        />
-        <!-- no button -->
-        <label class="form-check-label" for="inlineRadio2">No</label>
-      </div>
-      <div class="tool-tip">
-        <p class="tool-tip__icon">?</p>
-        <p class="tool-tip__info">
-          <span class="info"
-            ><span class="info__title"
-              >Choose to include the photo in website gallery</span
-            ></span
-          >
-        </p>
-      </div>
-    </form>
-  </div>
-
-  <!-- col for contents input box -->
-  <div class="col-md-6">
-    <div>
+  <div class="row">
+    <div class="col-md-4 ms-5 ps-5">
+      <!-- photo upload section -->
+      <h4>Upload a photo</h4>
       <form [formGroup]="form2">
-        <h4>Add Content</h4>
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="5"
-          placeholder="Add content/description here..."
-          formControlName="content"
-        ></textarea>
+        <img alt="" [src]="url" height="200" width="200" />
+        <!-- select photo section -->
+        <input
+          type="file"
+          (change)="onselectFile($event)"
+          formControlName="image"
+          multiple
+        />
+        <br /><br />
+        <button class="btn btn-dark" (click)="clearImage()">
+          Remove photo
+        </button>
+        <!-- instruction for selecting photos -->
+        <p>
+          <br />
+          (hold 'Ctrl' ('command' on Mac) to select <br />
+          multiple images when choosing files)
+        </p>
+        <!-- radio buttons for choosing if user wants to include photo in gallery -->
+        <br />
+        <p>
+          Include this image in gallery
+          <img
+            src="assets/upload/icons-question.png"
+            tooltip="Choose to include the photo in website gallery"
+            placement="auto"
+            class="mx-2 shadow rounded-circle p-1"
+            width="30"
+          />
+        </p>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="galleryNo"
+            id="galleryYes"
+            value="yes"
+            formControlName="imageUpload"
+          />
+          <!-- yes button -->
+          <label class="form-check-label" for="inlineRadio1">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="galleryNo"
+            id="galleryNo"
+            value="no"
+            formControlName="imageUpload"
+          />
+          <!-- no button -->
+          <label class="form-check-label" for="inlineRadio2">No</label>
+        </div>
       </form>
     </div>
-    <!-- event detail and date -->
-    <div class="row">
-      <div class="col">
-        <div class="form-group">
-          <form [formGroup]="form2">
-            <section *ngFor="let event of moreEvent; let i = index">
+
+    <!-- col for contents input box -->
+    <form [formGroup]="form2" class="col-md-6">
+      <div class="my-4">
+        <h4>Contents</h4>
+        <div class="border p-2 shadow rounded">
+          <label for="add_content" class="form-label h4">Add Content</label>
+          <textarea
+            class="form-control"
+            id="add_content"
+            rows="5"
+            placeholder="Add content/description here..."
+            formControlName="content"
+          ></textarea>
+        </div>
+      </div>
+      <!-- event detail and date -->
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <h4>Event year and event content</h4>
+            <section
+              class="my-4"
+              *ngFor="let event of moreEvent; let i = index; last as last"
+            >
               <!-- input fields inside the *ngFor, allows user to add/remove input boxes -->
-              <form [formGroup]="form2">
-                <br />
-                <h4>Event year and event content</h4>
+              <div class="border p-2 shadow my-4 rounded">
+                <label [for]="'event_year' + i">Year of event</label>
                 <input
                   [bsConfig]="{
                     startView: 'year',
                     minMode: 'year',
-                    dateInputFormat: 'YYYY'
+                    rangeInputFormat: 'YYYY'
                   }"
-                  bsDatepicker
+                  bsDaterangepicker
                   class="form-control"
                   placeholder="Year"
+                  [id]="'event_year' + i"
                   formControlName="eventYear"
                 />
+                <label [for]="'event_content' + i"
+                  >Event content/Description</label
+                >
                 <textarea
                   class="form-control"
-                  id="exampleFormControlTextarea1"
+                  [id]="'event_content' + i"
                   rows="5"
                   placeholder="Add event details here..."
                   formControlName="eventContent"
                 ></textarea>
-              </form>
+              </div>
+
               <!-- Remove button -->
               <button
                 type="button"
-                class="btn btn-danger btn-sm"
+                tooltip="Remove this event"
+                placement="auto"
+                class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
                 (click)="removeEvent(i)"
               >
                 Remove
+                <img
+                  src="assets/upload/icons-remove.png"
+                  class="mx-2"
+                  width="30"
+                />
+              </button>
+              <button
+                *ngIf="last"
+                type="button"
+                (click)="addEvent()"
+                tooltip="Add another event"
+                placement="auto"
+                class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
+              >
+                Add Event
+                <img
+                  src="assets/upload/icons-plus.svg"
+                  class="mx-2"
+                  width="30"
+                />
               </button>
             </section>
-            <form>
-              <br />
-              <!-- add event input field button -->
-              <button type="button" (click)="addEvent()" class="btn btn-dark">
-                Add Event
-              </button>
-            </form>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- memoir section -->
-    <br />
-    <h4>Add Memoir, book, or other information</h4>
-    <!-- allows uses to add/remove input boxes -->
-    <section *ngFor="let memoir of moreMemoir; let i = index">
-      <!-- memoir title -->
-      <form [formGroup]="form2">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Add title here..."
-          aria-label="title"
-          aria-describedby="basic-addon1"
-          formControlName="memoirTitle"
-        />
-        <br />
-        <!-- memoir author -->
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Add author here.."
-          aria-label="author"
-          aria-describedby="basic-addon1"
-          formControlName="memoirAuthor"
-        />
-        <br />
-        <!-- memoir content -->
-        <textarea
-          type="text"
-          class="form-control"
-          placeholder="Add memoir here..."
-          rows="5"
-          formControlName="memoirContent"
-        ></textarea>
+      <!-- memoir section -->
+      <br />
+      <h4>Add Memoir, book, or other information</h4>
+      <!-- allows uses to add/remove input boxes -->
+      <section
+        class="my-4"
+        *ngFor="let memoir of moreMemoir; let i = index; last as last"
+      >
+        <div class="border p-2 shadow my-4 rounded">
+          <!-- memoir title -->
+          <label [for]="'memior_title' + i">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Add title here..."
+            [id]="'memior_title' + i"
+            formControlName="memoirTitle"
+          />
+          <br />
+          <!-- memoir author -->
+          <label [for]="'memior_author' + i">Author</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Add author here.."
+            [id]="'memior_author' + i"
+            aria-describedby="basic-addon1"
+            formControlName="memoirAuthor"
+          />
+          <br />
+          <!-- memoir content -->
+          <label [for]="'memior_content' + i">Content/Discription</label>
+          <textarea
+            type="text"
+            class="form-control"
+            [id]="'memior_content' + i"
+            placeholder="Add memoir here..."
+            rows="5"
+            formControlName="memoirContent"
+          ></textarea>
+        </div>
+
         <br />
         <!-- removes memoir -->
         <button
           type="button"
-          class="btn btn-danger btn-sm"
+          tooltip="Remove this Memoir"
+          placement="auto"
+          class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
           (click)="removeMemoir(i)"
         >
           Remove
+          <img src="assets/upload/icons-remove.png" class="mx-2" width="30" />
         </button>
-      </form>
-    </section>
-    <!-- add memoir input fields -->
-    <button type="button" class="btn btn-dark" (click)="addMemoir()">
-      Add Memoir
-    </button>
+        <button
+          *ngIf="last"
+          type="button"
+          (click)="addMemoir()"
+          tooltip="Add another Memoir"
+          placement="auto"
+          class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
+        >
+          Add Memoir
+          <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
+        </button>
+      </section>
+    </form>
   </div>
-</div>
-<br /><br />
-<!-- submit and clear buttons -->
-<div class="container-fluid text-center">
-  <div class="row">
-    <div class="col">
-      <br />
-      <button type="button" class="btn btn-dark me-3" (click)="clear2()">
-        Clear
-      </button>
-      <button type="button" class="btn btn-dark me-3">Submit</button>
-    </div>
+  <br /><br />
+  <!-- submit and clear buttons -->
+  <div class="d-flex col-11 mx-auto mb-5">
+    <button
+      type="button"
+      class="btn btn-lg btn-outline-dark rounded-pill ms-auto px-4"
+      (click)="clear2()"
+    >
+      Clear
+    </button>
+    <button
+      type="button"
+      class="btn btn-lg btn-outline-dark me-3 rounded-pill mx-2 px-4"
+      [disabled]="form.invalid || form2.invalid"
+    >
+      Submit
+    </button>
   </div>
 </div>

@@ -7,20 +7,17 @@ import { FormControl, FormGroup, FormBuilder, FormArray, Validators} from '@angu
   styleUrls: ['./upload.component.scss'],
 })
 export class UploadComponent implements OnInit {
-
-  public ethnic: any;
-  public occupation2: any;
   //image url
   url = '';
 
   form = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', Validators.required),
     gender: new FormControl(''),
     status: new FormControl(''),
     ethnic: new FormControl(''),
-    occupation: new FormControl(''),
-    rightestYear: new FormControl(''),
-    birthYear: new FormControl(''),
+    occupation: new FormControl('', Validators.required),
+    rightestYear: new FormControl('', Validators.required),
+    birthYear: new FormControl('', Validators.required),
   });
 
   form2 = new FormGroup({
@@ -48,7 +45,7 @@ export class UploadComponent implements OnInit {
     this.form2.reset();
     this.imageForm.reset();
   }
-  
+
   clearImage(){
     this.imageForm.reset();
   }
