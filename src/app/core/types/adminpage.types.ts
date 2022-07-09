@@ -18,7 +18,7 @@ export type Status = 'Dead' | 'Alive' | 'Unknown'
 
 export type State = 'void' | 'removed'
 
-export type Publish = 'new' | 'approved' | 'rejected'
+export type Publish = 'original' | 'new' | 'approved' | 'rejected'
 
 interface Event {
   eventId: string,
@@ -32,7 +32,7 @@ interface Memoir {
   memoir: string
 }
 
-export interface Rightist {
+export interface RightistSchema {
   rightistId: string,
   imagePath: string[];
   initial: string;
@@ -53,23 +53,32 @@ export interface Rightist {
   reference: string,
   description: string
 }
- 
-export interface Contribution {
-  contributionId: string;
-  contributorId: string[];
-  rightist: Rightist;
-  contributedAt: string;
-  publish: Publish;
-  lastUpdatedAt: string;
-  notificationMessage: string,
-}
 
-export interface ContributionJson {
-  [contributionId: string]: [contribution: Contribution]
+export interface Rightist extends RightistSchema {
+
 }
 
 export interface RightistJson {
-  [rightistId: string]: [rightist: Rightist]
+  [rightistId: string]: [rightist: RightistSchema]
+}
+ 
+export interface ContributionSchema {
+  contributionId: string;
+  contributorId: string[];
+  rightist: Rightist;
+  publish: Publish;
+  contributedAt: Date;
+  approvedAt: Date;
+  lastUpdatedAt: Date;
+  notificationMessage: string,
+}
+
+export interface Contribution extends ContributionSchema {
+  state: State
+}
+
+export interface ContributionJson {
+  [contributionId: string]: [contribution: ContributionSchema]
 }
 
 export interface ImageSchema {
@@ -80,6 +89,10 @@ export interface ImageSchema {
   galleryTitle: string,
   galleryCaption: string,
   gallerySource: string
+}
+
+export interface Image extends ImageSchema {
+
 }
 
 export interface ImageJson {
