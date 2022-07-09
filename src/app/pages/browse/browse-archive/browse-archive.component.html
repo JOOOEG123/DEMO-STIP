@@ -60,8 +60,9 @@
                     </svg>
                   </span>
                   <input type="text" class="form-control" placeholder="URL" aria-label="URL"
-                    aria-describedby="basic-addon1" />
-                  <button class="btn btn-outline-secondary" type="button">
+                    aria-describedby="basic-addon1" value={{url}} readonly #inputTarget />
+                  <button class="btn btn-outline-secondary" type="button" [ngxClipboard]="inputTarget"
+                    (click)="copyURL()">
                     Copy
                   </button>
                 </div>
