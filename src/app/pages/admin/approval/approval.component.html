@@ -188,7 +188,7 @@
         </div>
         <div class="col-5 d-flex flex-column align-items-start justify-content-center">
           <div *ngFor="let event of contribution.rightist.events | slice:0:limit">
-            <span>In {{ event.startYear }}, {{ event.content }}</span>
+            <span>In {{ event.startYear }}, {{ event.event }}</span>
           </div>
           <div *ngIf="contribution.rightist.events.length > limit">...</div>
           <div class="align-self-end">

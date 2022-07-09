@@ -24,12 +24,17 @@ interface Event {
   eventId: string,
   startYear: number,
   endYear: number,
-  content: string
+  event: string
+}
+
+interface Memoir {
+  memoirId: string,
+  memoir: string
 }
 
 export interface Rightist {
   rightistId: string,
-  imagePath: string;
+  imagePath: string[];
   initial: string;
   firstName: string;
   lastName: string;
@@ -41,59 +46,42 @@ export interface Rightist {
   ethnicity: Ethnicity
   publish: string,
   job: string,
+  detailJob: string,
   workplace: string,
   events: Event[],
-  memoirs: string[],
+  memoirs: Memoir[],
   reference: string,
   description: string
 }
  
 export interface Contribution {
   contributionId: string;
-  contributorId: string;
+  contributorId: string[];
   rightist: Rightist;
-  contributedAt: Date;
-  state: State,
+  contributedAt: string;
+  publish: Publish;
+  lastUpdatedAt: string;
+  notificationMessage: string,
 }
 
-export interface ContributionSchema {
-  [contributionId: string]: {
-    contributorId: string;
-    rightist: Rightist;
-    contributedAt: string;
-    publish: Publish
-  }
+export interface ContributionJson {
+  [contributionId: string]: [contribution: Contribution]
 }
 
-export interface RightistSchema {
-  [rightistId: string]: {
-    imagePath: string;
-    initial: string;
-    firstName: string;
-    lastName: string;
-    gender: Gender;
-    birthYear: number;
-    deathYear: number;
-    rightistYear: number;
-    status: Status,
-    ethnicity: Ethnicity
-    publish: string,
-    job: string,
-    workplace: string,
-    events: Event[],
-    memoirs: string[],
-    reference: string,
-    description: string
-  }
+export interface RightistJson {
+  [rightistId: string]: [rightist: Rightist]
 }
 
-export interface Image {
-  [imageId: string]: {
-    imagePath: string,
-    rightistId: string,
-  }
+export interface ImageSchema {
+  imageId: string,
+  rightistId: string,
+  imagePath: string,
+  isGallery: boolean,
+  galleryTitle: string,
+  galleryCaption: string,
+  gallerySource: string
 }
 
-// export interface ContributionJson {
-//   [key: string]: ContributionSchema
-// }
+export interface ImageJson {
+  [imageId: string]: [image: ImageSchema]
+}
