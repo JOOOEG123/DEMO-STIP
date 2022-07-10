@@ -31,7 +31,10 @@
             "inlineStyleLanguage": "scss",
             "allowedCommonJsDependencies": [
               "ngx-masonry",
-              "masonry-layout"
+              "masonry-layout",
+              "raf",
+              "@babel/runtime-corejs3",
+              "lodash"
             ],
             "assets": [
               "src/favicon.ico",

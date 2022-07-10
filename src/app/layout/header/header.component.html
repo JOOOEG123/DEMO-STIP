@@ -22,7 +22,9 @@
       </button>
       <div class="collapse navbar-collapse row" id="navbarMobile">
         <div class="col-12 my-1 d-flex flex-row">
-          <h5 class="m-0 py-0">Chinese Anti-Rightist Archives</h5>
+          <h5 class="m-0 py-0">
+            {{ "common.chinese_anti_rightist_archives" | translate }}
+          </h5>
           <div class="ms-auto">
             <div class="input-group input-group-sm">
               <input
@@ -53,7 +55,7 @@
               class="nav-link text-white rounded-top"
               routerLinkActive="active"
               [routerLink]="item.url"
-              >{{ item.title }}</a
+              >{{ transPath + item.title | translate }}</a
             >
             <a
               *ngIf="item?.dropdown"
@@ -62,12 +64,12 @@
               aria-expanded="false"
               class="nav-link text-white rounded-top dropdown-toggle"
               [id]="item.icon"
-              >{{ item.title }}</a
+              >{{ transPath + item.title | translate }}</a
             >
             <ul class="dropdown-menu" [attr.aria-labelledby]="item.icon">
               <li *ngFor="let drop of item.dropdown">
                 <a class="dropdown-item" [routerLink]="drop.url">{{
-                  drop.title
+                  transPath + drop.title | translate
                 }}</a>
               </li>
             </ul>
@@ -75,25 +77,33 @@
         </ul>
         <div class="col-auto my-0">
           <div class="d-flex flex-row m-2">
-            <div class="mx-4 mt-2">
+            <button
+              class="mx-4 mt-2 btn text-white p-0"
+              (click)="changeLanguage('en')"
+              [ngClass]="{ 'btn-link': lang === 'en' }"
+            >
               <img
                 src="assets/homepage/united-states.png"
                 alt="globe"
                 width="30"
               />
               English
-            </div>
-            <div class="mx-4 mt-2">
+            </button>
+            <button
+              class="mx-4 mt-2 btn text-white p-0 btn-link"
+              [ngClass]="{ 'btn-link': lang === 'cn' }"
+              (click)="changeLanguage('cn')"
+            >
               <img src="assets/homepage/china.png" alt="globe" width="30" />
               Chinese
-            </div>
+            </button>
             <div class="mx-3" *ngIf="!isLoggedIn">
               <button
                 type="button"
                 class="btn text-white"
                 (click)="loginLogin()"
               >
-                LOG IN / SIGN UP
+                {{ transPath + "login_signup" | translate }}
               </button>
             </div>
             <div

@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { AnnouncementService } from 'src/app/core/services/announcement.service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { Profile } from 'src/app/core/types/auth.types';
 
 @Component({
   selector: 'app-modal-template',
@@ -17,14 +18,16 @@ export class ModalTemplateComponent implements OnInit {
   @ViewChild('changeEmailTemplate') changeEmailTemplate!: TemplateRef<any>;
   @ViewChild('deleteConfirmation') deleteConfirmation!: TemplateRef<any>;
   @ViewChild('logoutModal') logoutModal!: TemplateRef<any>;
+  @ViewChild('saveAccountChanges') saveAccountChanges!: TemplateRef<any>;
+  @ViewChild('sentEmailResetPassword') sentEmailResetPassword!: TemplateRef<any>;
 
   changeEmailForm = this.formBuilder.group({
-    newEmail: ['', [Validators.required, Validators.email]],
-    oldEmail: ['', [Validators.required, Validators.email]],
+    newEmail: ['', [Validators.required, Validators.email]]
   });
 
   sub: Subscription[] = [];
   announceText!: string;
+  edit_form!: Profile;
   constructor(
     private auth: AuthServiceService,
     private modalService: BsModalService,
@@ -35,7 +38,7 @@ export class ModalTemplateComponent implements OnInit {
   ngOnInit(): void {
     // For annuncement template.
     this.sub.push(
-      this.announce.message.subscribe((x: any) => {
+      this.announce.getAnnounce().subscribe((x: any) => {
         this.announceText = x;
       })
     );
@@ -65,11 +68,23 @@ export class ModalTemplateComponent implements OnInit {
   openChangeEmailModal(template: TemplateRef<any> = this.changeEmailTemplate) {
     this.modalRef = this.modalService.show(template);
   }
+  openSaveAccountModal(form: Profile, template: TemplateRef<any> = this.saveAccountChanges) {
+    this.edit_form = form;
+    this.modalRef = this.modalService.show(template);
+  }
+
+  openSendEmailResettModal(form: Profile, template: TemplateRef<any> = this.sentEmailResetPassword) {
+    this.edit_form = form;
+    this.modalRef = this.modalService.show(template);
+  }
 
   // function to close modal
 
   changeEmail() {
-    this.auth.changeEmail(this.changeEmailForm.value.newEmail);
+    const email = this.changeEmailForm.value.newEmail;
+    this.auth.changeEmail(email).then(() => {
+      this.modalRef?.hide();
+    });
   }
 
   deleteAccount() {
@@ -87,6 +102,20 @@ export class ModalTemplateComponent implements OnInit {
   updateAnnouncement() {
     this.announce.trackAdminChange(this.announceText).then(() => {
       this.modalRef?.hide();
+    });
+  }
+
+  saveAllAccountChanges() {
+    this.auth.editProfile(this.edit_form).then(() => {
+      this.modalRef?.hide();
+      this.edit_form = {} as Profile;
+    });
+  }
+
+  sendEmailResetPassword() {
+    this.auth.changePassword(this.edit_form.email).then(() => {
+      this.modalRef?.hide();
+      this.edit_form = {} as Profile;
     });
   }
 }

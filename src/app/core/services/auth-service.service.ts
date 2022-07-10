@@ -15,12 +15,19 @@ export class AuthServiceService {
 
   user: any;
   isLoggedIn = new Subject<boolean>();
-  readonly uid = this.getUserDetails()?.uid;
+  userDetaills = new BehaviorSubject<Profile>({} as Profile);
 
   isAdmin = new BehaviorSubject<boolean>(false);
   get hasAdminRole() {
     return this._hasAdminRole;
   }
+  get uid() {
+    return this.getUserDetails()?.uid;
+  }
+  private userDocs(uid: string = this.uid) {
+    return this.store.doc<any>(`users/${uid}`);
+  }
+
   constructor(
     private store: AngularFirestore,
     private auth: AngularFireAuth,
@@ -38,10 +45,17 @@ export class AuthServiceService {
             'user',
             JSON.stringify({ user: this.user, token: token })
           );
+          this.userDocs()
+            .valueChanges()
+            .subscribe((user) => {
+              this.userDetaills.next(user);
+            });
           this.isLoggedIn.next(this.isLoggedInCheck);
         });
       } else {
-        localStorage.clear();
+        if (localStorage.getItem('user')) {
+          localStorage.removeItem('user');
+        }
         this.isLoggedIn.next(this.isLoggedInCheck);
       }
       console.log('user', user);
@@ -58,7 +72,7 @@ export class AuthServiceService {
   signInWithEmail({ email, password }: { email: string; password: string }) {
     return this.auth
       .signInWithEmailAndPassword(email, password)
-      .then(async (user) => {
+      .then((user) => {
         this.saveUser(user.user as Profile | null);
         this.sendEmailVerification();
       });
@@ -91,7 +105,7 @@ export class AuthServiceService {
         this.saveUser(user.user as Profile | null);
       });
   }
-  
+
   signInWithPopup(providers: provider.AuthProvider) {
     return this.auth.signInWithPopup(providers).then((user) => {
       console.log('user', user);
@@ -114,27 +128,39 @@ export class AuthServiceService {
   }
 
   saveUser(p: Profile | null) {
-    if (p) {
-      console.log('save user', p);
-      const profile = {
-        uid: p.uid || '',
-        name: p.name || '',
-        email: p.email || '',
-        emailVerified: p.emailVerified || '',
-        avatarUrl: p.photoURL || '',
-        firstName: p.firstName || '',
-        lastName: p.lastName || '',
-        nickname: p.displayName || '',
-        lastLoginAt: p.lastLoginAt || '',
-        createdAt: p.createdAt || '',
-        updatedAt: p.updatedAt || '',
-      };
-      console.log('profile', profile);
-      return this.store
-        .doc<any>(`users/${p.uid}`)
-        .set(profile, { merge: true });
-    }
-    return null;
+    console.log('saveUser', p);
+    return this.userDocs(p?.uid || '').ref.onSnapshot((snapshot) => {
+      if (snapshot.exists && p) {
+        snapshot.ref.update({ uid: p.uid });
+      } else {
+        if (p) {
+          console.log('save user', p);
+          const profile = {
+            uid: p.uid || '',
+            name: p.name || '',
+            email: p.email || '',
+            emailVerified: p.emailVerified || '',
+            avatarUrl: p.photoURL || '',
+            firstName: p.firstName || '',
+            lastName: p.lastName || '',
+            nickname: p.displayName || '',
+            lastLoginAt: p.lastLoginAt || '',
+            createdAt: p.createdAt || '',
+            updatedAt: p.updatedAt || '',
+          };
+          console.log('profile', profile);
+          this.store
+            .doc<any>(`users/${p.uid}`)
+            .set(profile, { merge: true })
+            .then(() => {
+              console.log('user saved', profile);
+              this.userDetaills.next({ ...(profile as any) });
+            });
+        }
+      }
+    });
+
+    // return null;
   }
 
   signOut() {
@@ -149,17 +175,24 @@ export class AuthServiceService {
   }
 
   editProfile(profile: Profile) {
-    return this.store.doc<any>(`users/${profile.uid}`).update(profile);
+    return this.userDocs().update(profile);
   }
 
   deleteAccount() {
     return this.auth.currentUser.then((user: any) => {
       if (user) {
         // need to delete all the data from the database and api.
-        this.store.doc<any>(`users/${this.uid}`).delete().then(() => {
-          user.delete();
-          this.signOut();
-        });
+        this.store
+          .doc<any>(`users/${this.uid}`)
+          .delete()
+          .then(() => {
+            user.delete();
+            this.signOut();
+          })
+          .catch((error) => {
+            console.log('error', error);
+            location.reload();
+          });
       }
     });
   }
@@ -167,8 +200,9 @@ export class AuthServiceService {
   changeEmail(email: string) {
     return this.auth.currentUser.then((user: any) => {
       if (user) {
-        this.store.doc<any>(`users/${this.uid}`).update({ email });
-        user.updateEmail(email);
+        user.updateEmail(email).then(() => {
+          this.userDocs().update({ email });
+        });
       }
     });
   }
@@ -179,5 +213,9 @@ export class AuthServiceService {
         user.updatePassword(password);
       }
     });
+  }
+
+  userDetails() {
+    return this.userDocs().valueChanges();
   }
 }

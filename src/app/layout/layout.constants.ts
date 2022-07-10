@@ -1,43 +1,43 @@
 export const NavBar = [
   {
-    title: 'HOME',
+    title: 'home_page',
     url: '/home',
     icon: 'home',
   },
   {
-    title: 'ABOUT',
+    title: 'about_page',
     url: '/about',
     icon: 'info',
     dropdown: [
       {
-        title: 'About movement',
+        title: 'about_movement',
         url: '/about/movement',
         icon: 'info',
       },
       {
-        title: 'Projects Overview',
+        title: 'projects_overview',
         url: '/about/team',
         icon: 'envelope',
       },
       {
-        title: 'Resources',
+        title: 'resources_page',
         url: '/about/resources',
         icon: 'envelope',
       },
     ],
   },
   {
-    title: 'BROWSE',
+    title: 'broswer_page',
     url: '/browse',
     icon: 'home',
     dropdown: [
       {
-        title: 'Archive',
+        title: 'archive_page',
         url: '/browse/main',
         icon: 'home',
       },
       {
-        title: 'Gallery',
+        title: 'gallery_page',
         url: '/browse/gallery',
         icon: 'home',
       },

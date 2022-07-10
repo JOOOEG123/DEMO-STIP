@@ -1,5 +1,6 @@
 @import "~bootstrap/scss/bootstrap"; // Import Bootstrap
 @import "./styles/animation.scss";
+@import "./styles/btnImage.scss";
 
 /* You can add global styles to this file, and also import other style files */
 $khaki: #cea374;
@@ -29,8 +30,8 @@ body {
 
 // border color
 .border-khaki {
-  border-color: $khaki;
-  border: 2px solid $khaki;
+  border-color: $khaki !important;
+  border: 2px solid $khaki !important;
 }
 
 .border-orange-red {

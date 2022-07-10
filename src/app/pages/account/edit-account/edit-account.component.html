@@ -1,15 +1,10 @@
 <app-modal-template #modaltemplate></app-modal-template>
 <div class="container">
-  <div class="row my-3">
-    <div class="col-12 col-md-3">
+  <div class="row">
+    <div class="col-12 col-md">
       <div class="d-flex flex-column">
         <div class="d-flex justify-content-center">
-          <!-- <img
-          src="/assets/homepage/default-profile.png"
-          class="img-fluid rounded-circle"
-          alt="user profile"
-        /> -->
-          <div class="main-canvas">
+          <button class="main-canvas" (click)="uploadFile.click()">
             <input
               type="file"
               #uploadFile
@@ -18,32 +13,27 @@
               accept="image/*"
               (change)="uploadImage($event)"
             />
+
             <img
-              *ngIf="imageUrl | async; let srcUrl"
-              [src]="srcUrl"
+              *ngIf="imageUrl"
+              src="{{ imageUrl }}"
               alt="profile image"
-              class="img-fluid rounded-circle border shadow"
+              class="image"
             />
             <img
-              *ngIf="!(imageUrl | async)"
+              *ngIf="!imageUrl"
               src="/assets/homepage/default-profile.png"
               alt="user"
-              class="img-fluid rounded-circle border shadow"
+              class="image"
             />
-            <button
-              type="button"
-              class="btn rounded-circle icon-bl"
-              aria-label="upload profile"
-              aria-labelledby="profile-image"
-              (click)="uploadFile.click()"
-            >
-              <img
+            <!-- <img
                 src="assets/icons/profile/camera.svg"
                 alt="user"
-                width="45"
-              />
-            </button>
-          </div>
+                class="middle"
+                width="50"
+              /> -->
+            <div class="middle mt-5">ADD PHOTO</div>
+          </button>
         </div>
         <div class="mt-1" *ngIf="uploadImgProg | async; let prog">
           <!-- <progress max="100" class="w-100" [value]="prog">{{ prog }}%</progress> -->
@@ -58,73 +48,107 @@
         <small class="my-2 text-center">{{ userId }}</small>
       </div>
     </div>
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-8">
       <h4 class="col-12 text-center">Edit Account Information</h4>
       <div>
-        <div class="form-group">
-          <label for="surname" class="form-label">Full Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="surname"
-            placeholder="Enter name"
-          />
-        </div>
-        <div class="form-group">
-          <label for="email" class="form-label">Email address</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            placeholder="view email"
-            disabled
-          />
-        </div>
-        <div class="form-group">
-          <label for="occupation" class="form-label">Occupation</label>
-          <input
-            type="text"
-            class="form-control"
-            id="occupation"
-            placeholder="Enter Occupation"
-          />
-        </div>
-        <div class="form-group">
-          <label for="occupation" class="form-label"
-            >Chinese Ethnic Group</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="occupation"
-            placeholder="Enter Occupation"
-          />
-        </div>
-        <fieldset class="form-group d-flex flex-row my-1">
-          <legend class="h6 fw-light m-0 p-0 col-1">Gender</legend>
-          <div class="form-check">
+        <form [formGroup]="edit_form">
+          <div class="form-group">
+            <label for="nickname" class="form-label">Nick name</label>
             <input
-              class="form-check-input"
-              formControlName="gender"
-              value="male"
-              type="radio"
-              name="gender"
-              id="gender-male"
+              type="text"
+              class="form-control"
+              formControlName="nickname"
+              id="nickname"
+              placeholder="Enter nickname"
             />
-            <label class="form-check-label" for="gender-male"> Male </label>
           </div>
-          <div class="form-check ms-2">
+          <div class="form-group">
+            <label for="firstName" class="form-label">First Name</label>
             <input
-              class="form-check-input"
-              value="female"
-              type="radio"
-              formControlName="gender"
-              name="gender"
-              id="gender-female"
+              type="text"
+              class="form-control"
+              formControlName="firstName"
+              id="firstName"
+              placeholder="Enter first name"
             />
-            <label class="form-check-label" for="gender-female"> Female </label>
           </div>
-        </fieldset>
+          <div class="form-group">
+            <label for="firstName" class="form-label">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="lastName"
+              id="firstName"
+              placeholder="Enter last name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email" class="form-label">Email address</label>
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              id="email"
+              placeholder="view email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="occupation" class="form-label">Occupation</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="occupation"
+              id="occupation"
+              placeholder="Enter Occupation"
+            />
+          </div>
+          <div class="form-group">
+            <label for="ethnic" class="form-label">Chinese Ethnic Group</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="ethnic"
+              id="ethnic"
+              placeholder="Enter Occupation"
+            />
+          </div>
+          <div class="form-group">
+            <label for="aboutContent" class="form-label">About me </label>
+            <textarea
+              class="form-control"
+              formControlName="desc"
+              id="aboutContent"
+              placeholder="Enter about yourself and content you've shared"
+            ></textarea>
+          </div>
+          <fieldset class="form-group d-flex flex-row my-1">
+            <legend class="h6 fw-light m-0 p-0 col-1">Gender</legend>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                value="male"
+                formControlName="gender"
+                type="radio"
+                name="gender"
+                id="gender-male"
+              />
+              <label class="form-check-label" for="gender-male"> Male </label>
+            </div>
+            <div class="form-check ms-2">
+              <input
+                class="form-check-input"
+                value="female"
+                type="radio"
+                formControlName="gender"
+                name="gender"
+                id="gender-female"
+              />
+              <label class="form-check-label" for="gender-female">
+                Female
+              </label>
+            </div>
+          </fieldset>
+        </form>
 
         <div class="my-3 row">
           <div class="col-12 col-md-3">
@@ -136,7 +160,10 @@
             </button>
           </div>
           <div class="col-12 col-md-3">
-            <button class="btn btn-outline-dark rounded-pill w-100">
+            <button
+              class="btn btn-outline-dark rounded-pill w-100"
+              (click)="modaltemplate?.openSendEmailResettModal(edit_form.value)"
+            >
               Change Password
             </button>
           </div>
@@ -160,7 +187,10 @@
             </button>
           </div>
           <div class="col-12 col-md">
-            <button class="btn btn-outline-success rounded-pill w-100">
+            <button
+              class="btn btn-outline-success rounded-pill w-100"
+              (click)="modaltemplate?.openSaveAccountModal(edit_form.value)"
+            >
               Save Changes
             </button>
           </div>
