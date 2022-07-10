@@ -87,7 +87,7 @@
             <div class="d-flex flex-row m-2">
               <button
                 class="mx-4 mt-2 btn text-white p-0"
-                (click)="changeLanguage('en')"
+                (click)="changeLanguage('en');"
                 [ngClass]="{ 'btn-link': lang === 'en' }"
               >
                 <img
@@ -128,16 +128,28 @@
                 >
                 <ul class="dropdown-menu" aria-labelledby="account_btn">
                   <li>
-                    <a class="dropdown-item" routerLink="account">Account</a>
+                    <a
+                      class="dropdown-item"
+                      routerLink="account"
+                      (click)="collapseNavbar()"
+                      >Account</a
+                    >
                   </li>
                   <li>
-                    <a class="dropdown-item" routerLink="upload">Upload</a>
+                    <a
+                      class="dropdown-item"
+                      routerLink="upload"
+                      (click)="collapseNavbar()"
+                      >Upload</a
+                    >
                   </li>
                   <li>
                     <a
                       class="dropdown-item"
                       routerLink=""
-                      (click)="modalTemplates?.openLogoutModal()"
+                      (click)="
+                        modalTemplates?.openLogoutModal(); collapseNavbar()
+                      "
                       >Log out</a
                     >
                   </li>

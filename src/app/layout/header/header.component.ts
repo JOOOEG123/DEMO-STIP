@@ -64,6 +64,7 @@ export class HeaderComponent implements OnInit {
   changeLanguage(lang: string) {
     localStorage.setItem('lang', lang);
     this.translate.use(lang);
+    this.collapseNavbar();
   }
 
   collapseNavbar() {
