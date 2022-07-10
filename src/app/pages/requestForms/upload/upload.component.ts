@@ -205,31 +205,32 @@ export class UploadComponent implements OnInit {
 
   onSubmit() {
     console.log(this.form.value, this.form2.value);
-    const {name, gender, status, enthic} = this.form.value;
+    const {name, gender, status, enthic, rightestYear, occupation, birthYear} = this.form.value;
+    const { content } = this.form2.value;
     this.contributionService.addUserContributions({
       contributionId: this.auth.uid,
       contributedAt: new Date(),
-      approvedAt: new Date(), // update model with An
+      approvedAt: new Date(), // update model with An.
       rightist: {
-        rightistId: `Rghtist-${UUID()}`,
-        imagePath: [this.url],
+        rightistId: `Rightist-${UUID()}`,
+        imagePath: [this.url], // Price said he will work on this.
         initial: name.substring(0, 1),
         firstName: name,
         lastName: '',
         gender: gender || '',
-        birthYear: 0,
+        birthYear: birthYear,
         deathYear: 0,
-        rightistYear: 0,
+        rightistYear: rightestYear,
         status: status || 'Unknown',
         ethnicity: enthic || '',
         publish: 'new',
-        job: '',
+        job: occupation,
         detailJob: '',
         workplace: '',
         events: this.eventArray.value,
         memoirs: this.memiorArray.value,
         reference: '',
-        description: '',
+        description: content,
       },
     }).then(() => {
       this.clear();

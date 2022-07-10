@@ -20,12 +20,17 @@ export class ContributionsService {
       `/persons/requestArchieve/contributions/${this.auth.uid}`
     );
   }
+  private callAPI_List() {
+    return this.db.list(
+      `/persons/requestArchieve/contributions/${this.auth.uid}`
+    );
+  }
 
   // private callAPI() {
   //   return this.store.doc<any>(`contributions/${this.uid}`);
   // }
   fetchUserContributions() {
-    return this.callAPI().valueChanges();
+    return this.callAPI_List().valueChanges();
   }
 
   editUserContributions(contributionId: string, obj: ContributionSchema) {

@@ -214,10 +214,10 @@
     </div>
 
     <!-- col for contents input box -->
-    <form [formGroup]="form2" class="col-md-6">
+    <div  class="col-md-6">
       <div class="my-4">
         <h4>Contents</h4>
-        <div class="border p-2 shadow rounded">
+        <div [formGroup]="form2" class="border p-2 shadow rounded">
           <label for="add_content" class="form-label h4">Add Content</label>
           <textarea
             class="form-control"
@@ -376,7 +376,7 @@
           <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
         </button>
       </section>
-    </form>
+    </div>
   </div>
   <br /><br />
   <!-- submit and clear buttons -->

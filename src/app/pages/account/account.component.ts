@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { ContributionsService } from 'src/app/core/services/contributions.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
 
 
@@ -86,14 +87,18 @@ export class AccountComponent implements OnInit, OnDestroy {
   imageUrl!: Observable<string> | undefined;
   userId = this.auth.uid;
   profile: any;
+  userContribution: any[] = [];;
   // @ViewChild('modalTemplates') modalTemplates!: LogoutComponent;
   constructor(private auth: AuthServiceService,
-    private storage: StorageApIService) {}
+    private storage: StorageApIService, private contributionService: ContributionsService) {}
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
   }
 
   ngOnInit(): void {
+    this.contributionService.fetchUserContributions().subscribe((x) => {
+      this.userContribution = x;
+    });
     const h = this.storage.profileImgeUrl();
     if (h) {
       this.subscription.push(

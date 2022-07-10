@@ -24,11 +24,11 @@ export class HeaderComponent implements OnInit {
     private auth: AuthServiceService,
     private annoucement: AnnouncementService,
     private outsideScope: NgZone,
-    private translate: TranslateService,
+    private translate: TranslateService
   ) {}
   h = 'home_page';
 
-  get lang () {
+  get lang() {
     return localStorage.getItem('lang') || 'en';
   }
 
@@ -64,5 +64,13 @@ export class HeaderComponent implements OnInit {
   changeLanguage(lang: string) {
     localStorage.setItem('lang', lang);
     this.translate.use(lang);
+  }
+
+  collapseNavbar() {
+    this.isCollapsed = true;
+    const navbar = document.getElementById('navbarMobile');
+    if (navbar) {
+      navbar.classList.remove('show');
+    }
   }
 }
