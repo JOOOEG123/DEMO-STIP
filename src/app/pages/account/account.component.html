@@ -43,20 +43,14 @@
         </div>
         <div class="col d-flex flex-column">
           <div class="my-2 ms-auto">
-            <a
-              class="rounded-pill btn-khali"
-              routerLink="/edit-account"
-            >
+            <a class="rounded-pill btn-khali" routerLink="/edit-account">
               Edit Account
             </a>
           </div>
           <div class="my-2 ms-auto">
-            <a
-              routerLink="/upload"
-              class="rounded-pill my-2 btn-khali"
-            >
+            <a routerLink="/upload" class="rounded-pill my-2 btn-khali">
               Upload
-          </a>
+            </a>
           </div>
           <div class="my-2 ms-auto">
             <button
@@ -88,169 +82,15 @@
       </div>
     </div>
   </div>
-
-  <div class="text-center text-dark display-6">Your Contributions</div>
-  <div
-    class="rounded-start rounded-pill border-start-0 my-2 border border-khaki"
-  >
-    <div class="row m-0">
-      <div class="col-12 col-md-2">
-        <img
-          src="/assets/homepage/default-profile.png"
-          class="img-fluid rounded-circle"
-          alt=""
-        />
-      </div>
-      <div class="col-12 col-md-3">
-        <h4>Title</h4>
-        <p>Description</p>
-        <p>email</p>
-      </div>
-      <div class="col-12 col-md-7 ms-auto p-2">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure
-      </div>
-    </div>
-  </div>
-</div>
-
-<br /><br /><br />
-<hr />
-<!-- upload content -->
-
-<div class="container-fluid pb-2 w-80">
-  <h3 class="text-center pb-3">Upload Content</h3>
-  <div class="row">
-    <div class="col-lg-3 col-md-6 col-sm-6">
-      <!-- enter name form -->
-      <div class="form-floating pb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Firstname Surname"
-          required
-        />
-        <label for="floatingInput">Name Surname</label>
-      </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6 col-sm-6">
-      <!-- enter Occupation drop down -->
-      <label for="options">Select Occupation</label>
-      <input
-        [(ngModel)]="selected"
-        [typeahead]="options"
-        [isAnimated]="true"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-lg-3 col-md-6 col-sm-6">
-      <!-- enter ethnic group drop down -->
-      <label for="options">Select Ethic</label>
-      <input
-        [(ngModel)]="selected2"
-        [typeahead]="options2"
-        [isAnimated]="true"
-        class="form-control"
-      />
-    </div>
-
-    <div class="col-lg-3 col-md-6 col-sm-6">
-      <!-- year -->
-      <div class="form-floating pb-3">
-        <input type="text" class="form-control" placeholder="Year" />
-        <label for="floatingInput">Year Of Events</label>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <!-- radio buttons -->
-    <div class="col-lg-5 col-md-8 col-sm-12">
-      Status:
-      <div class="form-check form-check-inline mx-5">
-        <input class="form-check-input" type="radio" name="statusRadios" />
-        <label class="form-check-label">Alive</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="statusRadios" />
-        <label class="form-check-label">Deceased</label>
-      </div>
-    </div>
-
-    <div class="col-lg-5 col-md-8 col-sm-12">
-      Gender:
-      <div class="form-check form-check-inline mx-5">
-        <input class="form-check-input" type="radio" name="genderRadios" />
-        <label class="form-check-label" for="inlineCheckbox1">Male</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="genderRadios" />
-        <label class="form-check-label" for="inlineCheckbox1">Female</label>
-      </div>
-    </div>
-  </div>
-  <br />
-
-  <br />
-
-  <!-- Add content -->
-  <h4>Add Content</h4>
-  <div class="form-floating text-left" style="padding-bottom: 25px">
-    <textarea
-      class="form-control"
-      placeholder="Leave content here"
-      row="3"
-    ></textarea>
-    <label for="floatingTextarea">Content Detail</label>
-  </div>
-  <!-- upload a picture -->
-  <div class="row pb-5">
-    <!-- radio buttons -->
-    <div class="col-lg-4 col-md-8 col-sm-12">
-      <h4>Upload a picture:</h4>
-      <input type="file" multiple="false" accept="image/*" />
-    </div>
-    <div class="col-lg-4 col-md-8 col-sm-12">
-      Add to gallery?
-      <div class="form-check form-check-inline mx-5">
-        <input class="form-check-input" type="radio" name="addToGallery" />
-        <label class="form-check-label" for="inlineCheckbox1">Yes</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="addToGallery" />
-        <label class="form-check-label" for="inlineCheckbox1">No</label>
-      </div>
-    </div>
-  </div>
-  <!-- memoir detail -->
-  <h4>Add Memoir</h4>
-  <div class="border border-dark border-1 p-3">
-    <div class="form-floating pb-3">
-      <textarea
-        class="form-control"
-        placeholder="Leave title here"
-        required
-      ></textarea>
-      <label for="floatingTextarea">Memoir Title</label>
-    </div>
-    <div class="form-floating pb-3">
-      <textarea
-        class="form-control"
-        placeholder="Leave memoir detail here"
-        row="5"
-      ></textarea>
-      <label for="floatingTextarea">Memoir Detail</label>
-    </div>
-  </div>
-  <div class="pt-2">
-    <button class="btn btn-dark">Add another memoir</button>
-  </div>
-  <div>
-    <div class="pt-5">
-      <button class="btn btn-dark" style="width: 200px">Submit</button>
+  <div class="text-dark my-4">
+    <h3 class="text-center">Your Contributions</h3>
+    <div class="col-11 mx-auto">
+      <ng-container *ngFor="let data of userContribution">
+        <app-View-card [data]="data"></app-View-card>
+      </ng-container>
+      <ng-container *ngIf="!userContribution?.length">
+        <div class="text-center">You do not have any contribution yet.</div>
+      </ng-container>
     </div>
   </div>
 </div>

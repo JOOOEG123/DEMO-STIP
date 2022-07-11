@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ContributionSchema } from '../types/adminpage.types';
 import { UUID } from '../utils/uuid';
 import { AuthServiceService } from './auth-service.service';
 
@@ -7,42 +9,59 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root',
 })
 export class ContributionsService {
-  uid = this.auth.getUserDetails()?.uid;
   constructor(
     private store: AngularFirestore,
-    private auth: AuthServiceService
+    private auth: AuthServiceService,
+    private db: AngularFireDatabase
   ) {}
 
   private callAPI() {
-    return this.store.doc<any>(`contributions/${this.uid}`);
+    return this.db.object(
+      `/persons/requestArchieve/contributions/${this.auth.uid}`
+    );
   }
+  private callAPI_List() {
+    return this.db.list(
+      `/persons/requestArchieve/contributions/${this.auth.uid}`
+    );
+  }
+
+  // private callAPI() {
+  //   return this.store.doc<any>(`contributions/${this.uid}`);
+  // }
   fetchUserContributions() {
-    return this.callAPI().valueChanges();
+    return this.callAPI_List().valueChanges();
   }
 
-  editUserContributions(id: string, obj: any) {
-    return this.store
-      .doc<any>(`contributions/${this.uid}`)
-      .update({ [id]: obj });
+  editUserContributions(contributionId: string, obj: ContributionSchema) {
+    obj.lastUpdatedAt = new Date();
+    return this.callAPI().update({ [contributionId]: obj });
   }
 
-  addUserContributions(obj: any) {
-    console.log(this.uid);
+  addUserContributions(obj: ContributionSchema) {
+    console.log(this.auth.uid);
     // console.log('gok', this.auth.getUserDetails())
     const st = this.callAPI();
-    const uuid = UUID();
-    return st.update({ [uuid]: obj }).catch((e) => {
-      return st.set({ [uuid]: obj });
+    const contributionId = UUID();
+    obj.contributionId = contributionId;
+    obj.contributedAt = new Date();
+    obj.contributorId = [this.auth.uid];
+    obj.publish = 'new';
+    return st.update({ [contributionId]: obj }).catch((e) => {
+      return st.set({ [contributionId]: obj });
     });
   }
 
   removeAllUserContributions() {
-    return this.callAPI().delete();
+    return this.callAPI().remove();
   }
   // remove method 1
   removeContributionById(id: string) {
-    return this.callAPI().ref.onSnapshot((x) => {
-      const v = x.data();
+    const ref = this.db.database.ref(
+      `/persons/requestArchieve/contributions/${id}`
+    );
+    return ref.once('value', (x) => {
+      const v = x.val();
       if (v?.[id]) {
         delete v[id];
       }
@@ -50,10 +69,10 @@ export class ContributionsService {
     });
   }
   // remove method 2
-  removeContributionsById(id: string) {
-    const s = this.fetchUserContributions().subscribe((x) => {
-      if (x?.[id]) {
-        delete x[id];
+  removeContributionsById(contributionId: string) {
+    const s = this.fetchUserContributions().subscribe((x: any) => {
+      if (x?.[contributionId]) {
+        delete x[contributionId];
       }
       this.callAPI()
         .set(x)
@@ -65,6 +84,8 @@ export class ContributionsService {
 
   // Admin get all contribution
   fetchAllContribution() {
-    return this.store.collection<any>('contributions').valueChanges();
+    return this.db
+      .object(`/persons/requestArchieve/contributions`)
+      .valueChanges();
   }
 }

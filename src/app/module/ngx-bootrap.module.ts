@@ -14,6 +14,7 @@ import {
   ProgressbarModule,
 } from 'ngx-bootstrap/progressbar';
 import { PaginationModule, PaginationConfig } from 'ngx-bootstrap/pagination';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
 export const getProgressbarConfig = (): ProgressbarConfig =>
@@ -31,6 +32,7 @@ export const getProgressbarConfig = (): ProgressbarConfig =>
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
     AlertModule.forRoot(),
+    TooltipModule.forRoot(),
     ModalModule.forRoot(),
     TypeaheadModule.forRoot(),
     PaginationModule.forRoot(),
@@ -45,6 +47,7 @@ export const getProgressbarConfig = (): ProgressbarConfig =>
     TypeaheadModule,
     PaginationModule,
     ProgressbarModule,
+    TooltipModule,
   ],
   providers: [
     BsDatepickerConfig,

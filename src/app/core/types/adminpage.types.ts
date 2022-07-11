@@ -5,14 +5,14 @@ export type Categories =
 
 export type CategoryList = Record<Categories, Contribution[]>;
 
-type Gender = 'Male' | 'Female'
-type Ethnicity = 
+type Gender = 'Male' | 'Female' | undefined;
+type Ethnicity =
   'Han' | 'Zhuang' | 'Hui' | 'Man' | 'Uygur' | 'Miao' | 'Yi' | 'Tujia' | 'Zang' | 'Mongol' |
-  'Dong' | 'Bouyei' | 'Yao' | 'Chosŏn' | 'Hani' | 'Li' | 'Kazak' | 'Dai' | 
-  'She' | 'Lisu' | 'Dongxiang' | 'Gelao' | 'Lahu' | 'Wa' | 'Sui' |  'Naxi' |'Qiang' | 
+  'Dong' | 'Bouyei' | 'Yao' | 'Chosŏn' | 'Hani' | 'Li' | 'Kazak' | 'Dai' |
+  'She' | 'Lisu' | 'Dongxiang' | 'Gelao' | 'Lahu' | 'Wa' | 'Sui' |  'Naxi' |'Qiang' |
   'Tu' |'Mulao' | 'Xibe' | 'Kirgiz' | 'Jingpo' | 'Daur' | 'Salar' | 'Blang' |
   'Maonan' | 'Tajik' | 'Pumi' |'Achang' | 'Nu' | 'Ewenki' | 'Gin' | 'Jino' | 'Deang' | 'Bonan' |
-  'Russ' | 'Yugur' | 'Uzbek' | 'Monba' | 'Oroqen' | 'Derung' | 'Hezhen' | 'Gaoshan' | 'Lhoba' | 'Tatar'
+  'Russ' | 'Yugur' | 'Uzbek' | 'Monba' | 'Oroqen' | 'Derung' | 'Hezhen' | 'Gaoshan' | 'Lhoba' | 'Tatar'| 'Bai'
 
 export type Status = 'Dead' | 'Alive' | 'Unknown'
 
@@ -29,7 +29,9 @@ interface Event {
 
 interface Memoir {
   memoirId: string,
-  memoir: string
+  memoirTitle: string,
+  memoirContent: string,
+  memoirAuthor: string,
 }
 
 export interface RightistSchema {
@@ -59,18 +61,18 @@ export interface Rightist extends RightistSchema {
 }
 
 export interface RightistJson {
-  [rightistId: string]: [rightist: RightistSchema]
+  [rightistId: string]: RightistSchema;
 }
- 
+
 export interface ContributionSchema {
-  contributionId: string;
-  contributorId: string[];
+  contributionId: string; // set from the service when creating a new contribution
+  contributorId?: string[]; // set from the service when creating a new contribution
   rightist: Rightist;
-  publish: Publish;
-  contributedAt: Date;
-  approvedAt: Date;
-  lastUpdatedAt: Date;
-  notificationMessage: string,
+  publish?: Publish;
+  contributedAt: Date; // set from the service when creating a new contribution
+  approvedAt: Date; // set from the service when approving a contribution
+  lastUpdatedAt?: Date; // set from the service when updating a contribution
+  notificationMessage?: string, // set from the service when approving a contribution
 }
 
 export interface Contribution extends ContributionSchema {
@@ -78,7 +80,7 @@ export interface Contribution extends ContributionSchema {
 }
 
 export interface ContributionJson {
-  [contributionId: string]: [contribution: ContributionSchema]
+  [contributionId: string]: ContributionSchema
 }
 
 export interface ImageSchema {
@@ -96,5 +98,5 @@ export interface Image extends ImageSchema {
 }
 
 export interface ImageJson {
-  [imageId: string]: [image: ImageSchema]
+  [imageId: string]: ImageSchema
 }
