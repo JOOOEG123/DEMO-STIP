@@ -171,10 +171,10 @@ export class ArchieveApiService {
       .object(`/persons/requestArchieve/contributions`).update(contribution)
   }
 
-  updateContributionByPublish(contributionId: string, updatedPublish: string) {
+  updateContributionByPublish(contributorId: string, contributionId: string, updatedPublish: string) {
     console.log(contributionId)
     return this.db
-      .object(`/persons/requestArchieve/contributions/${contributionId}`)
+      .object(`/persons/requestArchieve/contributions/${contributorId}`)
       .update({ publish: updatedPublish })
   }
 

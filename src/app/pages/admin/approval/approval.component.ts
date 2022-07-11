@@ -8,13 +8,15 @@ import {
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs';
+import { ObjectUnsubscribedError, Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import {
   Categories,
   CategoryList,
   Contribution,
+  ContributionJson,
   ContributionSchema,
+  OuterContributionJson,
   Publish,
 } from 'src/app/core/types/adminpage.types';
 
@@ -79,14 +81,21 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     // })
 
   
-    this.subcription = this.archApi.getContributions().subscribe(data => {
-      
+    this.subcription = this.archApi.getContributions().subscribe((data: any) => {
+  
       this.newContributions.length = 0
       this.approvedContributions.length = 0
       this.rejectedContributions.length = 0
-      this.contributions = data as any[]
+      // this.contributions = data as any[]
+      const test: ContributionJson[] = Object.values(data)
+
+      for (let lol of test) {
+        for (const contribution of Object.values(lol)) {
+          this.contributions.push(contribution)
+        }
+      }
       
-      console.log(this.contributions)
+      // console.log(this.contributions)
     
       for (let contributionId in this.contributions) {
 
@@ -114,6 +123,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       // this.selectedContributions =  JSON.parse(JSON.stringify(this.newContributions));
 
       // console.log(this.selectedContributions, this.newContributions, this.approvedContributions, this.rejectedContributions)
+      
     })
   }
 
@@ -223,7 +233,10 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
     this.disabled = false
     if (this.selectedContribution) {
-      this.archApi.updateContributionByPublish(this.selectedContribution.contributionId, this.publish)
+      this.archApi.updateContributionByPublish(
+        this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1],
+        this.selectedContribution.contributionId, 
+        this.publish)
     }
   }
 

@@ -83,13 +83,17 @@ export interface ContributionJson {
   [contributionId: string]: ContributionSchema
 }
 
+export interface OuterContributionJson {
+  [contributorId: string]: ContributionJson
+}
+
 export interface ImageSchema {
   imageId: string,
   rightistId: string,
   imagePath: string,
   isGallery: boolean,
   galleryTitle: string,
-  galleryCaption: string,
+  galleryDetail: string,
   gallerySource: string
 }
 
