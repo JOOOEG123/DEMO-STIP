@@ -207,9 +207,12 @@ export class UploadComponent implements OnInit {
     console.log(this.form.value, this.form2.value);
     const {name, gender, status, enthic, rightestYear, occupation, birthYear} = this.form.value;
     const { content } = this.form2.value;
+    const contributionId = UUID()
     this.contributionService.addUserContributions({
-      contributionId: this.auth.uid,
+      contributionId: contributionId,
+      contributorId: [this.auth.uid],
       contributedAt: new Date(),
+      rightistId: '',
       approvedAt: new Date(), // update model with An.
       rightist: {
         rightistId: `Rightist-${UUID()}`,

@@ -66,8 +66,9 @@ export interface RightistJson {
 
 export interface ContributionSchema {
   contributionId: string; // set from the service when creating a new contribution
-  contributorId?: string[]; // set from the service when creating a new contribution
+  contributorId: string[]; // set from the service when creating a new contribution
   rightist: Rightist;
+  rightistId: string;
   publish?: Publish;
   contributedAt: Date; // set from the service when creating a new contribution
   approvedAt: Date; // set from the service when approving a contribution

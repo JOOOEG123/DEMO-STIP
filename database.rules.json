@@ -12,6 +12,12 @@
            	".read": "auth.token.admin === true",
       			".write": "auth.token.admin === true",
             "$user_id": {
+              "$uid": {
+                "publish":{
+                  	".write": "auth.token.admin === true",
+                    ".read": "auth.uid === $user_id || auth.token.admin === true"
+                }
+              },
             ".write": "auth.uid === $user_id || auth.token.admin === true",
             ".read": "auth.uid === $user_id || auth.token.admin === true"
           }

@@ -9,7 +9,7 @@ import {
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ObjectUnsubscribedError, Subscription } from 'rxjs';
-import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
+import { ContributionsService } from 'src/app/core/services/contributions.service';
 import {
   Categories,
   CategoryList,
@@ -68,7 +68,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   constructor(
     private modalService: BsModalService,
-    private archApi: ArchieveApiService
+    private contributionAPI: ContributionsService
   ) {
     this.selectedContributions = this.newContributions;
     this.activeCategory = 'New Contributions';
@@ -81,8 +81,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     // })
 
   
-    this.subcription = this.archApi.getContributions().subscribe((data: any) => {
-  
+    this.subcription = this.contributionAPI.fetchAllContribution().subscribe((data: any) => {
+      
+      this.contributions.length = 0
       this.newContributions.length = 0
       this.approvedContributions.length = 0
       this.rejectedContributions.length = 0
@@ -97,12 +98,10 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       
       // console.log(this.contributions)
     
-      for (let contributionId in this.contributions) {
+      for (let contribution of  this.contributions) {
 
-        let contribution = this.contributions[contributionId]
         let data: Contribution = {
-          ...this.contributions[contributionId],
-          contributionId: contributionId,
+          ...contribution,
           state: 'void',
         }
   
@@ -233,8 +232,12 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
     this.disabled = false
     if (this.selectedContribution) {
-      this.archApi.updateContributionByPublish(
-        this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1],
+      let contributorId = 
+        this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1]
+      console.log(contributorId)
+      console.log(this.selectedContribution.contributionId)
+      this.contributionAPI.updateContributionByPublish(
+        contributorId,
         this.selectedContribution.contributionId, 
         this.publish)
     }
