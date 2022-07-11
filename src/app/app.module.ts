@@ -48,6 +48,7 @@ import { UploadComponent } from './pages/requestForms/upload/upload.component';
 
 import { AppComponent } from './app.component';
 import { EditAccountComponent } from './pages/account/edit-account/edit-account.component';
+import { ClipboardModule } from 'ngx-clipboard';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LangInterceptor } from './core/interceptors/lang.interceptor';

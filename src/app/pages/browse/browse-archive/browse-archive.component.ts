@@ -4,6 +4,7 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { jsPDF } from 'jspdf';
+import { ClipboardService } from 'ngx-clipboard';
 
 @Component({
   selector: 'app-browse-archive',
@@ -18,11 +19,13 @@ export class BrowseArchiveComponent implements OnInit {
   // solution 1
   id = this.route.snapshot.paramMap.get('id') as string;
   profile = {} as any;
+  url = 'https:///browse/main/memoir/';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private arch: ArchieveApiService
+    private arch: ArchieveApiService,
+    private clipboardApi: ClipboardService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +35,7 @@ export class BrowseArchiveComponent implements OnInit {
       console.log(res);
       this.profile = res;
     });
+    this.url += this.id;
 
     // solution 2
     // this.route.paramMap.subscribe((params: ParamMap) => {
@@ -57,5 +61,8 @@ export class BrowseArchiveComponent implements OnInit {
     });
 
     //doc.output('dataurlnewwindow'); // just open it
+  }
+  copyURL() {
+    this.clipboardApi.copyFromContent(this.url);
   }
 }
