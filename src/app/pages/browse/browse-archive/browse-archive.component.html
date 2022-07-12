@@ -167,18 +167,14 @@
           </div>
         </div>
 
-        <div class="bg-white" id="collapseBasic" [collapse]="drop" [isAnimated]="true">
+        <div class="bg-white" id="collapseBasic" [collapse]="drop" [isAnimated]="true">>
           <div class="card scrollable">
-            <div class="card-body " id="memContent" #memContent *ngFor=" let memoir of profile.memoirs">
-              <div class="card-text limit-content" *ngFor="let d of memoir.memoir ; let i = index">
-                <div *ngIf="i < 10"> {{d || "-"}} </div>
-              </div>
-              <div class="card-body" style="background-color: rgb(208,208,208);">
-                You reached the max content view.
-                To read more, download
-                the full PDF.
-              </div>
-
+            <div class="card-body " id="memContent" #memContent>
+              <h5 class="card-title">Blue Skys (1957)</h5>
+              <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
+              <p class="card-text limit-content" *ngFor="let memoir of profile.memoirs">
+                {{memoir.memoir || "-"}}
+              </p>
 
             </div>
             <a (click)="SavePDF('memoirContent')" class="btn btn-light border-khaki">Memoir PDF Link</a>
