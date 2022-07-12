@@ -4,3 +4,17 @@
   position: sticky;
   top: 4rem;
 }
+
+.scrollable {
+  max-height: 5em;
+  overflow-y: auto;
+}
+
+
+.limit-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 100;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+  
+}
