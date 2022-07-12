@@ -155,25 +155,38 @@
         </div>
       </div>
 
+      <div class="container border px-0 rounded w-100">
+        <div class="d-flex bd-highlight bg-light ps-2">
+          <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">Memior</h6>
+          <div class="bd-highlight">
+            <button class="btn" type="button" [attr.aria-expanded]="!drop" aria-controls="collapseBasic"
+              (click)="updateCollapse()">
+              <img src="/assets/filters/collapse-{{ drop ? 'minus' : 'plus' }}.svg" alt="filter" width="20" />
+              <span class="visually-hidden">click to {{ drop ? "collapse" : "expand" }}</span>
+            </button>
+          </div>
+        </div>
 
-      <div class="card">
-        <div class="card-body" id="memContent" #memContent>
-          <h5 class="card-title">Blue Skys (1957)</h5>
-          <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
-          <p class="card-text" *ngFor="let memoir of profile.memoirs">
-            {{memoir.memoir || "-"}}
-          </p>
+        <div class="bg-white" id="collapseBasic" [collapse]="drop" [isAnimated]="true">>
+          <div class="card scrollable">
+            <div class="card-body " id="memContent" #memContent>
+              <h5 class="card-title">Blue Skys (1957)</h5>
+              <h6 class="card-subtitle mb-2 text-muted">by: Ai Yan Yan</h6>
+              <p class="card-text limit-content" *ngFor="let memoir of profile.memoirs">
+                {{memoir.memoir || "-"}}
+              </p>
+
+            </div>
+            <a (click)="SavePDF('memoirContent')" class="btn btn-light border-khaki">Memoir PDF Link</a>
+          </div>
+
+
+
+          <div>
+          </div>
+
 
         </div>
-        <a (click)="SavePDF('memoirContent')" class="btn btn-light border-khaki">Memoir PDF Link</a>
+
       </div>
-
-
-      <div>
-      </div>
-
-
     </div>
-
-  </div>
-</div>

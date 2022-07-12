@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { jsPDF } from 'jspdf';
 import { ClipboardService } from 'ngx-clipboard';
+import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
 @Component({
   selector: 'app-browse-archive',
@@ -19,13 +20,16 @@ export class BrowseArchiveComponent implements OnInit {
   // solution 1
   id = this.route.snapshot.paramMap.get('id') as string;
   profile = {} as any;
-  url = 'https:///browse/main/memoir/';
+  url = location.href;
+  isAdmin: boolean = false;
+  drop!: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private arch: ArchieveApiService,
-    private clipboardApi: ClipboardService
+    private clipboardApi: ClipboardService,
+    private auth: AuthServiceService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +41,9 @@ export class BrowseArchiveComponent implements OnInit {
     });
     this.url += this.id;
 
+    this.auth.isAdmin.subscribe((x) => {
+      this.isAdmin = x;
+    });
     // solution 2
     // this.route.paramMap.subscribe((params: ParamMap) => {
     //   console.log(params.get('id'));
@@ -64,5 +71,9 @@ export class BrowseArchiveComponent implements OnInit {
   }
   copyURL() {
     this.clipboardApi.copyFromContent(this.url);
+  }
+
+  updateCollapse() {
+    this.drop = !this.drop;
   }
 }
