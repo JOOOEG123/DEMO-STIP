@@ -23,76 +23,78 @@
   "navbar": {
     "navbar_title": "",
     "navbar_top_title": "中国“右派”档案",
-    "navbar_searchbar_placeholder": "",
-    "navbar_button_one": "",
+    "navbar_searchbar_placeholder": "未知",
+    "navbar_button_one": "未知",
     "navbar_button_two": "关于",
-    "navbar_button_two_subbutton_one": "",
-    "navbar_button_two_subbutton_two": "",
-    "navbar_button_two_subbutton_three": "",
-    "navbar_button_three": "",
-    "navbar_button_three_subbutton_one": "",
-    "navbar_button_three_subbutton_two": "",
-    "navbar_language_one": "",
-    "navbar_language_two": "",
-    "navbar_auth_button": "",
-    "navbar_account_button": "",
-    "navbar_account_button_subbutton_one": "",
-    "navbar_account_button_subbutton_two": "",
-    "navbar_account_button_subbutton_three": ""
+    "navbar_button_two_subbutton_one": "未知",
+    "navbar_button_two_subbutton_two": "未知",
+    "navbar_button_two_subbutton_three": "未知",
+    "navbar_button_three": "未知",
+    "navbar_button_three_subbutton_one": "未知",
+    "navbar_button_three_subbutton_two": "未知",
+    "navbar_language_one": "未知",
+    "navbar_language_two": "未知",
+    "navbar_auth_button": "未知",
+    "navbar_account_button": "未知",
+    "navbar_account_button_subbutton_one": "未知",
+    "navbar_account_button_subbutton_two": "未知",
+    "navbar_account_button_subbutton_three": "未知"
   },
   "footer": {
-    "footer_social_media_title": "",
-    "footer_social_media_button_one": "",
-    "footer_social_media_button_two": "",
-    "footer_social_media_button_three": "",
-    "footer_footnote": ""
+    "footer_social_media_title": "未知",
+    "footer_buttons": {
+      "footer_social_media_button_one": "未知",
+      "footer_social_media_button_two": "未知",
+      "footer_social_media_button_three": "未知"
+    },
+    "footer_footnote": "未知"
   },
   "home": {
-    "home_introduction_title": "",
-    "home_introduction_body": "",
-    "home_searchbar_placeholder": "",
-    "home_featured_title": "",
-    "home_history_title": "",
-    "home_history_body": ""
+    "home_introduction_title": "未知",
+    "home_introduction_body": "未知",
+    "home_searchbar_placeholder": "未知",
+    "home_featured_title": "未知",
+    "home_history_title": "未知",
+    "home_history_body": "未知"
   },
   "about_movement": {
-    "about_movement_introduction_title": "",
-    "about_movement_introduction_body": "",
-    "about_movement_introduction_button": "",
-    "about_movement_map_title": "",
-    "about_movement_map_body": "",
-    "about_movement_learn_more_button": ""
+    "about_movement_introduction_title": "未知",
+    "about_movement_introduction_body": "未知",
+    "about_movement_introduction_button": "未知",
+    "about_movement_map_title": "未知",
+    "about_movement_map_body": "未知",
+    "about_movement_learn_more_button": "未知"
   },
   "projects_overview": {
-    "projects_overview_meet_the_team_title": ""
+    "projects_overview_meet_the_team_title": "未知"
   },
   "other_resources": {
-    "other_resources_title": ""
+    "other_resources_title": "未知"
   },
   "archive": {
-    "archive_searchbar_placeholder": "",
-    "archive_top_title": "",
-    "archive_filter_title": "",
-    "archive_filter_cat_one_title": "",
-    "archive_filter_cat_one_checkbox_one": "",
-    "archive_filter_cat_one_checkbox_two": "",
-    "archive_filter_cat_two_title": "",
-    "archive_filter_cat_two_checkbox_one": "",
-    "archive_filter_cat_two_checkbox_two": "",
-    "archive_filter_cat_two_checkbox_three": "",
-    "archive_filter_cat_three_title": "",
-    "archive_filter_cat_three_textbox_placeholder": "",
-    "archive_filter_cat_four_title": "",
-    "archive_filter_cat_five_title": "",
-    "archive_filter_reset_button": ""
+    "archive_searchbar_placeholder": "未知",
+    "archive_top_title": "未知",
+    "archive_filter_title": "未知",
+    "archive_filter_cat_one_title": "未知",
+    "archive_filter_cat_one_checkbox_one": "未知",
+    "archive_filter_cat_one_checkbox_two": "未知",
+    "archive_filter_cat_two_title": "未知",
+    "archive_filter_cat_two_checkbox_one": "未知",
+    "archive_filter_cat_two_checkbox_two": "未知",
+    "archive_filter_cat_two_checkbox_three": "未知",
+    "archive_filter_cat_three_title": "未知",
+    "archive_filter_cat_three_textbox_placeholder": "未知",
+    "archive_filter_cat_four_title": "未知",
+    "archive_filter_cat_five_title": "未知",
+    "archive_filter_reset_button": "未知"
   },
   "gallery": {
-    "gallery_top_title": "",
-    "gallery_top_cat_one_button": "",
-    "gallery_top_cat_two_button": "",
-    "gallery_top_cat_three_button": "",
-    "gallery_top_cat_four_button": "",
-    "gallery_top_cat_five_button": "",
-    "gallery_image_button": ""
+    "gallery_top_title": "画廊",
+    "gallery_top_cat_one_button": "全部",
+    "gallery_top_cat_two_button": "神器",
+    "gallery_top_cat_three_button": "营地",
+    "gallery_top_cat_four_button": "人们",
+    "gallery_top_cat_five_button": "专辑名称",
+    "gallery_image_button": "学到更多"
   }
 }

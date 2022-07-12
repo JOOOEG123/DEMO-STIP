@@ -19,10 +19,10 @@
   },
   "common": {
     "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
-    "movement_brief": "Brief History"
+    "movement_brief": "Brief History",
+    "page_title": "Chinese \"Rightist\" Archives"
   },
   "navbar": {
-    "navbar_title": "Chinese \"Rightist\" Archives",
     "navbar_top_title": "Chinese Anti-Rightist Archives",
     "navbar_searchbar_placeholder": "Search for Archives",
     "navbar_button_one": "Home",
@@ -56,7 +56,7 @@
     "home_history_title": "Brief History",
     "home_history_body": "Lorem ipsum dolor sit amet..."
   },
-  "about": {
+  "about_movement": {
     "about_movement_introduction_title": "About the Chinese Anti-Rightists Campaign in the 1950's",
     "about_movement_introduction_body": "Lorem ipsum dolor sit amet...",
     "about_movement_introduction_button": "View Sources",
@@ -70,7 +70,6 @@
   },
   "other_resources": {
     "other_resources_title": "Resources"
-
   },
   "archive": {
     "archive_searchbar_placeholder": "Search for ...",
@@ -93,7 +92,7 @@
     "gallery_top_title": "Gallery",
     "gallery_top_cat_one_button": "All",
     "gallery_top_cat_two_button": "Artifacts",
-    "gallery_top_cat_three_button": "Camps",
+    "gallery_top_cat_three_button": "Camp",
     "gallery_top_cat_four_button": "People",
     "gallery_top_cat_five_button": "Album Name",
     "gallery_image_button": "Learn More"
