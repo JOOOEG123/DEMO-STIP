@@ -1,0 +1,259 @@
+[33mcommit 8f223c05fb9c8c738e409573eb4af000c990958d[m[33m ([m[1;36mHEAD -> [m[1;32mMemoirPage2[m[33m, [m[1;31morigin/MemoirPage3[m[33m, [m[1;31morigin/MemoirPage2[m[33m, [m[1;31morigin/MemoirPage[m[33m)[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Tue Jul 12 15:26:27 2022 -0400
+
+    fix bugs
+
+[33mcommit ac9f256a3cafbd328423d974ba0b34e44d9ab7cf[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Tue Jul 12 11:02:53 2022 -0400
+
+    Add "Scollbar" and "Limit number lines of text display""
+
+[33mcommit 14aaf2dae1c5a9587f25acec5069b00a904a765a[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Mon Jul 11 23:19:52 2022 -0400
+
+    memoir page: add
+    
+    add "collpase" component for memoir page.
+
+[33mcommit f74df00c397af97266917b33e7bf8518cf5cbb57[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Mon Jul 11 22:54:31 2022 -0400
+
+    Revert commit history and add "admin/user" code
+
+[33mcommit ef33467936a6f8b3f5db711e49bb98e05c363070[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Sat Jul 9 12:11:01 2022 -0400
+
+    Share component
+    
+    Add
+    1. "Copy URL to Clipboard"
+    2. Create URL for each profile
+
+[33mcommit 40d510e98066f74f8e3ed0e20b746863d1dfefcf[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 22:13:38 2022 -0400
+
+    Update main-browse.component.html
+
+[33mcommit b91214c112d5203c3031c6142972a0f49d3bb922[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 22:06:48 2022 -0400
+
+    Fix: display variables
+
+[33mcommit 57eb769c749bb52a33833d6a8ba0d70b603f361e[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 15:18:20 2022 -0400
+
+    update: fix naming conventions and searching function bugs.
+
+[33mcommit 4d0467579a30dfd7a9f96659be8b3a3466d64956[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 14:44:32 2022 -0400
+
+    update
+    
+    Make the attribute's names match with db naming conventions.
+
+[33mcommit b2b4717dadc0c03cb2f6ac5092e0debb6e43e7cf[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 14:24:49 2022 -0400
+
+    update
+
+[33mcommit 5f8992c9843bb49e1aefefbc7f230ddfc4501ba8[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 13:05:52 2022 -0400
+
+    update
+
+[33mcommit 4c4ab1b334514b5df692b33a766f2587f1879fa4[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 13:05:25 2022 -0400
+
+    update
+
+[33mcommit 4ef26c7d7ece9bfed49e0a29d5cb3413491db821[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 10:50:33 2022 -0400
+
+    Memoir
+    
+    Add "download pdf" function.
+
+[33mcommit 5ba7e8eb4bafb6f6b7c3471d988b2e190bac9c58[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 10:08:23 2022 -0400
+
+    update
+
+[33mcommit 129415de0e814ada8e4f7bacb2faa441bb3bdb0a[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 10:05:29 2022 -0400
+
+    update
+
+[33mcommit 3b61b8ca37eeb6f9bcf854d3792ec3b8b2d2952a[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jul 6 10:02:27 2022 -0400
+
+    update
+
+[33mcommit d4625a628709aafcc6f7452a8b9629054e64777a[m[33m ([m[1;31morigin/share-for-browse-achive-page[m[33m, [m[1;32mshare-for-browse-achive-page[m[33m)[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Tue Jul 5 20:29:43 2022 -0400
+
+    Add
+    
+    Enable the "Download PDF file" button for the memoir page.
+
+[33mcommit e99ab09d72a99c816ad35b1ada99df9733bebf75[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Sat Jul 2 12:57:03 2022 -0400
+
+    update: fix conflicts
+
+[33mcommit 907ddd375b3cc62b1baa84af2517a1146116a545[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Fri Jul 1 11:42:28 2022 -0400
+
+    Resolve conflicts
+
+[33mcommit 53ddb4a309fa158253bc6d3c6527dee9fbae3987[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Thu Jun 30 19:39:52 2022 -0400
+
+    Add front-end design
+
+[33mcommit 89b3b7cfe2a91b7d8cd7e8ae0d73e20616230e1c[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Thu Jun 30 14:22:57 2022 -0400
+
+    update: fix browse search result display bug
+
+[33mcommit c49988793cbcbf178177ce9c9213b4117d3fc1f2[m
+Merge: 7b5803f de80adf
+Author: Joel Adeniji <57308580+JOOOEG123@users.noreply.github.com>
+Date:   Fri Jul 1 14:17:49 2022 -0400
+
+    Merge pull request #56 from JOOOEG123/searchBarAndSearchFilter
+    
+    Fix typo
+
+[33mcommit de80adfab89c8f3bd8c1cbcd5bf0e1181c63f426[m
+Merge: 341aac4 7b5803f
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Fri Jul 1 09:54:51 2022 -0400
+
+    Merge branch 'main' into searchBarAndSearchFilter
+
+[33mcommit 341aac40af7936e7ae6660c7adae3b3ddec977bb[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Fri Jul 1 09:44:30 2022 -0400
+
+    Fix typo
+
+[33mcommit 7b5803f7432cbe931a14873154e9394e3aa2c4d2[m
+Merge: a9e1b8b 5f590cd
+Author: Joel Adeniji <57308580+JOOOEG123@users.noreply.github.com>
+Date:   Thu Jun 30 21:49:09 2022 -0400
+
+    Merge pull request #53 from JOOOEG123/MemoirPage
+    
+    Memoir page
+
+[33mcommit a9e1b8b9dd4bc878744851c23f8b5d49a9ebc9a1[m
+Merge: 773e4dd 3b93680
+Author: Joel Adeniji <57308580+JOOOEG123@users.noreply.github.com>
+Date:   Thu Jun 30 21:48:54 2022 -0400
+
+    Merge pull request #52 from JOOOEG123/Get/view-profile-fix
+    
+    Get/view-profile-fix
+
+[33mcommit 5f590cd96ae3dfd3a5822d2a8ba2529a3fada411[m
+Author: Joel Adeniji <57308580+JOOOEG123@users.noreply.github.com>
+Date:   Thu Jun 30 21:42:52 2022 -0400
+
+    Update route Id
+
+[33mcommit ad253a97e40a7cf4a36ebeb5b23d50962cee8361[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Thu Jun 30 19:39:52 2022 -0400
+
+    Add front-end design
+
+[33mcommit 0abfe191427e95b26310250436f8ea2a5f4f8567[m
+Author: weilonp <104396688+weilonp@users.noreply.github.com>
+Date:   Thu Jun 30 15:32:59 2022 -0400
+
+    Share button
+    
+    Share button is now a image and rounded
+
+[33mcommit 28c1d17ff40386aeb0053ba84ad64f04458e4470[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Thu Jun 30 15:20:10 2022 -0400
+
+    Memoir page
+    
+    Link share button with memoir page.
+
+[33mcommit fdaca10ebff4ded63b5c58ceb790d41739793e56[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Thu Jun 30 14:22:57 2022 -0400
+
+    update: fix browse search result display bug
+
+[33mcommit 3b936802347fa12ca6203716388894abe67bab57[m
+Author: Joel Adeniji <57308580+JOOOEG123@users.noreply.github.com>
+Date:   Thu Jun 30 16:05:16 2022 -0400
+
+    Update storage.rules
+
+[33mcommit 4df67e4f94f22155562f5ba32f6a22dcdbbc12ca[m
+Author: Joel Adeniji <57308580+JOOOEG123@users.noreply.github.com>
+Date:   Thu Jun 30 16:04:01 2022 -0400
+
+    uPDATE
+
+[33mcommit 773e4ddae48e5f22f2f774786b4213fb0d7cb587[m
+Merge: 04a9c6c 75db8b2
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Thu Jun 30 15:17:54 2022 -0400
+
+    Merge pull request #51 from JOOOEG123/searchBarAndSearchFilter
+    
+    Search bar and search filter
+
+[33mcommit 24fa910e7637d8d97bdb43da609956b4f5d83c61[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Thu Jun 30 14:20:35 2022 -0400
+
+    udpate
+
+[33mcommit 75db8b27b33a283292d6eb8dcb320b2af39ddb7e[m
+Merge: d29bab3 04a9c6c
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Thu Jun 30 11:41:29 2022 -0400
+
+    Merge branch 'main' into searchBarAndSearchFilter
+
+[33mcommit b44ea0c8c7f09dc19b4db7aa8ac5f6c37923c457[m
+Author: Joel Adeniji <57308580+JOOOEG123@users.noreply.github.com>
+Date:   Thu Jun 30 09:05:12 2022 -0400
+
+    Update storage-api.service.ts
+
+[33mcommit d29bab3ff14a54d0ea65a29e897d49e0a931e9bb[m
+Author: Yule Zhang <71297348+yzhang54@users.noreply.github.com>
+Date:   Wed Jun 29 21:10:45 2022 -0400
+
+    browse page
+    
+    fix bugs for searching functi
