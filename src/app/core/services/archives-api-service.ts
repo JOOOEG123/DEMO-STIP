@@ -150,34 +150,6 @@ export class ArchieveApiService {
       .valueChanges();
   }
 
-  getContributions() {
-    return this.db
-      .object(`/persons/requestArchieve/contributions`).valueChanges()
-  }
-
-  getContributionById(contributionId: string) {
-    return this.db
-      .object(`/persons/requestArchieve/contributions/${contributionId}`)
-  }
-
-  updateContributionById(contributionId: string, data: ContributionJson) {
-    return this.db
-      .object(`/persons/requestArchieve/contributions/${contributionId}`)
-      .update(data)
-  }
-
-  addContribution(contribution: ContributionJson) {
-    return this.db
-      .object(`/persons/requestArchieve/contributions`).update(contribution)
-  }
-
-  updateContributionByPublish(contributorId: string, contributionId: string, updatedPublish: string) {
-    console.log(contributionId)
-    return this.db
-      .object(`/persons/requestArchieve/contributions/${contributorId}`)
-      .update({ publish: updatedPublish })
-  }
-
   // new APIs: for sample data and need fix if the db data changes. 
   getTestDataPersonByIntial(letter: string) {
     
