@@ -19,5 +19,80 @@
   "common": {
     "chinese_anti_rightist_archives": "中国“右派”档案",
     "movement_brief": "反右运动简介"
+  },
+  "navbar": {
+    "navbar_title": "",
+    "navbar_top_title": "中国“右派”档案",
+    "navbar_searchbar_placeholder": "",
+    "navbar_button_one": "",
+    "navbar_button_two": "关于",
+    "navbar_button_two_subbutton_one": "",
+    "navbar_button_two_subbutton_two": "",
+    "navbar_button_two_subbutton_three": "",
+    "navbar_button_three": "",
+    "navbar_button_three_subbutton_one": "",
+    "navbar_button_three_subbutton_two": "",
+    "navbar_language_one": "",
+    "navbar_language_two": "",
+    "navbar_auth_button": "",
+    "navbar_account_button": "",
+    "navbar_account_button_subbutton_one": "",
+    "navbar_account_button_subbutton_two": "",
+    "navbar_account_button_subbutton_three": ""
+  },
+  "footer": {
+    "footer_social_media_title": "",
+    "footer_social_media_button_one": "",
+    "footer_social_media_button_two": "",
+    "footer_social_media_button_three": "",
+    "footer_footnote": ""
+  },
+  "home": {
+    "home_introduction_title": "",
+    "home_introduction_body": "",
+    "home_searchbar_placeholder": "",
+    "home_featured_title": "",
+    "home_history_title": "",
+    "home_history_body": ""
+  },
+  "about_movement": {
+    "about_movement_introduction_title": "",
+    "about_movement_introduction_body": "",
+    "about_movement_introduction_button": "",
+    "about_movement_map_title": "",
+    "about_movement_map_body": "",
+    "about_movement_learn_more_button": ""
+  },
+  "projects_overview": {
+    "projects_overview_meet_the_team_title": ""
+  },
+  "other_resources": {
+    "other_resources_title": ""
+  },
+  "archive": {
+    "archive_searchbar_placeholder": "",
+    "archive_top_title": "",
+    "archive_filter_title": "",
+    "archive_filter_cat_one_title": "",
+    "archive_filter_cat_one_checkbox_one": "",
+    "archive_filter_cat_one_checkbox_two": "",
+    "archive_filter_cat_two_title": "",
+    "archive_filter_cat_two_checkbox_one": "",
+    "archive_filter_cat_two_checkbox_two": "",
+    "archive_filter_cat_two_checkbox_three": "",
+    "archive_filter_cat_three_title": "",
+    "archive_filter_cat_three_textbox_placeholder": "",
+    "archive_filter_cat_four_title": "",
+    "archive_filter_cat_five_title": "",
+    "archive_filter_reset_button": ""
+  },
+  "gallery": {
+    "gallery_top_title": "",
+    "gallery_top_cat_one_button": "",
+    "gallery_top_cat_two_button": "",
+    "gallery_top_cat_three_button": "",
+    "gallery_top_cat_four_button": "",
+    "gallery_top_cat_five_button": "",
+    "gallery_image_button": ""
   }
 }

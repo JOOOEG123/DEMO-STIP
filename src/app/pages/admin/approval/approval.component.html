@@ -33,100 +33,6 @@
   </div>
 
   <div class="container-fluid">
-
-     <!-- Pending Contributions -->
-    <!-- <div class="container" *ngIf="activeCategory == 'Approved Contributions' && pendingContributions.length != 0">
-      <div
-        class="row my-4 contribution-container border border-danger border-2"
-        *ngFor="let contribution of pendingContributions"
-        [@contributionAnimation]="contribution.state"
-        (@contributionAnimation.start)="animationStart($event)"
-        (@contributionAnimation.done)="animationDone($event)"
-      >
-        <div class="col-5">
-      
-          <div class="card float-end w-75 border-0 d-flex align-items-center justify-content-center">
-            <div class="row my-2">
-              <div
-                class="col-md-6"
-              >
-                <img
-                  [src]="contribution.victim.imagePath"
-                  class="card-img image-fluid w-75 rounded-pill"
-                  alt="..."
-                />
-              </div>
-              <div class="col-md-6 d-flex align-items-center">
-                <div class="card-body text-md-start text-center">
-                  <h5 class="card-title fw-bold display-6">
-                    {{ contribution.victim.firstName }} {{ contribution.victim.lastName }}
-                  </h5>
-                  <p
-                    class="card-text m-0 text-uppercase"
-                    *ngIf="contribution.victim.job"
-                  >
-                    {{ contribution.victim.job }}
-                  </p>
-                  <p
-                    class="card-text m-0 text-uppercase"
-                    *ngIf="contribution.victim.nationality"
-                  >
-                    {{ contribution.victim.nationality }}
-                  </p>
-                  <p class="card-text m-0 text-uppercase" *ngIf="contribution.victim.gender">
-                    {{ contribution.victim.gender }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-5 d-flex flex-column align-items-start justify-content-center">
-          <div *ngFor="let event of contribution.victim.events | slice:0:contribution.limit">
-            In {{ event.startYear }}, {{ event.content }}
-          </div>
-          <div class="align-self-end" *ngIf="contribution.victim.events.length > contribution.limit">
-            <button class="btn btn-transparent" (click)="onReadMore(contribution.contributionId)"><i class="display-6">&#8595;</i></button>
-          </div>
-        </div>
-
-        <div
-          class="col-lg-2 col-12 d-flex flex-column align-items-center justify-content-center"
-        >
-        <div class="my-2 text-center">
-          <p><i>
-            {{ contribution.contributedAt.getMonth() + 1 }}/{{ contribution.contributedAt.getDate()}}/{{ contribution.contributedAt.getFullYear()}}
-          </i></p>
-        </div>
-        <div class="d-flex justify-content-center my-2">
-
-          <button 
-            (click)="onEdit(editTemplate, contribution.contributionId)" 
-            class="btn btn-transparent mx-2"
-          >
-            <span class="pencil-icon text-warning">&#9998;</span>
-          </button>
-          
-          <button
-          (click)="onReject(contribution.contributionId)"
-          class="btn btn-transparent mx-2"
-          >
-            <span class="cross-icon">&cross;</span>
-          </button>
-
-          <button 
-            (click)="onApprove(contribution.contributionId)" 
-            class="btn btn-transparent mx-2"
-          >
-            <span class="merge-icon">&#8694;</span>
-          </button>
-        </div>
-        </div>
-      </div>
-
-      <div class="divider pt-1 bg-warning"></div>
-    </div> -->
-
     <div class="container my-4" *ngIf="selectedContributions.length == 0">
       <div class="card">
         <div class="card-header text-center p-4">
@@ -149,10 +55,10 @@
         (@contributionAnimation.start)="animationStart($event)"
         (@contributionAnimation.done)="animationDone($event)"
       >
-        <div class="col-5">
-          <div class="card float-end w-75 h-100 border-0 d-flex align-items-center justify-content-center">
-            <div class="row no-gutters my-2">
-              <div
+        <div class="col-4">
+          <!-- <div class="card float-end w-75 h-100 border-0 d-flex align-items-center justify-content-center">
+            <div class="row no-gutters my-2"> -->
+              <!-- <div
                 class="col-md-6"
               >
                 <img
@@ -160,33 +66,27 @@
                   class="card-img image-fluid w-75 rounded-pill"
                   alt="..."
                 />
+              </div> -->
+              <!-- <div class="col-12"> -->
+                <div class="card-body ms-5">
+                  <h4 class="card-title fw-bold">
+                    {{ contribution.rightist.lastName }} {{ contribution.rightist.firstName }}
+                  </h4>
+                  <p class="card-text m-0">
+                    Occupation: <span class="fw-bold text-capitalize">{{ contribution.rightist.job ? contribution.rightist.job : '-' }}</span>
+                  </p>
+                  <p class="card-text m-0">
+                    Ethnic Group: <span class='fw-bold text-capitalize'>{{ contribution.rightist.ethnicity ? contribution.rightist.ethnicity : '-' }}</span>
+                  </p>
+                  <p class="card-text m-0">
+                    Gender: <span class='fw-bold text-capitalize'>{{ contribution.rightist.gender ? contribution.rightist.gender : '-' }}</span>
+                  </p>
+                <!-- </div>
               </div>
-              <div class="col-md-6">
-                <div class="card-body text-md-start text-center">
-                  <h5 class="card-title fw-bold display-6">
-                    {{ contribution.rightist.firstName }} {{ contribution.rightist.lastName }}
-                  </h5>
-                  <p
-                    class="card-text m-0 text-uppercase"
-                    *ngIf="contribution.rightist.job"
-                  >
-                    {{ contribution.rightist.job }}
-                  </p>
-                  <p
-                    class="card-text m-0 text-uppercase"
-                    *ngIf="contribution.rightist.ethnicity"
-                  >
-                    {{ contribution.rightist.ethnicity }}
-                  </p>
-                  <p class="card-text m-0 text-uppercase" *ngIf="contribution.rightist.gender">
-                    {{ contribution.rightist.gender }}
-                  </p>
-                </div>
-              </div>
-            </div>
+            </div> -->
           </div>
         </div>
-        <div class="col-5 d-flex flex-column align-items-start justify-content-center">
+        <div class="col-6 d-flex flex-column align-items-start justify-content-center">
           <div *ngFor="let event of contribution.rightist.events | slice:0:limit">
             <span>In {{ event.startYear }}, {{ event.event }}</span>
           </div>
@@ -210,7 +110,7 @@
           <div class="d-flex justify-content-center my-2">
 
           <button
-            (click)="onApprove(contribution.contributionId)"
+            (click)="onApprove(contribution)"
             class="btn btn-transparent mx-2"
             *ngIf="activeCategory == 'New Contributions'"
           >
@@ -218,7 +118,7 @@
           </button>
 
           <button
-          (click)="onReject(contribution.contributionId)"
+          (click)="onReject(contribution)"
           class="btn btn-transparent mx-2"
           *ngIf="activeCategory == 'New Contributions'"
         >
@@ -233,7 +133,7 @@
           </button>
 
           <button 
-          (click)="onReconsider(contribution.contributionId)" 
+          (click)="onReconsider(contribution)" 
           class="btn btn-transparent mx-2"
           *ngIf="activeCategory == 'Rejected Contributions'"
           >
@@ -247,13 +147,11 @@
 </div>
 
 <ng-template #readMoreTemplate>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Modal</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    This is a modal.
-  </div>  
+  <app-upload 
+    [contribution]="this.selectedContribution" 
+    page="contribution" 
+    (approve)="onApprove($event)"
+    (reject)="onReject($event)"
+    (reconsider)="onReconsider($event)"
+    ></app-upload>
 </ng-template>

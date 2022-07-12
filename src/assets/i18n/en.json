@@ -20,5 +20,82 @@
   "common": {
     "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
     "movement_brief": "Brief History"
+  },
+  "navbar": {
+    "navbar_title": "Chinese \"Rightist\" Archives",
+    "navbar_top_title": "Chinese Anti-Rightist Archives",
+    "navbar_searchbar_placeholder": "Search for Archives",
+    "navbar_button_one": "Home",
+    "navbar_button_two": "About",
+    "navbar_button_two_subbutton_one": "About the Movement",
+    "navbar_button_two_subbutton_two": "Projects Overview",
+    "navbar_button_two_subbutton_three": "Other Resources",
+    "navbar_button_three": "Browse Archives",
+    "navbar_button_three_subbutton_one": "Archive",
+    "navbar_button_three_subbutton_two": "Gallery",
+    "navbar_language_one": "English",
+    "navbar_language_two": "Chinese",
+    "navbar_auth_button": "Login / Signup",
+    "navbar_account_button": "Account",
+    "navbar_account_button_subbutton_one": "Account",
+    "navbar_account_button_subbutton_two": "Upload",
+    "navbar_account_button_subbutton_three": "Logout"
+  },
+  "footer": {
+    "footer_social_media_title": "Social Media",
+    "footer_social_media_button_one": "Facebook",
+    "footer_social_media_button_two": "Twitter",
+    "footer_social_media_button_three": "Google",
+    "footer_footnote": "© Copyright 2022 STIP"
+  },
+  "home": {
+    "home_introduction_title": "Chinese Anti-Rightist Archives",
+    "home_introduction_body": "testLorem ipsum dolor sit amet...",
+    "home_searchbar_placeholder": "Search for Archives",
+    "home_featured_title": "Featured \"Rightists\"",
+    "home_history_title": "Brief History",
+    "home_history_body": "Lorem ipsum dolor sit amet..."
+  },
+  "about": {
+    "about_movement_introduction_title": "About the Chinese Anti-Rightists Campaign in the 1950's",
+    "about_movement_introduction_body": "Lorem ipsum dolor sit amet...",
+    "about_movement_introduction_button": "View Sources",
+    "about_movement_map_title": "Map",
+    "about_movement_map_body": "Lorem ipsum dolor sit amet...",
+    "about_movement_learn_more_button": "Learn More About the Research on this Project"
+  },
+  "projects_overview": {
+    "projects_overview_meet_the_team_title": "Meet the team behind the research"
+
+  },
+  "other_resources": {
+    "other_resources_title": "Resources"
+
+  },
+  "archive": {
+    "archive_searchbar_placeholder": "Search for ...",
+    "archive_top_title": "Browse Archive",
+    "archive_filter_title": "Filter",
+    "archive_filter_cat_one_title": "Gender",
+    "archive_filter_cat_one_checkbox_one": "Male",
+    "archive_filter_cat_one_checkbox_two": "Female",
+    "archive_filter_cat_two_title": "Status",
+    "archive_filter_cat_two_checkbox_one": "Alive",
+    "archive_filter_cat_two_checkbox_two": "Deceased",
+    "archive_filter_cat_two_checkbox_three": "Unknown",
+    "archive_filter_cat_three_title": "Chinese Ethnic Group",
+    "archive_filter_cat_three_textbox_placeholder": "Type to search ethnic groups..",
+    "archive_filter_cat_four_title": "Occupation",
+    "archive_filter_cat_five_title": "Year of Becoming A \"Rightist\"",
+    "archive_filter_reset_button": "Clear"
+  },
+  "gallery": {
+    "gallery_top_title": "Gallery",
+    "gallery_top_cat_one_button": "All",
+    "gallery_top_cat_two_button": "Artifacts",
+    "gallery_top_cat_three_button": "Camps",
+    "gallery_top_cat_four_button": "People",
+    "gallery_top_cat_five_button": "Album Name",
+    "gallery_image_button": "Learn More"
   }
 }

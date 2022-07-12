@@ -75,12 +75,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void { 
-    //  console.log(this.archApi.addContribution(result))
-    // this.archApi.getContributions().snapshotChanges((data: any) => {
-    //   console.log(data)
-    // })
-
-  
     this.subcription = this.contributionAPI.fetchAllContribution().subscribe((data: any) => {
       
       this.contributions.length = 0
@@ -119,10 +113,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           this.rejectedContributions.push(data)
         }
       }
-      // this.selectedContributions =  JSON.parse(JSON.stringify(this.newContributions));
-
-      // console.log(this.selectedContributions, this.newContributions, this.approvedContributions, this.rejectedContributions)
-      
     })
   }
 
@@ -131,67 +121,38 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
   
 
-  onApprove(contributionId: string) {
+  onApprove(contribution: Contribution) {
+    this.modalRef?.hide()
     this.publish = 'approved'
     const index = this.selectedContributions.findIndex(
-      (contribution) => contribution.contributionId == contributionId
+      (c) => c.contributionId == contribution.contributionId
     );
     this.selectedContribution = this.newContributions[index];
     this.selectedContribution.state = 'removed';
-    // this.approvedContributions.unshift(this.selectedContribution)
   }
 
-  // onEdit(template: TemplateRef<any>, rightistId: string) {
-  //   this.modalRef = this.modalService.show(template);
-  // }
-
-  // onPending(victimId: string) {
-  //   const index = this.selectedContributions.findIndex(
-  //     (contribution) => contribution.contributionId == victimId
-  //   )
-  //   this.selectedContribution = this.newContributions[index];
-  //   this.selectedContribution.state = 'removed';
-  //   this.pendingContributions.unshift(this.selectedContribution);
-  // }
-
-  onReject(contributionId: string) {
+  onReject(contribution: Contribution) {
+    this.modalRef?.hide()
     this.publish = 'rejected'
-
     const index = this.selectedContributions.findIndex(
-      (contribution) => contribution.contributionId == contributionId
+      (c) => c.contributionId == contribution.contributionId
     );
-    // if (index == -1) {
-    //   const i = this.pendingContributions.findIndex(
-    //     (contribution) => contribution.contributionId == contributionId
-    //   )
-    //   this.selectedContribution = this.pendingContributions[i]
-    //   this.selectedContribution.state = 'removed'
-    //   this.rejectedContributions.unshift(this.selectedContribution)
-    // }
    
     this.selectedContribution = this.newContributions[index];
     this.selectedContribution.state = 'removed';
-    // this.rejectedContributions.unshift(this.selectedContribution); 
-    // this.archApi.updateContributionPublishAttribute(this.selectedContribution.contributionId, publish)
   }
 
-  onReconsider(contributionId: string) {
+  onReconsider(contribution: Contribution) {
+    this.modalRef?.hide()
+    this.publish = 'approved'
     const index = this.selectedContributions.findIndex(
-      (contribution) => contribution.contributionId = contributionId
+      (c) => c.contributionId = contribution.contributionId
     )
     this.selectedContribution = this.rejectedContributions[index]
     this.selectedContribution.state = 'removed'
-    // this.newContributions.unshift(this.selectedContribution)
   }
 
   setActiveCategory(category: Categories) {
-    // const index = this.selectedContributions.findIndex(
-    //   (contribution) => contribution.contributionId == this.selectedContribution?.contributionId
-    // )
-
-    // if (index != -1) {
-    //   this.selectedContributions[index].limit = 3
-    // }
     this.activeCategory = category;
     this.selectedContributions = this.categories[this.activeCategory];
     
@@ -203,33 +164,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   animationDone(event: AnimationEvent) {
-    // if (this.activeCategory == 'Rejected Contributions') {
-    //   if (event.toState == 'removed') {
-    //     // const index = this.rejectedContributions.findIndex(
-    //     //   (contribution) => contribution.contributionId == this.selectedContribution.contributionId
-    //     // )
-    //     // this.rejectedContributions.splice(index, 1)
-    //     this.selectedContribution.state = 'void'
-    //   }
-    // }
-
-    // if (this.activeCategory == 'Approved Contributions') {
-    //   if (event.toState == 'removed') {
-    //     // this.approvedContributions.unshift(this.selectedContribution); 
-    //     this.selectedContribution.state = 'void'
-    //   }
-    // }
-
-    // if (this.activeCategory == 'New Contributions') {
-    //   if (event.toState == 'removed') {
-    //     // const index = this.newContributions.findIndex(
-    //     //   (contribution) => contribution.contributionId == this.selectedContribution?.contributionId
-    //     // );
-    //     // this.newContributions.splice(index, 1);
-    //     this.selectedContribution.state = 'void';
-    //   }
-    // }
-
     this.disabled = false
     if (this.selectedContribution) {
       let contributorId = 
@@ -245,12 +179,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
     this.selectedContribution = contribution
-    this.modalRef = this.modalService.show(template)
-    // const index = this.selectedContributions.findIndex(
-    //   (contribution) => contribution.contributionId == contributionId
-    // )
-    // this.selectedContribution = this.selectedContributions[index]  
-    // this.selectedContributions[index].limit = this.selectedContributions[index].rightist['events'].length
-    // }
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg'})
   }
 }

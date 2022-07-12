@@ -1,5 +1,12 @@
-<h2 class="text-center pb-5 pt-5 mt-5">Request Form</h2>
-<h3 class="text-center pt-3 pb-5">Upload</h3>
+<div *ngIf="this.page != 'contribution'">
+  <h2 class="text-center pb-5 pt-5 mt-5">Request Form</h2>
+  <h3 class="text-center pt-3 pb-5">Upload</h3>
+</div>
+
+<div *ngIf="this.page == 'contribution'">
+  <h3 class="text-center pb-5 pt-5 mt-5">Detailed Contribution</h3>
+</div>
+
 <div class="container-fluid">
   <form
     [formGroup]="form"
@@ -55,7 +62,7 @@
       <!-- col for year of event -->
       <div class="col">
         <label for="Year" class="form-label"
-          >Year of becoming a rightest <span class="text-danger">*</span></label
+          >Rightist Year <span class="text-danger">*</span></label
         >
         <!-- year selector -->
         <input
@@ -100,7 +107,7 @@
           />
           <label class="form-check-label" for="gender-male"> Male </label>
         </div>
-        <div class="form-check form-check-inline mx-3">
+        <div class="form-check form-check-inline">
           <input
             class="form-check-input"
             value="female"
@@ -126,7 +133,7 @@
           />
           <label class="form-check-label" for="alive"> Alive </label>
         </div>
-        <div class="form-check form-check-inline mx-3">
+        <div class="form-check form-check-inline">
           <input
             class="form-check-input"
             type="radio"
@@ -145,6 +152,7 @@
         type="button"
         class="btn btn-lg btn-outline-dark rounded-pill ms-auto px-4"
         (click)="clear()"
+        [ngClass]="{invisible: this.page == 'contribution'}"
       >
         Clear
       </button>
@@ -380,7 +388,7 @@
   </div>
   <br /><br />
   <!-- submit and clear buttons -->
-  <div class="d-flex col-11 mx-auto mb-5">
+  <div class="d-flex col-11 mx-auto mb-5" *ngIf="this.page != 'contribution'">
     <button
       type="button"
       class="btn btn-lg btn-outline-dark rounded-pill ms-auto px-4"
@@ -395,6 +403,49 @@
       (click)="onSubmit()"
     >
       Submit
+    </button>
+  </div>
+  <div 
+    class="col-12 mx-auto mb-5 text-center display-1" 
+    *ngIf="this.page == 'contribution' && this.contribution?.publish == 'new'">
+    <button
+      type="button"
+      (click)="onApprove()"
+      class="btn btn-transparent btn-lg mx-2 display-4 check-icon"
+    >
+      <span class="check-icon">&checkmark;</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="onReject()"
+      class="btn btn-transparent btn-lg mx-2 cross-icon"
+    >
+      <span class="cross-icon">&cross;</span>
+    </button>
+  </div>
+
+  <!-- <div 
+    class="col-12 mx-auto mb-5 text-center display-1" 
+    *ngIf="this.page == 'contribution' && this.contribution.publish == 'approved'">
+      <button 
+          (click)="onEdit()"
+          type="button"
+          class="btn btn-transparent btn-lg mx-2 pencil-icon"
+        >
+          <span class="pencil-icon text-warning">&#9998;</span>
+        </button>
+  </div> -->
+
+  <div 
+    class="col-12 mx-auto mb-5 text-center display-1" 
+    *ngIf="this.page == 'contribution' && this.contribution?.publish == 'rejected'">
+      <button 
+        (click)="onReconsider()"
+        type="button" 
+        class="btn btn-transparent btn-lg mx-2 pencil-icon"
+      >
+      <span class="pencil-icon text-warning">&#8634;</span>
     </button>
   </div>
 </div>
