@@ -20,6 +20,7 @@ export class ContributionsService {
       `/persons/requestArchieve/contributions/${this.auth.uid}`
     );
   }
+
   private callAPI_List() {
     return this.db.list(
       `/persons/requestArchieve/contributions/${this.auth.uid}`
@@ -55,6 +56,7 @@ export class ContributionsService {
   removeAllUserContributions() {
     return this.callAPI().remove();
   }
+
   // remove method 1
   removeContributionById(id: string) {
     const ref = this.db.database.ref(
@@ -87,5 +89,11 @@ export class ContributionsService {
     return this.db
       .object(`/persons/requestArchieve/contributions`)
       .valueChanges();
+  }
+
+  updateContributionByPublish(contributorId: string, contributionId: string, updatedPublish: string) {
+    return this.db
+    .object(`/persons/requestArchieve/contributions/${contributorId}/${contributionId}`)
+    .update({ publish: updatedPublish })
   }
 }
