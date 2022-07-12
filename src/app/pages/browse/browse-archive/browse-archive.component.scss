@@ -6,7 +6,7 @@
 }
 
 .scrollable {
-  max-height: 5em;
+  max-height: 25rem;
   overflow-y: auto;
 }
 
@@ -17,4 +17,8 @@
     -webkit-box-orient: vertical;  
     overflow: hidden;
   
+}
+
+.formatted {
+  white-space: pre-wrap;
 }
