@@ -22,6 +22,7 @@ export class BrowseArchiveComponent implements OnInit {
   profile = {} as any;
   url = location.href;
   isAdmin: boolean = false;
+  drop!: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -70,5 +71,9 @@ export class BrowseArchiveComponent implements OnInit {
   }
   copyURL() {
     this.clipboardApi.copyFromContent(this.url);
+  }
+
+  updateCollapse() {
+    this.drop = !this.drop;
   }
 }
