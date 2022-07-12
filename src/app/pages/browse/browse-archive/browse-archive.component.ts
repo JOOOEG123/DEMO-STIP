@@ -22,7 +22,7 @@ export class BrowseArchiveComponent implements OnInit {
   profile = {} as any;
   url = location.href;
   isAdmin: boolean = false;
-  drop!: boolean;
+  drop: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,8 +38,8 @@ export class BrowseArchiveComponent implements OnInit {
     this.arch.getPersonById(this.id).subscribe((res) => {
       console.log(res);
       this.profile = res;
+      this.replaceNewline();
     });
-    this.url += this.id;
 
     this.auth.isAdmin.subscribe((x) => {
       this.isAdmin = x;
@@ -50,6 +50,20 @@ export class BrowseArchiveComponent implements OnInit {
     // });
   }
 
+  display: string[] = [];
+
+  replaceNewline() {
+    console.log(this.profile.memoirs);
+    this.profile.memoirs.forEach((element: any, index: number) => {
+      this.profile.memoirs[index].memoir = element.memoir.split('\\n');
+      // this.profile.memoirs[index].memoir = element.memoir.replace(
+      //   /\\n/g,
+      //   '<br>'
+      // );
+      console.log(this.display);
+    });
+    console.log(this.profile.memoirs);
+  }
   SavePDF(pdfName: string): void {
     let content;
     if (pdfName === 'memoirContent') {
