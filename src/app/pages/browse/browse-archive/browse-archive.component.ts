@@ -7,6 +7,11 @@ import { jsPDF } from 'jspdf';
 import { ClipboardService } from 'ngx-clipboard';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
+import {
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
+
 @Component({
   selector: 'app-browse-archive',
   templateUrl: './browse-archive.component.html',
@@ -89,5 +94,14 @@ export class BrowseArchiveComponent implements OnInit {
 
   updateCollapse() {
     this.drop = !this.drop;
+  }
+
+  modify = '';
+  reason = '';
+  clear(){
+    this.modify = '';
+  }
+  clear2(){
+    this.reason='';
   }
 }

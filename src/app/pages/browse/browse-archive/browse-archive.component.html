@@ -57,11 +57,12 @@
               class="form-control"
               rows="7"
               placeholder="What are your requesting to modify?"
+              [(ngModel)]="modify"
             ></textarea>
             <br />
             <div align="right">
-              <button class="btn btn-dark pull-right">Clear entry</button>
-            </div>
+              <button class="btn btn-dark pull-right" (click)="clear()">Clear entry</button>
+            </div> 
 
             <br /><br />
             <h5>
@@ -71,17 +72,18 @@
               class="form-control"
               rows="7"
               placeholder="Why should this file be modified?"
+              [(ngModel)]="reason"
             ></textarea>
             <br />
             <div align="right">
-              <button class="btn btn-dark pull-right">Clear entry</button>
+              <button class="btn btn-dark pull-right" (click)="clear2()">Clear entry</button>
             </div>
             <br /><br />
             <h5>Email</h5>
             <input
               type="email"
               class="form-control"
-              id="exampleFormControlInput1"
+              name="email"
               placeholder="What email can we contact you at in regards to this request?"
             />
           </div>
