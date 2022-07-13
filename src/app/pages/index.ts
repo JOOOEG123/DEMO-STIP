@@ -139,6 +139,15 @@ export const pagesRoutes = [
     },
   },
 
+  {
+    path: 'browse-archive',
+    component: BrowseArchiveComponent,
+    canActivate: [AngularFireAuthGuard, AuthGuard],
+    data: {
+      title: 'browse-archive',
+    },
+  },
+
 ];
 
 export const adminRoutes = [
