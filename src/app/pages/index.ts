@@ -19,6 +19,7 @@ import { UploadComponent } from './requestForms/upload/upload.component';
 
 import { EditAccountComponent } from './account/edit-account/edit-account.component';
 import { AuthGuard } from '../core/services/auth-guard.service';
+import { ModifyRequestComponent } from './requestForms/upload/modifyRequest/modify-request/modify-request.component';
 
 // AuthGuard pipe for admin pages
 const adminOnly = () =>
@@ -129,6 +130,15 @@ export const pagesRoutes = [
     },
   },
 
+  {
+    path: 'modifyRequest',
+    component: ModifyRequestComponent,
+    canActivate: [AngularFireAuthGuard, AuthGuard],
+    data: {
+      title: 'modifyRequest',
+    },
+  },
+
 ];
 
 export const adminRoutes = [
@@ -139,3 +149,5 @@ export const adminRoutes = [
     data: { authGuardPipe: adminOnly, title: 'Approval' },
   },
 ];
+
+
