@@ -76,6 +76,5 @@ export class HomepageComponent implements OnInit {
     this.router.navigate(['/browse/main'], {
       queryParams: { searchTerm: this.searchTerm },
     });
-    // this.router.navigate(['search/' + this.searchTerm]);
   }
 }
