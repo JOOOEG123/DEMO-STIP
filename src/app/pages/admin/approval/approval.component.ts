@@ -9,13 +9,16 @@ import {
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ObjectUnsubscribedError, Subscription } from 'rxjs';
+import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
 import {
   Categories,
   CategoryList,
   Contribution,
   ContributionJson,
+  ContributionSchema,
   Publish,
+  Rightist,
 } from 'src/app/core/types/adminpage.types';
 import { ContributionComponent } from '../contribution/contribution.component';
 
@@ -67,11 +70,12 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   constructor(
     private modalService: BsModalService,
-    private contributionAPI: ContributionsService
+    private contributionAPI: ContributionsService,
+    private archiveAPI: ArchieveApiService
   ) {}
 
   ngOnInit(): void { 
-    this.subcription = this.contributionAPI.fetchAllContribution().subscribe((data: any) => {
+    this.subcription = this.contributionAPI.fetchAllContributions().subscribe((data: any) => {
       
       this.contributions.length = 0
       this.newContributions.length = 0
@@ -86,8 +90,12 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         }
       }
       
+      this.contributions.sort(function(a, b) {
+        return b.lastUpdatedAt.getTime() - a.lastUpdatedAt.getTime()
+      })
+
       console.log(this.contributions)
-    
+
       for (let contribution of  this.contributions) {
 
         let data: Contribution = {
@@ -127,7 +135,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       (c) => c.contributionId == contribution.contributionId
     );
     this.selectedContribution = this.newContributions[index];
-    this.selectedContribution.state = 'removed';
+    this.selectedContribution.state = 'removed';    
   }
 
   onReject(contribution: Contribution) {
@@ -162,15 +170,31 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   animationDone(event: AnimationEvent) {
     this.disabled = false
-    if (this.selectedContribution) {
-      let contributorId = 
-        this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1]
-      console.log(contributorId)
-      console.log(this.selectedContribution.contributionId)
-      this.contributionAPI.updateContributionByPublish(
-        contributorId,
-        this.selectedContribution.contributionId, 
-        this.publish)
+
+    if (this.selectedContribution && this.selectedContribution.state === 'removed') {
+      // update the current timestamp
+      this.selectedContribution.lastUpdatedAt = new Date()
+
+      if (this.selectedContribution.rightist) {
+        let contributorId = 
+          this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1]
+        this.selectedContribution.publish = this.publish
+
+        const {state, rightist, ...result} = this.selectedContribution
+        result.rightistId = rightist.rightistId
+
+        if (this.publish === 'approved') {
+          result.approvedAt = new Date()
+          this.archiveAPI.addNewArchieve(rightist).then(data => console.log(data))
+        }
+    
+        this.contributionAPI.updateUserContribution(
+          contributorId,
+          this.selectedContribution.contributionId,
+          result)
+  
+        this.selectedContribution.state = 'void'
+      }
     }
   }
 

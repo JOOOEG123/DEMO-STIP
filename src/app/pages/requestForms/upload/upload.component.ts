@@ -25,8 +25,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     return this._contribution;
   }
   set contribution(contribution: Contribution) {
-    this.mapForm(contribution.rightist);
-    this._contribution = contribution;
+    if (contribution.rightist) {
+      this.mapForm(contribution.rightist);
+      this._contribution = contribution;
+    }  
   }
 
   @Input() page?: string;
@@ -237,7 +239,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     if (this.page === 'contribution') {
       console.log(this.contribution)
       if (this.contribution) {
-        if (this.contribution?.contributionId) {
+        if (this.contribution.contributionId && this.contribution.rightist) {
           const rightist: Rightist = this.contribution.rightist
           this.form = new FormGroup({
             name: new FormControl(rightist.lastName + ' ' + rightist.firstName, Validators.required),
@@ -349,6 +351,7 @@ export class UploadComponent implements OnInit, OnDestroy {
         contributedAt: new Date(),
         rightistId: rightistId,
         approvedAt: new Date(), // update model with An.
+        lastUpdatedAt: new Date(),
         publish: 'new',
         rightist: {
           rightistId: rightistId,
