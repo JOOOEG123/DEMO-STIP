@@ -26,6 +26,9 @@ export class UploadComponent implements OnInit {
   //image url
   url = '';
 
+  minDate: Date = new Date('1850-01-01');
+  maxDate: Date = new Date('1960-01-01');
+
   onApprove() {
     if (this.contribution) {
       this.approve.emit({...this.contribution})
