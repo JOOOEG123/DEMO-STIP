@@ -96,15 +96,15 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   
         data.contributedAt = new Date(contribution.contributedAt)
 
-        if (contribution.rightist.publish == 'new') {
+        if (contribution.publish == 'new') {
           this.newContributions.push(data)
         }
 
-        if (contribution.rightist.publish == 'approved') {
+        if (contribution.publish == 'approved') {
           this.approvedContributions.push(data)
         }
 
-        if (contribution.rightist.publish == 'rejected') {
+        if (contribution.publish == 'rejected') {
           this.rejectedContributions.push(data)
         }
       }

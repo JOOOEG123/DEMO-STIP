@@ -1,5 +1,5 @@
-
-    <div class="col-4 border border-2">
+<div class="row">
+        <div class="col-4">
                
             <div class="card-body ms-5">
                 <h4 class="card-title fw-bold">
@@ -15,10 +15,10 @@
                 Gender: <span class='fw-bold text-capitalize'>{{ contribution.rightist.gender ? contribution.rightist.gender : '-' }}</span>
                 </p>
             </div>
+        </div>
+  
 
-    </div>
-
-    <div class="col-6 d-flex flex-column align-items-start justify-content-center border border-3">
+    <div class="col-6 d-flex flex-column align-items-start justify-content-center">
         <div *ngFor="let event of contribution.rightist.events">
         <span>In {{ event.startYear }}, {{ event.event }}</span>
         </div>
@@ -71,3 +71,4 @@
         <span class="pencil-icon text-warning">&#8634;</span>
         </button>
     </div>
+</div>
