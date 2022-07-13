@@ -35,9 +35,6 @@ export class ContributionsService {
       .valueChanges();
   }
 
-  // private callAPI() {
-  //   return this.store.doc<any>(`contributions/${this.uid}`);
-  // }
   fetchUserContributions() {
     return this.callAPI_List().valueChanges();
   }
@@ -48,8 +45,6 @@ export class ContributionsService {
   }
 
   addUserContributions(obj: ContributionSchema) {
-    console.log(this.auth.uid);
-    // console.log('gok', this.auth.getUserDetails())
     const st = this.callAPI();
     const contributionId = UUID();
     obj.contributionId = contributionId;
