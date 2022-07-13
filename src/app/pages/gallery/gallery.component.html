@@ -1,5 +1,5 @@
 <div class="container">
-  <h2 class="text-center my-4 fw-bold">Gallery</h2>
+  <h2 class="text-center my-4 fw-bold">{{ title }}</h2>
 
   <div class="d-flex justify-content-center flex-wrap">
     <div *ngFor="let gallery of galleries" class="p-2 mx-4">
@@ -47,7 +47,7 @@
           [ngStyle]="{ opacity: currentImageIndex == i ? '1.0' : '0.0' }"
           (blur)="onLeave()"
         >
-          LEARN MORE
+          {{ imageButton }}
         </button>
       </div>
     </div>
