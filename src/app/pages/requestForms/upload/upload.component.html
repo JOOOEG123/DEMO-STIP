@@ -45,6 +45,13 @@
           placeholder="Year"
           autocomplete="off"
           formControlName="birthYear"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          [bsConfig]="{
+            containerClass: 'theme-red',
+            minMode: 'year',
+            rangeInputFormat: 'YYYY'
+          }"
         />
       </div>
       <!-- col for occupation -->
@@ -62,22 +69,24 @@
       <!-- col for year of event -->
       <div class="col">
         <label for="Year" class="form-label"
-          >Rightist Year <span class="text-danger">*</span></label
+          >Year of becoming a "Rightist"<span class="text-danger">*</span></label
         >
         <!-- year selector -->
         <input
-          [bsConfig]="{
-            startView: 'year',
-            minMode: 'year',
-            dateInputFormat: 'YYYY',
-            showClearButton: true
-          }"
-          bsDatepicker
-          class="form-control"
-          placeholder="Year"
-          autocomplete="off"
-          formControlName="rightestYear"
-        />
+            type="text"
+            id="year-of-becoming-rightest"
+            formControlName="date"
+            placeholder="YYYY-YYYY"
+            class="form-control form-control-sm"
+            bsDaterangepicker
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [bsConfig]="{
+              containerClass: 'theme-red',
+              minMode: 'year',
+              rangeInputFormat: 'YYYY'
+            }"
+          />
       </div>
     </div>
 

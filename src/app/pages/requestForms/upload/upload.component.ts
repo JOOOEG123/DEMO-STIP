@@ -28,6 +28,7 @@ export class UploadComponent implements OnInit {
 
   minDate: Date = new Date('1850-01-01');
   maxDate: Date = new Date('1960-01-01');
+  minDate2: Date = new Date('1950-01-01');
 
   onApprove() {
     if (this.contribution) {
