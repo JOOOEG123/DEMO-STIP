@@ -6,7 +6,20 @@
     <button class="btn border border-start-0 bg-white rounded-start rounded-pill" type="button" (click)="searchBar()">
       <img src="assets/global/search.svg" alt="" width="20" />
     </button>
+    <a class="align-self-center" type="button" tooltip="What to search for?
+    - Search for first name 
+    and/or last name
+    - Year of birth 
+    - Year of death
+    - “Rightist” year
+    - Chinese Ethnic Group
+    - Occupation
+    - Gender" data-bs-toggle="tooltip" data-bs-placement="right">
+      <img src="assets/browsepage/question-mark.svg" alt="" width="20" />
+
+    </a>
   </div>
+
 </div>
 
 <div class="row justify-content-center" style="background-color: rgb(12, 19, 48)">
@@ -22,7 +35,7 @@
       <div class="d-flex">
         <!-- <div class="row mb-2 mx-2 row-col-auto"> -->
         <div class="me-auto p-2 text-light text-nowrap">
-          Search Results {{ this.db_result.length }}
+          Search Results {{ this.db_result?.length || 0 }}
         </div>
 
         <div class="col-auto flex-shrink-0">
@@ -60,55 +73,47 @@
 
       <!-- display search results -->
       <app-stip-spinner [isLoading]="isloading"></app-stip-spinner>
+      <div *ngIf="!isloading">
+        <div *ngIf="curView === 'List'; else elseBlock">
+          <div *ngIf="display.length; else elseEmptyBlock">
+            <a class="d-flex m-3" style="
+                height: 150px;
+                border-radius: 28px;
+                color: black;
+                text-decoration: none;
+                background-color: white;
+              " name="searchLayout" routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
+              ariaCurrentWhenActive="page" *ngFor="let result of display; let i=index">
+              <div class="m-3">{{(i+1)+ (currentPage-1) * itemsPerPage}}</div>
 
-      <div *ngIf="curView === 'List'; else elseBlock">
-        <div *ngIf="display.length; else elseEmptyBlock">
-
-          <!-- <div class="position-relative" *ngIf="letterLableChange(result) == true as value">
-              <img src="assets\browsepage\tempprofile.png" class="rounded-circle border border-dark" width="20" />
-              <span class="fw-bolder position-absolute movem bg-light">
-                {{currentLetter}}
-                {{value}}
-
-                {{result.initial}}
-              </span>
-            </div> -->
-
-          <a class="d-flex m-3" style="
-              height: 150px;
-              border-radius: 28px;
-              color: black;
-              text-decoration: none;
-              background-color: white;
-            " name="searchLayout" routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
-            ariaCurrentWhenActive="page" *ngFor="let result of display; let i=index">
-            <div class="m-3">{{(i+1)+ (currentPage-1) * itemsPerPage}}</div>
-
-            <div class="m-3 col-3 text-capitalize">
-              <div class="text-start fw-bold">
-                {{ result.firstName +" "+result.lastName }}
+              <div class="m-3 col-3 text-capitalize">
+                <div class="text-start fw-bold">
+                  {{ result.firstName +" "+result.lastName }}
+                </div>
+                <div class="text-start">Occupation: {{ result.job || "-"}}</div>
+                <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
+                <div class="text-start">Gender: {{ result.gender || "-"}}</div>
               </div>
-              <div class="text-start">Occupation: {{ result.job || "-"}}</div>
-              <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
-              <div class="text-start">Gender: {{ result.gender || "-"}}</div>
-            </div>
-            <div class="text-start col-6 m-3">{{ result.description }}</div>
-            <div class="col align-self-end fw-bold">read more ></div>
-          </a>
+              <div class="text-start col-6 m-3">{{ result.description }}</div>
+              <div class="col align-self-end fw-bold">read more ></div>
+            </a>
 
-        </div>
-
-        <ng-template #elseEmptyBlock>
-          <div *ngIf="isloading == false" class="bg-light">
-            No record has been found.
           </div>
-        </ng-template>
+
+          <ng-template #elseEmptyBlock>
+            <div *ngIf="isloading == false" class="bg-light">
+              No record has been found.
+            </div>
+          </ng-template>
+        </div>
       </div>
 
       <ng-template #elseBlock>
         <div *ngIf="display.length; else elseEmptyBlock">
-          <div class="d-flex" name="searchLayout" *ngFor="let results of display | UpdateRows: 5 ; let i = index">
-            <div class="card d-flex flex-column m-3" style="flex: 1; border-radius: 28px; background-color: #dbdde2"
+          <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" name=" searchLayout"
+            *ngFor="let results of display | UpdateRows: 5 ; let i = index">
+
+            <div class="py-5 col" style="border-radius: 28px; background-color: #dbdde2; max-width: 25%;"
               *ngFor="let result of results; let j= index">
               <a routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
                 ariaCurrentWhenActive="page" style="color: black; text-decoration: none">
@@ -125,6 +130,7 @@
                 </div>
               </a>
             </div>
+
           </div>
         </div>
         <ng-template #elseEmptyBlock>
@@ -138,9 +144,10 @@
 
       <div class="d-flex flex-row-reverse">
         <nav aria-label="Page navigation">
-          <pagination class=" my-pagination" [rotate]="true" [totalItems]="db_result.length" [boundaryLinks]="true"
-            [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
-            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="10">
+          <pagination class=" my-pagination" [rotate]="true" [totalItems]="db_result?.length || 0"
+            [boundaryLinks]="true" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage"
+            (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+            lastText="&raquo;" [maxSize]="10">
           </pagination>
         </nav>
 

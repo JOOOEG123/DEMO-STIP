@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 
 @Component({
@@ -11,9 +11,16 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 })
 export class HomepageComponent implements OnInit {
   data$: any;
-  constructor(private arch: ArchieveApiService, private func: AngularFireFunctions, private router: Router, private customApi: AngularFireFunctions, private http: HttpClient) {}
+  constructor(
+    private arch: ArchieveApiService,
+    private func: AngularFireFunctions,
+    private router: Router,
+    private route: ActivatedRoute,
+    private customApi: AngularFireFunctions,
+    private http: HttpClient
+  ) {}
   searchTerm: string = '';
-  transPath = 'home'
+  transPath = 'homepage.component.';
 
   fakeProfile = [
     {
@@ -42,27 +49,32 @@ export class HomepageComponent implements OnInit {
     // this.data$ = callable({ name: 'John' });
     // this.data$.subscribe((result: any) => console.log(result));
 
-  //   this.http.get('https://us-central1-stip-demo.cloudfunctions.net/app/allArchies', {}).subscribe((result: any) => {
-  //     console.log(result);
-  //     result.data.forEach((item: any) => {
-  //       console.log(item);
-  //     }
-  //     );
-  // })
-  this.func.httpsCallable('add')({respo: ''}).subscribe((result: any) => {
-    console.log(result);
-    // result.data.forEach((item: any) => {
-    //   console.log(item);
+    //   this.http.get('https://us-central1-stip-demo.cloudfunctions.net/app/allArchies', {}).subscribe((result: any) => {
+    //     console.log(result);
+    //     result.data.forEach((item: any) => {
+    //       console.log(item);
+    //     }
+    //     );
     // })
-  })
+    this.func
+      .httpsCallable('add')({ respo: '' })
+      .subscribe((result: any) => {
+        console.log(result);
+        // result.data.forEach((item: any) => {
+        //   console.log(item);
+        // })
+      });
   }
 
-  onKey(event: any) {
-    this.searchTerm = (event.target as HTMLInputElement).value;
-  }
+  // onKey(event: any) {
+  //   this.searchTerm = (event.target as HTMLInputElement).value;
+  // }
 
   searchArchives() {
     console.log(this.searchTerm);
-    // this.router.navigate(["search/" + this.searchTerm]);
+
+    this.router.navigate(['/browse/main'], {
+      queryParams: { searchTerm: this.searchTerm },
+    });
   }
 }
