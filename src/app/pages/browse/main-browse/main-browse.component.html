@@ -107,8 +107,10 @@
 
       <ng-template #elseBlock>
         <div *ngIf="display.length; else elseEmptyBlock">
-          <div class="d-flex" name="searchLayout" *ngFor="let results of display | UpdateRows: 5 ; let i = index">
-            <div class="card d-flex flex-column m-3" style="flex: 1; border-radius: 28px; background-color: #dbdde2"
+          <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" name=" searchLayout"
+            *ngFor="let results of display | UpdateRows: 5 ; let i = index">
+
+            <div class="py-5 col" style="border-radius: 28px; background-color: #dbdde2; max-width: 25%;"
               *ngFor="let result of results; let j= index">
               <a routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
                 ariaCurrentWhenActive="page" style="color: black; text-decoration: none">
@@ -125,6 +127,7 @@
                 </div>
               </a>
             </div>
+
           </div>
         </div>
         <ng-template #elseEmptyBlock>
