@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -18,7 +18,7 @@ import { UUID } from 'src/app/core/utils/uuid';
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss'],
 })
-export class UploadComponent implements OnInit {
+export class UploadComponent implements OnInit, OnDestroy {
   private _contribution!: Contribution;
   contributionId!: string;
   @Input() get contribution() {
@@ -229,11 +229,13 @@ export class UploadComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
+  ngOnDestroy(): void {
+    this.sub.forEach((sub) => sub.unsubscribe());
+  }
+
   ngOnInit(): void {
-    console.log(this.contribution);
     this.sub.push(
       this.activatedRoute.queryParams.subscribe((params) => {
-        console.log(params);
         this.contributionId = params['contributionId'];
         if (this.contributionId) {
           this.sub.push(
@@ -241,7 +243,6 @@ export class UploadComponent implements OnInit {
               .fetchContributorByContributionId(this.contributionId)
               .subscribe((contributor: any) => {
                 this.contribution = contributor;
-                console.log(this.contribution);
                 this.mapForm(contributor.rightist);
               })
           );
@@ -297,7 +298,6 @@ export class UploadComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value, this.form2.value);
     const {
       name,
       gender,
