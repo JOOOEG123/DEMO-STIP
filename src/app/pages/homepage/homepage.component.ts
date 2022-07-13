@@ -20,7 +20,7 @@ export class HomepageComponent implements OnInit {
     private http: HttpClient
   ) {}
   searchTerm: string = '';
-  transPath = 'home';
+  transPath = 'homepage.component.';
 
   fakeProfile = [
     {
@@ -68,7 +68,6 @@ export class HomepageComponent implements OnInit {
 
   // onKey(event: any) {
   //   this.searchTerm = (event.target as HTMLInputElement).value;
-  // console.log()
   // }
 
   searchArchives() {
