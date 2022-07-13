@@ -302,12 +302,13 @@ export class UploadComponent implements OnInit, OnDestroy {
       name,
       gender,
       status,
-      enthic,
+      ethnic,
       rightestYear,
       occupation,
       birthYear,
     } = this.form.value;
     const { content } = this.form2.value;
+
     const contributionId = this.contributionId || UUID();
     const rightistId =
       this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
@@ -318,6 +319,7 @@ export class UploadComponent implements OnInit, OnDestroy {
         contributedAt: new Date(),
         rightistId: rightistId,
         approvedAt: new Date(), // update model with An.
+        publish: 'new',
         rightist: {
           rightistId: rightistId,
           imagePath: [this.url], // Price said he will work on this.
@@ -329,8 +331,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           deathYear: 0,
           rightistYear: rightestYear,
           status: status || 'Unknown',
-          ethnicity: enthic || '',
-          publish: 'new',
+          ethnicity: ethnic || '',
           job: occupation,
           detailJob: '',
           workplace: '',
@@ -345,5 +346,5 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.clear2();
         this.route.navigateByUrl('/account');
       });
-  }
+    }
 }

@@ -45,8 +45,7 @@ export interface RightistSchema {
   deathYear: number;
   rightistYear: number;
   status: Status,
-  ethnicity: Ethnicity
-  publish: string,
+  ethnicity: Ethnicity,
   job: string,
   detailJob: string,
   workplace: string,
