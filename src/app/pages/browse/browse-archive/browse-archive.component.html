@@ -1,48 +1,101 @@
 <div class="container-fluid bg-dark">
-
-  <div class=" d-flex ">
-    <div class=" flex-column align-items-center flex-shrink-1">
+  <div class="d-flex">
+    <div class="flex-column align-items-center flex-shrink-1">
       <figure>
-        <img src="assets\browsepage\tempprofile.png" class="img-fluid rounded-circle mx-5">
-        <figcaption class="text-light">ID: {{id}} </figcaption>
+        <img
+          src="assets\browsepage\tempprofile.png"
+          class="img-fluid rounded-circle mx-5"
+        />
+        <figcaption class="text-light">ID: {{ id }}</figcaption>
       </figure>
     </div>
-    <div class="d-flex flex-column align-self-center text-light flex-fill" style="height: 100%;">
-
+    <div
+      class="d-flex flex-column align-self-center text-light flex-fill"
+      style="height: 100%"
+    >
       <div class="fs-1">{{ profile.firstName }} {{ profile.lastName }}</div>
-      <div class=" pb-3">{{ profile.detailJob }}</div>
-
+      <div class="pb-3">{{ profile.detailJob }}</div>
     </div>
   </div>
 
   <!-- Request to modify button and modal -->
   <div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
       Request to modify
     </button>
-    
+
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabel">Modification request form</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h4 class="modal-title" id="exampleModalLabel">
+              Modification request form
+            </h4>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
-            <br>
-            <h5>Modification request</h5>
-            <textarea class="form-control" rows="5" placeholder="What are your requesting to modify?"></textarea>
-            <br><br>
-            <h5>Reasoning behind the request</h5>
-            <textarea class="form-control" rows="5" placeholder="Why should this file be modified?"></textarea>
-            <br><br>
+            <br />
+            <h5>Modification request <span style="color: #ff0000">*</span></h5>
+            <textarea
+              class="form-control"
+              rows="7"
+              placeholder="What are your requesting to modify?"
+            ></textarea>
+            <br />
+            <div align="right">
+              <button class="btn btn-dark pull-right">Clear entry</button>
+            </div>
+
+            <br /><br />
+            <h5>
+              Reasoning behind the request <span style="color: #ff0000">*</span>
+            </h5>
+            <textarea
+              class="form-control"
+              rows="7"
+              placeholder="Why should this file be modified?"
+            ></textarea>
+            <br />
+            <div align="right">
+              <button class="btn btn-dark pull-right">Clear entry</button>
+            </div>
+            <br /><br />
             <h5>Email</h5>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="What email can we contact you at in regards to this request?">
+            <input
+              type="email"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder="What email can we contact you at in regards to this request?"
+            />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Submit request</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-primary">
+              Submit request
+            </button>
           </div>
         </div>
       </div>
@@ -50,56 +103,99 @@
   </div>
 </div>
 
-<div class="container-fluid ">
-  <div class="row ">
-    <div class="col-2 ">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
       <div class="col align-self-end">
         <ul class="list-group sticky-sm-top">
-          <li class="list-group-item border-0 " style="background-color: #E8E8E8;">
-            <label class="border-bottom border-dark fw-bold"> Gallery&emsp;</label>
+          <li
+            class="list-group-item border-0"
+            style="background-color: #e8e8e8"
+          >
+            <label class="border-bottom border-dark fw-bold">
+              Gallery&emsp;</label
+            >
           </li>
-
         </ul>
       </div>
     </div>
 
-
     <div class="col-7 border-start">
-      <button type="button" class="btn btn-light share" data-bs-toggle="modal" data-bs-target="#shareModal">
-        <img src="../../../../assets/browsepage/share.svg">
+      <button
+        type="button"
+        class="btn btn-light share"
+        data-bs-toggle="modal"
+        data-bs-target="#shareModal"
+      >
+        <img src="../../../../assets/browsepage/share.svg" />
       </button>
 
       <!-- Modal -->
-      <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+      <div
+        class="modal fade"
+        id="shareModal"
+        tabindex="-1"
+        aria-labelledby="shareModalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Share file</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-body">
               <div>
                 <p>Copy Link</p>
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="basic-addon1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-link-45deg" viewBox="0 0 16 16">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-link-45deg"
+                      viewBox="0 0 16 16"
+                    >
                       <path
-                        d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
+                        d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"
+                      />
                       <path
-                        d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z" />
+                        d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"
+                      />
                     </svg>
                   </span>
-                  <input type="text" class="form-control" placeholder="URL" aria-label="URL"
-                    aria-describedby="basic-addon1" value={{url}} readonly #inputTarget />
-                  <button class="btn btn-outline-secondary" type="button" [ngxClipboard]="inputTarget"
-                    (click)="copyURL()">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="URL"
+                    aria-label="URL"
+                    aria-describedby="basic-addon1"
+                    value="{{ url }}"
+                    readonly
+                    #inputTarget
+                  />
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    [ngxClipboard]="inputTarget"
+                    (click)="copyURL()"
+                  >
                     Copy
                   </button>
                 </div>
                 <br />
                 <div style="padding-bottom: 10px"></div>
-                <a (click)="SavePDF('infoContent')" class="btn btn-light border-khaki">Download</a>
+                <a
+                  (click)="SavePDF('infoContent')"
+                  class="btn btn-light border-khaki"
+                  >Download</a
+                >
               </div>
             </div>
           </div>
@@ -109,16 +205,25 @@
         <div class="row border-bottom">
           <div class="col-12">
             <label class="fw-bold"> Detail Information:&emsp;</label>
-
           </div>
           <div class="col-12 col-md-6 row mt-2">
-            <div class="col-12 py-2">First Name: {{ profile.firstName|| "-"}}</div>
-            <div class="col-12 py-2">Last Name: {{ profile.lastName || "-"}}</div>
-            <div class="col-12 py-2">Ethic Group:{{profile.ethnicity || "-"}}</div>
-            <div class="col-12 py-2">Education:{{profile.education|| "-"}}</div>
+            <div class="col-12 py-2">
+              First Name: {{ profile.firstName || "-" }}
+            </div>
+            <div class="col-12 py-2">
+              Last Name: {{ profile.lastName || "-" }}
+            </div>
+            <div class="col-12 py-2">
+              Ethic Group:{{ profile.ethnicity || "-" }}
+            </div>
+            <div class="col-12 py-2">
+              Education:{{ profile.education || "-" }}
+            </div>
           </div>
           <div class="col-12 col-md-6 row mt-2">
-            <div class="col-12 py-2">Occupation: {{profile.detailJob|| "-"}}</div>
+            <div class="col-12 py-2">
+              Occupation: {{ profile.detailJob || "-" }}
+            </div>
             <div class="col-12 py-2">
               Year of Birth: {{ profile.birthYear || "-" }}
             </div>
@@ -131,11 +236,10 @@
           </div>
         </div>
 
-
         <div class="card-body">
           <p class="h6 fw-bold">Description/Timeline:</p>
           <p>{{ profile.description || "-" }}</p>
-          <p *ngFor="let event of profile.events">{{event.event || "-"}}</p>
+          <p *ngFor="let event of profile.events">{{ event.event || "-" }}</p>
         </div>
       </div>
 
@@ -143,38 +247,62 @@
         <div class="d-flex bd-highlight bg-light ps-2">
           <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">Memior</h6>
           <div class="bd-highlight">
-            <button class="btn" type="button" [attr.aria-expanded]="!drop" aria-controls="collapseBasic"
-              (click)="updateCollapse()">
-              <img src="/assets/filters/collapse-{{ drop ? 'minus' : 'plus' }}.svg" alt="filter" width="20" />
-              <span class="visually-hidden">click to {{ drop ? "collapse" : "expand" }}</span>
+            <button
+              class="btn"
+              type="button"
+              [attr.aria-expanded]="!drop"
+              aria-controls="collapseBasic"
+              (click)="updateCollapse()"
+            >
+              <img
+                src="/assets/filters/collapse-{{ drop ? 'minus' : 'plus' }}.svg"
+                alt="filter"
+                width="20"
+              />
+              <span class="visually-hidden"
+                >click to {{ drop ? "collapse" : "expand" }}</span
+              >
             </button>
           </div>
         </div>
 
-        <div class="bg-white" id="collapseBasic" [collapse]="drop" [isAnimated]="true">
+        <div
+          class="bg-white"
+          id="collapseBasic"
+          [collapse]="drop"
+          [isAnimated]="true"
+        >
           <div class="card scrollable">
-            <div class="card-body " id="memContent" #memContent *ngFor=" let memoir of profile.memoirs">
-              <div class="card-text limit-content" *ngFor="let d of memoir.memoir ; let i = index">
-                <div *ngIf="i < 10"> {{d || "-"}} </div>
+            <div
+              class="card-body"
+              id="memContent"
+              #memContent
+              *ngFor="let memoir of profile.memoirs"
+            >
+              <div
+                class="card-text limit-content"
+                *ngFor="let d of memoir.memoir; let i = index"
+              >
+                <div *ngIf="i < 10">{{ d || "-" }}</div>
               </div>
-              <div class="card-body" style="background-color: rgb(208,208,208);">
-                You reached the max content view.
-                To read more, download
-                the full PDF.
+              <div
+                class="card-body"
+                style="background-color: rgb(208, 208, 208)"
+              >
+                You reached the max content view. To read more, download the
+                full PDF.
               </div>
-
-
             </div>
-            <a (click)="SavePDF('memoirContent')" class="btn btn-light border-khaki">Memoir PDF Link</a>
+            <a
+              (click)="SavePDF('memoirContent')"
+              class="btn btn-light border-khaki"
+              >Memoir PDF Link</a
+            >
           </div>
 
-
-
-          <div>
-          </div>
-
-
+          <div></div>
         </div>
-
       </div>
     </div>
+  </div>
+</div>
