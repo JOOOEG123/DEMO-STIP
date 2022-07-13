@@ -1,6 +1,8 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { NgxMasonryOptions } from 'ngx-masonry';
+import { Subscription } from 'rxjs';
 
 interface Image {
   src: string;
@@ -14,17 +16,13 @@ interface Image {
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss'],
 })
-export class GalleryComponent implements OnInit {
+export class GalleryComponent implements OnInit, OnDestroy {
   selectedCategory?: string;
   currentImageIndex?: number;
 
-  galleries: Array<string> = [
-    'All',
-    'Artifacts',
-    'Camps',
-    'People',
-    'Album Name',
-  ];
+  title?: string
+  galleries: string[] = []
+  imageButton?: string
 
   public masonryOptions: NgxMasonryOptions = {
     gutter: 20,
@@ -99,6 +97,8 @@ export class GalleryComponent implements OnInit {
     },
   ];
 
+  translationSubscription?: Subscription
+
   currentPage?: number;
   showBoundaryLinks: boolean = true;
   itemsPerPage: number = 5;
@@ -106,14 +106,32 @@ export class GalleryComponent implements OnInit {
 
   @ViewChild('image') imageRef?: ElementRef;
 
-  constructor() {
+  constructor(private translate: TranslateService) {
+    
+  }
+
+  ngOnInit(): void {
     this.selectedCategory = 'All';
     this.currentImageIndex = -1;
     this.currentPage = 1;
     this.display = this.images.slice(0, this.itemsPerPage);
+
+    this.translationSubscription = this.translate.stream('gallery').subscribe(data => {
+      this.galleries.length = 0
+
+      this.galleries.push(data['gallery_top_cat_one_button'])
+      this.galleries.push(data['gallery_top_cat_two_button'])
+      this.galleries.push(data['gallery_top_cat_three_button'])
+      this.galleries.push(data['gallery_top_cat_four_button'])
+      this.galleries.push(data['gallery_top_cat_five_button'])
+      this.title = data['gallery_top_title']
+      this.imageButton = data['gallery_image_button']
+    })
   }
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.translationSubscription?.unsubscribe()
+  }
 
   setActive(gallery: string) {
     this.selectedCategory = gallery;

@@ -13,7 +13,7 @@ export class HomepageComponent implements OnInit {
   data$: any;
   constructor(private arch: ArchieveApiService, private func: AngularFireFunctions, private router: Router, private customApi: AngularFireFunctions, private http: HttpClient) {}
   searchTerm: string = '';
-  transPath = 'homepage.component.'
+  transPath = 'home'
 
   fakeProfile = [
     {
