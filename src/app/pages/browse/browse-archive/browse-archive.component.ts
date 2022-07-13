@@ -9,7 +9,7 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
 import {
   FormControl,
-  FormGroup,
+  Validators,
 } from '@angular/forms';
 
 @Component({
@@ -96,8 +96,8 @@ export class BrowseArchiveComponent implements OnInit {
     this.drop = !this.drop;
   }
 
-  modify = new FormControl('');
-  reason = new FormControl('');
+  modify = new FormControl('', Validators.required);
+  reason = new FormControl('', Validators.required);
   clear(){
     this.modify.reset();
   }
