@@ -99,7 +99,7 @@ export interface ImageSchema {
 }
 
 export interface Image extends ImageSchema {
-
+  opacity: number
 }
 
 export interface ImageJson {

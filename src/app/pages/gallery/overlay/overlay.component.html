@@ -1,0 +1,12 @@
+<div class="container-fluid">
+    <button (click)="onClose()" class="btn btn-danger float-end">X</button>
+
+    <div>
+        <img [src]="this.image?.imagePath" width="70%" class="img-fluid mx-auto my-4 d-block" />
+    </div>    
+    <div>
+        <p class="display-6"><span class="fw-bold">Title: </span>{{this.image?.galleryTitle}}</p>
+        <p class="display-6"><span class="fw-bold">Detail: </span>{{this.image?.galleryDetail}}</p>
+        <p class="display-6"><span class="fw-bold">Source: </span>{{this.image?.gallerySource}}</p>
+    </div>
+</div>

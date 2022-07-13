@@ -1,15 +1,11 @@
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { NgxMasonryOptions } from 'ngx-masonry';
 import { Subscription } from 'rxjs';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Image } from 'src/app/core/types/adminpage.types';
 
-interface Image {
-  src: string;
-  title: string;
-  description: string;
-  opacity: number;
-}
 
 @Component({
   selector: 'app-gallery',
@@ -19,6 +15,8 @@ interface Image {
 export class GalleryComponent implements OnInit, OnDestroy {
   selectedCategory?: string;
   currentImageIndex?: number;
+  modalRef?: BsModalRef;
+  selectedImage?: Image;
 
   title?: string
   galleries: string[] = []
@@ -30,70 +28,114 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   images: Array<Image> = [
     {
-      src: 'assets/gallery/historical_1.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_1.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_2.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_2.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_3.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_3.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_4.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_4.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_5.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_5.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_6.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_6.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_7.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_7.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_8.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_8.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_9.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_9.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_10.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_10.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
     {
-      src: 'assets/gallery/historical_11.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
+      imageId: 'image1',
+      rightistId: 'A101',
+      imagePath: 'assets/gallery/historical_11.jpg',
+      isGallery: true,
+      galleryTitle: 'Some Title',
+      galleryDetail: 'Some Detail',
+      gallerySource: 'Some Source',
+      opacity: 100
     },
   ];
 
@@ -106,11 +148,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   @ViewChild('image') imageRef?: ElementRef;
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, private modalService: BsModalService) {
     
   }
 
   ngOnInit(): void {
+
     this.selectedCategory = 'All';
     this.currentImageIndex = -1;
     this.currentPage = 1;
@@ -152,5 +195,16 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.display = this.images.slice(start, end);
     window.scroll(0, 0)
     this.imageRef?.nativeElement.focus()
+  }
+
+  onLearnMore(template: TemplateRef<any>, image: Image) {
+    this.selectedImage = image
+    this.modalRef = this.modalService.show(template, { class: 'modal-xl', backdrop: 'static'})
+  }
+
+  onClose(value: string) {
+    if (value == 'close') {
+      this.modalService.hide()
+    }
   }
 }

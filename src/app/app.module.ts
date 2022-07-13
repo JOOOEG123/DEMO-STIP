@@ -52,6 +52,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LangInterceptor } from './core/interceptors/lang.interceptor';
+import { OverlayComponent } from './pages/gallery/overlay/overlay.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -68,6 +69,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MemoirComponent,
     EditAccountComponent,
     UploadComponent,
+    OverlayComponent,
   ],
   imports: [
     AngularFireAuthModule,
