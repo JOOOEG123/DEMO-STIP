@@ -6,7 +6,6 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { ClipboardService } from 'ngx-clipboard';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
-import { bootstrap } from 'angular';
 
 @Component({
   selector: 'app-browse-archive',
