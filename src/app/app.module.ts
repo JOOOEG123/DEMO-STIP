@@ -53,6 +53,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LangInterceptor } from './core/interceptors/lang.interceptor';
 import { OverlayComponent } from './pages/gallery/overlay/overlay.component';
+import { ContributionComponent } from './pages/admin/contribution/contribution.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -70,6 +71,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EditAccountComponent,
     UploadComponent,
     OverlayComponent,
+    ContributionComponent,
   ],
   imports: [
     AngularFireAuthModule,

@@ -1,0 +1,73 @@
+
+    <div class="col-4 border border-2">
+               
+            <div class="card-body ms-5">
+                <h4 class="card-title fw-bold">
+                {{ contribution.rightist.lastName }} {{ contribution.rightist.firstName }}
+                </h4>
+                <p class="card-text m-0">
+                Occupation: <span class="fw-bold text-capitalize">{{ contribution.rightist.job ? contribution.rightist.job : '-' }}</span>
+                </p>
+                <p class="card-text m-0">
+                Ethnic Group: <span class='fw-bold text-capitalize'>{{ contribution.rightist.ethnicity ? contribution.rightist.ethnicity : '-' }}</span>
+                </p>
+                <p class="card-text m-0">
+                Gender: <span class='fw-bold text-capitalize'>{{ contribution.rightist.gender ? contribution.rightist.gender : '-' }}</span>
+                </p>
+            </div>
+
+    </div>
+
+    <div class="col-6 d-flex flex-column align-items-start justify-content-center border border-3">
+        <div *ngFor="let event of contribution.rightist.events">
+        <span>In {{ event.startYear }}, {{ event.event }}</span>
+        </div>
+        <!-- <div *ngIf="contribution.rightist.events.length > limit">...</div>
+        <div class="align-self-end">
+        <button class="btn btn-transparent" (click)="onReadMore(readMoreTemplate, contribution)">
+            <span class="display-6">Read More...</span>
+        </button>
+        </div> -->
+    </div>
+
+    <div
+        class="col-lg-2 col-12 d-flex align-items-center flex-column justify-content-center">
+        <div class="my-2 text-center">
+        <p><i>
+            {{ contribution.contributedAt.getMonth() + 1 }}/{{ contribution.contributedAt.getDate()}}/{{ contribution.contributedAt.getFullYear()}}
+        </i></p>
+        </div>
+      
+        <div class="d-flex justify-content-center my-2">
+
+        <button
+        (click)="onApprove()"
+        class="btn btn-transparent mx-2"
+        *ngIf="activeCategory == 'New Contributions'"
+        >
+        <span class="check-icon">&checkmark;</span>
+        </button>
+
+        <button
+        (click)="onReject()"
+        class="btn btn-transparent mx-2"
+        *ngIf="activeCategory == 'New Contributions'"
+        >
+        <span class="cross-icon">&cross;</span>
+        </button>
+
+        <button 
+        class="btn btn-transparent mx-2"
+        *ngIf="activeCategory == 'Approved Contributions'"
+        >
+        <span class="pencil-icon text-warning">&#9998;</span>
+        </button>
+
+        <button 
+        (click)="onReconsider()" 
+        class="btn btn-transparent mx-2"
+        *ngIf="activeCategory == 'Rejected Contributions'"
+        >
+        <span class="pencil-icon text-warning">&#8634;</span>
+        </button>
+    </div>

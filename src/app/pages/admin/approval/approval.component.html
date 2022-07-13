@@ -1,8 +1,6 @@
 <div class="container-fluid px-0">
   <div class="display-1 text-center my-4">Public Contributions</div>
-  <!-- <pre>{{ selectedContributions | json }}</pre>
-  <pre>New: {{ newContributions | json }}</pre>
-  <pre>New: {{ approvedContributions | json }}</pre> -->
+
   <div class="container">
     <div class="d-flex flex-md-row flex-column justify-content-center">
       <button
@@ -43,6 +41,7 @@
 
       <!-- Categorized Contributions -->
     <div class="container">
+      
       <div
         class="row my-4 contribution-container border border-2"
         *ngFor="let contribution of selectedContributions"
@@ -55,19 +54,14 @@
         (@contributionAnimation.start)="animationStart($event)"
         (@contributionAnimation.done)="animationDone($event)"
       >
-        <div class="col-4">
-          <!-- <div class="card float-end w-75 h-100 border-0 d-flex align-items-center justify-content-center">
-            <div class="row no-gutters my-2"> -->
-              <!-- <div
-                class="col-md-6"
-              >
-                <img
-                  [src]="contribution.rightist.imagePath"
-                  class="card-img image-fluid w-75 rounded-pill"
-                  alt="..."
-                />
-              </div> -->
-              <!-- <div class="col-12"> -->
+        <div class="col-12 border border-3">
+          <app-contribution 
+          [contribution]="contribution" 
+          [activeCategory]="activeCategory"></app-contribution>
+        </div>
+        <!-- <div class="container">
+          <div class="col-4">
+            <div class="row no-gutters my-2">          
                 <div class="card-body ms-5">
                   <h4 class="card-title fw-bold">
                     {{ contribution.rightist.lastName }} {{ contribution.rightist.firstName }}
@@ -81,9 +75,9 @@
                   <p class="card-text m-0">
                     Gender: <span class='fw-bold text-capitalize'>{{ contribution.rightist.gender ? contribution.rightist.gender : '-' }}</span>
                   </p>
-                <!-- </div>
+                </div>
               </div>
-            </div> -->
+            </div>
           </div>
         </div>
         <div class="col-6 d-flex flex-column align-items-start justify-content-center">
@@ -141,6 +135,8 @@
           </button>
           </div>
         </div>
+        </div> -->
+        
       </div>
     </div>
   </div>

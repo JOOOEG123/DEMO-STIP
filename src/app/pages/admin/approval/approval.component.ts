@@ -15,8 +15,6 @@ import {
   CategoryList,
   Contribution,
   ContributionJson,
-  ContributionSchema,
-  OuterContributionJson,
   Publish,
 } from 'src/app/core/types/adminpage.types';
 
@@ -69,10 +67,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: BsModalService,
     private contributionAPI: ContributionsService
-  ) {
-    this.selectedContributions = this.newContributions;
-    this.activeCategory = 'New Contributions';
-  }
+  ) {}
 
   ngOnInit(): void { 
     this.subcription = this.contributionAPI.fetchAllContribution().subscribe((data: any) => {
@@ -83,14 +78,14 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.rejectedContributions.length = 0
       // this.contributions = data as any[]
       const test: ContributionJson[] = Object.values(data)
-
+      console.log(test)
       for (let lol of test) {
         for (const contribution of Object.values(lol)) {
           this.contributions.push(contribution)
         }
       }
       
-      // console.log(this.contributions)
+      console.log(this.contributions)
     
       for (let contribution of  this.contributions) {
 
@@ -101,19 +96,22 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   
         data.contributedAt = new Date(contribution.contributedAt)
 
-        if (contribution.publish == 'new') {
+        if (contribution.rightist.publish == 'new') {
           this.newContributions.push(data)
         }
 
-        if (contribution.publish == 'approved') {
+        if (contribution.rightist.publish == 'approved') {
           this.approvedContributions.push(data)
         }
 
-        if (contribution.publish == 'rejected') {
+        if (contribution.rightist.publish == 'rejected') {
           this.rejectedContributions.push(data)
         }
       }
     })
+
+    this.selectedContributions = this.newContributions;
+    this.activeCategory = 'New Contributions';
   }
 
   ngOnDestroy(): void {
@@ -155,7 +153,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   setActiveCategory(category: Categories) {
     this.activeCategory = category;
     this.selectedContributions = this.categories[this.activeCategory];
-    
   }
 
   animationStart(event: AnimationEvent) {
