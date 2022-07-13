@@ -50,11 +50,19 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   constructor(
     private archApi: ArchieveApiService,
+    private route: ActivatedRoute,
     private changeDetection: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.lettersBtnClickOrReset('All');
+    // this.lettersBtnClickOrReset('All');
+
+    this.route.queryParams.subscribe((params) => {
+      console.log(params['searchTerm']);
+      this.searchInput = params['searchTerm'] || '';
+      console.log('keyword', this.searchInput);
+      this.lettersBtnClickOrReset('All');
+    });
   }
   ngOnDestroy(): void {
     this.archSubAPI.forEach((sub) => sub.unsubscribe());
@@ -119,6 +127,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
           this.setDisplayInfo(this.itemsPerPage);
           this.setNonFilterData('filterPanel');
           this.setNonFilterData('searchBar');
+          if (this.searchInput) {
+            this.searchBar();
+          }
 
           this.isloading = false;
         });
@@ -135,6 +146,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         this.setNonFilterData('filterPanel');
         this.setNonFilterData('searchBar');
         this.isloading = false;
+        if (this.searchInput) {
+          this.searchBar();
+        }
         // });
       }
     }
@@ -144,7 +158,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   searchBar() {
-    this.browseSearchFilterComponent.clear();
+    this.browseSearchFilterComponent?.clear();
     const userValues = this.searchInput.split(' ');
 
     var db_attr = [
@@ -169,6 +183,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     ];
 
     this.getNonFilterData('searchBar');
+    // if (this.db_result) {
     this.db_result = this.db_result.filter((record: any): boolean => {
       return userValues.every((keyword) => {
         var res: boolean = false;
@@ -180,6 +195,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         return res;
       });
     });
+    // }
     if (!userValues.length) {
       this.getNonFilterData('searchBar');
     }
