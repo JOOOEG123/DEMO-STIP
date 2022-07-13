@@ -55,12 +55,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // this.lettersBtnClickOrReset('All');
-
     this.route.queryParams.subscribe((params) => {
-      console.log(params['searchTerm']);
       this.searchInput = params['searchTerm'] || '';
-      console.log('keyword', this.searchInput);
       this.lettersBtnClickOrReset('All');
     });
   }
@@ -255,7 +251,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         return element !== '';
       });
 
-      //console.log('uservalues', userValues);
       var containsAll =
         userValues.every((keyword) => {
           return this.containKeyword(values, keyword);
