@@ -4,6 +4,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 
 import { adminRoutes, pagesRoutes } from './pages';
+import { MainBrowseComponent } from './pages/browse/main-browse/main-browse.component';
 
 const routes: Routes = [
   {
@@ -30,10 +31,11 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'home',
   },
+  // { path: 'home', loadChildren: MainBrowseComponent, redirectTo: 'Archive' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: "top"})],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
