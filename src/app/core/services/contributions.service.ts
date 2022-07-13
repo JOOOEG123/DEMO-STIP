@@ -27,6 +27,14 @@ export class ContributionsService {
     );
   }
 
+  fetchContributorByContributionId(contId: string) {
+    return this.db
+      .object(
+        `/persons/requestArchieve/contributions/${this.auth.uid}/${contId}`
+      )
+      .valueChanges();
+  }
+
   // private callAPI() {
   //   return this.store.doc<any>(`contributions/${this.uid}`);
   // }
@@ -51,6 +59,14 @@ export class ContributionsService {
     return st.update({ [contributionId]: obj }).catch((e) => {
       return st.set({ [contributionId]: obj });
     });
+  }
+
+  contributionsAddEdit(obj: ContributionSchema) {
+    if (obj.contributionId) {
+      return this.editUserContributions(obj.contributionId, obj);
+    } else {
+      return this.addUserContributions(obj);
+    }
   }
 
   removeAllUserContributions() {
@@ -91,9 +107,15 @@ export class ContributionsService {
       .valueChanges();
   }
 
-  updateContributionByPublish(contributorId: string, contributionId: string, updatedPublish: string) {
+  updateContributionByPublish(
+    contributorId: string,
+    contributionId: string,
+    updatedPublish: string
+  ) {
     return this.db
-    .object(`/persons/requestArchieve/contributions/${contributorId}/${contributionId}`)
-    .update({ publish: updatedPublish })
+      .object(
+        `/persons/requestArchieve/contributions/${contributorId}/${contributionId}`
+      )
+      .update({ publish: updatedPublish });
   }
 }
