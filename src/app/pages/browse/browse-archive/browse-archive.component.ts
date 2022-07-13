@@ -96,12 +96,12 @@ export class BrowseArchiveComponent implements OnInit {
     this.drop = !this.drop;
   }
 
-  modify = '';
-  reason = '';
+  modify = new FormControl('');
+  reason = new FormControl('');
   clear(){
-    this.modify = '';
+    this.modify.reset();
   }
   clear2(){
-    this.reason='';
+    this.reason.reset();
   }
 }

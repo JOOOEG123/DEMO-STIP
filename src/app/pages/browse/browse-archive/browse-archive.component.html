@@ -57,26 +57,28 @@
               class="form-control"
               rows="7"
               placeholder="What are your requesting to modify?"
-              [(ngModel)]="modify"
+              [formControl]="modify"
             ></textarea>
             <br />
             <div align="right">
-              <button class="btn btn-dark pull-right" (click)="clear()">Clear entry</button>
-            </div> 
+              <button class="btn btn-dark pull-right" (click)="clear()">
+                Clear entry
+              </button>
+            </div>
 
             <br /><br />
-            <h5>
-              Reasoning behind the request <span style="color: #ff0000">*</span>
-            </h5>
+            <h5>Reasoning Behind Request <span style="color: #ff0000">*</span></h5>
             <textarea
               class="form-control"
               rows="7"
               placeholder="Why should this file be modified?"
-              [(ngModel)]="reason"
+              [formControl]="reason"
             ></textarea>
             <br />
             <div align="right">
-              <button class="btn btn-dark pull-right" (click)="clear2()">Clear entry</button>
+              <button class="btn btn-dark pull-right" (click)="clear2()">
+                Clear entry
+              </button>
             </div>
             <br /><br />
             <h5>Email</h5>
