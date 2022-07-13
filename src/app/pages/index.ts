@@ -19,7 +19,6 @@ import { UploadComponent } from './requestForms/upload/upload.component';
 
 import { EditAccountComponent } from './account/edit-account/edit-account.component';
 import { AuthGuard } from '../core/services/auth-guard.service';
-import { ModifyRequestComponent } from './requestForms/upload/modifyRequest/modify-request/modify-request.component';
 
 // AuthGuard pipe for admin pages
 const adminOnly = () =>
@@ -127,15 +126,6 @@ export const pagesRoutes = [
     canActivate: [AngularFireAuthGuard],
     data:{
       title: 'share',
-    },
-  },
-
-  {
-    path: 'modifyRequest',
-    component: ModifyRequestComponent,
-    canActivate: [AngularFireAuthGuard, AuthGuard],
-    data: {
-      title: 'modifyRequest',
     },
   },
 
