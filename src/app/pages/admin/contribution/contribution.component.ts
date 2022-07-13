@@ -6,7 +6,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, TemplateRef } from '@angular/core';
 import { Categories, Contribution, Publish } from 'src/app/core/types/adminpage.types';
 
 @Component({
@@ -30,6 +30,8 @@ export class ContributionComponent implements OnInit {
   @Output() reconsider: EventEmitter<Contribution> = new EventEmitter()
   @Output() readMore: EventEmitter<Contribution> = new EventEmitter()
 
+  limit: number = 3
+
   constructor() { }
 
   ngOnInit(): void {
@@ -51,6 +53,6 @@ export class ContributionComponent implements OnInit {
   }
 
   onReadMore() {
-
+    this.readMore.emit(this.contribution)
   }
 }

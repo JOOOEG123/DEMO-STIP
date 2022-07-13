@@ -57,7 +57,12 @@
         
         <app-contribution 
           [contribution]="contribution" 
-          [activeCategory]="activeCategory"></app-contribution>
+          [activeCategory]="activeCategory"
+          (approve)="onApprove($event)"
+          (reject)="onReject($event)"
+          (reconsider)="onReconsider($event)"
+          (readMore)="onReadMore(readMoreTemplate, $event)"
+          ></app-contribution>
         
         <!-- <div class="container">
           <div class="col-4">

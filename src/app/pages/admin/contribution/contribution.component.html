@@ -22,12 +22,12 @@
         <div *ngFor="let event of contribution.rightist.events">
         <span>In {{ event.startYear }}, {{ event.event }}</span>
         </div>
-        <!-- <div *ngIf="contribution.rightist.events.length > limit">...</div>
+        <div *ngIf="contribution.rightist.events.length > limit">...</div>
         <div class="align-self-end">
-        <button class="btn btn-transparent" (click)="onReadMore(readMoreTemplate, contribution)">
+        <button class="btn btn-transparent" (click)="onReadMore()">
             <span class="display-6">Read More...</span>
         </button>
-        </div> -->
+        </div>
     </div>
 
     <div

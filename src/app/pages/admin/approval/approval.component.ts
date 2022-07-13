@@ -17,6 +17,7 @@ import {
   ContributionJson,
   Publish,
 } from 'src/app/core/types/adminpage.types';
+import { ContributionComponent } from '../contribution/contribution.component';
 
 @Component({
   selector: 'app-approval',
@@ -156,7 +157,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   animationStart(event: AnimationEvent) {
-    console.log(event);
     this.disabled = true
   }
 
@@ -176,6 +176,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
     this.selectedContribution = contribution
-    this.modalRef = this.modalService.show(template, { class: 'modal-lg'})
+    this.modalRef = this.modalService.show(template, { class: 'modal-xl'})
   }
 }

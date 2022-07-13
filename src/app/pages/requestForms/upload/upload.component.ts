@@ -70,9 +70,9 @@ export class UploadComponent implements OnInit, OnDestroy {
     content: new FormControl(''),
   });
 
-  eventArray = new FormArray([this.newEvent()]);
+  eventArray = new FormArray([]);
 
-  memoirArray = new FormArray([this.newMemoir()]);
+  memoirArray = new FormArray([]);
 
   imageForm = new FormGroup({
     imageUpload: new FormControl(''),
@@ -234,23 +234,69 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.sub.push(
-      this.activatedRoute.queryParams.subscribe((params) => {
-        this.contributionId = params['contributionId'];
-        if (this.contributionId) {
-          this.sub.push(
-            this.contributionService
-              .fetchContributorByContributionId(this.contributionId)
-              .subscribe((contributor: any) => {
-                this.contribution = contributor;
-                this.mapForm(contributor.rightist);
-              })
-          );
+    if (this.page === 'contribution') {
+      console.log(this.contribution)
+      if (this.contribution) {
+        if (this.contribution?.contributionId) {
+          const rightist: Rightist = this.contribution.rightist
+          this.form = new FormGroup({
+            name: new FormControl(rightist.lastName + ' ' + rightist.firstName, Validators.required),
+            gender: new FormControl(rightist.gender),
+            status: new FormControl(rightist.status),
+            ethnic: new FormControl(rightist.ethnicity),
+            occupation: new FormControl(rightist.job, Validators.required),
+            rightestYear: new FormControl(rightist.rightistYear, Validators.required),
+            birthYear: new FormControl(rightist.birthYear, Validators.required),
+          });
+        
+          this.form2 = new FormGroup({
+            imageUpload: new FormControl(''),
+            image: new FormControl(''),
+            content: new FormControl('')
+          });
+    
+          for (const event of this.contribution.rightist.events) {
+            this.eventArray.push(new FormGroup({
+              startYear: new FormControl(event.startYear),
+              endYear: new FormControl(event.endYear),
+              event: new FormControl(event.event),
+            }))
+          }
+    
+          for (const memoir of this.contribution.rightist.memoirs) {
+            this.memoirArray.push(new FormGroup({
+              memoirTitle: new FormControl(memoir.memoirTitle),
+              memoirContent: new FormControl(memoir.memoirContent),
+              memoirAuthor: new FormControl(memoir.memoirAuthor),
+            }))
+          }
         }
-      })
-    );
-    if (this.contribution?.rightist) {
-      this.mapForm(this.contribution.rightist);
+      }
+      else {
+        this.eventArray.push(this.newEvent())
+        this.memoirArray.push(this.newEvent())
+      }
+    }
+
+    if (this.page == 'account') {
+      this.sub.push(
+        this.activatedRoute.queryParams.subscribe((params) => {
+          this.contributionId = params['contributionId'];
+          if (this.contributionId) {
+            this.sub.push(
+              this.contributionService
+                .fetchContributorByContributionId(this.contributionId)
+                .subscribe((contributor: any) => {
+                  this.contribution = contributor;
+                  this.mapForm(contributor.rightist);
+                })
+            );
+          }
+        })
+      );
+      if (this.contribution?.rightist) {
+        this.mapForm(this.contribution.rightist);
+      }
     }
   }
 
@@ -270,22 +316,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.memoirArray.patchValue(rightist.memoirs);
     }
   }
-
-  // onApprove() {
-  //   if (this.contribution) {
-  //     let contributorId = this.contribution.contributorId[this.contribution.contributorId.length - 1]
-  //     this.contributionService.updateContributionByPublish(
-  //       contributorId , this.contribution.contributionId, 'approved')
-  //   }
-  // }
-
-  // onReject() {
-  //   if (this.contribution) {
-  //     let contributorId = this.contribution.contributorId[this.contribution.contributorId.length - 1]
-  //     this.contributionService.updateContributionByPublish(
-  //       contributorId , this.contribution.contributionId, 'rejected')
-  //   }
-  // }
 
   onselectFile(e) {
     if (e.target.files) {
