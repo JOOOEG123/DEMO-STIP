@@ -189,20 +189,26 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         let contributorId = 
           this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1]
         this.selectedContribution.publish = this.publish
-
-        const {state, ...result} = this.selectedContribution
+    
+        const {state, ...contribution} = this.selectedContribution
         
         if (this.publish === 'approved') {
-          const { rightist } = result
+          let { rightist, ...result} = contribution
           result.rightistId = rightist!.rightistId
           result.approvedAt = new Date()
           this.archiveAPI.addNewArchieve(rightist!).then(data => console.log(data))
+          console.log(result)
+          this.contributionAPI.updateUserContribution(
+            contributorId,
+            this.selectedContribution.contributionId,
+            result)
         }
-    
-        this.contributionAPI.updateUserContribution(
-          contributorId,
-          this.selectedContribution.contributionId,
-          result)
+        else {
+          this.contributionAPI.updateUserContribution(
+            contributorId,
+            this.selectedContribution.contributionId,
+            contribution)
+        }
   
         this.selectedContribution.state = 'void'
       }

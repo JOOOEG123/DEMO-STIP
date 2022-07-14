@@ -103,16 +103,6 @@ export class ContributionsService {
       .valueChanges();
   }
 
-  // updateContributionByPublish(contributorId: string, contributionId: string, updatedPublish: string) {
-    
-  //   return this.db
-  //   .object(`/persons/requestArchieve/contributions/${contributorId}/${contributionId}`)
-  //   .update({ 
-  //     publish: updatedPublish,
-  //     lastUpdatedAt: new Date() 
-  //   })
-  // }
-
   updateUserContribution(contributorId: string, contributionId: string, obj: ContributionSchema) {
 
     return this.db

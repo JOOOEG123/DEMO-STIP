@@ -26,7 +26,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
   set contribution(contribution: Contribution) {
     if (contribution.rightist) {
-      this.mapForm(contribution.rightist);
+      // this.mapForm(contribution.rightist);
       this._contribution = contribution;
     }  
   }
@@ -101,7 +101,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     return this.eventArray.controls as FormGroup[];
   }
 
-  get memiorControls() {
+  get memoirControls() {
     return this.memoirArray.controls as FormGroup[];
   }
 
@@ -274,31 +274,31 @@ export class UploadComponent implements OnInit, OnDestroy {
           }
         }
       }
-      else {
-        this.eventArray.push(this.newEvent())
-        this.memoirArray.push(this.newEvent())
-      }
     }
-
-    if (this.page == 'account') {
+    else {
+      
       this.sub.push(
         this.activatedRoute.queryParams.subscribe((params) => {
           this.contributionId = params['contributionId'];
-          if (this.contributionId) {
-            this.sub.push(
-              this.contributionService
-                .fetchContributorByContributionId(this.contributionId)
-                .subscribe((contributor: any) => {
-                  this.contribution = contributor;
-                  this.mapForm(contributor.rightist);
-                })
-            );
+          this.page = params['page']
+          if (this.page === 'account') {
+            if (this.contributionId) {
+              this.sub.push(
+                this.contributionService
+                  .fetchContributorByContributionId(this.contributionId)
+                  .subscribe((contribution: any) => {
+                    this.contribution = contribution;
+                    this.mapForm(contribution.rightist);
+                  })
+              );
+            }
+          }
+          else {
+            this.eventArray.push(this.newEvent())
+            this.memoirArray.push(this.newMemoir())
           }
         })
       );
-      if (this.contribution?.rightist) {
-        this.mapForm(this.contribution.rightist);
-      }
     }
   }
 
@@ -314,8 +314,21 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.form2.patchValue({
         content: rightist.description,
       });
-      this.eventArray.patchValue(rightist.events);
-      this.memoirArray.patchValue(rightist.memoirs);
+      for (const event of rightist.events) {
+        this.eventArray.push(new FormGroup({
+          startYear: new FormControl(event.startYear),
+          endYear: new FormControl(event.endYear),
+          event: new FormControl(event.event),
+        }))
+      }
+
+      for (const memoir of rightist.memoirs) {
+        this.memoirArray.push(new FormGroup({
+          memoirTitle: new FormControl(memoir.memoirTitle),
+          memoirContent: new FormControl(memoir.memoirContent),
+          memoirAuthor: new FormControl(memoir.memoirAuthor),
+        }))
+      }
     }
   }
 
@@ -340,6 +353,9 @@ export class UploadComponent implements OnInit, OnDestroy {
       birthYear,
     } = this.form.value;
     const { content } = this.form2.value;
+
+    console.log(this.memoirArray.value)
+    console.log(this.eventArray.value)
 
     const contributionId = this.contributionId || UUID();
     const rightistId =
