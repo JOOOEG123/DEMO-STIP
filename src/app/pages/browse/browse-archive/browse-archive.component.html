@@ -1,11 +1,11 @@
 <div class="container-fluid bg-dark">
 
-  <div class=" d-flex ">
+  <div class="d-flex ">
     <div class=" flex-column align-items-center flex-shrink-1">
-      <figure>
-        <img src="assets\browsepage\tempprofile.png" class="img-fluid rounded-circle mx-5">
-        <figcaption class="text-light">ID: {{id}} </figcaption>
-      </figure>
+      <div class="">
+        <img src="assets\browsepage\tempprofile.png" class="img-fluid rounded-circle mx-5 align-self-center">
+        <p class="text-light">ID: {{id}} </p>
+      </div>
     </div>
     <div class="d-flex flex-column align-self-center text-light flex-fill" style="height: 100%;">
 
@@ -33,10 +33,10 @@
     </div>
 
 
-    <div class="col-7 border-start">
-      <button type="button" class="btn btn-light share" data-bs-toggle="modal" data-bs-target="#shareModal">
+    <div class="col-7 border-start m-3">
+      <a class="share float-end m-2" data-bs-toggle="modal" data-bs-target="#shareModal">
         <img src="/assets/browsepage/share.svg">
-      </button>
+      </a>
 
       <!-- Modal -->
       <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
@@ -75,14 +75,14 @@
         </div>
       </div>
 
-      <a type="button" tooltip="hi" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a class="float-end m-2" type="button" tooltip="hi" data-bs-toggle="tooltip" data-bs-placement="right">
         <img src="assets/browsepage/question-mark.svg" alt="" width="20" />
       </a>
 
 
 
-      <div id="infoContent" #infoContent>
-        <div class="row border-bottom">
+      <div class="" id="infoContent" #infoContent>
+        <div class="row border-bottom ">
           <div class="col-12">
             <label class="fw-bold"> Detail Information:&emsp;</label>
 
@@ -108,32 +108,41 @@
         </div>
 
 
-        <div class="row border-bottom">
-          <p class="h6 fw-bold">Description/Timeline:</p>
-          <p>{{ profile.description | slice:1 || "-" }}</p>
-          <p *ngFor="let event of profile.events">{{event.event || "-"}}</p>
+        <div class="row border-bottom ">
+          <div class="col-12 py-2 h6 fw-bold ms-3 mt-2">
+            Description/Timeline:
+          </div>
+          <div class="col-12 py-2 ms-3">{{ profile.description | slice:1 || "-" }}</div>
+          <div class="col-12 ms-3" *ngFor="let event of profile.events">
+            {{event.event || "-"}}
+          </div>
+
         </div>
       </div>
 
-      <div class="row">
-        <div class="container border px-0 rounded w-100">
-          <div class="d-flex bd-highlight bg-light ps-2">
+      <div class="row ms-2 my-3">
+        <div class="col-12 fs-4 fw-bold text-uppercase ">Additional Files </div>
+        <div class="col-12 border px-0 rounded w-100 m-2" id="memContent" #memContent
+          *ngFor=" let memoir of profile.memoirs">
+
+          <div class="d-flex ps-2">
             <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">Memior</h6>
-            <div class="bd-highlight">
-              <button class="btn" type="button" [attr.aria-expanded]="!drop" aria-controls="collapseBasic"
-                (click)="updateCollapse()">
-                <img src="/assets/filters/collapse-{{ drop ? 'minus' : 'plus' }}.svg" alt="filter" width="20" />
-                <span class="visually-hidden">click to {{ drop ? "collapse" : "expand" }}</span>
-              </button>
-            </div>
+
+            <button class="btn" type="button" [attr.aria-expanded]="!drop" aria-controls="collapseBasic"
+              (click)="updateCollapse()">
+              <img src="/assets/filters/collapse-{{ drop ? 'minus' : 'plus' }}.svg" alt="filter" width="20" />
+              <span class="visually-hidden">click to {{ drop ? "collapse" : "expand" }}</span>
+            </button>
+
           </div>
+
           <div class="bg-white" id="collapseBasic" [collapse]="drop" [isAnimated]="true">
             <div class="card scrollable">
-              <div class="card-body " id="memContent" #memContent *ngFor=" let memoir of profile.memoirs">
+              <div class="card-body ">
                 <div class="card-text limit-content" *ngFor="let d of memoir.memoir ; let i = index">
                   <div *ngIf="i < 10"> {{d || "-"}} </div>
                 </div>
-                <div class="card-body" style="background-color: rgb(208,208,208);">
+                <div class="card-body my-3" style="background-color: rgba(245,245,245,255);">
                   You reached the max content view.
                   To read more, download
                   the full PDF.
@@ -142,10 +151,8 @@
               </div>
               <a (click)="SavePDF('memoirContent')" class="btn btn-light border-khaki">Memoir PDF Link</a>
             </div>
-
           </div>
-
-          <span>File last modified: 2022-11-07 01:55:20PM</span>
         </div>
       </div>
+      <span class="ms-2 my-3">File last modified: </span>
     </div>
