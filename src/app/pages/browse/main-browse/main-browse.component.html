@@ -50,7 +50,7 @@
       <div class="d-flex">
         <!-- <div class="row mb-2 mx-2 row-col-auto"> -->
         <div class="me-auto p-2 text-light text-nowrap">
-          Search Results {{ this.db_result?.length || 0 }}
+          Search Results {{ this.db_result.length }}
         </div>
 
         <div class="col-auto flex-shrink-0">
@@ -88,100 +88,88 @@
 
       <!-- display search results -->
       <app-stip-spinner [isLoading]="isloading"></app-stip-spinner>
-      <div *ngIf="!isloading">
-        <div *ngIf="curView === 'List'; else elseBlock">
-          <div *ngIf="display.length; else elseEmptyBlock">
-            <a class="d-flex m-3" style="
-                height: 150px;
-                border-radius: 28px;
-                color: black;
-                text-decoration: none;
-                background-color: white;
-              " name="searchLayout" routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
-              ariaCurrentWhenActive="page" *ngFor="let result of display; let i=index">
-              <div class="m-3">{{(i+1)+ (currentPage-1) * itemsPerPage}}</div>
 
-              <div *ngIf="curView === 'List'; else elseBlock">
-                <div *ngIf="display.length; else elseEmptyBlock">
-                  <a class="d-flex m-3 searchprofile" style="
+      <div *ngIf="curView === 'List'; else elseBlock">
+        <div *ngIf="display.length; else elseEmptyBlock">
+
+
+          <a class="d-flex m-3 searchprofile" style="
               height: 150px;
               border-radius: 28px;
               color: black;
               text-decoration: none;
               background-color: white;
             " name="searchLayout" routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
-                    ariaCurrentWhenActive="page" *ngFor="let result of display; let i=index">
-                    <div class="m-3">{{(i+1)+ (currentPage-1) * itemsPerPage}}</div>
+            ariaCurrentWhenActive="page" *ngFor="let result of display; let i=index">
+            <div class="m-3">{{(i+1)+ (currentPage-1) * itemsPerPage}}</div>
 
-                    <div class="m-3 col-3 text-capitalize">
-                      <div class="text-start fw-bold">
-                        {{ result.firstName +" "+result.lastName }}
-                      </div>
-                      <div class="text-start">Occupation: {{ result.job || "-"}}</div>
-                      <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
-                      <div class="text-start">Gender: {{ result.gender || "-"}}</div>
-                    </div>
-                    <div class="text-start col-6 m-3 searchprofile">{{ result.description }}</div>
-                    <div class="col align-self-end fw-bold">read more ></div>
-                  </a>
-
-                </div>
-
-                <ng-template #elseEmptyBlock>
-                  <div *ngIf="isloading == false" class="bg-light">
-                    No record has been found.
-                  </div>
-                </ng-template>
+            <div class="m-3 col-3 text-capitalize">
+              <div class="text-start fw-bold">
+                {{ result.firstName +" "+result.lastName }}
               </div>
+              <div class="text-start">Occupation: {{ result.job || "-"}}</div>
+              <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
+              <div class="text-start">Gender: {{ result.gender || "-"}}</div>
+            </div>
+            <div class="text-start col-6 m-3 searchprofile">{{ result.description }}</div>
+            <div class="col align-self-end fw-bold">read more ></div>
+          </a>
 
+        </div>
 
-              <ng-template #elseBlock>
-                <div *ngIf="display.length; else elseEmptyBlock">
-                  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" name=" searchLayout"
-                    *ngFor="let results of display | UpdateRows: 3 ; let i = index">
+        <ng-template #elseEmptyBlock>
+          <div *ngIf="isloading == false" class="bg-light">
+            No record has been found.
+          </div>
+        </ng-template>
+      </div>
 
-                    <div class="py-5 col" style="border-radius: 28px; background-color: #dbdde2; max-width: 25%;"
-                      *ngFor="let result of results; let j= index">
-                      <a routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
-                        ariaCurrentWhenActive="page" style="color: black; text-decoration: none">
+      <ng-template #elseBlock>
+        <div *ngIf="display.length; else elseEmptyBlock">
+          <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" name=" searchLayout"
+            *ngFor="let results of display | UpdateRows: 3 ; let i = index">
 
-                        <div class="m-3">{{(5*i+(j+1)) + (currentPage-1) * itemsPerPage}}</div>
+            <div class="py-5 col" style="border-radius: 28px; background-color: #dbdde2; max-width: 25%;"
+              *ngFor="let result of results; let j= index">
+              <a routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
+                ariaCurrentWhenActive="page" style="color: black; text-decoration: none">
 
-                        <div class="card-body mt-auto text-capitalize">
-                          <div class="card-body">
-                            <div class="fw-bold">{{ result.firstName +" "+result.lastName }}</div>
-                            <div>{{ result.workplace }}</div>
-                            <div class="pb-3">{{ result.ethnicity }}</div>
-                            <div class="fw-bold">read more ></div>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
+                <div class="m-3">{{(3*i+(j+1)) + (currentPage-1) * itemsPerPage}}</div>
 
+                <div class="card-body mt-auto text-capitalize">
+                  <div class="card-body">
+                    <div class="fw-bold">{{ result.firstName +" "+result.lastName }}</div>
+                    <div>{{ result.workplace }}</div>
+                    <div class="pb-3">{{ result.ethnicity }}</div>
+                    <div class="fw-bold">read more ></div>
                   </div>
                 </div>
-                <ng-template #elseEmptyBlock>
-                  <div *ngIf="isloading" class="bg-light">
-                    No record has been found.
-                  </div>
-                </ng-template>
-              </ng-template>
+              </a>
+            </div>
 
-              <!-- search nav -->
-
-              <div class="d-flex flex-row-reverse">
-                <nav aria-label="Page navigation">
-                  <pagination class=" my-pagination" [rotate]="true" [totalItems]="db_result?.length || 0"
-                    [boundaryLinks]="true" [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage"
-                    (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-                    lastText="&raquo;" [maxSize]="10">
-                  </pagination>
-                </nav>
-
-                <div class="p-2 bd-highlight">
-                  page {{ this.currentPage }} of {{ this.maxPage }}
-                </div>
-              </div>
           </div>
         </div>
+        <ng-template #elseEmptyBlock>
+          <div *ngIf="isloading" class="bg-light">
+            No record has been found.
+          </div>
+        </ng-template>
+      </ng-template>
+
+      <!-- search nav -->
+
+      <div class="d-flex flex-row-reverse">
+        <nav aria-label="Page navigation">
+          <pagination class=" my-pagination" [rotate]="true" [totalItems]="db_result.length" [boundaryLinks]="true"
+            [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="10">
+          </pagination>
+        </nav>
+
+        <div class="p-2 bd-highlight">
+          page {{ this.currentPage }} of {{ this.maxPage }}
+        </div>
       </div>
+    </div>
+  </div>
+</div>
