@@ -28,4 +28,8 @@ export class StorageApIService {
     const upload = ref.put(file);
     return upload;
   }
+
+  getGalleryImage(imageId: string) {
+    return this.afs.ref(`images/galleries/${imageId}`).getDownloadURL()
+  }
 }

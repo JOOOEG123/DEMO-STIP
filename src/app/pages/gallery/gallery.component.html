@@ -41,6 +41,7 @@
           [ngStyle]="{ opacity: currentImageIndex == i ? '0.4' : '1' }"
         />
         <button
+          (click)="onLearnMore()"
           (focus)="onEnter(i)"
           class="hovered-button"
           (mouseover)="onEnter(i)"
