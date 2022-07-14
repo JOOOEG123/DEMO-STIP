@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
+import { Contribution } from 'src/app/core/types/adminpage.types';
 
 
 @Component({
@@ -83,22 +85,35 @@ export class AccountComponent implements OnInit, OnDestroy {
     ];
 
   subscription: Subscription[] = [];
+  contributionSubscription?: Subscription
   isAdmin = false;
   imageUrl!: Observable<string> | undefined;
   userId = this.auth.uid;
   profile: any;
   userContribution: any[] = [];;
   // @ViewChild('modalTemplates') modalTemplates!: LogoutComponent;
-  constructor(private auth: AuthServiceService,
-    private storage: StorageApIService, private contributionService: ContributionsService) {}
+  constructor(
+    private auth: AuthServiceService,
+    private storage: StorageApIService, 
+    private contributionService: ContributionsService,
+    private archiveService: ArchieveApiService) {}
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.contributionSubscription?.unsubscribe()
   }
 
   ngOnInit(): void {
-    this.contributionService.fetchUserContributions().subscribe((x) => {
-      this.userContribution = x;
+    this.contributionSubscription = this.contributionService.fetchUserContributions().subscribe((x: any) => {
+      for (const contribution of x)
+      {
+        this.archiveService.getPersonById(contribution.rightistId).subscribe((rightist: any) => {
+          contribution.rightist = rightist
+        })
+
+        this.userContribution.push(contribution)
+      }
     });
+
     const h = this.storage.profileImgeUrl();
     if (h) {
       this.subscription.push(
