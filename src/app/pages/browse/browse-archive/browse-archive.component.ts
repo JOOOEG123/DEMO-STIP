@@ -10,7 +10,8 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import {
   FormControl,
   Validators,
-  FormBuilder
+  FormBuilder,
+  FormGroup
 } from '@angular/forms';
 
 @Component({
@@ -42,11 +43,6 @@ export class BrowseArchiveComponent implements OnInit {
   ngOnInit(): void {
 
     //Form modal controls
-    this.form = this.formBuilder.group({
-      reason2: [null, Validators.required],
-      modify2: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]]
-    })
 
     console.log(this.id);
 
