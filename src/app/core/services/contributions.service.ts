@@ -27,9 +27,14 @@ export class ContributionsService {
     );
   }
 
-  // private callAPI() {
-  //   return this.store.doc<any>(`contributions/${this.uid}`);
-  // }
+  fetchContributorByContributionId(contId: string) {
+    return this.db
+      .object(
+        `/persons/requestArchieve/contributions/${this.auth.uid}/${contId}`
+      )
+      .valueChanges();
+  }
+
   fetchUserContributions() {
     return this.callAPI_List().valueChanges();
   }
@@ -40,8 +45,6 @@ export class ContributionsService {
   }
 
   addUserContributions(obj: ContributionSchema) {
-    console.log(this.auth.uid);
-    // console.log('gok', this.auth.getUserDetails())
     const st = this.callAPI();
     const contributionId = UUID();
     obj.contributionId = contributionId;
@@ -51,6 +54,14 @@ export class ContributionsService {
     return st.update({ [contributionId]: obj }).catch((e) => {
       return st.set({ [contributionId]: obj });
     });
+  }
+
+  contributionsAddEdit(obj: ContributionSchema) {
+    if (obj.contributionId) {
+      return this.editUserContributions(obj.contributionId, obj);
+    } else {
+      return this.addUserContributions(obj);
+    }
   }
 
   removeAllUserContributions() {
@@ -91,9 +102,15 @@ export class ContributionsService {
       .valueChanges();
   }
 
-  updateContributionByPublish(contributorId: string, contributionId: string, updatedPublish: string) {
+  updateContributionByPublish(
+    contributorId: string,
+    contributionId: string,
+    updatedPublish: string
+  ) {
     return this.db
-    .object(`/persons/requestArchieve/contributions/${contributorId}/${contributionId}`)
-    .update({ publish: updatedPublish })
+      .object(
+        `/persons/requestArchieve/contributions/${contributorId}/${contributionId}`
+      )
+      .update({ publish: updatedPublish });
   }
 }

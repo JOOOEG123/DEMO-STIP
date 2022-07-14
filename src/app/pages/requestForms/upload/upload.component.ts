@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -6,7 +6,8 @@ import {
   FormArray,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
 import { Contribution, Rightist } from 'src/app/core/types/adminpage.types';
@@ -17,33 +18,41 @@ import { UUID } from 'src/app/core/utils/uuid';
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.scss'],
 })
-export class UploadComponent implements OnInit {
-  @Input() contribution?: Contribution;
-  @Input() page?: string
-  @Output() approve: EventEmitter<Contribution> = new EventEmitter()
-  @Output() reject: EventEmitter<Contribution> = new EventEmitter()
-  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter()
+export class UploadComponent implements OnInit, OnDestroy {
+  private _contribution!: Contribution;
+  contributionId!: string;
+  @Input() get contribution() {
+    return this._contribution;
+  }
+  set contribution(contribution: Contribution) {
+    this.mapForm(contribution.rightist);
+    this._contribution = contribution;
+  }
+
+  @Input() page?: string;
+  @Output() approve: EventEmitter<Contribution> = new EventEmitter();
+  @Output() reject: EventEmitter<Contribution> = new EventEmitter();
+  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter();
   //image url
   url = '';
 
   onApprove() {
     if (this.contribution) {
-      this.approve.emit({...this.contribution})
+      this.approve.emit({ ...this.contribution });
     }
   }
 
   onReject() {
     if (this.contribution) {
-      this.reject.emit({...this.contribution})
-    }
-  }
-  
-  onReconsider() {
-    if (this.contribution) {
-      this.reconsider.emit({...this.contribution})
+      this.reject.emit({ ...this.contribution });
     }
   }
 
+  onReconsider() {
+    if (this.contribution) {
+      this.reconsider.emit({ ...this.contribution });
+    }
+  }
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -58,7 +67,7 @@ export class UploadComponent implements OnInit {
   form2 = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
-    content: new FormControl('')
+    content: new FormControl(''),
   });
 
   eventArray = new FormArray([this.newEvent()]);
@@ -195,6 +204,8 @@ export class UploadComponent implements OnInit {
     'Deputy Secretary General',
   ];
 
+  sub: Subscription[] = [];
+
   addEvent() {
     this.eventArray.push(this.newEvent());
   }
@@ -214,45 +225,49 @@ export class UploadComponent implements OnInit {
   constructor(
     private contributionService: ContributionsService,
     private auth: AuthServiceService,
-    private route: Router
+    private route: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
+  ngOnDestroy(): void {
+    this.sub.forEach((sub) => sub.unsubscribe());
+  }
+
   ngOnInit(): void {
-    console.log(this.contribution)
+    this.sub.push(
+      this.activatedRoute.queryParams.subscribe((params) => {
+        this.contributionId = params['contributionId'];
+        if (this.contributionId) {
+          this.sub.push(
+            this.contributionService
+              .fetchContributorByContributionId(this.contributionId)
+              .subscribe((contributor: any) => {
+                this.contribution = contributor;
+                this.mapForm(contributor.rightist);
+              })
+          );
+        }
+      })
+    );
+    if (this.contribution?.rightist) {
+      this.mapForm(this.contribution.rightist);
+    }
+  }
 
-    if (this.contribution?.contributionId) {
-      const rightist: Rightist = this.contribution.rightist
-      this.form = new FormGroup({
-        name: new FormControl(rightist.lastName + ' ' + rightist.firstName, Validators.required),
-        gender: new FormControl(rightist.gender),
-        status: new FormControl(rightist.status),
-        ethnic: new FormControl(rightist.ethnicity),
-        occupation: new FormControl(rightist.job, Validators.required),
-        rightestYear: new FormControl(rightist.rightistYear, Validators.required),
-        birthYear: new FormControl(rightist.birthYear, Validators.required),
+  mapForm(rightist: Rightist) {
+    if (this.form && this.form2 && this.eventArray && this.memoirArray) {
+      this.form.patchValue({
+        name: rightist.lastName + ' ' + rightist.firstName,
+        occupation: rightist.job,
+        ethnic: rightist.ethnicity,
+        rightestYear: rightist.rightistYear,
+        ...rightist,
       });
-    
-      this.form2 = new FormGroup({
-        imageUpload: new FormControl(''),
-        image: new FormControl(''),
-        content: new FormControl('')
+      this.form2.patchValue({
+        content: rightist.description,
       });
-
-      for (const event of this.contribution.rightist.events) {
-        this.eventArray.push(new FormGroup({
-          startYear: new FormControl(event.startYear),
-          endYear: new FormControl(event.endYear),
-          event: new FormControl(event.event),
-        }))
-      }
-
-      for (const memoir of this.contribution.rightist.memoirs) {
-        this.memoirArray.push(new FormGroup({
-          memoirTitle: new FormControl(memoir.memoirTitle),
-          memoirContent: new FormControl(memoir.memoirContent),
-          memoirAuthor: new FormControl(memoir.memoirAuthor),
-        }))
-      }
+      this.eventArray.patchValue(rightist.events);
+      this.memoirArray.patchValue(rightist.memoirs);
     }
   }
 
@@ -283,41 +298,52 @@ export class UploadComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value, this.form2.value);
-    const {name, gender, status, enthic, rightestYear, occupation, birthYear} = this.form.value;
+    const {
+      name,
+      gender,
+      status,
+      enthic,
+      rightestYear,
+      occupation,
+      birthYear,
+    } = this.form.value;
     const { content } = this.form2.value;
-    const contributionId = UUID()
-    this.contributionService.addUserContributions({
-      contributionId: contributionId,
-      contributorId: [this.auth.uid],
-      contributedAt: new Date(),
-      rightistId: '',
-      approvedAt: new Date(), // update model with An.
-      rightist: {
-        rightistId: `Rightist-${UUID()}`,
-        imagePath: [this.url], // Price said he will work on this.
-        initial: name.substring(0, 1),
-        firstName: name,
-        lastName: '',
-        gender: gender || '',
-        birthYear: birthYear,
-        deathYear: 0,
-        rightistYear: rightestYear,
-        status: status || 'Unknown',
-        ethnicity: enthic || '',
-        publish: 'new',
-        job: occupation,
-        detailJob: '',
-        workplace: '',
-        events: this.eventArray.value,
-        memoirs: this.memoirArray.value,
-        reference: '',
-        description: content,
-      },
-    }).then(() => {
-      this.clear();
-      this.clear2();
-      this.route.navigateByUrl('/account');
-    });
+    const contributionId = this.contributionId || UUID();
+    const rightistId =
+      this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
+    this.contributionService
+      .contributionsAddEdit({
+        contributionId: contributionId,
+        contributorId: [this.auth.uid],
+        contributedAt: new Date(),
+        rightistId: rightistId,
+        approvedAt: new Date(), // update model with An.
+        rightist: {
+          rightistId: rightistId,
+          imagePath: [this.url], // Price said he will work on this.
+          initial: name.substring(0, 1),
+          firstName: name,
+          lastName: '',
+          gender: gender || '',
+          birthYear: birthYear,
+          deathYear: 0,
+          rightistYear: rightestYear,
+          status: status || 'Unknown',
+          ethnicity: enthic || '',
+          publish: 'new',
+          job: occupation,
+          detailJob: '',
+          workplace: '',
+          events: this.eventArray.value,
+          memoirs: this.memoirArray.value,
+          reference: '',
+          description: content,
+        },
+      })
+      .then(() => {
+        this.clear();
+        this.clear2();
+        this.route.navigateByUrl('/account');
+      });
   }
 }

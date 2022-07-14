@@ -25,7 +25,11 @@
       </dl>
     </div>
     <div class="col-12 col-md-5">
-      {{ data?.rightist?.description || "-" }}
+      {{
+        (data?.rightist?.description?.length || 0) > 400
+          ? (data?.rightist?.description || "").substring(0, 400) + "..."
+          : data?.rightist?.description || "-"
+      }}
     </div>
     <div class="col-12 col-md-2 d-flex">
       <div class="row mx-auto">
@@ -37,7 +41,23 @@
             </dd>
           </dl>
         </div>
-        <a class="btn-link mt-auto col-12" href=""> read more>>> </a>
+        <div class="mt-auto col-12">
+          <a
+            class="btn btn-primary btn-block"
+            [routerLink]="['/upload']"
+            [queryParams]="{ contributionId: data.contributionId }"
+          >
+            Edit
+          </a>
+        </div>
+
+        <a
+          class="btn-link mt-auto col-12"
+          [routerLink]="['/upload']"
+          [queryParams]="{ contributionId: data.contributionId }"
+        >
+          read more>>>
+        </a>
       </div>
     </div>
   </div>
