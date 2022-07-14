@@ -10,6 +10,7 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import {
   FormControl,
   Validators,
+  FormBuilder
 } from '@angular/forms';
 
 @Component({
@@ -34,10 +35,19 @@ export class BrowseArchiveComponent implements OnInit {
     private router: Router,
     private arch: ArchieveApiService,
     private clipboardApi: ClipboardService,
-    private auth: AuthServiceService
+    private auth: AuthServiceService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
+
+    //Form modal controls
+    this.form = this.formBuilder.group({
+      reason2: [null, Validators.required],
+      modify2: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]]
+    })
+
     console.log(this.id);
 
     this.arch.getPersonById(this.id).subscribe((res) => {
