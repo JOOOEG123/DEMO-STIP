@@ -60,7 +60,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   disabled: boolean = false
   modalRef?: BsModalRef;
   
-  subcription?: Subscription
+  contributionSubcription?: Subscription
+  rightistSubscription?: Subscription
+
   contributions: any[] = []
   publish: Publish = 'new'
   isLoaded: boolean = false
@@ -75,7 +77,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void { 
-    this.subcription = this.contributionAPI.fetchAllContributions().subscribe((data: any) => {
+    this.contributionSubcription = this.contributionAPI.fetchAllContributions().subscribe((data: any) => {
       
       this.contributions.length = 0
       this.newContributions.length = 0
@@ -90,27 +92,34 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         }
       }
       
+      // make sure the latest contribution is at the top
       this.contributions.sort(function(a, b) {
-        return b.lastUpdatedAt.getTime() - a.lastUpdatedAt.getTime()
+        return new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime()
       })
 
       console.log(this.contributions)
 
-      for (let contribution of  this.contributions) {
+      for (let contribution of this.contributions) {
 
         let data: Contribution = {
           ...contribution,
+          contributedAt: new Date(contribution.contributedAt),
+          approvedAt: new Date(contribution.approvedAt),
+          lastUpdatedAt: new Date(contribution.lastUpdatedAt),
           state: 'void',
         }
-  
-        data.contributedAt = new Date(contribution.contributedAt)
 
         if (contribution.publish == 'new') {
           this.newContributions.push(data)
         }
 
         if (contribution.publish == 'approved') {
+          this.archiveAPI.getPersonById(data.rightistId).subscribe((rightist: any) => {
+            data.rightist = rightist
+          })
+  
           this.approvedContributions.push(data)
+          console.log(contribution)
         }
 
         if (contribution.publish == 'rejected') {
@@ -124,7 +133,8 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subcription?.unsubscribe()
+    this.contributionSubcription?.unsubscribe()
+    this.rightistSubscription?.unsubscribe()
   }
   
 
@@ -180,12 +190,13 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1]
         this.selectedContribution.publish = this.publish
 
-        const {state, rightist, ...result} = this.selectedContribution
-        result.rightistId = rightist.rightistId
-
+        const {state, ...result} = this.selectedContribution
+        
         if (this.publish === 'approved') {
+          const { rightist } = result
+          result.rightistId = rightist!.rightistId
           result.approvedAt = new Date()
-          this.archiveAPI.addNewArchieve(rightist).then(data => console.log(data))
+          this.archiveAPI.addNewArchieve(rightist!).then(data => console.log(data))
         }
     
         this.contributionAPI.updateUserContribution(
