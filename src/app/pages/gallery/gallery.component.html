@@ -33,7 +33,7 @@
     >
       <div class="images">
         <img
-          [src]="image.src"
+          [src]="image.imagePath"
           width="100%"
           class="hovered-img"
           (mouseleave)="onLeave()"
@@ -46,6 +46,7 @@
           (mouseover)="onEnter(i)"
           [ngStyle]="{ opacity: currentImageIndex == i ? '1.0' : '0.0' }"
           (blur)="onLeave()"
+          (click)="onLearnMore(galleryModal, image)"
         >
           {{ imageButton }}
         </button>
@@ -67,3 +68,7 @@
     lastText="&raquo;"
   ></pagination>
 </div>
+
+<ng-template #galleryModal>
+  <app-overlay [image]="this.selectedImage" (close)="onClose($event)"></app-overlay>
+</ng-template>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { ContributionJson } from '../types/adminpage.types';
+import { ContributionJson, Rightist } from '../types/adminpage.types';
 import { UUID } from '../utils/uuid';
 
 @Injectable({
@@ -58,11 +58,11 @@ export class ArchieveApiService {
     return arch;
   }
 
-  addNewArchieve(obj: any) {
+  addNewArchieve(obj: Rightist) {
     // update function with type and required value
     return this.db
       .object(`/persons/requestArchieve/persons`)
-      .update({ [UUID()]: obj });
+      .update({ [obj.rightistId]: obj });
   }
 
   /**

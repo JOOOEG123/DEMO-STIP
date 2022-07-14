@@ -319,7 +319,7 @@
       <section
         class="my-4"
         *ngFor="
-          let memoir of memiorControls;
+          let memoir of memoirControls;
           let i = index;
           last as last;
           first as first
@@ -327,32 +327,32 @@
       >
         <div [formGroup]="memoir" class="border p-2 shadow my-4 rounded">
           <!-- memoir title -->
-          <label [for]="'memior_title' + i">Title</label>
+          <label [for]="'memoir_title' + i">Title</label>
           <input
             type="text"
             class="form-control"
             placeholder="Add title here..."
-            [id]="'memior_title' + i"
+            [id]="'memoir_title' + i"
             formControlName="memoirTitle"
           />
           <br />
           <!-- memoir author -->
-          <label [for]="'memior_author' + i">Author</label>
+          <label [for]="'memoir_author' + i">Author</label>
           <input
             type="text"
             class="form-control"
             placeholder="Add author here.."
-            [id]="'memior_author' + i"
+            [id]="'memoir_author' + i"
             aria-describedby="basic-addon1"
             formControlName="memoirAuthor"
           />
           <br />
           <!-- memoir content -->
-          <label [for]="'memior_content' + i">Content/Discription</label>
+          <label [for]="'memoir_content' + i">Content/Discription</label>
           <textarea
             type="text"
             class="form-control"
-            [id]="'memior_content' + i"
+            [id]="'memoir_content' + i"
             placeholder="Add memoir here..."
             rows="5"
             formControlName="memoirContent"

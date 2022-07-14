@@ -110,7 +110,7 @@
 
         <div class="row border-bottom">
           <p class="h6 fw-bold">Description/Timeline:</p>
-          <p>{{ profile.description || "-" }}</p>
+          <p>{{ profile.description | slice:1 || "-" }}</p>
           <p *ngFor="let event of profile.events">{{event.event || "-"}}</p>
         </div>
       </div>

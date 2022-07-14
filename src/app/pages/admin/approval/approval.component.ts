@@ -9,6 +9,7 @@ import {
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ObjectUnsubscribedError, Subscription } from 'rxjs';
+import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
 import {
   Categories,
@@ -16,9 +17,10 @@ import {
   Contribution,
   ContributionJson,
   ContributionSchema,
-  OuterContributionJson,
   Publish,
+  Rightist,
 } from 'src/app/core/types/adminpage.types';
+import { ContributionComponent } from '../contribution/contribution.component';
 
 @Component({
   selector: 'app-approval',
@@ -58,7 +60,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   disabled: boolean = false
   modalRef?: BsModalRef;
   
-  subcription?: Subscription
+  contributionSubcription?: Subscription
+  rightistSubscription?: Subscription
+
   contributions: any[] = []
   publish: Publish = 'new'
   isLoaded: boolean = false
@@ -68,14 +72,12 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   constructor(
     private modalService: BsModalService,
-    private contributionAPI: ContributionsService
-  ) {
-    this.selectedContributions = this.newContributions;
-    this.activeCategory = 'New Contributions';
-  }
+    private contributionAPI: ContributionsService,
+    private archiveAPI: ArchieveApiService
+  ) {}
 
   ngOnInit(): void { 
-    this.subcription = this.contributionAPI.fetchAllContribution().subscribe((data: any) => {
+    this.contributionSubcription = this.contributionAPI.fetchAllContributions().subscribe((data: any) => {
       
       this.contributions.length = 0
       this.newContributions.length = 0
@@ -83,30 +85,41 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.rejectedContributions.length = 0
       // this.contributions = data as any[]
       const test: ContributionJson[] = Object.values(data)
-
+      console.log(test)
       for (let lol of test) {
         for (const contribution of Object.values(lol)) {
           this.contributions.push(contribution)
         }
       }
       
-      // console.log(this.contributions)
-    
-      for (let contribution of  this.contributions) {
+      // make sure the latest contribution is at the top
+      this.contributions.sort(function(a, b) {
+        return new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime()
+      })
+
+      console.log(this.contributions)
+
+      for (let contribution of this.contributions) {
 
         let data: Contribution = {
           ...contribution,
+          contributedAt: new Date(contribution.contributedAt),
+          approvedAt: new Date(contribution.approvedAt),
+          lastUpdatedAt: new Date(contribution.lastUpdatedAt),
           state: 'void',
         }
-  
-        data.contributedAt = new Date(contribution.contributedAt)
 
         if (contribution.publish == 'new') {
           this.newContributions.push(data)
         }
 
         if (contribution.publish == 'approved') {
+          this.archiveAPI.getPersonById(data.rightistId).subscribe((rightist: any) => {
+            data.rightist = rightist
+          })
+  
           this.approvedContributions.push(data)
+          console.log(contribution)
         }
 
         if (contribution.publish == 'rejected') {
@@ -114,10 +127,14 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         }
       }
     })
+
+    this.selectedContributions = this.newContributions;
+    this.activeCategory = 'New Contributions';
   }
 
   ngOnDestroy(): void {
-    this.subcription?.unsubscribe()
+    this.contributionSubcription?.unsubscribe()
+    this.rightistSubscription?.unsubscribe()
   }
   
 
@@ -128,7 +145,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       (c) => c.contributionId == contribution.contributionId
     );
     this.selectedContribution = this.newContributions[index];
-    this.selectedContribution.state = 'removed';
+    this.selectedContribution.state = 'removed';    
   }
 
   onReject(contribution: Contribution) {
@@ -155,30 +172,51 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   setActiveCategory(category: Categories) {
     this.activeCategory = category;
     this.selectedContributions = this.categories[this.activeCategory];
-    
   }
 
   animationStart(event: AnimationEvent) {
-    console.log(event);
     this.disabled = true
   }
 
   animationDone(event: AnimationEvent) {
     this.disabled = false
-    if (this.selectedContribution) {
-      let contributorId = 
-        this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1]
-      console.log(contributorId)
-      console.log(this.selectedContribution.contributionId)
-      this.contributionAPI.updateContributionByPublish(
-        contributorId,
-        this.selectedContribution.contributionId, 
-        this.publish)
+
+    if (this.selectedContribution && this.selectedContribution.state === 'removed') {
+      // update the current timestamp
+      this.selectedContribution.lastUpdatedAt = new Date()
+
+      if (this.selectedContribution.rightist) {
+        let contributorId = 
+          this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1]
+        this.selectedContribution.publish = this.publish
+    
+        const {state, ...contribution} = this.selectedContribution
+        
+        if (this.publish === 'approved') {
+          let { rightist, ...result} = contribution
+          result.rightistId = rightist!.rightistId
+          result.approvedAt = new Date()
+          this.archiveAPI.addNewArchieve(rightist!).then(data => console.log(data))
+          console.log(result)
+          this.contributionAPI.updateUserContribution(
+            contributorId,
+            this.selectedContribution.contributionId,
+            result)
+        }
+        else {
+          this.contributionAPI.updateUserContribution(
+            contributorId,
+            this.selectedContribution.contributionId,
+            contribution)
+        }
+  
+        this.selectedContribution.state = 'void'
+      }
     }
   }
 
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
     this.selectedContribution = contribution
-    this.modalRef = this.modalService.show(template, { class: 'modal-lg'})
+    this.modalRef = this.modalService.show(template, { class: 'modal-xl'})
   }
 }

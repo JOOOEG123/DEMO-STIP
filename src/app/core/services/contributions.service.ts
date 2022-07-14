@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Tracing } from 'trace_events';
 import { ContributionSchema } from '../types/adminpage.types';
 import { UUID } from '../utils/uuid';
 import { AuthServiceService } from './auth-service.service';
@@ -96,21 +97,16 @@ export class ContributionsService {
   }
 
   // Admin get all contribution
-  fetchAllContribution() {
+  fetchAllContributions() {
     return this.db
       .object(`/persons/requestArchieve/contributions`)
       .valueChanges();
   }
 
-  updateContributionByPublish(
-    contributorId: string,
-    contributionId: string,
-    updatedPublish: string
-  ) {
+  updateUserContribution(contributorId: string, contributionId: string, obj: ContributionSchema) {
+
     return this.db
-      .object(
-        `/persons/requestArchieve/contributions/${contributorId}/${contributionId}`
-      )
-      .update({ publish: updatedPublish });
+      .object(`/persons/requestArchieve/contributions/${contributorId}`)
+      .update({ [contributionId]: obj});
   }
 }

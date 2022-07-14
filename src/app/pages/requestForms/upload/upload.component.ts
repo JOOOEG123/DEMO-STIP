@@ -25,8 +25,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     return this._contribution;
   }
   set contribution(contribution: Contribution) {
-    this.mapForm(contribution.rightist);
-    this._contribution = contribution;
+    if (contribution.rightist) {
+      // this.mapForm(contribution.rightist);
+      this._contribution = contribution;
+    }  
   }
 
   @Input() page?: string;
@@ -70,9 +72,9 @@ export class UploadComponent implements OnInit, OnDestroy {
     content: new FormControl(''),
   });
 
-  eventArray = new FormArray([this.newEvent()]);
+  eventArray = new FormArray([]);
 
-  memoirArray = new FormArray([this.newMemoir()]);
+  memoirArray = new FormArray([]);
 
   imageForm = new FormGroup({
     imageUpload: new FormControl(''),
@@ -99,7 +101,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     return this.eventArray.controls as FormGroup[];
   }
 
-  get memiorControls() {
+  get memoirControls() {
     return this.memoirArray.controls as FormGroup[];
   }
 
@@ -234,23 +236,69 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.sub.push(
-      this.activatedRoute.queryParams.subscribe((params) => {
-        this.contributionId = params['contributionId'];
-        if (this.contributionId) {
-          this.sub.push(
-            this.contributionService
-              .fetchContributorByContributionId(this.contributionId)
-              .subscribe((contributor: any) => {
-                this.contribution = contributor;
-                this.mapForm(contributor.rightist);
-              })
-          );
+    if (this.page === 'contribution') {
+      console.log(this.contribution)
+      if (this.contribution) {
+        if (this.contribution.contributionId && this.contribution.rightist) {
+          const rightist: Rightist = this.contribution.rightist
+          this.form = new FormGroup({
+            name: new FormControl(rightist.lastName + ' ' + rightist.firstName, Validators.required),
+            gender: new FormControl(rightist.gender),
+            status: new FormControl(rightist.status),
+            ethnic: new FormControl(rightist.ethnicity),
+            occupation: new FormControl(rightist.job, Validators.required),
+            rightestYear: new FormControl(rightist.rightistYear, Validators.required),
+            birthYear: new FormControl(rightist.birthYear, Validators.required),
+          });
+        
+          this.form2 = new FormGroup({
+            imageUpload: new FormControl(''),
+            image: new FormControl(''),
+            content: new FormControl('')
+          });
+    
+          for (const event of this.contribution.rightist.events) {
+            this.eventArray.push(new FormGroup({
+              startYear: new FormControl(event.startYear),
+              endYear: new FormControl(event.endYear),
+              event: new FormControl(event.event),
+            }))
+          }
+    
+          for (const memoir of this.contribution.rightist.memoirs) {
+            this.memoirArray.push(new FormGroup({
+              memoirTitle: new FormControl(memoir.memoirTitle),
+              memoirContent: new FormControl(memoir.memoirContent),
+              memoirAuthor: new FormControl(memoir.memoirAuthor),
+            }))
+          }
         }
-      })
-    );
-    if (this.contribution?.rightist) {
-      this.mapForm(this.contribution.rightist);
+      }
+    }
+    else {
+      
+      this.sub.push(
+        this.activatedRoute.queryParams.subscribe((params) => {
+          this.contributionId = params['contributionId'];
+          this.page = params['page']
+          if (this.page === 'account') {
+            if (this.contributionId) {
+              this.sub.push(
+                this.contributionService
+                  .fetchContributorByContributionId(this.contributionId)
+                  .subscribe((contribution: any) => {
+                    this.contribution = contribution;
+                    this.mapForm(contribution.rightist);
+                  })
+              );
+            }
+          }
+          else {
+            this.eventArray.push(this.newEvent())
+            this.memoirArray.push(this.newMemoir())
+          }
+        })
+      );
     }
   }
 
@@ -266,26 +314,23 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.form2.patchValue({
         content: rightist.description,
       });
-      this.eventArray.patchValue(rightist.events);
-      this.memoirArray.patchValue(rightist.memoirs);
+      for (const event of rightist.events) {
+        this.eventArray.push(new FormGroup({
+          startYear: new FormControl(event.startYear),
+          endYear: new FormControl(event.endYear),
+          event: new FormControl(event.event),
+        }))
+      }
+
+      for (const memoir of rightist.memoirs) {
+        this.memoirArray.push(new FormGroup({
+          memoirTitle: new FormControl(memoir.memoirTitle),
+          memoirContent: new FormControl(memoir.memoirContent),
+          memoirAuthor: new FormControl(memoir.memoirAuthor),
+        }))
+      }
     }
   }
-
-  // onApprove() {
-  //   if (this.contribution) {
-  //     let contributorId = this.contribution.contributorId[this.contribution.contributorId.length - 1]
-  //     this.contributionService.updateContributionByPublish(
-  //       contributorId , this.contribution.contributionId, 'approved')
-  //   }
-  // }
-
-  // onReject() {
-  //   if (this.contribution) {
-  //     let contributorId = this.contribution.contributorId[this.contribution.contributorId.length - 1]
-  //     this.contributionService.updateContributionByPublish(
-  //       contributorId , this.contribution.contributionId, 'rejected')
-  //   }
-  // }
 
   onselectFile(e) {
     if (e.target.files) {
@@ -302,12 +347,16 @@ export class UploadComponent implements OnInit, OnDestroy {
       name,
       gender,
       status,
-      enthic,
+      ethnic,
       rightestYear,
       occupation,
       birthYear,
     } = this.form.value;
     const { content } = this.form2.value;
+
+    console.log(this.memoirArray.value)
+    console.log(this.eventArray.value)
+
     const contributionId = this.contributionId || UUID();
     const rightistId =
       this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
@@ -318,6 +367,8 @@ export class UploadComponent implements OnInit, OnDestroy {
         contributedAt: new Date(),
         rightistId: rightistId,
         approvedAt: new Date(), // update model with An.
+        lastUpdatedAt: new Date(),
+        publish: 'new',
         rightist: {
           rightistId: rightistId,
           imagePath: [this.url], // Price said he will work on this.
@@ -329,8 +380,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           deathYear: 0,
           rightistYear: rightestYear,
           status: status || 'Unknown',
-          ethnicity: enthic || '',
-          publish: 'new',
+          ethnicity: ethnic || '',
           job: occupation,
           detailJob: '',
           workplace: '',
@@ -345,5 +395,5 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.clear2();
         this.route.navigateByUrl('/account');
       });
-  }
+    }
 }
