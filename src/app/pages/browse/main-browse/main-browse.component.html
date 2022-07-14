@@ -1,12 +1,27 @@
 <div class="bg-khaki bg-opacity-25 d-flex">
   <!-- search bar -->
   <div class="input-group m-5">
-    <input type="search" class="form-control rounded-end rounded-pill" placeholder="Search for ... "
-      [(ngModel)]="searchInput" (search)="searchBar()" aria-label="Search for ... " aria-describedby="button-addon2" />
+    <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="true">
+      <button id="button-basic" dropdownToggle type="button"
+        class="btn border border-start-0 bg-white rounded-end rounded-pill dropdown-toggle" [value]="searchSelect">
+        {{searchSelect}}
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+        <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('All Fields')">All Fields</a></li>
+        <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('Name')">Name</a></li>
+        <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('Events')">Events</a></li>
+        <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('Description')">Description</a>
+        </li>
+      </ul>
+    </div>
+
+    <input type="search" class="form-control" placeholder="Search for ... " [(ngModel)]="searchInput"
+      (search)="searchBar()" aria-label="Search for ... " aria-describedby="button-addon2" />
     <button class="btn border border-start-0 bg-white rounded-start rounded-pill" type="button" (click)="searchBar()">
       <img src="assets/global/search.svg" alt="" width="20" />
     </button>
-    <a class="align-self-center" type="button" tooltip="What to search for?
+
+    <a class="align-self-center mx-2" type="button" tooltip="What to search for?
     - Search for first name 
     and/or last name
     - Year of birth 
@@ -77,17 +92,8 @@
       <div *ngIf="curView === 'List'; else elseBlock">
         <div *ngIf="display.length; else elseEmptyBlock">
 
-          <!-- <div class="position-relative" *ngIf="letterLableChange(result) == true as value">
-              <img src="assets\browsepage\tempprofile.png" class="rounded-circle border border-dark" width="20" />
-              <span class="fw-bolder position-absolute movem bg-light">
-                {{currentLetter}}
-                {{value}}
 
-                {{result.initial}}
-              </span>
-            </div> -->
-
-          <a class="d-flex m-3" style="
+          <a class="d-flex m-3 searchprofile" style="
               height: 150px;
               border-radius: 28px;
               color: black;
@@ -105,7 +111,7 @@
               <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
               <div class="text-start">Gender: {{ result.gender || "-"}}</div>
             </div>
-            <div class="text-start col-6 m-3">{{ result.description }}</div>
+            <div class="text-start col-6 m-3 searchprofile">{{ result.description }}</div>
             <div class="col align-self-end fw-bold">read more ></div>
           </a>
 
@@ -121,7 +127,7 @@
       <ng-template #elseBlock>
         <div *ngIf="display.length; else elseEmptyBlock">
           <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" name=" searchLayout"
-            *ngFor="let results of display | UpdateRows: 5 ; let i = index">
+            *ngFor="let results of display | UpdateRows: 3 ; let i = index">
 
             <div class="py-5 col" style="border-radius: 28px; background-color: #dbdde2; max-width: 25%;"
               *ngFor="let result of results; let j= index">

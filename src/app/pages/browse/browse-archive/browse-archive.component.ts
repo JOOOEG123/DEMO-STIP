@@ -56,13 +56,7 @@ export class BrowseArchiveComponent implements OnInit {
     console.log(this.profile.memoirs);
     this.profile.memoirs.forEach((element: any, index: number) => {
       this.profile.memoirs[index].memoir = element.memoir.split('\\n');
-      // this.profile.memoirs[index].memoir = element.memoir.replace(
-      //   /\\n/g,
-      //   '<br>'
-      // );
-      console.log(this.display);
     });
-    console.log(this.profile.memoirs);
   }
   SavePDF(pdfName: string): void {
     let content;
