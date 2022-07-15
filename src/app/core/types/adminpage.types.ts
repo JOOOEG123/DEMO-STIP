@@ -90,8 +90,9 @@ export interface OuterContributionJson {
 export interface ImageSchema {
   imageId: string,
   rightistId: string,
-  imagePath: string,
+  imagePath?: string,
   isGallery: boolean,
+  galleryCategory: string,
   galleryTitle: string,
   galleryDetail: string,
   gallerySource: string

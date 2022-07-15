@@ -1,22 +1,18 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { NgxMasonryOptions } from 'ngx-masonry';
-import { Subscription } from 'rxjs';
+import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
+import { Observable, Subscription } from 'rxjs';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Image } from 'src/app/core/types/adminpage.types';
+import { Image, ImageSchema } from 'src/app/core/types/adminpage.types';
 
 import { ImagesService } from 'src/app/core/services/images.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
 import { ImageJson } from 'src/app/core/types/adminpage.types';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UUID } from 'src/app/core/utils/uuid';
 // import { Image } from 'src/app/core/types/adminpage.types';
-interface Image {
-  src: string;
-  title: string;
-  description: string;
-  opacity: number;
-}
 
 @Component({
   selector: 'app-gallery',
@@ -24,6 +20,7 @@ interface Image {
   styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent implements OnInit, OnDestroy {
+
   selectedCategory?: string;
   currentImageIndex?: number;
 
@@ -33,109 +30,54 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   public masonryOptions: NgxMasonryOptions = {
     gutter: 20,
+    horizontalOrder: true
   };
 
-  imagesOther: Image[] = []
-
-  images: Array<Image> = [
-    {
-      src: 'assets/gallery/historical_1.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_2.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_3.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_4.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_5.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_6.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_7.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_8.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_9.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_10.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-    {
-      src: 'assets/gallery/historical_11.jpg',
-      title: 'Some title',
-      description: 'Some description',
-      opacity: 100,
-    },
-  ];
+  images: Image[] = []
+  categoryImages: Image[] = []
+  display: Image[] = []
 
   translationSubscription?: Subscription
+  imageSubscription?: Subscription
 
   currentPage?: number;
   showBoundaryLinks: boolean = true;
-  itemsPerPage: number = 5;
-  display: Image[] = []
+  itemsPerPage: number = 4;
+
+  modalRef?: BsModalRef
+  selectedImage?: Image
 
   @ViewChild('image') imageRef?: ElementRef;
 
   constructor(
     private translate: TranslateService,
     private storageAPI: StorageApIService,
-    private imagesAPI: ImagesService) {}
+    private imagesAPI: ImagesService,
+    private modalService: BsModalService) {}
 
   ngOnInit(): void {
 
-    this.imagesAPI.getAllImages().subscribe((data: any) => {
-      let images : Image[]
-      for (const image in Object.values(data)) {
-        this.imagesOther.push(image)
+    this.imageSubscription = this.imagesAPI.getAllImages().subscribe((data: any) => {
+      let images : Image[] = Object.values(data)
+      for (const image of images) {
+        this.storageAPI.getGalleryImageURL(`${image.imageId}`).subscribe(data => {
+          image.imagePath = data
+        })
+        this.images.push(image)
+        if (this.display.length < this.itemsPerPage) {
+          this.display.push(image)
+        }
       }
+      this.categoryImages = this.images.slice()
     })
+    
+   
+    console.log(this.categoryImages)
 
     this.selectedCategory = 'All';
     this.currentImageIndex = -1;
     this.currentPage = 1;
-    this.display = this.images.slice(0, this.itemsPerPage);
-
-    
-
+  
     // Translation
     this.translationSubscription = this.translate.stream('gallery').subscribe(data => {
       this.galleries.length = 0
@@ -152,10 +94,33 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.translationSubscription?.unsubscribe()
+    this.imageSubscription?.unsubscribe()
   }
 
   setActive(gallery: string) {
     this.selectedCategory = gallery;
+  
+    this.currentPage = 1
+
+    let result : Image[]  = []
+
+    if (gallery == "All") {
+      result = this.images.slice()
+    }
+    else {
+      for (const image of this.images) {
+        if (image.galleryCategory == gallery) {
+          result.push(image)
+        }
+      }
+    }
+
+    this.categoryImages = result
+
+    this.pageChanged({
+      itemsPerPage: this.itemsPerPage,
+      page: 1
+    })
   }
 
   onEnter(index: number) {
@@ -170,15 +135,53 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.currentPage = event.page;
     var start = (this.currentPage - 1) * this.itemsPerPage;
     var end = start + this.itemsPerPage;
-    this.display = this.images.slice(start, end);
+    this.display = this.categoryImages.slice(start, end);
     window.scroll(0, 0)
     this.imageRef?.nativeElement.focus()
   }
 
-  onLearnMore() {
-    console.log("ad")
-    this.storageAPI.getGalleryImage('historical_11.jpg').subscribe((data) => {
-      console.log(data)
-    })
+  onLearnMore(template: TemplateRef<any>, image: Image) {
+    this.modalService.show(template, { class: 'modal-xl', backdrop: 'static'})
+    this.selectedImage = image  
+  }
+
+  populateData() {
+    // for (let i = 1; i <= 11; i++) {
+    //   fetch(`http://localhost:4200/assets/gallery/historical_${i}.jpg`)
+    //   .then(async response => {
+    //     const contentType = response.headers.get('content-type')
+    //     const blob = await response.blob()
+    //     const file = new File([blob], UUID(), { type: contentType! })
+
+    //     const uid = UUID()
+
+    //     let image : ImageSchema = {
+    //       imageId: uid,
+    //       rightistId: '',
+    //       isGallery: true,
+    //       galleryCategory: '',
+    //       galleryTitle: 'Title',
+    //       galleryDetail: 'Detail',
+    //       gallerySource: 'Source'
+    //     }
+
+    //     if (i % 2 == 0) {
+    //       image.galleryCategory = 'Camps'
+    //     }
+    //     else {
+    //       image.galleryCategory = 'People'
+    //     }
+       
+    //     this.imagesAPI.addImage(image)
+    //     this.storageAPI.uploadGalleryImage(uid, file)
+    //   })
+    // }
+    this.currentPage = 1
+  }
+
+  onClose(value: string) {
+    if (value === 'close') {
+      this.modalService.hide()
+    }
   }
 }

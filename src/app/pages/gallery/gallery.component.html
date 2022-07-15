@@ -21,10 +21,10 @@
 
 <div class="container my-4">
   <ngx-masonry
-    [options]="masonryOptions"
     [ordered]="true"
-    [ngStyle]="{ width: '100%' }"
-    
+    [options]="masonryOptions"
+    [ngStyle]="{ width: '100%' }" 
+    *ngIf="images[0]?.imagePath && images[images.length-1]?.imagePath"
   >
     <div
       ngxMasonryItem
@@ -41,7 +41,6 @@
           [ngStyle]="{ opacity: currentImageIndex == i ? '0.4' : '1' }"
         />
         <button
-          (click)="onLearnMore()"
           (focus)="onEnter(i)"
           class="hovered-button"
           (mouseover)="onEnter(i)"
@@ -56,11 +55,13 @@
   </ngx-masonry>
 </div>
 
-<div class="container d-flex justify-content-center">
+<button (click)="populateData()">Click</button>
+
+<div *ngIf="categoryImages.length > 0" class="container d-flex justify-content-center my-4">
   <pagination
     [boundaryLinks]="showBoundaryLinks"
     [itemsPerPage]="itemsPerPage"
-    [totalItems]="images.length"
+    [totalItems]="categoryImages.length"
     [(ngModel)]="currentPage"
     (pageChanged)="pageChanged($event)"
     previousText="&lsaquo;"
@@ -68,6 +69,10 @@
     firstText="&laquo;"
     lastText="&raquo;"
   ></pagination>
+</div>
+
+<div class="container text-center my-4" *ngIf="images[0]?.imagePath && categoryImages.length == 0">
+  <span class="display-1">No Records Found</span>
 </div>
 
 <ng-template #galleryModal>
