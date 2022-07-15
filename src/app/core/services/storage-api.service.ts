@@ -39,4 +39,10 @@ export class StorageApIService {
     const upload = ref.put(file)
     return upload
   }
+
+  removeGalleryImage(uid: string) {
+    const ref = this.afs.ref(`images/galleries/${uid}`)
+    const upload = ref.delete()
+    return upload
+  }
 }

@@ -44,6 +44,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   modalRef?: BsModalRef
   selectedImage?: Image
 
+  status: string = 'initial'
+
   @ViewChild('image') imageRef?: ElementRef;
 
   constructor(
@@ -55,6 +57,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.imageSubscription = this.imagesAPI.getAllImages().subscribe((data: any) => {
+      this.categoryImages.length = 0
+      this.display.length = 0
+      this.images.length = 0
       let images : Image[] = Object.values(data)
       for (const image of images) {
         this.storageAPI.getGalleryImageURL(`${image.imageId}`).subscribe(data => {
@@ -135,8 +140,68 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   onLearnMore(template: TemplateRef<any>, image: Image) {
+    this.selectedImage = image
+    this.status = 'initial'  
     this.modalService.show(template, { class: 'modal-xl', backdrop: 'static'})
-    this.selectedImage = image  
+  }
+
+  // functionality in modal
+  onSubmit(data: any, template: TemplateRef<any>) {
+    this.modalService.hide()
+
+    setTimeout(() => {
+      this.status = data.status
+      this.selectedImage = data.image
+      this.modalService.show(template, { class: 'modal-xl', backdrop: 'static'})
+    }, 500)
+  }
+
+  onRemove(data: any, template: TemplateRef<any>) {
+    this.modalService.hide()
+    
+    setTimeout(() => {
+      this.status = data.status
+      this.modalService.show(template, { class: 'modal-xl', backdrop: 'static'})
+    }, 500)
+  }
+
+  onUpdate(data: any) {
+    let image : Image = data.image
+    if (this.selectedImage) {
+      if (data.status == 'update') {
+        this.modalService.hide()
+        let { opacity, imagePath, ...result } = image
+        console.log(result)
+        this.imagesAPI.updateImage(result)
+      }
+    }
+  }
+
+  onDelete(data: any) {
+    let image = data.image
+    if (data.status == 'delete') {
+      this.modalService.hide()
+      this.imagesAPI.deleteImage(image.imageId)
+      this.storageAPI.removeGalleryImage(image.imageId)
+      console.log(image)
+    }
+  }
+
+  onCancel(data: any) {
+    if (data.status == 'cancel') {
+      this.modalService.hide()
+    }
+  }
+
+  onClose(data: any) {
+    if (data.status === 'close') {
+      this.modalService.hide()
+    }
+  }
+  searchTerm?: string
+
+  searchGallery() {
+    console.log(this.searchTerm)
   }
 
   populateData() {
@@ -171,16 +236,5 @@ export class GalleryComponent implements OnInit, OnDestroy {
     //   })
     // }
     this.currentPage = 1
-  }
-
-  onClose(value: string) {
-    if (value === 'close') {
-      this.modalService.hide()
-    }
-  }
-  searchTerm?: string
-
-  searchGallery() {
-    console.log("asd")
   }
 }

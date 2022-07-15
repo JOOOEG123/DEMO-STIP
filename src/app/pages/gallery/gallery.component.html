@@ -8,9 +8,11 @@
       <input type="search" class="form-control rounded-end rounded-pill" placeholder="Search Gallery"
         aria-label="Search Gallery" aria-describedby="gallery_search_btn" [(ngModel)]="searchTerm"
         (keyup.enter)="searchGallery()" />
-      <button class="btn border border-start-0 bg-white rounded-start rounded-pill" type="button"
-        routerLink="/browse/main/memoir" routerLinkActive="active" ariaCurrentWhenActive="page"
-        id="gallery_search_btn" (click)="searchGallery()">
+      <button 
+        class="btn border border-start-0 bg-white rounded-start rounded-pill" 
+        type="button"
+        id="gallery_search_btn" 
+        (click)="searchGallery()">
         <img src="assets/homepage/search.png" alt="globe" width="15" />
   
       </button>
@@ -97,5 +99,14 @@
 
 <!--Modal-->
 <ng-template #galleryModal>
-  <app-overlay [image]="this.selectedImage" (close)="onClose($event)"></app-overlay>
+  <app-overlay
+    [status]="status" 
+    [image]="this.selectedImage" 
+    (close)="onClose($event)" 
+    (submit)="onSubmit($event, galleryModal)"
+    (remove)="onRemove($event, galleryModal)"
+    (update)="onUpdate($event)"
+    (delete)="onDelete($event)"
+    (cancel)="onCancel($event)"></app-overlay>
 </ng-template>
+

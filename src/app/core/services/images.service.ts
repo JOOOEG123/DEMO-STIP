@@ -23,4 +23,16 @@ export class ImagesService {
             .object(`persons/requestArchieve/images`)
             .update({ [image.imageId]: image})
     }
+
+    updateImage(image: ImageSchema) {
+        return this.db
+            .object(`persons/requestArchieve/images`)
+            .update({[image.imageId]: image})
+    }
+
+    deleteImage(imageId: string) {
+        return this.db
+            .object(`persons/requestArchieve/images/${imageId}`)
+            .remove()
+    }
 }
