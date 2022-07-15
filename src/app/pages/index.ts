@@ -19,6 +19,7 @@ import { UploadComponent } from './requestForms/upload/upload.component';
 
 import { EditAccountComponent } from './account/edit-account/edit-account.component';
 import { AuthGuard } from '../core/services/auth-guard.service';
+import { RepositoryComponent } from './browse/repository/repository.component';
 
 // AuthGuard pipe for admin pages
 const adminOnly = () =>
@@ -44,6 +45,7 @@ export const pagesComponents = [
   ResourcesComponent,
   BrowseArchiveComponent,
   UploadComponent,
+  RepositoryComponent,
 ];
 
 // Page routes
@@ -81,6 +83,13 @@ export const pagesRoutes = [
     component: GalleryComponent,
     data: {
       title: 'Gallery',
+    },
+  },
+  {
+    path: 'browse/repository',
+    component: RepositoryComponent,
+    data: {
+      title: 'Repository',
     },
   },
   {
@@ -124,11 +133,10 @@ export const pagesRoutes = [
     path: 'share',
     component: ShareComponent,
     canActivate: [AngularFireAuthGuard],
-    data:{
+    data: {
       title: 'share',
     },
   },
-
 ];
 
 export const adminRoutes = [

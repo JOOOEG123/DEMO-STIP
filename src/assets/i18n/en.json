@@ -12,6 +12,7 @@
     "broswer_page": " Browse Archives",
     "archive_page": "Archive",
     "gallery_page": "Gallery",
+    "repository_page":"Repository",
     "login_signup": "Login/Signup"
   },
   "login.component": {
@@ -33,6 +34,7 @@
     "navbar_button_three": "Browse Archives",
     "navbar_button_three_subbutton_one": "Archive",
     "navbar_button_three_subbutton_two": "Gallery",
+    "navbar_button_three_subbutton_three": "Repository",
     "navbar_language_one": "English",
     "navbar_language_two": "Chinese",
     "navbar_auth_button": "Login / Signup",
@@ -96,5 +98,12 @@
     "gallery_top_cat_four_button": "People",
     "gallery_top_cat_five_button": "Album Name",
     "gallery_image_button": "Learn More"
+  }, 
+  "repository": {
+    "gallery_top_title": "Archive Repositories",
+    "gallery_top_cat_one_button": "Forward",
+    "gallery_top_cat_two_button": "Publication Notes",
+    "gallery_top_cat_three_button": "Appendix",
+    "gallery_top_cat_four_button": "Preface"
   }
 }

@@ -20,7 +20,7 @@ const routes: Routes = [
         path: 'home',
         component: HomepageComponent,
         data: {
-          title: 'Chinese “Rightist” Archives',
+          title: 'hinese “Rightist” Archives',
         },
       },
       ...pagesRoutes,
