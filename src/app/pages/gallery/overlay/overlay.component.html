@@ -5,8 +5,43 @@
         <img [src]="this.image?.imagePath" width="70%" class="img-fluid mx-auto my-4 d-block" />
     </div>    
     <div>
-        <p class="display-6"><span class="fw-bold">Title: </span>{{this.image?.galleryTitle}}</p>
-        <p class="display-6"><span class="fw-bold">Detail: </span>{{this.image?.galleryDetail}}</p>
-        <p class="display-6"><span class="fw-bold">Source: </span>{{this.image?.gallerySource}}</p>
+      
+        <div class="container">
+            <div class="display-6"><span class="fw-bold">Title: </span>{{this.image?.galleryTitle}}</div>
+            <div class="input-group" *ngIf="isEditMode">
+                <div class="input-group-prepend">
+                    <span class="input-group-text fw-bold">Title: </span>
+                </div>
+                <input [(ngModel)]="title" type="text" class="form-control" aria-label="Small" aria-describedby="title_edit_input" />
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="display-6"><span class="fw-bold">Detail: </span>{{this.image?.galleryDetail}}</div>
+            <div class="input-group" *ngIf="isEditMode">
+                <div class="input-group-prepend">
+                    <span class="input-group-text fw-bold">Detail: </span>
+                </div>
+                <input [(ngModel)]="detail" type="text" class="form-control" aria-label="Small" aria-describedby="detail_edit_input" />
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="display-6"><span class="fw-bold">Source: </span>{{this.image?.gallerySource}}</div>
+            <div class="input-group" *ngIf="isEditMode">
+                <div class="input-group-prepend">
+                    <span class="input-group-text fw-bold">Source: </span>
+                </div>
+                <input [(ngModel)]="source" type="text" class="form-control" aria-label="Small" aria-describedby="source_edit_input" />
+            </div>
+        </div>
+        
     </div>
+
+    <div class="container text-center my-4" *ngIf="isAdmin">
+        <button class="btn btn-warning mx-2" (click)="onEdit()">Edit</button>
+        <button class="btn btn-danger mx-2" (click)="onRemove()">Remove</button>
+    </div>
+
+    
 </div>

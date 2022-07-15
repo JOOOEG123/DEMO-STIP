@@ -1,6 +1,23 @@
 <div class="container">
+  <!-- Title -->
   <h2 class="text-center my-4 fw-bold">{{ title }}</h2>
 
+  <!-- Search bar -->
+  <div class="container w-50">
+    <div class="input-group py-5">
+      <input type="search" class="form-control rounded-end rounded-pill" placeholder="Search Gallery"
+        aria-label="Search Gallery" aria-describedby="gallery_search_btn" [(ngModel)]="searchTerm"
+        (keyup.enter)="searchGallery()" />
+      <button class="btn border border-start-0 bg-white rounded-start rounded-pill" type="button"
+        routerLink="/browse/main/memoir" routerLinkActive="active" ariaCurrentWhenActive="page"
+        id="gallery_search_btn" (click)="searchGallery()">
+        <img src="assets/homepage/search.png" alt="globe" width="15" />
+  
+      </button>
+    </div>
+  </div>
+  
+  <!-- Categories -->
   <div class="d-flex justify-content-center flex-wrap">
     <div *ngFor="let gallery of galleries" class="p-2 mx-4">
       <button
@@ -19,6 +36,7 @@
   <hr class="divider border-orange-red" />
 </div>
 
+ <!-- Masonry Columns -->
 <div class="container my-4">
   <ngx-masonry
     [ordered]="true"
@@ -57,7 +75,8 @@
 
 <button (click)="populateData()">Click</button>
 
-<div *ngIf="categoryImages.length > 0" class="container d-flex justify-content-center my-4">
+<!-- Pagination -->
+<div *ngIf="categoryImages.length > itemsPerPage" class="container d-flex justify-content-center my-4">
   <pagination
     [boundaryLinks]="showBoundaryLinks"
     [itemsPerPage]="itemsPerPage"
@@ -71,10 +90,12 @@
   ></pagination>
 </div>
 
+<!--No Record Indicator-->
 <div class="container text-center my-4" *ngIf="images[0]?.imagePath && categoryImages.length == 0">
   <span class="display-1">No Records Found</span>
 </div>
 
+<!--Modal-->
 <ng-template #galleryModal>
   <app-overlay [image]="this.selectedImage" (close)="onClose($event)"></app-overlay>
 </ng-template>

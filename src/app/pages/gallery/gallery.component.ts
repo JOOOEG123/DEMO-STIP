@@ -1,18 +1,15 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
-import { Observable, Subscription } from 'rxjs';
+import { PageChangedEvent, PaginationComponent } from 'ngx-bootstrap/pagination';
+import { NgxMasonryOptions } from 'ngx-masonry';
+import { Subscription } from 'rxjs';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Image, ImageSchema } from 'src/app/core/types/adminpage.types';
+import { Image } from 'src/app/core/types/adminpage.types';
 
 import { ImagesService } from 'src/app/core/services/images.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
-import { ImageJson } from 'src/app/core/types/adminpage.types';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UUID } from 'src/app/core/utils/uuid';
-// import { Image } from 'src/app/core/types/adminpage.types';
 
 @Component({
   selector: 'app-gallery',
@@ -40,7 +37,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   translationSubscription?: Subscription
   imageSubscription?: Subscription
 
-  currentPage?: number;
+  currentPage : number = 1;
   showBoundaryLinks: boolean = true;
   itemsPerPage: number = 4;
 
@@ -71,12 +68,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
       this.categoryImages = this.images.slice()
     })
     
-   
-    console.log(this.categoryImages)
 
     this.selectedCategory = 'All';
     this.currentImageIndex = -1;
-    this.currentPage = 1;
   
     // Translation
     this.translationSubscription = this.translate.stream('gallery').subscribe(data => {
@@ -99,14 +93,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   setActive(gallery: string) {
     this.selectedCategory = gallery;
-  
-    this.currentPage = 1
 
     let result : Image[]  = []
 
     if (gallery == "All") {
       result = this.images.slice()
-    }
+    } 
     else {
       for (const image of this.images) {
         if (image.galleryCategory == gallery) {
@@ -115,12 +107,14 @@ export class GalleryComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.categoryImages = result
+    this.currentPage = 1
+    
+    // issue with ngx pagination (can only update one field at a time)
+    setTimeout(() => {
+      this.categoryImages = result
+      this.display = this.categoryImages.slice(0, this.itemsPerPage)
+    }, 100)
 
-    this.pageChanged({
-      itemsPerPage: this.itemsPerPage,
-      page: 1
-    })
   }
 
   onEnter(index: number) {
@@ -183,5 +177,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
     if (value === 'close') {
       this.modalService.hide()
     }
+  }
+  searchTerm?: string
+
+  searchGallery() {
+    console.log("asd")
   }
 }
