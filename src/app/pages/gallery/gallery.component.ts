@@ -137,7 +137,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.currentPage = event.page;
     var start = (this.currentPage - 1) * this.itemsPerPage;
     var end = start + this.itemsPerPage;
-    this.display = this.categoryImages.slice(start, end);
+    this.display = this.searchImages.slice(start, end);
     window.scroll(0, 0)
     this.imageRef?.nativeElement.focus()
   }
