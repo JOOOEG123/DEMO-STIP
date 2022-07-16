@@ -233,7 +233,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     }, 200)
   }
 
-  populateData() {
+  // populateData() {
     // for (let i = 1; i <= 11; i++) {
     //   fetch(`http://localhost:4200/assets/gallery/historical_${i}.jpg`)
     //   .then(async response => {
@@ -264,6 +264,5 @@ export class GalleryComponent implements OnInit, OnDestroy {
     //     this.storageAPI.uploadGalleryImage(uid, file)
     //   })
     // }
-    this.currentPage = 1
-  }
+  // }
 }
