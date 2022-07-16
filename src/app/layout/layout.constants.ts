@@ -41,6 +41,11 @@ export const NavBar = [
         url: '/browse/gallery',
         icon: 'home',
       },
+      {
+        title: 'repository_page',
+        url: '/browse/repository',
+        icon: 'home',
+      },
     ],
   },
 ];

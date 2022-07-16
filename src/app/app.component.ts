@@ -4,8 +4,6 @@ import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map } from 'rxjs/operators';
 
-
-
 @Component({
   selector: 'app-root',
   template: `<router-outlet></router-outlet>`,
@@ -33,6 +31,7 @@ export class AppComponent {
         filter((event) => event instanceof NavigationEnd),
         map(() => {
           let child = this.activatedRoute.firstChild;
+          console.log(child);
           while (child?.firstChild) {
             child = child.firstChild;
           }

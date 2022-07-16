@@ -53,33 +53,30 @@ export class BrowseArchiveComponent implements OnInit {
   display: string[] = [];
 
   replaceNewline() {
-    console.log(this.profile.memoirs);
     this.profile.memoirs.forEach((element: any, index: number) => {
       this.profile.memoirs[index].memoir = element.memoir.split('\\n');
-      // this.profile.memoirs[index].memoir = element.memoir.replace(
-      //   /\\n/g,
-      //   '<br>'
-      // );
-      console.log(this.display);
     });
-    console.log(this.profile.memoirs);
   }
   SavePDF(pdfName: string): void {
+    let doc = new jsPDF('p', 'pt', 'a4');
     let content;
     if (pdfName === 'memoirContent') {
-      content = this.memContent.nativeElement;
+      // content = doc.text(splitTitle, 30, 30);
+      this.addWrappedText(this.profile.memoirs[0].memoir, 540, doc);
+      doc.save(pdfName + '.pdf');
+      // doc.text(this.profile.memoirs[0].memoir, 30, 60, { maxWidth: 540 });
+      // content = this.memContent.nativeElement;
     } else {
+      // this.addWrappedText(this.profile.memoirs[0].memoir, 540, doc);
       content = this.infoContent.nativeElement;
+      doc.html(content, {
+        callback: function (doc) {
+          doc.save(pdfName + '.pdf');
+        },
+        x: 50,
+        y: 50,
+      });
     }
-
-    console.log(content);
-    let doc = new jsPDF('p', 'pt', 'a4');
-
-    doc.html(content, {
-      callback: function (doc) {
-        doc.save(pdfName + '.pdf');
-      },
-    });
 
     //doc.output('dataurlnewwindow'); // just open it
   }
@@ -89,5 +86,36 @@ export class BrowseArchiveComponent implements OnInit {
 
   updateCollapse() {
     this.drop = !this.drop;
+  }
+
+  addWrappedText(
+    text,
+    textWidth,
+    doc,
+    fontSize = 10,
+    fontType = 'normal',
+    lineSpacing = 20,
+    xPosition = 40,
+    initialYPosition = 50,
+    pageWrapInitialYPosition = 50
+  ) {
+    var textLines = doc.splitTextToSize(text, textWidth); // Split the text into lines
+    var pageHeight = doc.internal.pageSize.height; // Get page height, well use this for auto-paging
+    doc.setFont(undefined, fontType);
+    doc.setFont(undefined, fontSize);
+
+    console.log(textLines);
+    var cursorY = initialYPosition;
+
+    textLines.forEach((lineText) => {
+      if (cursorY + 50 > pageHeight) {
+        // Auto-paging
+        console.log('auto-paginggggggggggggg', pageHeight);
+        doc.addPage();
+        cursorY = pageWrapInitialYPosition;
+      }
+      doc.text(xPosition, cursorY, lineText);
+      cursorY += lineSpacing;
+    });
   }
 }

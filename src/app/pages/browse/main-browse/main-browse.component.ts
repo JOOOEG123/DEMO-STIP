@@ -15,6 +15,7 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { FilterTypes } from 'src/app/core/types/filters.type';
 import { LETTERS } from './main-browse.constant';
 import { BrowseSearchFilterComponent } from 'src/app/pages/browse/browse-search-filter/browse-search-filter.component';
+import { BsDropdownModule, BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -44,7 +45,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   archSubAPI: Subscription[] = [];
   isloading!: boolean;
   original: any;
-
+  searchSelect: string = 'All Fields';
   @ViewChild(BrowseSearchFilterComponent)
   private browseSearchFilterComponent!: BrowseSearchFilterComponent;
 
@@ -80,8 +81,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       Math.ceil(this.db_result.length / this.itemsPerPage),
       1
     );
-    console.log(this.db_result);
-    console.log(this.display);
   }
 
   pageChanged(event: any) {
@@ -157,26 +156,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.browseSearchFilterComponent?.clear();
     const userValues = this.searchInput.split(' ');
 
-    var db_attr = [
-      'birthYear',
-      'birthplace',
-      'deathYear',
-      'description',
-      'detailJob',
-      'education',
-      'ethnicity',
-      'events',
-      'firstName',
-      'gender',
-      'job',
-      'lastName',
-      'publish',
-      'memoir',
-      'reference',
-      'rightistYear',
-      'status',
-      'workplace',
-    ];
+    var db_attr = this.onOpenChange(this.searchSelect);
 
     this.getNonFilterData('searchBar');
     // if (this.db_result) {
@@ -212,8 +192,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     return res;
   }
   filterValueschanges(valueEmitted: any) {
-    console.log('filtering values');
-    console.log(this.db_result);
     const empty = Object.values(this.filterValues).every((element) => {
       return element === '';
     });
@@ -234,8 +212,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     }
 
     this.currentPage = 1;
-    console.log('filtering values');
-    console.log(this.db_result);
+
     this.setDisplayInfo(this.itemsPerPage);
   }
 
@@ -246,7 +223,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         values[index] = record[value];
       });
 
-      console.log('uservalues before removing empty', userValues);
       userValues = userValues.filter((element) => {
         return element !== '';
       });
@@ -286,5 +262,39 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       res = from <= record.rightestYear && record.rightestYear <= to;
     }
     return res;
+  }
+
+  onOpenChange(searchSelect: string) {
+    this.searchSelect = searchSelect;
+    switch (searchSelect) {
+      case 'Description':
+        return ['description'];
+      case 'Name':
+        //An: need to add fullName attribute on db, otherwise this is a bug.
+        return ['firstName', 'lastName', 'fullName'];
+      case 'Events':
+        return ['events'];
+      default:
+        return [
+          'birthYear',
+          'birthplace',
+          'deathYear',
+          'description',
+          'detailJob',
+          'education',
+          'ethnicity',
+          'events',
+          'firstName',
+          'gender',
+          'job',
+          'lastName',
+          'publish',
+          'memoir',
+          'reference',
+          'rightistYear',
+          'status',
+          'workplace',
+        ];
+    }
   }
 }

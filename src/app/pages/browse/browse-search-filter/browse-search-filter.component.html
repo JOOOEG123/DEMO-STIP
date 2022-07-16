@@ -79,7 +79,13 @@
       <div class="col-12 col-md-3">
         <div class="form-group">
 
-          <label for="year-of-becoming-rightest" class="form-label col fw-bold">Year of Becoming A "Rightist"</label>
+          <label for="year-of-becoming-rightest" class="form-label col fw-bold">"Rightist" Year</label>
+          <a class="align-self-center mx-2" type="button"
+            tooltip="“Rightist Year” is when the individual became a “rightist”." data-bs-toggle="tooltip"
+            data-bs-placement="right">
+            <img src="assets/browsepage/question-mark.svg" alt="" width="20" />
+
+          </a>
           <input type="text" id="year-of-becoming-rightest" formControlName="date" placeholder="YYYY-YYYY"
             class="form-control form-control-sm " bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
             [bsConfig]="{containerClass: 'theme-red',minMode: 'year',rangeInputFormat: 'YYYY'}" />
@@ -88,7 +94,7 @@
       </div>
       <div class="col-12 d-flex">
         <div class="ms-auto">
-          <button class="btn btn-secondary mx-3" type="button" (click)="clear()">
+          <button class="btn btn-secondary mx-3 rounded-pill" type="button" (click)="clear()">
             Clear
           </button>
 

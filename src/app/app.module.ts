@@ -42,7 +42,7 @@ import {
 import { UpdateRowsPipe } from './core/pipes/update-rows-pipe.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareComponent } from './pages/browse/share/share.component';
-import { MemoirComponent } from './pages/browse/memoir/memoir.component';
+
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { UploadComponent } from './pages/requestForms/upload/upload.component';
 
@@ -54,6 +54,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LangInterceptor } from './core/interceptors/lang.interceptor';
 import { OverlayComponent } from './pages/gallery/overlay/overlay.component';
 import { ContributionComponent } from './pages/admin/contribution/contribution.component';
+import { RepositoryComponent } from './pages/browse/repository/repository.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -67,7 +68,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ...sharedComponents,
     UpdateRowsPipe,
     ShareComponent,
-    MemoirComponent,
     EditAccountComponent,
     UploadComponent,
     OverlayComponent,
