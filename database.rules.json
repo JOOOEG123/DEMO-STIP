@@ -24,6 +24,9 @@
          },
           "persons": {
             ".read": true
+          },
+          "images": {
+            ".read": true
           }
       }
     },

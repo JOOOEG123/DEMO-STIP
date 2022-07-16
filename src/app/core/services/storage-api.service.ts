@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { UUID } from '../utils/uuid';
 import { AuthServiceService } from './auth-service.service';
 
 @Injectable({
@@ -27,5 +28,21 @@ export class StorageApIService {
     const ref = this.profileImage(uid);
     const upload = ref.put(file);
     return upload;
+  }
+
+  getGalleryImageURL(imageId: string) {
+    return this.afs.ref(`images/galleries/${imageId}`).getDownloadURL()
+  }
+
+  uploadGalleryImage(uid: string, file: File) {
+    const ref = this.afs.ref(`images/galleries/${uid}`)
+    const upload = ref.put(file)
+    return upload
+  }
+
+  removeGalleryImage(uid: string) {
+    const ref = this.afs.ref(`images/galleries/${uid}`)
+    const upload = ref.delete()
+    return upload
   }
 }
