@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy, TemplateRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { PageChangedEvent, PaginationComponent } from 'ngx-bootstrap/pagination';
-import { NgxMasonryOptions } from 'ngx-masonry';
+import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { Subscription } from 'rxjs';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -27,11 +27,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   public masonryOptions: NgxMasonryOptions = {
     gutter: 20,
-    horizontalOrder: true
   };
 
   images: Image[] = []
   categoryImages: Image[] = []
+  searchImages: Image[] = []
   display: Image[] = []
 
   translationSubscription?: Subscription
@@ -39,7 +39,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   currentPage : number = 1;
   showBoundaryLinks: boolean = true;
-  itemsPerPage: number = 4;
+  itemsPerPage: number = 6;
 
   modalRef?: BsModalRef
   selectedImage?: Image
@@ -47,7 +47,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   status: string = 'initial'
 
   @ViewChild('image') imageRef?: ElementRef;
-
+  @ViewChild(NgxMasonryComponent) masonry?: NgxMasonryComponent;
+  
   constructor(
     private translate: TranslateService,
     private storageAPI: StorageApIService,
@@ -71,6 +72,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         }
       }
       this.categoryImages = this.images.slice()
+      this.searchImages = this.categoryImages
     })
     
 
@@ -117,7 +119,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
     // issue with ngx pagination (can only update one field at a time)
     setTimeout(() => {
       this.categoryImages = result
-      this.display = this.categoryImages.slice(0, this.itemsPerPage)
+      this.searchGallery()
+      // this.display = this.searchImages.slice(0, this.itemsPerPage)
     }, 100)
 
   }
@@ -175,6 +178,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.imagesAPI.updateImage(result)
       }
     }
+    this.currentPage = 1
   }
 
   onDelete(data: any) {
@@ -185,6 +189,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       this.storageAPI.removeGalleryImage(image.imageId)
       console.log(image)
     }
+    this.currentPage = 1
   }
 
   onCancel(data: any) {
@@ -201,7 +206,31 @@ export class GalleryComponent implements OnInit, OnDestroy {
   searchTerm?: string
 
   searchGallery() {
-    console.log(this.searchTerm)
+    let result : Image[] = []
+
+    if (this.searchTerm) {
+    
+      for (const image of this.categoryImages) {
+        if (image.galleryDetail.toLowerCase().includes(this.searchTerm.toLowerCase())) {
+          result.push(image)
+        }
+      }
+      this.searchImages = result
+      console.log(this.searchImages)
+    }
+    else {
+      this.searchImages = this.categoryImages
+    }
+
+    this.display = this.searchImages.slice(0, this.itemsPerPage)
+  
+    
+    // issue with pagination. Unable to find fix.
+    setTimeout(() => {
+      this.currentPage = 1
+      this.masonry?.reloadItems();
+      this.masonry?.layout();
+    }, 200)
   }
 
   populateData() {

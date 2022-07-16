@@ -78,11 +78,11 @@
 <button (click)="populateData()">Click</button>
 
 <!-- Pagination -->
-<div *ngIf="categoryImages.length > itemsPerPage" class="container d-flex justify-content-center my-4">
+<div *ngIf="searchImages.length > itemsPerPage" class="container d-flex justify-content-center my-4">
   <pagination
     [boundaryLinks]="showBoundaryLinks"
     [itemsPerPage]="itemsPerPage"
-    [totalItems]="categoryImages.length"
+    [totalItems]="searchImages.length"
     [(ngModel)]="currentPage"
     (pageChanged)="pageChanged($event)"
     previousText="&lsaquo;"
@@ -93,7 +93,7 @@
 </div>
 
 <!--No Record Indicator-->
-<div class="container text-center my-4" *ngIf="images[0]?.imagePath && categoryImages.length == 0">
+<div class="container text-center my-4" *ngIf="images[0]?.imagePath && searchImages.length == 0">
   <span class="display-1">No Records Found</span>
 </div>
 
