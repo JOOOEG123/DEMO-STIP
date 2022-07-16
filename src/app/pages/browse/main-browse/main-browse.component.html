@@ -9,7 +9,6 @@
       <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
         <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('All Fields')">All Fields</a></li>
         <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('Name')">Name</a></li>
-        <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('Events')">Events</a></li>
         <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('Description')">Description</a>
         </li>
       </ul>
@@ -57,9 +56,9 @@
           <label for="per_page_result" class="text-white">Result per page</label>
           <select class="mx-2" aria-label="Result per page select" id="per_page_result" [(ngModel)]="itemsPerPage"
             (change)="itemPerPageChanged()">
-            <option selected value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
+            <option selected value="25">30</option>
+            <option value="50">60</option>
+            <option value="100">90</option>
           </select>
         </div>
         <div class="col-auto flex-shrink-0">
@@ -111,7 +110,7 @@
               <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
               <div class="text-start">Gender: {{ result.gender || "-"}}</div>
             </div>
-            <div class="text-start col-6 m-3 searchprofile">{{ result.description }}</div>
+            <div class="text-start col-6 m-3 ">{{ result.description }}</div>
             <div class="col align-self-end fw-bold">read more ></div>
           </a>
 
@@ -126,24 +125,23 @@
 
       <ng-template #elseBlock>
         <div *ngIf="display.length; else elseEmptyBlock">
-          <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" name=" searchLayout"
-            *ngFor="let results of display | UpdateRows: 3 ; let i = index">
+          <div class="d-flex justify-content-between p-2 flex-nowrap" name=" searchLayout"
+            *ngFor="let results of display | UpdateRows: 3 ; let i = index" style="height: 5cm;">
 
-            <div class="py-5 col" style="border-radius: 28px; background-color: #dbdde2; max-width: 25%;"
+            <div style="border-radius: 28px; background-color: #dbdde2; width: 30%;"
               *ngFor="let result of results; let j= index">
               <a routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
-                ariaCurrentWhenActive="page" style="color: black; text-decoration: none">
+                ariaCurrentWhenActive="page" style="color: black; text-decoration: none; ">
+                <b class="m-4">{{(3*i+(j+1)) + (currentPage-1) * itemsPerPage}}</b>
+                <p class="fw-bold">{{ result.firstName +" "+result.lastName }}</p>
+                <div #searchprofile>{{ result.description}}</div>
+                <p class="fw-bold">read more ></p>
+                <!-- <div class="text-capitalize">
+                  <b class="">{{(3*i+(j+1)) + (currentPage-1) * itemsPerPage}}</b>
+                  <p class="fw-bold">{{ result.firstName +" "+result.lastName }}</p>
+                  <p class="fw-bold">read more ></p>
 
-                <div class="m-3">{{(3*i+(j+1)) + (currentPage-1) * itemsPerPage}}</div>
-
-                <div class="card-body mt-auto text-capitalize">
-                  <div class="card-body">
-                    <div class="fw-bold">{{ result.firstName +" "+result.lastName }}</div>
-                    <div>{{ result.workplace }}</div>
-                    <div class="pb-3">{{ result.ethnicity }}</div>
-                    <div class="fw-bold">read more ></div>
-                  </div>
-                </div>
+                </div> -->
               </a>
             </div>
 
