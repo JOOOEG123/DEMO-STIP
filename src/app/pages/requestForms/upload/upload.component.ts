@@ -1,20 +1,11 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  Output,
-  EventEmitter,
-  OnDestroy,
-} from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormArray,
-  Validators,
-} from '@angular/forms';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ETHNIC_GROUP_CONSTANTS, LIST_OF_JOB } from 'src/app/core/constants/group.constants';
+import {
+  ETHNIC_GROUP_CONSTANTS,
+  LIST_OF_JOB,
+} from 'src/app/core/constants/group.constants';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
 import { Contribution, Rightist } from 'src/app/core/types/adminpage.types';
@@ -33,6 +24,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   selected?: string;
   selected2?: string;
   sub: Subscription[] = [];
+  url = '';
 
   @Input() get contribution() {
     return this._contribution;
@@ -42,30 +34,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       this._contribution = contribution;
     }
   }
-
   @Input() page?: string;
-  @Output() approve: EventEmitter<Contribution> = new EventEmitter();
-  @Output() reject: EventEmitter<Contribution> = new EventEmitter();
-  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter();
-  url = '';
-
-  onApprove() {
-    if (this.contribution) {
-      this.approve.emit({ ...this.contribution });
-    }
-  }
-
-  onReject() {
-    if (this.contribution) {
-      this.reject.emit({ ...this.contribution });
-    }
-  }
-
-  onReconsider() {
-    if (this.contribution) {
-      this.reconsider.emit({ ...this.contribution });
-    }
-  }
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -76,17 +45,13 @@ export class UploadComponent implements OnInit, OnDestroy {
     rightestYear: new FormControl('', Validators.required),
     birthYear: new FormControl('', Validators.required),
   });
-
   form2 = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
     content: new FormControl(''),
   });
-
   eventArray = new FormArray([this.newEvent()]);
-
   memoirArray = new FormArray([this.newMemoir()]);
-
   imageForm = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
@@ -116,6 +81,17 @@ export class UploadComponent implements OnInit, OnDestroy {
     return this.memoirArray.controls as FormGroup[];
   }
 
+  removeMemoir(i: number) {
+    this.memoirArray.removeAt(i);
+  }
+
+  constructor(
+    private contributionService: ContributionsService,
+    private auth: AuthServiceService,
+    private route: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
   clear() {
     this.form.reset();
   }
@@ -143,17 +119,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   addMemoir() {
     this.memoirArray.push(this.newMemoir());
   }
-
-  removeMemoir(i: number) {
-    this.memoirArray.removeAt(i);
-  }
-
-  constructor(
-    private contributionService: ContributionsService,
-    private auth: AuthServiceService,
-    private route: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
 
   ngOnDestroy(): void {
     this.sub.forEach((sub) => sub.unsubscribe());
@@ -227,7 +192,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       birthYear,
     } = this.form.value;
     const { content } = this.form2.value;
-    // const contributionId = this.contributionId || UUID();
     const rightistId =
       this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
     this.contributionService
@@ -236,12 +200,12 @@ export class UploadComponent implements OnInit, OnDestroy {
         contributorId: [this.auth.uid],
         contributedAt: new Date(),
         rightistId: rightistId,
-        approvedAt: new Date(), // update model with An.
+        approvedAt: new Date(),
         lastUpdatedAt: new Date(),
         publish: 'new',
         rightist: {
           rightistId: rightistId,
-          imagePath: [this.url], // Price said he will work on this.
+          imagePath: [this.url],
           initial: name.substring(0, 1),
           firstName: name,
           lastName: '',
