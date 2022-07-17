@@ -71,29 +71,9 @@ export class ContributionsService {
 
   // remove method 1
   removeContributionById(id: string) {
-    const ref = this.db.database.ref(
-      `/persons/requestArchieve/contributions/${id}`
-    );
-    return ref.once('value', (x) => {
-      const v = x.val();
-      if (v?.[id]) {
-        delete v[id];
-      }
-      x.ref.set(v);
-    });
-  }
-  // remove method 2
-  removeContributionsById(contributionId: string) {
-    const s = this.fetchUserContributions().subscribe((x: any) => {
-      if (x?.[contributionId]) {
-        delete x[contributionId];
-      }
-      this.callAPI()
-        .set(x)
-        .then(() => {
-          s.unsubscribe();
-        });
-    });
+    return this.db
+      .object(`/persons/requestArchieve/contributions/${this.auth.uid}/${id}`)
+      .remove();
   }
 
   // Admin get all contribution
@@ -103,10 +83,13 @@ export class ContributionsService {
       .valueChanges();
   }
 
-  updateUserContribution(contributorId: string, contributionId: string, obj: ContributionSchema) {
-
+  updateUserContribution(
+    contributorId: string,
+    contributionId: string,
+    obj: ContributionSchema
+  ) {
     return this.db
       .object(`/persons/requestArchieve/contributions/${contributorId}`)
-      .update({ [contributionId]: obj});
+      .update({ [contributionId]: obj });
   }
 }

@@ -30,6 +30,17 @@ const adminOnly = () =>
         claims.admin === true || (claims.user_id != null ? ['account'] : [''])
     )
   );
+const viewUploadPage = () =>
+  pipe(
+    customClaims,
+    map(
+      (claims) =>{
+        console.log('Claims', claims);
+        return ((claims.email_verified === true ||
+        claims.admin === true )||
+        (claims.user_id != null ? ['account'] : ['']))}
+    )
+  );
 // Page components
 export const pagesComponents = [
   AboutComponent,
@@ -126,6 +137,7 @@ export const pagesRoutes = [
     canActivate: [AngularFireAuthGuard],
     data: {
       title: 'Edit Account',
+      authGuardPipe: viewUploadPage,
     },
   },
 

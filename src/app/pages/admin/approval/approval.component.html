@@ -68,10 +68,43 @@
 
 <ng-template #readMoreTemplate>
   <app-upload
-    [contribution]="this.selectedContribution"
+    [contribution]="selectedContribution"
     page="contribution"
     (approve)="onApprove($event)"
     (reject)="onReject($event)"
     (reconsider)="onReconsider($event)"
   ></app-upload>
+  <div
+    class="col-12 mx-auto mb-5 text-center display-1"
+    *ngIf="selectedContribution?.publish == 'new'"
+  >
+    <button
+      type="button"
+      (click)="onApprove(selectedContribution)"
+      class="btn btn-transparent btn-lg mx-2 display-4 check-icon"
+    >
+      <span class="check-icon">&checkmark;</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="onReject(selectedContribution)"
+      class="btn btn-transparent btn-lg mx-2 cross-icon"
+    >
+      <span class="cross-icon">&cross;</span>
+    </button>
+  </div>
+
+  <div
+    class="col-12 mx-auto mb-5 text-center display-1"
+    *ngIf="selectedContribution?.publish == 'rejected'"
+  >
+    <button
+      (click)="onReconsider(selectedContribution)"
+      type="button"
+      class="btn btn-transparent btn-lg mx-2 pencil-icon"
+    >
+      <span class="pencil-icon text-warning">&#8634;</span>
+    </button>
+  </div>
 </ng-template>

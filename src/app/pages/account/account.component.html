@@ -48,9 +48,14 @@
             </a>
           </div>
           <div class="my-2 ms-auto">
-            <a routerLink="/upload" class="rounded-pill my-2 btn-khali">
+            <button
+              (click)="navigateTo('/upload')"
+              class="rounded-pill my-2 btn-khali"
+              [attr.aria-disabled]="!auth.hasVerifiedEmail"
+              [disabled]="!auth.hasVerifiedEmail"
+            >
               Upload
-            </a>
+            </button>
           </div>
           <div class="my-2 ms-auto">
             <button
@@ -88,8 +93,26 @@
       <ng-container *ngFor="let data of userContribution">
         <app-View-card [data]="data"></app-View-card>
       </ng-container>
-      <ng-container *ngIf="!userContribution?.length">
-        <div class="text-center">You do not have any contribution yet.</div>
+      <ng-container *ngIf="!userContribution?.length && auth.hasVerifiedEmail">
+        <div class="text-center py-4 shadow bg-opacity-10 bg-info">
+          You do not have any contribution yet. Log out and log in again after
+          verifying account if you can't still navigate upload page.
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!userContribution?.length && !auth.hasVerifiedEmail">
+        <div class="text-center py-4 shadow bg-opacity-10 bg-danger">
+          You need to verify account before you can add Contribution. Log out
+          and log in again after verifying account if you can't still navigate upload page.
+          <button
+            type="button"
+            class="rounded-pill btn-khali"
+            tooltip="Refresh page after veryfying account"
+            [ngClass]="{ 'btn-success': isVeryBtnClicked }"
+            (click)="sendverifyEmail()"
+          >
+            Verify Account
+          </button>
+        </div>
       </ng-container>
     </div>
   </div>
