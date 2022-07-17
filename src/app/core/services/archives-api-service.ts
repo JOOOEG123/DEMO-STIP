@@ -15,8 +15,22 @@ export class ArchieveApiService {
 
   /** New API */
   getAllArchieve() {
-    return this.db.object('/persons/requestArchieve/persons').valueChanges();
+    return this.db.object('/persons/requestArchieve/persons').valueChanges()
   }
+
+  getArchiveList() {
+    return this.db.list('/persons/requestArchieve/persons').valueChanges()
+  }
+
+  // getMales() {
+  //   return this.db.list('/persons/requestArchieve/persons', 
+  //     ref => ref.orderByChild('gender').equalTo('male')).valueChanges()
+  // }
+
+  // getFemales() {
+  //   return this.db.list('/persons/requestArchieve/persons',
+  //     ref => ref.orderByChild('gender').equalTo('female')).valueChanges()
+  // }
 
   getPersonById(id: string) {
     return this.db

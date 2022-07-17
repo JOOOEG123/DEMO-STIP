@@ -55,6 +55,7 @@ import { LangInterceptor } from './core/interceptors/lang.interceptor';
 import { OverlayComponent } from './pages/gallery/overlay/overlay.component';
 import { ContributionComponent } from './pages/admin/contribution/contribution.component';
 import { RepositoryComponent } from './pages/browse/repository/repository.component';
+import { ChartComponent } from './pages/about/chart/chart.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -72,6 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UploadComponent,
     OverlayComponent,
     ContributionComponent,
+    ChartComponent,
   ],
   imports: [
     AngularFireAuthModule,
