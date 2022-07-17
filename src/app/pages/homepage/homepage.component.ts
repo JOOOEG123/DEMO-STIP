@@ -60,19 +60,9 @@ export class HomepageComponent implements OnInit {
       .httpsCallable('add')({ respo: '' })
       .subscribe((result: any) => {
         console.log(result);
-        // result.data.forEach((item: any) => {
-        //   console.log(item);
-        // })
       });
   }
-
-  // onKey(event: any) {
-  //   this.searchTerm = (event.target as HTMLInputElement).value;
-  // }
-
   searchArchives() {
-    console.log(this.searchTerm);
-
     this.router.navigate(['/browse/main'], {
       queryParams: { searchTerm: this.searchTerm },
     });
