@@ -206,7 +206,7 @@ export class UploadComponent implements OnInit, OnDestroy {
         rightist: {
           rightistId: rightistId,
           imagePath: [this.url],
-          initial: name.substring(0, 1),
+          initial: name.trim().charAt(0).toUpperCase(),
           firstName: name,
           lastName: '',
           gender: gender || '',
