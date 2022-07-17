@@ -1,57 +1,46 @@
-.homepage-bg {
-    background-image: url('/assets/homepage/homepage_bg.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: white;
-}
-
-.blue-bg {
-    background: url('/assets/homepage/rec_med_blue.png') no-repeat center center fixed;
-    background-size: cover;
-}
-
-.stip-design-bg {
-    background: url('/assets/homepage/stip-design.png') no-repeat top center;
-    background-size: cover;
-}
-
-.mid-blue-bg {
-    background-color: #0c1e3c;
-}
-
 $large: 64rem;
 $medium: 48rem;
 $small: 36rem;
 
-.brief-responsive {
-    @media screen and (min-width: $medium) {
-        text-align: left;
-    }
-
-    @media screen and (max-width: $medium) {
-        text-align: center;
-    }
+.homepage-bg {
+  background-image: url("/assets/homepage/homepage_bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
 }
 
-// .china-sign-responsive {
-//     @media screen and (min-width: $medium) {
-//         display: block
-//     }
+.blue-bg {
+  background: url("/assets/homepage/rec_med_blue.png") no-repeat center center
+    fixed;
+  background-size: cover;
+}
 
-//     @media screen and (max-width: $medium) {
-//         display: none
-//     }
-// }
+.stip-design-bg {
+  background: url("/assets/homepage/stip-design.png") no-repeat top center;
+  background-size: cover;
+}
+
+.mid-blue-bg {
+  background-color: #0c1e3c;
+}
+
+.brief-responsive {
+  @media screen and (min-width: $medium) {
+    text-align: left;
+  }
+
+  @media screen and (max-width: $medium) {
+    text-align: center;
+  }
+}
 
 .homepage-text {
-    @media screen and (min-width: $medium) {
-        width: 50%
-    }
+  @media screen and (min-width: $medium) {
+    width: 50%;
+  }
 
-    @media screen and (max-width: $medium) {
-        width: 100%
-    }
+  @media screen and (max-width: $medium) {
+    width: 100%;
+  }
 }
-
-
