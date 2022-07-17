@@ -9,28 +9,16 @@ import { UUID } from '../utils/uuid';
 export class ArchieveApiService {
   user: any;
   cache: any = {};
-  constructor(
-    private db: AngularFireDatabase
-  ) {}
+  constructor(private db: AngularFireDatabase) {}
 
   /** New API */
   getAllArchieve() {
-    return this.db.object('/persons/requestArchieve/persons').valueChanges()
+    return this.db.object('/persons/requestArchieve/persons').valueChanges();
   }
 
   getArchiveList() {
-    return this.db.list('/persons/requestArchieve/persons').valueChanges()
+    return this.db.list('/persons/requestArchieve/persons').valueChanges();
   }
-
-  // getMales() {
-  //   return this.db.list('/persons/requestArchieve/persons', 
-  //     ref => ref.orderByChild('gender').equalTo('male')).valueChanges()
-  // }
-
-  // getFemales() {
-  //   return this.db.list('/persons/requestArchieve/persons',
-  //     ref => ref.orderByChild('gender').equalTo('female')).valueChanges()
-  // }
 
   getPersonById(id: string) {
     return this.db
@@ -164,9 +152,8 @@ export class ArchieveApiService {
       .valueChanges();
   }
 
-  // new APIs: for sample data and need fix if the db data changes. 
+  // new APIs: for sample data and need fix if the db data changes.
   getTestDataPersonByIntial(letter: string) {
-    
     return this.db
       .list(`/persons/requestArchieve/persons`, (ref) =>
         ref.orderByChild('initial').equalTo(letter)
@@ -178,9 +165,12 @@ export class ArchieveApiService {
     return this.db.list(`/persons/requestArchieve/persons`).valueChanges();
   }
 
-  getTestDataPersonByEvent(word:string) {
-    return this.db.list(`/persons/requestArchieve/persons`, (ref) =>
-    ref.orderByChild('event').equalTo(word)).valueChanges();
+  getTestDataPersonByEvent(word: string) {
+    return this.db
+      .list(`/persons/requestArchieve/persons`, (ref) =>
+        ref.orderByChild('event').equalTo(word)
+      )
+      .valueChanges();
   }
 
   // getPersonID() {

@@ -37,42 +37,41 @@
           {{ this.emptyContributionMessage }}
         </div>
       </div>
-    </div> 
+    </div>
 
-      <!-- Categorized Contributions -->
+    <!-- Categorized Contributions -->
     <div class="container">
-      
       <div
         class="row my-4 contribution-container border border-2"
         *ngFor="let contribution of selectedContributions"
-        [ngClass]="
-          {'border-danger': activeCategory == 'New Contributions', 
+        [ngClass]="{
+          'border-danger': activeCategory == 'New Contributions',
           'border-success': activeCategory == 'Approved Contributions',
-          'border-warning': activeCategory == 'Rejected Contributions'} 
-        "
+          'border-warning': activeCategory == 'Rejected Contributions'
+        }"
         [@contributionAnimation]="contribution.state"
         (@contributionAnimation.start)="animationStart($event)"
         (@contributionAnimation.done)="animationDone($event)"
       >
-        <app-contribution 
-          [contribution]="contribution" 
+        <app-contribution
+          [contribution]="contribution"
           [activeCategory]="activeCategory"
           (approve)="onApprove($event)"
           (reject)="onReject($event)"
           (reconsider)="onReconsider($event)"
           (readMore)="onReadMore(readMoreTemplate, $event)"
-          ></app-contribution>        
+        ></app-contribution>
       </div>
     </div>
   </div>
 </div>
 
 <ng-template #readMoreTemplate>
-  <app-upload 
-    [contribution]="this.selectedContribution" 
-    page="contribution" 
+  <app-upload
+    [contribution]="this.selectedContribution"
+    page="contribution"
     (approve)="onApprove($event)"
     (reject)="onReject($event)"
     (reconsider)="onReconsider($event)"
-    ></app-upload>
+  ></app-upload>
 </ng-template>
