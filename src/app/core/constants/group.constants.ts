@@ -1,6 +1,7 @@
 const ETHNIC_GROUP_CONSTANTS = [
   'Zhuang',
   'Hui',
+  'Han',
   'Manchu',
   'Uyghur',
   'Miao',
