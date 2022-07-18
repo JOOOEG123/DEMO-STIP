@@ -148,6 +148,30 @@ export const pagesRoutes = [
       title: 'share',
     },
   },
+  {
+    path: 'meetTeam',
+    component: AboutTeamComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      title: 'meetTeam',
+    },
+  },
+  {
+    path: 'resources',
+    component: ResourcesComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      title: 'resources',
+    },
+  },
+  {
+    path: 'research',
+    component: AboutResearchComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      title: 'research',
+    },
+  },
 ];
 
 export const adminRoutes = [
