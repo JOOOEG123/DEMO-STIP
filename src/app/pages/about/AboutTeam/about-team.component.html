@@ -6,14 +6,14 @@
     </div>
     <div class="container-fluid">
       <div class="row text-center" style="padding-left:25%; padding-right:25%">
-        <div class="col-lg-4 pics" *ngFor="let profile of fakeProfile">
+        <div class="col-lg-4 col-md-6 my-3 pics" *ngFor="let profile of Profiles">
           <img
                   src="assets/homepage/{{ profile.profile }}"
                   class="rounded-circle"
                   style="width:200px; height:190px;"
           />
           <div class=" rounded-circle caption">
-            <p class="my-auto des">Description here</p>
+            <p class="my-auto des">{{profile.name}}</p>
           </div>
         </div>
       </div>

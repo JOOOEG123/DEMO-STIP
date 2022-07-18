@@ -8,49 +8,49 @@ import { Component, OnInit } from '@angular/core';
 export class AboutTeamComponent implements OnInit {
 
   constructor() { }
-  fakeProfile = [
+  Profiles = [
     {
-      name: 'John Doe',
+      name: 'Joel Adeniji',
       email: 'johnDoe@aol.com',
       profile: 'default-profile.png'
     },
     {
-      name: 'Jane Doe',
+      name: 'An Dang',
       email: 'JaneDoe@aol.com',
       profile: 'default-profile.png'
     },
     {
-      name: 'John Smith',
+      name: 'Bailey George',
       email: 'johnSmith@aol.com',
       profile: 'default-profile.png'
     },
     {
-      name: 'John Smith',
+      name: 'Kristie',
       email: 'johnSmith@aol.com',
       profile: 'default-profile.png'
     },
     {
-      name: 'John Smith',
+      name: 'Weilon Price',
       email: 'johnSmith@aol.com',
       profile: 'default-profile.png'
     },
     {
-      name: 'John Smith',
+      name: 'Yule Zhang',
       email: 'johnSmith@aol.com',
       profile: 'default-profile.png'
     },
     {
-      name: 'John Smith',
+      name: 'Shanshan Cui',
       email: 'johnSmith@aol.com',
       profile: 'default-profile.png'
     },
     {
-      name: 'John Smith',
+      name: 'Myeong Lee',
       email: 'johnSmith@aol.com',
       profile: 'default-profile.png'
     },
     {
-      name: 'John Smith',
+      name: 'Zhehan Zhang',
       email: 'johnSmith@aol.com',
       profile: 'default-profile.png'
     },
