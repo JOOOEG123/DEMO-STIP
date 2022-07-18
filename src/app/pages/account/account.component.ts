@@ -70,7 +70,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     );
   }
 
-  navigateTo (url: string) {
+  navigateTo(url: string) {
     this.router.navigateByUrl(url);
   }
 
