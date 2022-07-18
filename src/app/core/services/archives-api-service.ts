@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { ContributionJson, Rightist } from '../types/adminpage.types';
-import { UUID } from '../utils/uuid';
+import { Rightist } from '../types/adminpage.types';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +38,6 @@ export class ArchieveApiService {
           v.ref.update({ [id]: obj });
         }
       });
-    // return arch.update({ A001: obj})
     return arch;
   }
 
@@ -172,10 +170,4 @@ export class ArchieveApiService {
       )
       .valueChanges();
   }
-
-  // getPersonID() {
-  //   var adaRef = this.db.ref("users/ada");
-  //   var key = adaRef.key;  // key === "ada"
-  //   key = adaRef.child("name/last").key;
-  // }
 }

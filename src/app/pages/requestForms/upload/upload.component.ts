@@ -1,13 +1,11 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
-  FormArray,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import {
+  ETHNIC_GROUP_CONSTANTS,
+  LIST_OF_JOB,
+} from 'src/app/core/constants/group.constants';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
 import { Contribution, Rightist } from 'src/app/core/types/adminpage.types';
@@ -21,40 +19,22 @@ import { UUID } from 'src/app/core/utils/uuid';
 export class UploadComponent implements OnInit, OnDestroy {
   private _contribution!: Contribution;
   contributionId!: string;
+  ethnicGroup: string[] = ETHNIC_GROUP_CONSTANTS;
+  occupation: string[] = LIST_OF_JOB;
+  selected?: string;
+  selected2?: string;
+  sub: Subscription[] = [];
+  url = '';
+
   @Input() get contribution() {
     return this._contribution;
   }
   set contribution(contribution: Contribution) {
     if (contribution.rightist) {
-      // this.mapForm(contribution.rightist);
       this._contribution = contribution;
-    }  
+    }
   }
-
   @Input() page?: string;
-  @Output() approve: EventEmitter<Contribution> = new EventEmitter();
-  @Output() reject: EventEmitter<Contribution> = new EventEmitter();
-  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter();
-  //image url
-  url = '';
-
-  onApprove() {
-    if (this.contribution) {
-      this.approve.emit({ ...this.contribution });
-    }
-  }
-
-  onReject() {
-    if (this.contribution) {
-      this.reject.emit({ ...this.contribution });
-    }
-  }
-
-  onReconsider() {
-    if (this.contribution) {
-      this.reconsider.emit({ ...this.contribution });
-    }
-  }
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -65,17 +45,13 @@ export class UploadComponent implements OnInit, OnDestroy {
     rightestYear: new FormControl('', Validators.required),
     birthYear: new FormControl('', Validators.required),
   });
-
   form2 = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
     content: new FormControl(''),
   });
-
-  eventArray = new FormArray([]);
-
-  memoirArray = new FormArray([]);
-
+  eventArray = new FormArray([this.newEvent()]);
+  memoirArray = new FormArray([this.newMemoir()]);
   imageForm = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
@@ -105,6 +81,17 @@ export class UploadComponent implements OnInit, OnDestroy {
     return this.memoirArray.controls as FormGroup[];
   }
 
+  removeMemoir(i: number) {
+    this.memoirArray.removeAt(i);
+  }
+
+  constructor(
+    private contributionService: ContributionsService,
+    private auth: AuthServiceService,
+    private route: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
   clear() {
     this.form.reset();
   }
@@ -121,93 +108,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.imageForm.reset();
   }
 
-  selected?: string;
-  ethnicGroup: string[] = [
-    'Zhuang',
-    'Hui',
-    'Manchu',
-    'Uyghur',
-    'Miao',
-    'Yi',
-    'Tujia',
-    'Tibetan',
-    'Mongol',
-    'Dong',
-    'Bouyei',
-    'Yao',
-    'Bai',
-    'Joseonjok',
-    'Hani',
-    'Li',
-    'Kazakh',
-    'Dai',
-    'She',
-    'Lisu',
-    'Dongxiang',
-    'Gelao',
-    'Lahu',
-    'Wa',
-    'Sui',
-    'Nakhi',
-    'Qiang',
-    'Tu',
-    'Mulao',
-    'Xibe',
-    'Kyrgyz',
-    'Jingpo',
-    'Daur',
-    'Salar',
-    'Blang',
-    'Maonan',
-    'Tajik',
-    'Pumi',
-    'Achang',
-    'Nu',
-    'Evenki',
-    'Vietnamese',
-    'Jino',
-    'De ang',
-    'Bonan',
-    'Russian',
-    'Yugur',
-    'Uzbek',
-    'Monba',
-    'Oroqen',
-    'Derung',
-    'Hezhen',
-    'Gaoshan',
-    'Lhoba',
-    'Tatars',
-    'Undistinguished',
-    'Naturalized Citizen',
-  ];
-
-  selected2?: string;
-  occupation: string[] = [
-    'Deputy',
-    'Director',
-    'Professor',
-    'Worker',
-    'Actress',
-    'Agent',
-    'Assistant',
-    'Editor-in-Chief',
-    'Assistant Lieutenant',
-    'Assistant Professor',
-    'Associate Professor',
-    'Cadre',
-    'Chairman',
-    'Chief',
-    'Chief Engineer',
-    'Christian Priest',
-    'Clerk',
-    'Deputy Director',
-    'Deputy Secretary',
-    'Deputy Secretary General',
-  ];
-
-  sub: Subscription[] = [];
-
   addEvent() {
     this.eventArray.push(this.newEvent());
   }
@@ -220,67 +120,23 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.memoirArray.push(this.newMemoir());
   }
 
-  removeMemoir(i: number) {
-    this.memoirArray.removeAt(i);
-  }
-
-  constructor(
-    private contributionService: ContributionsService,
-    private auth: AuthServiceService,
-    private route: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
-
   ngOnDestroy(): void {
     this.sub.forEach((sub) => sub.unsubscribe());
   }
 
   ngOnInit(): void {
     if (this.page === 'contribution') {
-      console.log(this.contribution)
       if (this.contribution) {
         if (this.contribution.contributionId && this.contribution.rightist) {
-          const rightist: Rightist = this.contribution.rightist
-          this.form = new FormGroup({
-            name: new FormControl(rightist.lastName + ' ' + rightist.firstName, Validators.required),
-            gender: new FormControl(rightist.gender),
-            status: new FormControl(rightist.status),
-            ethnic: new FormControl(rightist.ethnicity),
-            occupation: new FormControl(rightist.job, Validators.required),
-            rightestYear: new FormControl(rightist.rightistYear, Validators.required),
-            birthYear: new FormControl(rightist.birthYear, Validators.required),
-          });
-        
-          this.form2 = new FormGroup({
-            imageUpload: new FormControl(''),
-            image: new FormControl(''),
-            content: new FormControl('')
-          });
-    
-          for (const event of this.contribution.rightist.events) {
-            this.eventArray.push(new FormGroup({
-              startYear: new FormControl(event.startYear),
-              endYear: new FormControl(event.endYear),
-              event: new FormControl(event.event),
-            }))
-          }
-    
-          for (const memoir of this.contribution.rightist.memoirs) {
-            this.memoirArray.push(new FormGroup({
-              memoirTitle: new FormControl(memoir.memoirTitle),
-              memoirContent: new FormControl(memoir.memoirContent),
-              memoirAuthor: new FormControl(memoir.memoirAuthor),
-            }))
-          }
+          const rightist: Rightist = this.contribution.rightist;
+          this.mapForm(rightist);
         }
       }
-    }
-    else {
-      
+    } else {
       this.sub.push(
         this.activatedRoute.queryParams.subscribe((params) => {
           this.contributionId = params['contributionId'];
-          this.page = params['page']
+          this.page = params['page'];
           if (this.page === 'account') {
             if (this.contributionId) {
               this.sub.push(
@@ -292,10 +148,6 @@ export class UploadComponent implements OnInit, OnDestroy {
                   })
               );
             }
-          }
-          else {
-            this.eventArray.push(this.newEvent())
-            this.memoirArray.push(this.newMemoir())
           }
         })
       );
@@ -314,21 +166,8 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.form2.patchValue({
         content: rightist.description,
       });
-      for (const event of rightist.events) {
-        this.eventArray.push(new FormGroup({
-          startYear: new FormControl(event.startYear),
-          endYear: new FormControl(event.endYear),
-          event: new FormControl(event.event),
-        }))
-      }
-
-      for (const memoir of rightist.memoirs) {
-        this.memoirArray.push(new FormGroup({
-          memoirTitle: new FormControl(memoir.memoirTitle),
-          memoirContent: new FormControl(memoir.memoirContent),
-          memoirAuthor: new FormControl(memoir.memoirAuthor),
-        }))
-      }
+      this.eventArray.patchValue(rightist.events);
+      this.memoirArray.patchValue(rightist.memoirs);
     }
   }
 
@@ -353,26 +192,21 @@ export class UploadComponent implements OnInit, OnDestroy {
       birthYear,
     } = this.form.value;
     const { content } = this.form2.value;
-
-    console.log(this.memoirArray.value)
-    console.log(this.eventArray.value)
-
-    const contributionId = this.contributionId || UUID();
     const rightistId =
       this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
     this.contributionService
       .contributionsAddEdit({
-        contributionId: contributionId,
+        contributionId: this.contributionId,
         contributorId: [this.auth.uid],
         contributedAt: new Date(),
         rightistId: rightistId,
-        approvedAt: new Date(), // update model with An.
+        approvedAt: new Date(),
         lastUpdatedAt: new Date(),
         publish: 'new',
         rightist: {
           rightistId: rightistId,
-          imagePath: [this.url], // Price said he will work on this.
-          initial: name.substring(0, 1),
+          imagePath: [this.url],
+          initial: name.trim().charAt(0).toUpperCase(),
           firstName: name,
           lastName: '',
           gender: gender || '',
@@ -395,5 +229,5 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.clear2();
         this.route.navigateByUrl('/account');
       });
-    }
+  }
 }

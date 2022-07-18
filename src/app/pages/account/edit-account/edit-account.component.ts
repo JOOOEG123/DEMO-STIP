@@ -28,7 +28,7 @@ export class EditAccountComponent implements OnInit, OnDestroy {
     desc: [''],
   });
   constructor(
-    private auth: AuthServiceService,
+    public auth: AuthServiceService,
     private storage: StorageApIService,
     private fb: FormBuilder
   ) {}

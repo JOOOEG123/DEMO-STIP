@@ -5,13 +5,13 @@ import * as provider from 'firebase/auth';
 import { Router } from '@angular/router';
 import { EmailPassword, Profile } from '../types/auth.types';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthServiceService {
   private _hasAdminRole = false;
+  private _hasVerifiedEmail = false;
 
   user: any;
   isLoggedIn = new Subject<boolean>();
@@ -21,6 +21,10 @@ export class AuthServiceService {
   get hasAdminRole() {
     return this._hasAdminRole;
   }
+
+  get hasVerifiedEmail() {
+    return this._hasVerifiedEmail || this._hasAdminRole;
+  }
   get uid() {
     return this.getUserDetails()?.uid;
   }
@@ -28,6 +32,15 @@ export class AuthServiceService {
     return this.store.doc<any>(`users/${uid}`);
   }
 
+  get userProviders() {
+    return this.getUserDetails()?.providerData?.map((provider) => {
+      return provider.providerId;
+    });
+  }
+
+  get userExternalId() {
+    return this.userProviders.includes('google.com', 'facebook.com');
+  }
   constructor(
     private store: AngularFirestore,
     private auth: AngularFireAuth,
@@ -38,8 +51,8 @@ export class AuthServiceService {
       if (user) {
         this.user = user;
         user.getIdTokenResult().then((token) => {
-          console.log('token', token, this.user);
           this._hasAdminRole = token.claims?.['admin'];
+          this._hasVerifiedEmail = user.emailVerified;
           this.isAdmin.next(this.hasAdminRole || false);
           localStorage.setItem(
             'user',
@@ -58,7 +71,6 @@ export class AuthServiceService {
         }
         this.isLoggedIn.next(this.isLoggedInCheck);
       }
-      console.log('user', user);
     });
   }
 
@@ -108,7 +120,6 @@ export class AuthServiceService {
 
   signInWithPopup(providers: provider.AuthProvider) {
     return this.auth.signInWithPopup(providers).then((user) => {
-      console.log('user', user);
       this.outsideScope.run(() => {
         this.router.navigate(['/']);
       });
@@ -128,13 +139,11 @@ export class AuthServiceService {
   }
 
   saveUser(p: Profile | null) {
-    console.log('saveUser', p);
     return this.userDocs(p?.uid || '').ref.onSnapshot((snapshot) => {
       if (snapshot.exists && p) {
         snapshot.ref.update({ uid: p.uid });
       } else {
         if (p) {
-          console.log('save user', p);
           const profile = {
             uid: p.uid || '',
             name: p.name || '',
@@ -148,19 +157,15 @@ export class AuthServiceService {
             createdAt: p.createdAt || '',
             updatedAt: p.updatedAt || '',
           };
-          console.log('profile', profile);
           this.store
             .doc<any>(`users/${p.uid}`)
             .set(profile, { merge: true })
             .then(() => {
-              console.log('user saved', profile);
               this.userDetaills.next({ ...(profile as any) });
             });
         }
       }
     });
-
-    // return null;
   }
 
   signOut() {
@@ -182,6 +187,7 @@ export class AuthServiceService {
     return this.auth.currentUser.then((user: any) => {
       if (user) {
         // need to delete all the data from the database and api.
+        user.delete();
         this.store
           .doc<any>(`users/${this.uid}`)
           .delete()
@@ -190,8 +196,8 @@ export class AuthServiceService {
             this.signOut();
           })
           .catch((error) => {
-            console.log('error', error);
             location.reload();
+            this.signOut();
           });
       }
     });
