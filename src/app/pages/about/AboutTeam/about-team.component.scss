@@ -1,0 +1,33 @@
+img {
+    display: block;
+}
+
+.pics{
+    position: relative;
+    display: inline-block;
+}
+
+.caption{
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    transform: translate( -50%, -50% );
+    height: 190px;
+    width: 200px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.5);;
+}
+
+.caption:hover{
+    opacity: 1;
+}
+
+.des{
+    position:absolute;
+    top:60%;
+    left:22%;
+}
+
