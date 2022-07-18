@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { UUID } from '../utils/uuid';
-import { Image, ImageSchema } from '../types/adminpage.types';
+import { ImageSchema } from '../types/adminpage.types';
 
 @Injectable({
   providedIn: 'root',

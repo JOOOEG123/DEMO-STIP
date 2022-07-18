@@ -37,6 +37,7 @@ export const getProgressbarConfig = (): ProgressbarConfig =>
     TypeaheadModule.forRoot(),
     PaginationModule.forRoot(),
     ProgressbarModule.forRoot(),
+    TabsModule.forRoot(),
   ],
   exports: [
     BsDropdownModule,
@@ -48,6 +49,7 @@ export const getProgressbarConfig = (): ProgressbarConfig =>
     PaginationModule,
     ProgressbarModule,
     TooltipModule,
+    TabsModule,
   ],
   providers: [
     BsDatepickerConfig,
@@ -55,6 +57,6 @@ export const getProgressbarConfig = (): ProgressbarConfig =>
     { provide: ProgressbarConfig, useFactory: getProgressbarConfig },
   ],
   bootstrap: [],
-  schemas: [NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class NgxBootstrapModule {}

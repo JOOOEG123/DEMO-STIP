@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { AuthServiceService } from './auth-service.service';
 
 @Injectable({
   providedIn: 'root',

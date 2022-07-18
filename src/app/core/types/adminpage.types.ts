@@ -7,36 +7,86 @@ export type CategoryList = Record<Categories, Contribution[]>;
 
 type Gender = 'Male' | 'Female' | undefined;
 type Ethnicity =
-  'Han' | 'Zhuang' | 'Hui' | 'Man' | 'Uygur' | 'Miao' | 'Yi' | 'Tujia' | 'Zang' | 'Mongol' |
-  'Dong' | 'Bouyei' | 'Yao' | 'Chosŏn' | 'Hani' | 'Li' | 'Kazak' | 'Dai' |
-  'She' | 'Lisu' | 'Dongxiang' | 'Gelao' | 'Lahu' | 'Wa' | 'Sui' |  'Naxi' |'Qiang' |
-  'Tu' |'Mulao' | 'Xibe' | 'Kirgiz' | 'Jingpo' | 'Daur' | 'Salar' | 'Blang' |
-  'Maonan' | 'Tajik' | 'Pumi' |'Achang' | 'Nu' | 'Ewenki' | 'Gin' | 'Jino' | 'Deang' | 'Bonan' |
-  'Russ' | 'Yugur' | 'Uzbek' | 'Monba' | 'Oroqen' | 'Derung' | 'Hezhen' | 'Gaoshan' | 'Lhoba' | 'Tatar'| 'Bai'
+  | 'Han'
+  | 'Zhuang'
+  | 'Hui'
+  | 'Man'
+  | 'Uygur'
+  | 'Miao'
+  | 'Yi'
+  | 'Tujia'
+  | 'Zang'
+  | 'Mongol'
+  | 'Dong'
+  | 'Bouyei'
+  | 'Yao'
+  | 'Chosŏn'
+  | 'Hani'
+  | 'Li'
+  | 'Kazak'
+  | 'Dai'
+  | 'She'
+  | 'Lisu'
+  | 'Dongxiang'
+  | 'Gelao'
+  | 'Lahu'
+  | 'Wa'
+  | 'Sui'
+  | 'Naxi'
+  | 'Qiang'
+  | 'Tu'
+  | 'Mulao'
+  | 'Xibe'
+  | 'Kirgiz'
+  | 'Jingpo'
+  | 'Daur'
+  | 'Salar'
+  | 'Blang'
+  | 'Maonan'
+  | 'Tajik'
+  | 'Pumi'
+  | 'Achang'
+  | 'Nu'
+  | 'Ewenki'
+  | 'Gin'
+  | 'Jino'
+  | 'Deang'
+  | 'Bonan'
+  | 'Russ'
+  | 'Yugur'
+  | 'Uzbek'
+  | 'Monba'
+  | 'Oroqen'
+  | 'Derung'
+  | 'Hezhen'
+  | 'Gaoshan'
+  | 'Lhoba'
+  | 'Tatar'
+  | 'Bai';
 
-export type Status = 'Dead' | 'Alive' | 'Unknown'
+export type Status = 'Dead' | 'Alive' | 'Unknown';
 
-export type State = 'void' | 'removed'
+export type State = 'void' | 'removed';
 
-export type Publish = 'original' | 'new' | 'approved' | 'rejected'
+export type Publish = 'original' | 'new' | 'approved' | 'rejected';
 
 interface Event {
-  eventId: string,
-  startYear: number,
-  endYear: number,
-  event: string
+  eventId: string;
+  startYear: number;
+  endYear: number;
+  event: string;
 }
 
 interface Memoir {
-  memoirId: string,
-  memoirTitle: string,
-  memoirContent: string,
-  memoirAuthor: string,
+  memoirId: string;
+  memoirTitle: string;
+  memoirContent: string;
+  memoirAuthor: string;
 }
 
 export interface RightistSchema {
-  rightistId: string,
-  imagePath: string[],
+  rightistId: string;
+  imagePath: string[];
   initial: string;
   firstName: string;
   lastName: string;
@@ -44,20 +94,18 @@ export interface RightistSchema {
   birthYear: number;
   deathYear: number;
   rightistYear: number;
-  status: Status,
-  ethnicity: Ethnicity,
-  job: string,
-  detailJob: string,
-  workplace: string,
-  events: Event[],
-  memoirs: Memoir[],
-  reference: string,
-  description: string
+  status: Status;
+  ethnicity: Ethnicity;
+  job: string;
+  detailJob: string;
+  workplace: string;
+  events: Event[];
+  memoirs: Memoir[];
+  reference: string;
+  description: string;
 }
 
-export interface Rightist extends RightistSchema {
-
-}
+export interface Rightist extends RightistSchema {}
 
 export interface RightistJson {
   [rightistId: string]: RightistSchema;
@@ -72,36 +120,36 @@ export interface ContributionSchema {
   contributedAt: Date; // set from the service when creating a new contribution
   approvedAt: Date; // set from the service when approving a contribution
   lastUpdatedAt: Date; // set from the service when updating a contribution
-  notificationMessage?: string, // set from the service when approving a contribution
+  notificationMessage?: string; // set from the service when approving a contribution
 }
 
 export interface Contribution extends ContributionSchema {
-  state: State
+  state: State;
 }
 
 export interface ContributionJson {
-  [contributionId: string]: ContributionSchema
+  [contributionId: string]: ContributionSchema;
 }
 
 export interface OuterContributionJson {
-  [contributorId: string]: ContributionJson
+  [contributorId: string]: ContributionJson;
 }
 
 export interface ImageSchema {
-  imageId: string,
-  rightistId: string,
-  imagePath?: string,
-  isGallery: boolean,
-  galleryCategory: string,
-  galleryTitle: string,
-  galleryDetail: string,
-  gallerySource: string
+  imageId: string;
+  rightistId: string;
+  imagePath?: string;
+  isGallery: boolean;
+  galleryCategory: string;
+  galleryTitle: string;
+  galleryDetail: string;
+  gallerySource: string;
 }
 
 export interface Image extends ImageSchema {
-  opacity: number
+  opacity: number;
 }
 
 export interface ImageJson {
-  [imageId: string]: ImageSchema
+  [imageId: string]: ImageSchema;
 }

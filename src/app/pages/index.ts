@@ -33,13 +33,14 @@ const adminOnly = () =>
 const viewUploadPage = () =>
   pipe(
     customClaims,
-    map(
-      (claims) =>{
-        console.log('Claims', claims);
-        return ((claims.email_verified === true ||
-        claims.admin === true )||
-        (claims.user_id != null ? ['account'] : ['']))}
-    )
+    map((claims) => {
+      console.log('Claims', claims);
+      return (
+        claims.email_verified === true ||
+        claims.admin === true ||
+        (claims.user_id != null ? ['account'] : [''])
+      );
+    })
   );
 // Page components
 export const pagesComponents = [
@@ -140,7 +141,6 @@ export const pagesRoutes = [
       authGuardPipe: viewUploadPage,
     },
   },
-
   {
     path: 'share',
     component: ShareComponent,

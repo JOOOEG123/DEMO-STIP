@@ -24,6 +24,11 @@ export const NavBar = [
         url: '/about/resources',
         icon: 'envelope',
       },
+      {
+        title: 'research_page',
+        url: '/about/research',
+        icon: 'envelope',
+      },
     ],
   },
   {

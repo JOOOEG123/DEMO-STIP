@@ -12,13 +12,13 @@ import { NavBarLinks } from '../layout.types';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  navbars: NavBarLinks = NavBar;
-  isCollapsed = true;
-  isLoggedIn = false;
   @ViewChild('login') login!: LoginComponent;
   count = 15;
-  timeId: any;
+  isCollapsed = true;
+  isLoggedIn = false;
   message: unknown;
+  navbars: NavBarLinks = NavBar;
+  timeId: any;
   transPath = 'header.component.';
   constructor(
     private auth: AuthServiceService,

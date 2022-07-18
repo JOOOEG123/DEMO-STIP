@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Tracing } from 'trace_events';
 import { ContributionSchema } from '../types/adminpage.types';
 import { UUID } from '../utils/uuid';
 import { AuthServiceService } from './auth-service.service';

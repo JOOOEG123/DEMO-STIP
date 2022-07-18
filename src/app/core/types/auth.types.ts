@@ -14,9 +14,7 @@ export type Profile = {
   [key: string]: any;
 };
 
-
 export type EmailPassword = {
   email: string;
   password: string;
 };
-

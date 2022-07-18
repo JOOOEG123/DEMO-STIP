@@ -19,10 +19,11 @@ export class ModalTemplateComponent implements OnInit {
   @ViewChild('deleteConfirmation') deleteConfirmation!: TemplateRef<any>;
   @ViewChild('logoutModal') logoutModal!: TemplateRef<any>;
   @ViewChild('saveAccountChanges') saveAccountChanges!: TemplateRef<any>;
-  @ViewChild('sentEmailResetPassword') sentEmailResetPassword!: TemplateRef<any>;
+  @ViewChild('sentEmailResetPassword')
+  sentEmailResetPassword!: TemplateRef<any>;
 
   changeEmailForm = this.formBuilder.group({
-    newEmail: ['', [Validators.required, Validators.email]]
+    newEmail: ['', [Validators.required, Validators.email]],
   });
 
   sub: Subscription[] = [];
@@ -68,12 +69,18 @@ export class ModalTemplateComponent implements OnInit {
   openChangeEmailModal(template: TemplateRef<any> = this.changeEmailTemplate) {
     this.modalRef = this.modalService.show(template);
   }
-  openSaveAccountModal(form: Profile, template: TemplateRef<any> = this.saveAccountChanges) {
+  openSaveAccountModal(
+    form: Profile,
+    template: TemplateRef<any> = this.saveAccountChanges
+  ) {
     this.edit_form = form;
     this.modalRef = this.modalService.show(template);
   }
 
-  openSendEmailResettModal(form: Profile, template: TemplateRef<any> = this.sentEmailResetPassword) {
+  openSendEmailResettModal(
+    form: Profile,
+    template: TemplateRef<any> = this.sentEmailResetPassword
+  ) {
     this.edit_form = form;
     this.modalRef = this.modalService.show(template);
   }

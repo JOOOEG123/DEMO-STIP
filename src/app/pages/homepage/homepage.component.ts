@@ -41,6 +41,7 @@ export class HomepageComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    // this is left here for future reference.
     // this.customApi
     //   .httpsCallable('getArchives')
     //   .subscribe((result) => console.log(result));

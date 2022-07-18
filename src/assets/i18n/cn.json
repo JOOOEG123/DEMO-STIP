@@ -8,9 +8,11 @@
     "about_movement": "反右运动简介",
     "projects_overview": "项目概况",
     "resources_page": "更多资源",
+    "research_page": "研究",
     "broswer_page": "查询",
     "archive_page": "“右派”人物",
     "gallery_page": "图片",
+    "repository_page":"仓库",
     "login_signup": "登录或注册"
   },
   "login.component": {
