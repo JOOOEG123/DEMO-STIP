@@ -91,12 +91,10 @@ export class BrowseArchiveComponent implements OnInit {
     doc.setFont(undefined, fontSize);
     doc.setFont(undefined, fontType);
 
-    console.log(textLines);
     var cursorY = initialYPosition;
 
     textLines.forEach((lineText) => {
       if (cursorY + 50 > pageHeight) {
-        // Auto-paging
         doc.addPage();
         cursorY = pageWrapInitialYPosition;
       }
