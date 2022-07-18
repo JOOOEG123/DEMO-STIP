@@ -36,8 +36,8 @@ export class UploadImageComponent{
   }
 
   imageForm = new FormGroup({
-    imageTitle: new FormControl(''),
-    imageDes: new FormControl(''),
+    imageUpload: new FormControl(''),
+    image: new FormControl(''),
   });
 
   get imageControls() {
