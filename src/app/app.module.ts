@@ -15,7 +15,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 // Index Components
 import { allLayoutComponents } from './layout';
 import { pagesComponents } from './pages';
-import { sharedComponents } from './share';
+import { sharedComponents } from './shared';
 
 // Firebase Modules
 import { AngularFireModule } from '@angular/fire/compat';
@@ -72,7 +72,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EditAccountComponent,
     UploadComponent,
     OverlayComponent,
-    ContributionComponent,
+    ContributionComponent
   ],
   imports: [
     AngularFireAuthModule,
