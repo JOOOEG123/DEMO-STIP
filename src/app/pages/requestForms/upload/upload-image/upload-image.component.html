@@ -1,0 +1,118 @@
+<h4>Upload a photo</h4>
+      <section
+        class="my-4"
+        *ngFor="
+          let event of imageControls;
+          let i = index;
+          last as last;
+          first as first
+        "
+      >
+        <form [formGroup]="imageForm">
+          <img alt="" [src]="url" height="200" width="200" />
+          <!-- select photo section -->
+          <input
+            class="form-control"
+            type="file"
+            (change)="onselectFile($event)"
+            formControlName="image"
+          />
+          <br /><br />
+          <button class="btn btn-dark" (click)="clearImage()">
+            Clear photo
+          </button>
+          <br /><br />
+
+          <label for="imageTitle" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="imagTitle"
+            placeholder="What would you title this image"
+            formControlName="imageTitle"
+          />
+
+          <label for="imageDetails" class="form-label"
+            >Details</label
+          >
+          <textarea
+            class="form-control"
+            id="imageDetails"
+            rows="3"
+            placeholder="Add a description"
+            formControlName="imageDes"
+          ></textarea>
+
+          <br /><br />
+
+          <label for="cars">Image category</label>
+          <select name="imageCategory" id="imageCategory">
+            <option value="People">People</option>
+            <option value="Media">Media</option>
+            <option value="Camps">Camps</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <br /><br />
+
+          <!-- radio buttons for choosing if user wants to include photo in gallery -->
+          <br />
+          <p>
+            Include this image in gallery
+            <img
+              src="assets/upload/icons-question.png"
+              tooltip="Choose to include the photo in website gallery"
+              placement="auto"
+              class="mx-2 shadow rounded-circle p-1"
+              width="30"
+            />
+          </p>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="galleryNo"
+              id="galleryYes"
+              value="yes"
+              formControlName="imageUpload"
+            />
+            <!-- yes button -->
+            <label class="form-check-label" for="inlineRadio1">Yes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="galleryNo"
+              id="galleryNo"
+              value="no"
+              formControlName="imageUpload"
+            />
+            <!-- no button -->
+            <label class="form-check-label" for="inlineRadio2">No</label>
+          </div>
+          <br /><br />
+          <button
+            *ngIf="last"
+            type="button"
+            (click)="addImage()"
+            tooltip="Add another image"
+            placement="auto"
+            class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
+          >
+            Add Another Image
+            <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
+          </button>
+          <button
+            type="button"
+            tooltip="Remove this image"
+            placement="auto"
+            *ngIf="!first || !last"
+            class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
+            (click)="removeImageSection(i)"
+          >
+            Remove
+            <img src="assets/upload/icons-remove.png" class="mx-2" width="30" />
+          </button>
+        </form>
+      </section>

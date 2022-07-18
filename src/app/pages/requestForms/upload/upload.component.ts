@@ -59,7 +59,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   imageArray = new FormArray([this.newImage()]);
   eventArray = new FormArray([this.newEvent()]);
   memoirArray = new FormArray([this.newMemoir()]);
-  ImageForm = new FormGroup({
+  imageForm2 = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
   });
