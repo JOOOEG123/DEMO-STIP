@@ -75,6 +75,32 @@ export class ContributionsService {
       .remove();
   }
 
+  //   const ref = this.db.database.ref(
+  //     `/persons/requestArchieve/contributions/${id}`
+  //   );
+  //   return ref.once('value', (x) => {
+  //     const v = x.val();
+  //     if (v?.[id]) {
+  //       delete v[id];
+  //     }
+  //     x.ref.set(v);
+  //   });
+  // }
+
+  // remove method 2
+  removeContributionsById(contributionId: string) {
+    const s = this.fetchUserContributions().subscribe((x: any) => {
+      if (x?.[contributionId]) {
+        delete x[contributionId];
+      }
+      this.callAPI()
+        .set(x)
+        .then(() => {
+          s.unsubscribe();
+        });
+    });
+  }
+
   // Admin get all contribution
   fetchAllContributions() {
     return this.db
@@ -91,4 +117,13 @@ export class ContributionsService {
       .object(`/persons/requestArchieve/contributions/${contributorId}`)
       .update({ [contributionId]: obj });
   }
+
+  removeUserContribution(
+    contributorId: string,
+    contributionId: string
+  ) {
+    return this.db
+      .object(`/persons/requestArchieve/contributions/${contributorId}/${contributionId}`)
+      .remove()
+  } 
 }

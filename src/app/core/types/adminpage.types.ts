@@ -68,7 +68,7 @@ export type Status = 'Dead' | 'Alive' | 'Unknown';
 
 export type State = 'void' | 'removed';
 
-export type Publish = 'original' | 'new' | 'approved' | 'rejected';
+export type Publish = 'original' | 'new' | 'approved' | 'rejected' | 'deleted'
 
 interface Event {
   eventId: string;
@@ -85,24 +85,26 @@ interface Memoir {
 }
 
 export interface RightistSchema {
-  rightistId: string;
-  imagePath: string[];
+  rightistId: string,
+  imageId: string[],
   initial: string;
   firstName: string;
   lastName: string;
+  fullName: string;
   gender: Gender;
   birthYear: number;
   deathYear: number;
   rightistYear: number;
-  status: Status;
-  ethnicity: Ethnicity;
-  job: string;
-  detailJob: string;
-  workplace: string;
-  events: Event[];
-  memoirs: Memoir[];
-  reference: string;
-  description: string;
+  status: Status,
+  ethnicity: Ethnicity,
+  job: string,
+  detailJob: string,
+  workplace: string,
+  workplaceCombined: string,
+  events: Event[],
+  memoirs: Memoir[],
+  reference: string,
+  description: string
 }
 
 export interface Rightist extends RightistSchema {}

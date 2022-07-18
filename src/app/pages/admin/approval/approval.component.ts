@@ -44,7 +44,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   selectedContributions: Contribution[] = [];
 
   activeCategory!: Categories;
+
   selectedContribution!: Contribution;
+  updatedContribution?: Contribution
 
   categoriesList: Categories[] = [
     'New Contributions',
@@ -57,8 +59,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     'Rejected Contributions': this.rejectedContributions,
   };
 
-  disabled: boolean = false;
-  modalRef?: BsModalRef;
+  disabled: boolean = false
+  readMoreRef?: BsModalRef;
+  deleteRef?: BsModalRef;
 
   contributionSubcription?: Subscription;
   rightistSubscription?: Subscription;
@@ -136,38 +139,64 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.contributionSubcription?.unsubscribe();
     this.rightistSubscription?.unsubscribe();
   }
+  
+  onEdit(contribution: Contribution) {
+    this.readMoreRef?.hide()
+    contribution.lastUpdatedAt = new Date()
+    let contributorId = contribution.contributorId[contribution.contributorId.length - 1]
+    this.contributionAPI.updateUserContribution(contributorId, contribution.contributionId, contribution)
+    this.archiveAPI.editArchieveById(contribution.rightist, contribution.rightistId)
+  }
 
   onApprove(contribution: Contribution) {
-    this.modalRef?.hide();
-    this.publish = 'approved';
+    this.updatedContribution = contribution
+    this.readMoreRef?.hide()
     const index = this.selectedContributions.findIndex(
       (c) => c.contributionId == contribution.contributionId
     );
-    this.selectedContribution = this.newContributions[index];
-    this.selectedContribution.state = 'removed';
+    this.selectedContribution = this.newContributions[index]
+    this.publish = 'approved'
+    this.selectedContribution.state = 'removed';    
   }
 
   onReject(contribution: Contribution) {
-    this.modalRef?.hide();
-    this.publish = 'rejected';
+    this.updatedContribution = contribution
+    this.readMoreRef?.hide()
     const index = this.selectedContributions.findIndex(
       (c) => c.contributionId == contribution.contributionId
     );
-
-    this.selectedContribution = this.newContributions[index];
+    this.selectedContribution = this.newContributions[index]
+    this.publish = 'rejected'
     this.selectedContribution.state = 'removed';
   }
 
   onReconsider(contribution: Contribution) {
-    this.modalRef?.hide();
-    this.publish = 'approved';
+    this.updatedContribution = contribution
+    this.readMoreRef?.hide()
     const index = this.selectedContributions.findIndex(
-      (c) => (c.contributionId = contribution.contributionId)
+      (c) => c.contributionId == contribution.contributionId
     );
-    this.selectedContribution = this.rejectedContributions[index];
-    this.selectedContribution.state = 'removed';
+    this.selectedContribution = this.rejectedContributions[index]
+    this.publish = 'approved'
+    this.selectedContribution.state = 'removed'
   }
 
+  onRemove(template: TemplateRef<any>, contribution: Contribution) {
+    this.selectedContribution = contribution
+    this.readMoreRef?.hide()
+    this.deleteRef = this.modalService.show(template, { class: 'modal-dialog-centered', backdrop: 'static'})
+  }
+
+  onDelete() {
+    this.deleteRef?.hide()
+    this.publish = 'deleted'
+    this.selectedContribution.state = 'removed'
+  }
+
+  onCancel() {
+    this.deleteRef?.hide()
+  }
+  
   setActiveCategory(category: Categories) {
     this.activeCategory = category;
     this.selectedContributions = this.categories[this.activeCategory];
@@ -188,27 +217,33 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.selectedContribution.lastUpdatedAt = new Date();
 
       if (this.selectedContribution.rightist) {
-        let contributorId =
-          this.selectedContribution.contributorId[
-            this.selectedContribution.contributorId.length - 1
-          ];
-        this.selectedContribution.publish = this.publish;
+        let contributorId = 
+          this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1]
+        let contributionId = this.selectedContribution.contributionId
+        let rightistId = this.selectedContribution.rightistId
 
-        const { state, ...contribution } = this.selectedContribution;
-
+        this.selectedContribution.publish = this.publish
+        
+        const {state, ...contribution} = this.selectedContribution
+        
         if (this.publish === 'approved') {
-          let { rightist, ...result } = contribution;
-          result.rightistId = rightist!.rightistId;
-          result.approvedAt = new Date();
-          this.archiveAPI
-            .addNewArchieve(rightist!)
-            .then(() => {});
+          let { rightist, ...result} = contribution
+
+          rightist = this.updatedContribution?.rightist
+          result.rightistId = rightist!.rightistId
+          result.approvedAt = new Date()
+          this.archiveAPI.addNewArchieve(rightist!).then(data => console.log(data))
+          console.log(result)
           this.contributionAPI.updateUserContribution(
             contributorId,
             this.selectedContribution.contributionId,
-            result
-          );
-        } else {
+            result)
+        }
+        else if (this.publish === 'deleted') {
+          this.contributionAPI.removeUserContribution(contributorId, contributionId)
+          this.archiveAPI.removeArchieveById(rightistId)
+        }
+        else {
           this.contributionAPI.updateUserContribution(
             contributorId,
             this.selectedContribution.contributionId,
@@ -222,7 +257,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
-    this.selectedContribution = contribution;
-    this.modalRef = this.modalService.show(template, { class: 'modal-xl' });
+    this.selectedContribution = contribution
+    this.readMoreRef = this.modalService.show(template, { class: 'modal-xl'})
   }
 }

@@ -33,12 +33,14 @@ import {
   ],
 })
 export class ContributionComponent implements OnInit {
-  @Input() contribution!: Contribution;
-  @Input() activeCategory?: Categories;
-  @Output() approve: EventEmitter<Contribution> = new EventEmitter();
-  @Output() reject: EventEmitter<Contribution> = new EventEmitter();
-  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter();
-  @Output() readMore: EventEmitter<Contribution> = new EventEmitter();
+  @Input() contribution!: Contribution
+  @Input() activeCategory?: Categories
+  @Output() approve: EventEmitter<Contribution> = new EventEmitter()
+  @Output() reject: EventEmitter<Contribution> = new EventEmitter()
+  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter()
+  @Output() readMore: EventEmitter<Contribution> = new EventEmitter()
+  @Output() remove: EventEmitter<Contribution> = new EventEmitter()
+  @Output() edit: EventEmitter<Contribution> = new EventEmitter()
 
   limit: number = 3;
 
@@ -60,5 +62,13 @@ export class ContributionComponent implements OnInit {
 
   onReadMore() {
     this.readMore.emit(this.contribution);
+  }
+
+  onRemove() {
+    this.remove.emit(this.contribution)
+  }
+
+  onEdit() {
+    this.edit.emit(this.contribution)
   }
 }

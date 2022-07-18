@@ -405,4 +405,51 @@
       Submit
     </button>
   </div>
+  <div 
+    class="col-12 mx-auto mb-5 text-center display-1" 
+    *ngIf="this.page == 'contribution' && this.contribution?.publish == 'new'">
+    <button
+      type="button"
+      (click)="onApprove()"
+      class="btn btn-transparent btn-lg mx-2 display-4 check-icon"
+    >
+      <span class="check-icon">&checkmark;</span>
+    </button>
+
+    <button
+      type="button"
+      (click)="onReject()"
+      class="btn btn-transparent btn-lg mx-2 cross-icon"
+    >
+      <span class="cross-icon">&cross;</span>
+    </button>
+  </div>
+
+  <div 
+    class="col-12 mx-auto mb-5 text-center display-1" 
+    *ngIf="
+      this.page == 'contribution' && 
+      this.contribution.publish == 'approved' &&
+      this.changed
+    ">
+      <button 
+          (click)="onEdit()"
+          type="button"
+          class="btn btn-warning btn-lg mx-2"
+        >
+          Edit
+        </button>
+  </div>
+
+  <div 
+    class="col-12 mx-auto mb-5 text-center display-1" 
+    *ngIf="this.page == 'contribution' && this.contribution?.publish == 'rejected'">
+      <button 
+        (click)="onReconsider()"
+        type="button" 
+        class="btn btn-transparent btn-lg mx-2 pencil-icon"
+      >
+      <span class="pencil-icon text-warning">&#8634;</span>
+    </button>
+  </div>
 </div>

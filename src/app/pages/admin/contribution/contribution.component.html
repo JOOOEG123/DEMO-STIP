@@ -2,8 +2,7 @@
   <div class="col-4">
     <div class="card-body ms-5">
       <h4 class="card-title fw-bold">
-        {{ contribution.rightist.lastName }}
-        {{ contribution.rightist.firstName }}
+        {{ contribution.rightist.fullName }}
       </h4>
       <p class="card-text m-0">
         Occupation:
@@ -55,7 +54,7 @@
     <div class="my-2 text-center">
       <p>
         <i>
-          {{ contribution.contributedAt | date: "short" }}
+          {{ contribution.lastUpdatedAt | date: "short" }}
         </i>
       </p>
     </div>
@@ -78,10 +77,11 @@
       </button>
 
       <button
+        (click)="onRemove()"
         class="btn btn-transparent mx-2"
         *ngIf="activeCategory == 'Approved Contributions'"
       >
-        <span class="pencil-icon text-warning">&#9998;</span>
+        <span class="cross-icon">&cross;</span>
       </button>
 
       <button
