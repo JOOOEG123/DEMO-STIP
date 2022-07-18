@@ -163,82 +163,146 @@
     <div class="col-md-4 ms-5 ps-5 photo">
       <!-- photo upload section -->
       <h4>Upload a photo</h4>
-      <form [formGroup]="form2">
-        <img alt="" [src]="url" height="200" width="200" />
-        <!-- select photo section -->
-        <input
-          class="form-control"
-          type="file"
-          (change)="onselectFile($event)"
-          formControlName="image"
-        />
-        <br /><br />
-        <button class="btn btn-dark" (click)="clearImage()">
-          Clear photo
-        </button>
-        <br><br>
-
-        <label for="exampleFormControlInput1" class="form-label">Title</label>
-        <input type="text" class="form-control" id="imagTitle" placeholder="What would you title this image">
-
-        <label for="exampleFormControlTextarea1" class="form-label">Details</label>
-        <textarea class="form-control" id="imageDetails" rows="3" placeholder="Add a description"></textarea>
-
-        <br><br>
-
-        <div class="btn-group" dropdown>
-          <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-                  aria-controls="dropdown-animated">
-            Image Category <span class="caret"></span>
+      <section
+        class="my-4"
+        *ngFor="
+          let event of imageControls;
+          let i = index;
+          last as last;
+          first as first
+        "
+      >
+        <form [formGroup]="imageForm">
+          <img alt="" [src]="url" height="200" width="200" />
+          <!-- select photo section -->
+          <input
+            class="form-control"
+            type="file"
+            (change)="onselectFile($event)"
+            formControlName="image"
+          />
+          <br /><br />
+          <button class="btn btn-dark" (click)="clearImage()">
+            Clear photo
           </button>
-          <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
-              role="menu" aria-labelledby="button-animated">
-            <li role="menuitem"><a class="dropdown-item" href="#">People</a></li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Media</a>
-            </li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Camp</a></li>
-            <li role="menuitem"><a class="dropdown-item" href="#">Other</a></li>
-          </ul>
-        </div>
-        <br><br>
+          <br /><br />
 
-        <!-- radio buttons for choosing if user wants to include photo in gallery -->
-        <br />
-        <p>
-          Include this image in gallery
-          <img
-            src="assets/upload/icons-question.png"
-            tooltip="Choose to include the photo in website gallery"
+          <label for="exampleFormControlInput1" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="imagTitle"
+            placeholder="What would you title this image"
+            formControlName="imageTitle"
+          />
+
+          <label for="exampleFormControlTextarea1" class="form-label"
+            >Details</label
+          >
+          <textarea
+            class="form-control"
+            id="imageDetails"
+            rows="3"
+            placeholder="Add a description"
+            formControlName="imageDes"
+          ></textarea>
+
+          <br /><br />
+
+          <div class="btn-group" dropdown>
+            <button
+              id="button-animated"
+              dropdownToggle
+              type="button"
+              class="btn btn-primary dropdown-toggle"
+              aria-controls="dropdown-animated"
+            >
+              Image Category <span class="caret"></span>
+            </button>
+            <ul
+              id="dropdown-animated"
+              *dropdownMenu
+              class="dropdown-menu"
+              role="menu"
+              aria-labelledby="button-animated"
+            >
+              <li role="menuitem">
+                <a class="dropdown-item" href="#">People</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" href="#">Media</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" href="#">Camp</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" href="#">Other</a>
+              </li>
+            </ul>
+          </div>
+          <br /><br />
+
+          <!-- radio buttons for choosing if user wants to include photo in gallery -->
+          <br />
+          <p>
+            Include this image in gallery
+            <img
+              src="assets/upload/icons-question.png"
+              tooltip="Choose to include the photo in website gallery"
+              placement="auto"
+              class="mx-2 shadow rounded-circle p-1"
+              width="30"
+            />
+          </p>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="galleryNo"
+              id="galleryYes"
+              value="yes"
+              formControlName="imageUpload"
+            />
+            <!-- yes button -->
+            <label class="form-check-label" for="inlineRadio1">Yes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="galleryNo"
+              id="galleryNo"
+              value="no"
+              formControlName="imageUpload"
+            />
+            <!-- no button -->
+            <label class="form-check-label" for="inlineRadio2">No</label>
+          </div>
+          <br /><br />
+          <button
+            *ngIf="last"
+            type="button"
+            (click)="addImage()"
+            tooltip="Add another image"
             placement="auto"
-            class="mx-2 shadow rounded-circle p-1"
-            width="30"
-          />
-        </p>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="galleryNo"
-            id="galleryYes"
-            value="yes"
-            formControlName="imageUpload"
-          />
-          <!-- yes button -->
-          <label class="form-check-label" for="inlineRadio1">Yes</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="galleryNo"
-            id="galleryNo"
-            value="no"
-            formControlName="imageUpload"
-          />
-          <!-- no button -->
-          <label class="form-check-label" for="inlineRadio2">No</label>
-        </div>
-      </form>
+            class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
+          >
+            Add Another Image
+            <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
+          </button>
+          <button
+            type="button"
+            tooltip="Remove this image"
+            placement="auto"
+            *ngIf="!first || !last"
+            class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
+            (click)="removeImageSection(i)"
+          >
+            Remove
+            <img src="assets/upload/icons-remove.png" class="mx-2" width="30" />
+          </button>
+        </form>
+      </section>
     </div>
 
     <!-- col for contents input box -->
@@ -313,6 +377,7 @@
                   width="30"
                 />
               </button>
+              <!-- add event button -->
               <button
                 *ngIf="last"
                 type="button"
