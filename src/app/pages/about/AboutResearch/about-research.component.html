@@ -1,91 +1,94 @@
+<!-- Project overview header -->
+<div class="container-fluid p-0 pb-3" id="golddiv">
+  <div class="container-fluid text-white p-0 m-0" id="bluediv">
+    <div class="container w-50 py-5">
+      <h2 class="text-center py-4">Archive Project Overview</h2>
+      <p class="pb-5 mb-5">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore. Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+        in reprehenderit in voluptate velit esse cillum dolore.
+      </p>
+    </div>
+  </div>
+</div>
 
-  <!-- Project overview header -->
-<div>
-    <div class="container-fluid position-relative" id="golddiv"style=";background-color:rgb(206, 163, 116); padding-bottom:20px">
-      <div class="container-fluid text-white" id="bluediv" style="position:relative; padding-bottom:0; background-color:rgb(12,19,48);">
-        <h2 class="text-center" style="padding-top:50px;">Archive Project Overview</h2>
-        <p style="text-align:left; padding-left:25%; padding-right:25%;">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore. Lorem ipsum dolor sit amet, consectetur
-          adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-          in reprehenderit in voluptate velit esse cillum dolore. 
-        </p>
-        <p style="text-align:left; padding-left:25%; padding-right:25%; margin:0; padding-bottom:250px;">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-          velit esse cillum dolore. Lorem ipsum dolor sit amet, consectetur
-          adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-          in reprehenderit in voluptate velit esse cillum dolore. 
-        </p>
-      </div>
+<!-- What we found section -->
+<div class="container text-center w-50 my-4">
+  <h2 class="text-center pb-4">Research and what we found</h2>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore.
+  </p>
+</div>
+
+<!--Graphs-->
+<div class="container w-100 my-5">
+  <div class="row">
+    <div class="col-8 text-left">
+      <app-chart
+        *ngIf="rightistYearData.length != 0"
+        id="rightistYearBarChart"
+        type="bar"
+        [data]="rightistYearData"
+        [total]="total"
+      ></app-chart>
+    </div>
+    <div class="col-4 text-end align-self-center">
+      <h2>Data</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore.
+      </p>
     </div>
   </div>
-  
-  <!-- What we found section -->
-  <div class="container-fluid">
-    <h2 class="text-center pb-4">Research and what we found</h2>
-    <p style="padding-bottom:100px; padding-left:30%; padding-right:30%;">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore.
-    </p>
-    <div class="container-fluid">
-      <div class="row" style="padding-left:15%; padding-right:15%;">
-        <div class="col">
-          <p>graphs and display</p>
-        </div>
-        <div class="col">
-          <h2 style="padding-left:80%; padding-bottom:30px;">Data</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore.
-          </p>
-        </div>
-      </div>
-      <div class="row" style="padding-top: 100px; padding-left:15%; padding-right:15%;">
-        <div class="col">
-          <h2 style="padding-bottom:30px;">Data</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore.
-          </p>
-        </div>
-        <div class="col">
-          graphs and display
-        </div>
-      </div>
+  <div class="row row-gap">
+    <div class="col-4 text-start align-self-center">
+      <h2>Data</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore.
+      </p>
+    </div>
+    <div class="col-8 text-end">
+      <app-chart
+        *ngIf="genderData.length != 0"
+        id="genderPieChart"
+        type="pie"
+        [data]="genderData"
+        [total]="total"
+      ></app-chart>
     </div>
   </div>
-  
-  <!-- Summary section -->
-  <div class="container-fluid">
-    <h2 class="text-center" style="padding-bottom:40px; padding-top:100px;">Summary</h2>
-    <p style="padding-left:27%; padding-right:27%;">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore.
-    </p>
-    <div class="container=fluid text-center" style="padding-bottom:50px; padding-top:150px;">
-      <button class="btn rounded-pill" style="font-size:20px; border-color:red;">Meet the team behind the research</button>
-    </div>
+</div>
+
+<!-- Summary section -->
+<div class="container w-50 my-4 text-center">
+  <h2>Summary</h2>
+  <p>
+    Lorem ipsum dolor sit am, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore.
+  </p>
+  <div class="my-5">
+    <button class="btn btn-success rounded-pill button-size">
+      Meet the team behind the research
+    </button>
   </div>
-  
+</div>

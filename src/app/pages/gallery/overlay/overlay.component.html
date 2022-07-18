@@ -1,68 +1,113 @@
 <div class="container-fluid">
-    <button (click)="onClose()" class="btn btn-danger float-end">X</button>
+  <button (click)="onClose()" class="btn btn-danger float-end">X</button>
 
-    <div>
-        <img [src]="this.image?.imagePath" width="70%" class="img-fluid mx-auto my-4 d-block" />
-    </div>  
+  <div>
+    <img
+      [src]="this.image?.imagePath"
+      width="70%"
+      class="img-fluid mx-auto my-4 d-block"
+    />
+  </div>
 
-    <div class="my-4">  
-        <div class="container">
-            <div class="display-6"><span class="fw-bold">Title: </span>{{this.image?.galleryTitle}}</div>
-            <div class="input-group" *ngIf="isEditMode">
-                <div class="input-group-prepend">
-                    <span class="input-group-text fw-bold">Title: </span>
-                </div>
-                <input [(ngModel)]="title" type="text" class="form-control" aria-label="Small" aria-describedby="title_edit_input" />
-            </div>
+  <div class="my-4">
+    <div class="container">
+      <div class="display-6">
+        <span class="fw-bold">Title: </span>{{ this.image?.galleryTitle }}
+      </div>
+      <div class="input-group" *ngIf="isEditMode">
+        <div class="input-group-prepend">
+          <span class="input-group-text fw-bold">Title: </span>
         </div>
-
-        <div class="container">
-            <div class="display-6"><span class="fw-bold">Detail: </span>{{this.image?.galleryDetail}}</div>
-            <div class="input-group" *ngIf="isEditMode">
-                <div class="input-group-prepend">
-                    <span class="input-group-text fw-bold">Detail: </span>
-                </div>
-                <input [(ngModel)]="detail" type="text" class="form-control" aria-label="Small" aria-describedby="detail_edit_input" />
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="display-6"><span class="fw-bold">Source: </span>{{this.image?.gallerySource}}</div>
-            <div class="input-group" *ngIf="isEditMode">
-                <div class="input-group-prepend">
-                    <span class="input-group-text fw-bold">Source: </span>
-                </div>
-                <input [(ngModel)]="source" type="text" class="form-control" aria-label="Small" aria-describedby="source_edit_input" />
-            </div>
-        </div> 
+        <input
+          [(ngModel)]="title"
+          type="text"
+          class="form-control"
+          aria-label="Small"
+          aria-describedby="title_edit_input"
+        />
+      </div>
     </div>
 
-    <div class="container w-75 text-center">
-        <div *ngIf="status == 'submit'" class="display-6 text-danger">
-            Are you sure you want to update this record?
+    <div class="container">
+      <div class="display-6">
+        <span class="fw-bold">Detail: </span>{{ this.image?.galleryDetail }}
+      </div>
+      <div class="input-group" *ngIf="isEditMode">
+        <div class="input-group-prepend">
+          <span class="input-group-text fw-bold">Detail: </span>
         </div>
-        <div *ngIf="status == 'remove'" class="display-6 text-danger">
-            <div>Are you sure you want to delete this record?</div>
-            <div class="h4 font-italic">(This action can not be undone)</div>
-        </div>
+        <input
+          [(ngModel)]="detail"
+          type="text"
+          class="form-control"
+          aria-label="Small"
+          aria-describedby="detail_edit_input"
+        />
+      </div>
     </div>
 
-    <div class="container text-center my-4" *ngIf="isAdmin">
-        <div *ngIf="status == 'initial'">
-            <button class="btn btn-warning mx-2" (click)="onEdit()" *ngIf="!this.isEditMode">Edit</button>
-            <button class="btn btn-success mx-2" (click)="onSubmit()" *ngIf="this.isEditMode">Submit</button>
-            <button class="btn btn-danger mx-2" (click)="onRemove()" *ngIf="!this.isEditMode">Remove</button>
+    <div class="container">
+      <div class="display-6">
+        <span class="fw-bold">Source: </span>{{ this.image?.gallerySource }}
+      </div>
+      <div class="input-group" *ngIf="isEditMode">
+        <div class="input-group-prepend">
+          <span class="input-group-text fw-bold">Source: </span>
         </div>
-        
-        <div *ngIf="status == 'submit'">
-            <button class="btn btn-success mx-2" (click)="onUpdate()">Update</button>
-            <button class="btn btn-danger mx-2" (click)="onCancel()">Cancel</button>
-        </div>
+        <input
+          [(ngModel)]="source"
+          type="text"
+          class="form-control"
+          aria-label="Small"
+          aria-describedby="source_edit_input"
+        />
+      </div>
+    </div>
+  </div>
 
-        <div *ngIf="status == 'remove'">
-            <button class="btn btn-success mx-2" (click)="onDelete()">Delete</button>
-            <button class="btn btn-danger mx-2" (click)="onCancel()">Cancel</button>
-        </div>
+  <div class="container w-75 text-center">
+    <div *ngIf="status == 'submit'" class="display-6 text-danger">
+      Are you sure you want to update this record?
+    </div>
+    <div *ngIf="status == 'remove'" class="display-6 text-danger">
+      <div>Are you sure you want to delete this record?</div>
+      <div class="h4 font-italic">(This action can not be undone)</div>
+    </div>
+  </div>
+
+  <div class="container text-center my-4" *ngIf="isAdmin">
+    <div *ngIf="status == 'initial'">
+      <button
+        class="btn btn-warning mx-2"
+        (click)="onEdit()"
+        *ngIf="!this.isEditMode"
+      >
+        Edit
+      </button>
+      <button
+        class="btn btn-success mx-2"
+        (click)="onSubmit()"
+        *ngIf="this.isEditMode"
+      >
+        Submit
+      </button>
+      <button
+        class="btn btn-danger mx-2"
+        (click)="onRemove()"
+        *ngIf="!this.isEditMode"
+      >
+        Remove
+      </button>
     </div>
 
+    <div *ngIf="status == 'submit'">
+      <button class="btn btn-success mx-2" (click)="onUpdate()">Update</button>
+      <button class="btn btn-danger mx-2" (click)="onCancel()">Cancel</button>
+    </div>
+
+    <div *ngIf="status == 'remove'">
+      <button class="btn btn-success mx-2" (click)="onDelete()">Delete</button>
+      <button class="btn btn-danger mx-2" (click)="onCancel()">Cancel</button>
+    </div>
+  </div>
 </div>

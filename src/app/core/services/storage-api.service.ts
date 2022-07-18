@@ -31,18 +31,18 @@ export class StorageApIService {
   }
 
   getGalleryImageURL(imageId: string) {
-    return this.afs.ref(`images/galleries/${imageId}`).getDownloadURL()
+    return this.afs.ref(`images/galleries/${imageId}`).getDownloadURL();
   }
 
   uploadGalleryImage(uid: string, file: File) {
-    const ref = this.afs.ref(`images/galleries/${uid}`)
-    const upload = ref.put(file)
-    return upload
+    const ref = this.afs.ref(`images/galleries/${uid}`);
+    const upload = ref.put(file);
+    return upload;
   }
 
   removeGalleryImage(uid: string) {
-    const ref = this.afs.ref(`images/galleries/${uid}`)
-    const upload = ref.delete()
-    return upload
+    const ref = this.afs.ref(`images/galleries/${uid}`);
+    const upload = ref.delete();
+    return upload;
   }
 }

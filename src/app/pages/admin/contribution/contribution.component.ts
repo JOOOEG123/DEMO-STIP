@@ -6,8 +6,19 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, Input, OnInit, EventEmitter, Output, TemplateRef } from '@angular/core';
-import { Categories, Contribution, Publish } from 'src/app/core/types/adminpage.types';
+import {
+  Component,
+  Input,
+  OnInit,
+  EventEmitter,
+  Output,
+  TemplateRef,
+} from '@angular/core';
+import {
+  Categories,
+  Contribution,
+  Publish,
+} from 'src/app/core/types/adminpage.types';
 
 @Component({
   selector: 'app-contribution',
@@ -21,38 +32,33 @@ import { Categories, Contribution, Publish } from 'src/app/core/types/adminpage.
     ]),
   ],
 })
-
 export class ContributionComponent implements OnInit {
-  @Input() contribution!: Contribution
-  @Input() activeCategory?: Categories
-  @Output() approve: EventEmitter<Contribution> = new EventEmitter()
-  @Output() reject: EventEmitter<Contribution> = new EventEmitter()
-  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter()
-  @Output() readMore: EventEmitter<Contribution> = new EventEmitter()
+  @Input() contribution!: Contribution;
+  @Input() activeCategory?: Categories;
+  @Output() approve: EventEmitter<Contribution> = new EventEmitter();
+  @Output() reject: EventEmitter<Contribution> = new EventEmitter();
+  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter();
+  @Output() readMore: EventEmitter<Contribution> = new EventEmitter();
 
-  limit: number = 3
+  limit: number = 3;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-    // if (typeof this.contributionInput !== 'undefined') {
-    //   this.contribution = this.contributionInput
-    // }
-  }
+  ngOnInit(): void {}
 
   onApprove() {
-    this.approve.emit(this.contribution)
+    this.approve.emit(this.contribution);
   }
 
   onReject() {
-    this.reject.emit(this.contribution)
+    this.reject.emit(this.contribution);
   }
 
   onReconsider() {
-    this.reconsider.emit(this.contribution)
+    this.reconsider.emit(this.contribution);
   }
 
   onReadMore() {
-    this.readMore.emit(this.contribution)
+    this.readMore.emit(this.contribution);
   }
 }

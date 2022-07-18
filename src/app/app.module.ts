@@ -56,6 +56,7 @@ import { OverlayComponent } from './pages/gallery/overlay/overlay.component';
 import { ContributionComponent } from './pages/admin/contribution/contribution.component';
 import { RepositoryComponent } from './pages/browse/repository/repository.component';
 
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
