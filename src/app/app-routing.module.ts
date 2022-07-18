@@ -31,7 +31,6 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'home',
   },
-  // { path: 'home', loadChildren: MainBrowseComponent, redirectTo: 'Archive' },
 ];
 
 @NgModule({

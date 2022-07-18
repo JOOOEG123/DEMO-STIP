@@ -31,7 +31,6 @@ export class ArchieveApiService {
       .ref(`/persons/requestArchieve/persons`)
       .once('value', (v) => {
         const o = v.val();
-        console.log('New ', o);
         if (!o?.[id]) {
           throw new Error(`${id} is not found`);
         } else {
@@ -46,7 +45,6 @@ export class ArchieveApiService {
       .ref(`/persons/requestArchieve/persons`)
       .once('value', (v) => {
         const o = v.val();
-        console.log('New ', o);
         if (!o?.[id]) {
           throw new Error(`${id} is not found`);
         } else {
@@ -125,7 +123,6 @@ export class ArchieveApiService {
           e.ref.update(data);
         });
       });
-    // return this.db.list(`/persons/publics/${alphabet}/persons`, (ref) =>  ref.orderByChild('person_id').equalTo(data.person_id)).update(data.person_id, data);
   }
 
   // key value pair is person_id: data. Scenario: update person_id--1 to data--{name: "new name"}

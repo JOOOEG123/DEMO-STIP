@@ -86,7 +86,6 @@ export class ModalTemplateComponent implements OnInit {
   }
 
   // function to close modal
-
   changeEmail() {
     const email = this.changeEmailForm.value.newEmail;
     this.auth.changeEmail(email).then(() => {

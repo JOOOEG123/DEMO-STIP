@@ -198,8 +198,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
     //reset db
     this.getNonFilterData('filterPanel');
-    console.log('filtering values');
-    console.log(this.db_result);
     if (!empty) {
       let attr: any[] = ['gender', 'ethnicity', 'job', 'status'];
       let userValues: any[] = [

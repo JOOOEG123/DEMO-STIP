@@ -57,7 +57,6 @@ export class EditAccountComponent implements OnInit, OnDestroy {
     this.edit_form.get('email')?.disable();
     this.sub.push(
       this.auth.userDetaills.subscribe((user: any) => {
-        console.log('Subscribe: ', user);
         this.edit_form.patchValue({
           ...user,
         });

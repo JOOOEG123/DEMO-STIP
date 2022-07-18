@@ -17,7 +17,6 @@ export class BrowseArchiveComponent implements OnInit {
   @ViewChild('infoContent') infoContent!: ElementRef;
 
   [x: string]: any;
-  // solution 1
   id = this.route.snapshot.paramMap.get('id') as string;
   profile = {} as any;
   url = location.href;
@@ -26,17 +25,13 @@ export class BrowseArchiveComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private arch: ArchieveApiService,
     private clipboardApi: ClipboardService,
     private auth: AuthServiceService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.id);
-
     this.arch.getPersonById(this.id).subscribe((res) => {
-      console.log(res);
       this.profile = res;
       this.replaceNewline();
     });
@@ -44,10 +39,6 @@ export class BrowseArchiveComponent implements OnInit {
     this.auth.isAdmin.subscribe((x) => {
       this.isAdmin = x;
     });
-    // solution 2
-    // this.route.paramMap.subscribe((params: ParamMap) => {
-    //   console.log(params.get('id'));
-    // });
   }
 
   display: string[] = [];
@@ -61,13 +52,9 @@ export class BrowseArchiveComponent implements OnInit {
     let doc = new jsPDF('p', 'pt', 'a4');
     let content;
     if (pdfName === 'memoirContent') {
-      // content = doc.text(splitTitle, 30, 30);
       this.addWrappedText(this.profile.memoirs[0].memoir, 540, doc);
       doc.save(pdfName + '.pdf');
-      // doc.text(this.profile.memoirs[0].memoir, 30, 60, { maxWidth: 540 });
-      // content = this.memContent.nativeElement;
     } else {
-      // this.addWrappedText(this.profile.memoirs[0].memoir, 540, doc);
       content = this.infoContent.nativeElement;
       doc.html(content, {
         callback: function (doc) {
@@ -77,8 +64,6 @@ export class BrowseArchiveComponent implements OnInit {
         y: 50,
       });
     }
-
-    //doc.output('dataurlnewwindow'); // just open it
   }
   copyURL() {
     this.clipboardApi.copyFromContent(this.url);
@@ -103,14 +88,11 @@ export class BrowseArchiveComponent implements OnInit {
     var pageHeight = doc.internal.pageSize.height; // Get page height, well use this for auto-paging
     doc.setFont(undefined, fontType);
     doc.setFont(undefined, fontSize);
-
-    console.log(textLines);
     var cursorY = initialYPosition;
 
     textLines.forEach((lineText) => {
       if (cursorY + 50 > pageHeight) {
         // Auto-paging
-        console.log('auto-paginggggggggggggg', pageHeight);
         doc.addPage();
         cursorY = pageWrapInitialYPosition;
       }

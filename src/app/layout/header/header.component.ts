@@ -35,7 +35,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.auth.isLoggedIn.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
-      console.log('isLoggedIn', this.isLoggedIn);
     });
 
     this.annoucement.getAnnounce().subscribe((x) => {
@@ -45,7 +44,6 @@ export class HeaderComponent implements OnInit {
     });
   }
   loginLogin() {
-    console.log('loginLogin', this.isLoggedIn);
     this.login.openModal();
   }
   createCounter() {

@@ -63,7 +63,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.subscription.push(
       this.auth.userDetaills.subscribe((user: any) => {
         this.profile = user;
-        console.log('profile', this.profile);
         if (user?.['uid']) {
           this.userId = user['uid'];
         }

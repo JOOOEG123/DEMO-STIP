@@ -9,7 +9,6 @@ const allArchies = async (req: unknown, res: Response) => {
     // eslint-disable-next-line max-len
     await database.ref(`/persons/requestArchieve/persons`).once('value', (v) => {
       const o = v.val();
-      console.log('New ', o);
       if (!o) {
         throw new Error('No data');
       } else {

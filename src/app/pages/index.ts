@@ -34,7 +34,6 @@ const viewUploadPage = () =>
   pipe(
     customClaims,
     map((claims) => {
-      console.log('Claims', claims);
       return (
         claims.email_verified === true ||
         claims.admin === true ||

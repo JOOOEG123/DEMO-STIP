@@ -84,9 +84,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         this.newContributions.length = 0;
         this.approvedContributions.length = 0;
         this.rejectedContributions.length = 0;
-        // this.contributions = data as any[]
         const test: ContributionJson[] = Object.values(data);
-        console.log(test);
         for (let lol of test) {
           for (const contribution of Object.values(lol)) {
             this.contributions.push(contribution);
@@ -100,8 +98,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             new Date(a.lastUpdatedAt).getTime()
           );
         });
-
-        console.log(this.contributions);
 
         for (let contribution of this.contributions) {
           let data: Contribution = {
@@ -124,7 +120,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
               });
 
             this.approvedContributions.push(data);
-            console.log(contribution);
           }
 
           if (contribution.publish == 'rejected') {
@@ -207,8 +202,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           result.approvedAt = new Date();
           this.archiveAPI
             .addNewArchieve(rightist!)
-            .then((data) => console.log(data));
-          console.log(result);
+            .then(() => {});
           this.contributionAPI.updateUserContribution(
             contributorId,
             this.selectedContribution.contributionId,

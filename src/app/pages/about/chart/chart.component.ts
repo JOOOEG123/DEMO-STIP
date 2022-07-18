@@ -32,10 +32,7 @@ export class ChartComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.data);
-    console.log(this.radius);
-  }
+  ngOnInit() {}
 
   ngAfterContentInit() {
     if (this.type == 'bar') {
@@ -154,7 +151,6 @@ export class ChartComponent implements OnInit {
       .enter()
       .append('text')
       .text(function (d) {
-        console.log(d.data.count);
         let percentage = (d.data.count / total!) * 100;
         return '' + d.data.filter + ': ' + percentage.toFixed(2) + '%';
       })

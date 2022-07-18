@@ -26,8 +26,6 @@ export class BrowseSearchFilterComponent implements OnInit {
   groups = GROUPS;
   occupations = OCCUPATIONS;
 
-  //dateCustomClasses: DatepickerDateCustomClasses[];
-
   constructor(private formgroup: FormBuilder) {}
 
   formSub!: Subscription;
@@ -55,13 +53,8 @@ export class BrowseSearchFilterComponent implements OnInit {
     this.formSub = this.formValues.valueChanges.subscribe((value) => {
       let date = '';
       if (value.date) {
-        console.log(value.date);
-        //value.date = [new Date(1999),new Date(2010)];
-        //console.log(value.date[0].gettime())
         value.date = [new Date(value.date[0]), new Date(value.date[1])];
       }
-
-      console.log('subforming', value);
       this.filterValues = { ...value, date } as any;
       this.filterValuesChange.emit(value);
     });
@@ -84,18 +77,4 @@ export class BrowseSearchFilterComponent implements OnInit {
       date: '',
     });
   }
-
-  // modelDate = '';
-
-  // onOpenCalendar(container:any) {
-  //   console.log("testing calender")
-  //   container.monthSelectHandler = (event: any): void => {
-  //     container._store.dispatch(container._actions.select(event.date));
-  //   };
-  //   console.log(container)
-  //   console.log(container.placement)
-  //   container.setViewMode('year');
-  //   container.displayMonths = 1
-  //   container.isMobile = true
-  //  }
 }

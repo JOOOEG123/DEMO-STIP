@@ -60,7 +60,6 @@ export class HomepageComponent implements OnInit {
     this.func
       .httpsCallable('add')({ respo: '' })
       .subscribe((result: any) => {
-        console.log(result);
       });
   }
   searchArchives() {
