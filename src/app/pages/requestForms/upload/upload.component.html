@@ -160,28 +160,48 @@
   </form>
 
   <div class="row">
-    <div class="col-md-4 ms-5 ps-5">
+    <div class="col-md-4 ms-5 ps-5 photo">
       <!-- photo upload section -->
       <h4>Upload a photo</h4>
       <form [formGroup]="form2">
         <img alt="" [src]="url" height="200" width="200" />
         <!-- select photo section -->
         <input
+          class="form-control"
           type="file"
           (change)="onselectFile($event)"
           formControlName="image"
-          multiple
         />
         <br /><br />
         <button class="btn btn-dark" (click)="clearImage()">
-          Remove photo
+          Clear photo
         </button>
-        <!-- instruction for selecting photos -->
-        <p>
-          <br />
-          (hold 'Ctrl' ('command' on Mac) to select <br />
-          multiple images when choosing files)
-        </p>
+        <br><br>
+
+        <label for="exampleFormControlInput1" class="form-label">Title</label>
+        <input type="text" class="form-control" id="imagTitle" placeholder="What would you title this image">
+
+        <label for="exampleFormControlTextarea1" class="form-label">Details</label>
+        <textarea class="form-control" id="imageDetails" rows="3" placeholder="Add a description"></textarea>
+
+        <br><br>
+
+        <div class="btn-group" dropdown>
+          <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                  aria-controls="dropdown-animated">
+            Image Category <span class="caret"></span>
+          </button>
+          <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
+              role="menu" aria-labelledby="button-animated">
+            <li role="menuitem"><a class="dropdown-item" href="#">People</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="#">Media</a>
+            </li>
+            <li role="menuitem"><a class="dropdown-item" href="#">Camp</a></li>
+            <li role="menuitem"><a class="dropdown-item" href="#">Other</a></li>
+          </ul>
+        </div>
+        <br><br>
+
         <!-- radio buttons for choosing if user wants to include photo in gallery -->
         <br />
         <p>
