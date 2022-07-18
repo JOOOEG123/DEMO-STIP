@@ -34,12 +34,12 @@
 
 
     <div class="col-7 border-start m-3">
-      <a (click)="SavePDF('infoContent')" class="btn btn-light border-khaki float-end">Delete</a>
-      <a (click)="SavePDF('infoContent')" class="btn btn-light border-khaki float-end">Request to Modify</a>
-      <a class="share float-end m-2" data-bs-toggle="modal" data-bs-target="#shareModal">
+      <app-request-modify></app-request-modify>
+      <a class="btn btn-light border-khaki">Delete</a>
+      <a class="share m-2" data-bs-toggle="modal" data-bs-target="#shareModal">
         <img src="/assets/browsepage/share.svg">
       </a>
-
+      
       <!-- Modal -->
       <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -77,7 +77,7 @@
         </div>
       </div>
 
-      <a class="float-end m-2" type="button" tooltip="hi" data-bs-toggle="tooltip" data-bs-placement="right">
+      <a class="" type="button" tooltip="hi" data-bs-toggle="tooltip" data-bs-placement="right">
         <img src="assets/browsepage/question-mark.svg" alt="" width="20" />
       </a>
 
