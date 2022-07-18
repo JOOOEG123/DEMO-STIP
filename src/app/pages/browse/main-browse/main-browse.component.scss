@@ -30,8 +30,20 @@
     color: white !important;
     }
 
-    @media only screen and (min-width:400px) and (min-height: 400px) {
-      div.searchprofile {
-        color: red;
+    @media only screen and (max-width: 1400px), (max-height: 600px){
+      div.grid-searchprofile {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
+
+
+    @media only screen and (max-width: 700px), (max-height: 600px){
+      div.list-searchprofile {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  
