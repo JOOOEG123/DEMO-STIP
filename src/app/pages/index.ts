@@ -151,10 +151,36 @@ export const pagesRoutes = [
     },
   },
   {
+
+    path: 'meetTeam',
+    component: AboutTeamComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      title: 'meetTeam',
+    },
+  },
+  {
+    path: 'resources',
+    component: ResourcesComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      title: 'resources',
+    },
+  },
+  {
+    path: 'research',
+    component: AboutResearchComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {
+      title: 'research',
+      },
+  },
+  {
     path: 'request-modify',
     component: RequestModifyComponent,
     data: {
       title: 'request-modify',
+
     },
   },
 ];

@@ -6,9 +6,9 @@
       class="container-fluid position-relative"
       id="firstbg"
       style="
-        background-color: rgb(12, 19, 48);
-        padding-top: 100px;
-        padding-bottom: 280px;
+        background-color: #266461;
+        padding-top: 6.25rem;
+        padding-bottom: 17.5rem;
       "
     >
       <!-- head title of the page -->
@@ -19,63 +19,63 @@
       <!-- image of the red flower -->
       <div
         class="position-absolute"
-        style="width: 100px; height: 100px; left: 8%"
+        style="width: 6.25rem; height: 6.25rem; left: 8%"
       >
         <img
           class="img-fluid"
           src="/assets/aboutpage/Group 66.png"
-          style="width: 100px; height: 100px"
+          style="width: 6.25rem; height: 6.25rem"
         />
       </div>
       <!-- image of the red flower -->
       <div
         class="position-absolute"
-        style="width: 100px; height: 100px; top: 40%; left: 82%"
+        style="width: 6.25rem; height: 6.25rem; top: 40%; left: 82%"
       >
         <img
           class="img-fluid"
           src="/assets/aboutpage/Group 66.png"
-          style="width: 100px; height: 100px"
+          style="width: 6.25rem; height: 6.25rem"
         />
       </div>
       <!-- image of the red flower -->
       <div
         class="position-absolute"
-        style="width: 100px; height: 100px; top: 60%; left: 4%"
+        style="width: 6.25rem; height: 6.25rem; top: 60%; left: 4%"
       >
         <img
           class="img-fluid"
           src="/assets/aboutpage/Group 66.png"
-          style="width: 100px; height: 100px"
+          style="width: 6.25rem; height: 6.25rem"
         />
       </div>
       <!-- image of the gold lines -->
       <div
         class="position-absolute"
-        style="width: 100%; height: 255px; top: 20%; z-index: -1"
+        style="width: 100%; height: 15.938rem; top: 20%; z-index: -1"
       >
         <img
           class="img-fluid"
           src="/assets/aboutpage/Group 71.png"
-          style="width: 100%; height: 155px"
+          style="width: 100%; height: 9.688rem"
         />
       </div>
       <!-- image of the gold lines -->
       <div
         class="position-absolute"
-        style="width: 100%; height: 255px; top: 50%; z-index: -1"
+        style="width: 100%; height: 15.938rem; top: 50%; z-index: -1"
       >
         <img
           class="img-fluid"
           src="/assets/aboutpage/Group 62.png"
-          style="width: 100%; height: 155px"
+          style="width: 100%; height: 9.688rem"
         />
       </div>
       <!-- the paragraph box with border and background color -->
       <p
         class="mt-4 text-left text-light mx-auto"
         style="
-          background-color: rgb(12, 19, 48);
+          background-color: rgb(9, 54, 60);
           width: 50%;
           border-style: solid;
           border-color: rgb(206, 163, 116);
@@ -87,11 +87,12 @@
       </p>
 
       <!-- view source button -->
-      <div class="text-center" style="padding-top: 50px">
+      <div class="text-center" style="padding-top: 3.125rem">
         <button
           type="button"
           class="btn btn-lg btn-secondary rounded-pill responsive-width"
           style="width: 20%"
+          routerLink="/resources"
         >
           <i class="fa fa-plus"></i
           ><span class="hidden-sm hidden-xs">{{
@@ -103,17 +104,18 @@
   </div>
 
   <!-- div for the map section -->
-  <div style="padding-top: 100px">
-    <h3 style="padding-left: 16%">
+  <div style="padding-top: 6.25rem">
+    <h3 class="text-center">
       {{ "about_movement.about_movement_map_title" | translate }}
     </h3>
-    <p class="lh-lg" style="padding-left: 16%; width: 50%; padding-bottom: 15%">
+    <p class="lh-lg text-center">
       {{ "about_movement.about_movement_map_body" | translate }}
     </p>
     <div class="text-center" style="padding-bottom: 5%">
       <button
         type="button"
         class="btn-lg rounded-pill responsive-width btn-orange-red"
+        routerLink="/research"
       >
         <span class="hidden-sm hidden-xs">{{
           "about_movement.about_movement_learn_more_button" | translate
