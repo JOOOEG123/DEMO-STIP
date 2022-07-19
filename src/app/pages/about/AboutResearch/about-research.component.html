@@ -65,13 +65,14 @@
       </p>
     </div>
     <div class="col-8 text-end">
-      <app-chart
+      <div id='chart' class="chart-container"></div>
+      <!-- <app-chart
         *ngIf="genderData.length != 0"
         id="genderPieChart"
         type="pie"
         [data]="genderData"
         [total]="total"
-      ></app-chart>
+      ></app-chart> -->
     </div>
   </div>
 </div>
@@ -92,3 +93,4 @@
     </button>
   </div>
 </div>
+
