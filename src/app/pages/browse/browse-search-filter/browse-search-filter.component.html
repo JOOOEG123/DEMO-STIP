@@ -2,102 +2,170 @@
   <div class="d-flex bd-highlight bg-light ps-2">
     <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">Filter</h6>
     <div class="bd-highlight">
-      <button class="btn" type="button" [attr.aria-expanded]="!drop" aria-controls="collapseBasic"
-        (click)="updateCollapse()">
-        <img src="/assets/filters/collapse-{{ drop ? 'minus' : 'plus' }}.svg" alt="filter" width="20" />
-        <span class="visually-hidden">click to {{ drop ? "collapse" : "expand" }}</span>
+      <button
+        class="btn"
+        type="button"
+        [attr.aria-expanded]="!drop"
+        aria-controls="collapseBasic"
+        (click)="updateCollapse()"
+      >
+        <img
+          src="/assets/filters/collapse-{{ drop ? 'minus' : 'plus' }}.svg"
+          alt="filter"
+          width="20"
+        />
+        <span class="visually-hidden"
+          >click to {{ drop ? "collapse" : "expand" }}</span
+        >
       </button>
     </div>
   </div>
-  <div class="bg-white" id="collapseBasic" [collapse]="drop" [isAnimated]="true">
+  <div
+    class="bg-white"
+    id="collapseBasic"
+    [collapse]="drop"
+    [isAnimated]="true"
+  >
     <form class="row p-2" [formGroup]="formValues">
       <fieldset class="col-12 col-md-2">
         <legend class="h6 fw-bold">Gender</legend>
         <div class="form-check ms-3">
-          <input class="form-check-input" formControlName="gender" value="male" type="radio" name="gender"
-            id="gender-male" />
+          <input
+            class="form-check-input"
+            formControlName="gender"
+            value="male"
+            type="radio"
+            name="gender"
+            id="gender-male"
+          />
           <label class="form-check-label" for="gender-male"> Male </label>
         </div>
         <div class="form-check ms-3">
-          <input class="form-check-input" value="female" type="radio" formControlName="gender" name="gender"
-            id="gender-female" />
+          <input
+            class="form-check-input"
+            value="female"
+            type="radio"
+            formControlName="gender"
+            name="gender"
+            id="gender-female"
+          />
           <label class="form-check-label" for="gender-female"> Female </label>
         </div>
       </fieldset>
-
 
       <fieldset class="col-12 col-md-2">
         <legend class="h6 fw-bold">Status</legend>
 
         <div class="form-check ms-3">
-          <input class="form-check-input" value="Alive" type="radio" formControlName="status" name="status"
-            id="alive" />
+          <input
+            class="form-check-input"
+            value="Alive"
+            type="radio"
+            formControlName="status"
+            name="status"
+            id="alive"
+          />
           <label class="form-check-label" for="alive"> Alive </label>
         </div>
 
         <div class="form-check ms-3">
-          <input class="form-check-input" type="radio" value="Deceased" formControlName="status" name="status"
-            id="deceased" />
+          <input
+            class="form-check-input"
+            type="radio"
+            value="Deceased"
+            formControlName="status"
+            name="status"
+            id="deceased"
+          />
           <label class="form-check-label" for="deceased"> Deceased </label>
         </div>
 
         <div class="form-check ms-3">
-          <input class="form-check-input" value="Unknown" type="radio" formControlName="status" name="status"
-            id="unknown" />
+          <input
+            class="form-check-input"
+            value="Unknown"
+            type="radio"
+            formControlName="status"
+            name="status"
+            id="unknown"
+          />
           <label class="form-check-label" for="unknown"> Unknown </label>
         </div>
       </fieldset>
 
-
-
-
-
       <div class="col-12 col-md-2">
-        <label for="chinese-ethic-group" class="form-label col fw-bold">Chinese Ethnic Group</label>
+        <label for="chinese-ethic-group" class="form-label col fw-bold"
+          >Chinese Ethnic Group</label
+        >
         <div class="col-auto">
-          <input class="form-control form-control-sm" formControlName="ethnicity" id="chinese-ethic-group"
-            [typeahead]="groups" typeaheadOptionField="viewValue" [typeaheadOptionsLimit]="5"
-            placeholder="Type to search ethnic groups..." />
+          <input
+            class="form-control form-control-sm"
+            formControlName="ethnicity"
+            id="chinese-ethic-group"
+            [typeahead]="groups"
+            typeaheadOptionField="viewValue"
+            [typeaheadOptionsLimit]="5"
+            placeholder="Type to search ethnic groups..."
+          />
         </div>
       </div>
       <div class="col-12 col-md-3">
-        <label for="chinese-ethic-group fw-bold" class="form-label col fw-bold">Occupation</label>
+        <label for="chinese-ethic-group fw-bold" class="form-label col fw-bold"
+          >Occupation</label
+        >
         <div class="col-auto">
-
-          <select class="form-select form-select-sm mb-3" formControlName="job" aria-label=".form-select-lg example">
+          <select
+            class="form-select form-select-sm mb-3"
+            formControlName="job"
+            aria-label=".form-select-lg example"
+          >
             <option *ngFor="let job of occupations" [value]="job.viewValue">
-              {{job.viewValue}}
+              {{ job.viewValue }}
             </option>
           </select>
-
         </div>
-
-
-
-
       </div>
       <div class="col-12 col-md-3">
         <div class="form-group">
-
-          <label for="year-of-becoming-rightest" class="form-label col fw-bold">"Rightist" Year</label>
-          <a class="align-self-center mx-2" type="button"
-            tooltip="“Rightist Year” is when the individual became a “rightist”." data-bs-toggle="tooltip"
-            data-bs-placement="right">
+          <label for="year-of-becoming-rightest" class="form-label col fw-bold"
+            >"Rightist" Year</label
+          >
+          <a
+            class="align-self-center mx-2 float-end"
+            type="button"
+            tooltip="“Rightist Year” is when the individual became a “rightist”."
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
             <img src="assets/browsepage/question-mark.svg" alt="" width="20" />
-
           </a>
-          <input type="text" id="year-of-becoming-rightest" formControlName="date" placeholder="YYYY-YYYY"
-            class="form-control form-control-sm " bsDaterangepicker [minDate]="minDate" [maxDate]="maxDate"
-            [bsConfig]="{containerClass: 'theme-red',minMode: 'year',rangeInputFormat: 'YYYY'}" />
-
+          <input
+            type="text"
+            id="year-of-becoming-rightest"
+            formControlName="date"
+            placeholder="YYYY-YYYY"
+            class="form-control form-control-sm"
+            bsDaterangepicker
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [bsConfig]="{
+              containerClass: 'theme-red',
+              minMode: 'year',
+              rangeInputFormat: 'YYYY'
+            }"
+          />
         </div>
       </div>
       <div class="col-12 d-flex">
         <div class="ms-auto">
-          <button class="btn btn-secondary mx-3 rounded-pill" type="button" (click)="clear()">
-            Clear
+          <button
+            class="btn mx-3 rounded-pill shadow"
+            style="background-color: white"
+            type="button"
+            (click)="clear()"
+          >
+            Clear Filters
           </button>
-
         </div>
       </div>
     </form>

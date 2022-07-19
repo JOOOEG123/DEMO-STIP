@@ -8,6 +8,7 @@ import {
   ViewChild,
   SimpleChanges,
   NgZone,
+  OnChanges,
 } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { concatAll, Subscription } from 'rxjs';
@@ -39,7 +40,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   olditemsPerPage = 25;
 
   //variables for search functionalities
-  db_result: any[] = [];
+  @Input() db_result: any[] = [];
+
+  db_result_thousands_seperator: string = '0';
   nonFilterData: any[] = [];
   archCacheAPI: any = {};
   archSubAPI: Subscription[] = [];
@@ -74,19 +77,25 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     private archApi: ArchieveApiService,
     private route: ActivatedRoute,
     private changeDetection: ChangeDetectorRef
-  ) {}
+  ) {
+    console.log(this.db_result.length);
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.searchInput = params['searchTerm'] || '';
       this.lettersBtnClickOrReset('All');
     });
+    console.log(this.db_result.length);
   }
   ngOnDestroy(): void {
     this.archSubAPI.forEach((sub) => sub.unsubscribe());
     this.archCacheAPI = {};
   }
 
+  ngDoCheck() {
+    this.thousandsSeperator();
+  }
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
@@ -178,8 +187,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.browseSearchFilterComponent?.clear();
     const userValues = this.searchInput.split(' ');
 
-    //this.onOpenChange(this.searchSelect);
-
     console.log(this.db_attr, userValues);
 
     this.getNonFilterData('searchBar');
@@ -190,7 +197,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
         if (this.searchSelect == 'All Fields') {
           Object.values(record).forEach((element) => {
-            // console.log('ele--------', element);
             res =
               res ||
               this.containKeyword(
@@ -226,9 +232,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     } else {
       res = word.includes(keyword);
     }
-    // if (res) {
-    //   console.log(word);
-    // }
+
     return res;
   }
   filterValueschanges(valueEmitted: any) {
@@ -303,7 +307,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   onOpenChange(searchSelect: string) {
-    console.log('dropdown select------');
     this.searchSelect = searchSelect;
 
     switch (searchSelect) {
@@ -337,5 +340,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         ];
     }
     this.searchBar();
+  }
+
+  //to-do: might need to test when more data is avalible
+  thousandsSeperator() {
+    this.db_result_thousands_seperator = this.db_result.length
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 }
