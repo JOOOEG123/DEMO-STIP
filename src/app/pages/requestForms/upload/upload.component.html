@@ -160,65 +160,9 @@
   </form>
 
   <div class="row">
-    <div class="col-md-4 ms-5 ps-5">
+    <div class="col-md-4 ms-5 ps-5 photo">
       <!-- photo upload section -->
-      <h4>Upload a photo</h4>
-      <form [formGroup]="form2">
-        <img alt="" [src]="url" height="200" width="200" />
-        <!-- select photo section -->
-        <input
-          type="file"
-          (change)="onselectFile($event)"
-          formControlName="image"
-          multiple
-        />
-        <br /><br />
-        <button class="btn btn-dark" (click)="clearImage()">
-          Remove photo
-        </button>
-        <!-- instruction for selecting photos -->
-        <p>
-          <br />
-          (hold 'Ctrl' ('command' on Mac) to select <br />
-          multiple images when choosing files)
-        </p>
-        <!-- radio buttons for choosing if user wants to include photo in gallery -->
-        <br />
-        <p>
-          Include this image in gallery
-          <img
-            src="assets/upload/icons-question.png"
-            tooltip="Choose to include the photo in website gallery"
-            placement="auto"
-            class="mx-2 shadow rounded-circle p-1"
-            width="30"
-          />
-        </p>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="galleryNo"
-            id="galleryYes"
-            value="yes"
-            formControlName="imageUpload"
-          />
-          <!-- yes button -->
-          <label class="form-check-label" for="inlineRadio1">Yes</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="galleryNo"
-            id="galleryNo"
-            value="no"
-            formControlName="imageUpload"
-          />
-          <!-- no button -->
-          <label class="form-check-label" for="inlineRadio2">No</label>
-        </div>
-      </form>
+      <app-upload-image></app-upload-image>
     </div>
 
     <!-- col for contents input box -->
@@ -293,6 +237,7 @@
                   width="30"
                 />
               </button>
+              <!-- add event button -->
               <button
                 *ngIf="last"
                 type="button"

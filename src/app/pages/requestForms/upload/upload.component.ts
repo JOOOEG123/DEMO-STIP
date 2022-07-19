@@ -50,12 +50,28 @@ export class UploadComponent implements OnInit, OnDestroy {
     image: new FormControl(''),
     content: new FormControl(''),
   });
+
+  imageForm = new FormGroup({
+    imageTitle: new FormControl(''),
+    imageDes: new FormControl(''),
+  });
+
+  imageArray = new FormArray([this.newImage()]);
   eventArray = new FormArray([this.newEvent()]);
   memoirArray = new FormArray([this.newMemoir()]);
-  imageForm = new FormGroup({
+  imageForm2 = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
   });
+
+  private newImage() {
+    return new FormGroup({
+      imageUpload: new FormControl(''),
+      image: new FormControl(''),
+      imageTitle: new FormControl(''),
+      imageDes: new FormControl(''),
+    });
+  }
 
   private newEvent() {
     return new FormGroup({
@@ -77,12 +93,20 @@ export class UploadComponent implements OnInit, OnDestroy {
     return this.eventArray.controls as FormGroup[];
   }
 
+  get imageControls() {
+    return this.imageArray.controls as FormGroup[];
+  }
+
   get memoirControls() {
     return this.memoirArray.controls as FormGroup[];
   }
 
   removeMemoir(i: number) {
     this.memoirArray.removeAt(i);
+  }
+
+  removeImageSection(i: number) {
+    this.imageArray.removeAt(i);
   }
 
   constructor(
@@ -106,6 +130,10 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   clearImage() {
     this.imageForm.reset();
+  }
+
+  addImage() {
+    this.imageArray.push(this.newImage());
   }
 
   addEvent() {
