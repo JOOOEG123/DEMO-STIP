@@ -1,73 +1,59 @@
 <footer class="text-center text-lg-start bg-khaki mt-auto">
-  <section
-    class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
-  >
-    <div class="me-5 d-none d-lg-block">
-      <span>Social media:</span>
-    </div>
-    <div>
-      <a href="" class="me-4 text-reset"> Facebook </a>
-      <a href="" class="me-4 text-reset"> Twitter </a>
-      <a href="" class="me-4 text-reset"> Google+ </a>
-    </div>
-  </section>
-
-  <section class="">
+  <section class="py-3">
     <div class="container text-center text-md-start mt-5">
       <div class="row mt-3">
-        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+        <div class="col-md-3 col-lg-4 col-xl-2 mx-auto mb-4">
           <h6 class="text-uppercase fw-bold mb-4">
             {{ "common.chinese_anti_rightist_archives" | translate }}
           </h6>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
-          </p>
+          <div>2022 © <a class="text-reset fw-bold"> STIP Copyright</a></div>
+          <p>George Mason University</p>
         </div>
 
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-          <h6 class="text-uppercase fw-bold mb-4">Service</h6>
+          <h6 class="text-uppercase fw-bold mb-4">NAVIGATION</h6>
           <p>
-            <a routerLink="/" class="text-reset">Contact Us</a>
-          </p>
-          <p>
-            <a routerLink="/" class="text-reset">Ordering & Payment</a>
-          </p>
-          <p>
-            <a routerLink="/" class="text-reset">Shipping</a>
-          </p>
-          <p>
-            <a routerLink="/" class="text-reset">Return</a>
-          </p>
-          <p>
-            <a routerLink="/" class="text-reset">FAQ</a>
-          </p>
-          <p>
-            <a routerLink="/" class="text-reset">Sizing Guide</a>
+            <a routerLink="/home" class="text-reset">FAQ</a>
           </p>
         </div>
 
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-          <h6 class="text-uppercase fw-bold mb-4">Information</h6>
           <p>
-            <a routerLink="/" class="text-reset">About Adobe</a>
+            <a routerLink="/about/movement" class="text-reset">About</a>
           </p>
           <p>
-            <a routerLink="/" class="text-reset">Work With US</a>
+            <a routerLink="/browse/main" class="text-reset">Archive</a>
           </p>
           <p>
-            <a routerLink="/" class="text-reset">Privacy Policy</a>
+            <a routerLink="/browse/gallery" class="text-reset">Gallery</a>
+          </p>
+        </div>
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <p>
+            <a routerLink="/about/resources" class="text-reset"
+              >Project Overview</a
+            >
           </p>
           <p>
-            <a routerLink="/" class="text-reset">Press Enquiries</a>
+            <a routerLink="/about/team" class="text-reset">Meet The Team</a>
+          </p>
+          <p>
+            <a routerLink="/about/research" class="text-reset">Resources</a>
+          </p>
+        </div>
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <p>
+            <a routerLink="/terms" class="text-reset">Term & Contributions</a>
+          </p>
+          <p>
+            <a routerLink="/account" class="text-reset">Account</a>
+          </p>
+          <p>
+            <a routerLink="/about/research" class="text-reset">Research</a>
           </p>
         </div>
 
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+        <div class="col-md-4 col-lg-3 col-xl-2 mx-auto mb-md-0 mb-4">
           <h6 class="text-uppercase fw-bold mb-4">Contact Us</h6>
           <p>Fairfax, VA 00000, US</p>
           <p>stip@gmu.com</p>
@@ -77,6 +63,6 @@
     </div>
   </section>
   <div class="text-center p-4 bg-dark bg-opacity-20">
-    © Copyright 2022 <a class="text-reset fw-bold"> STIP </a>
+    © Copyright 2022 <a class="text-reset fw-bold" routerLink="/home"> STIP </a>
   </div>
 </footer>
