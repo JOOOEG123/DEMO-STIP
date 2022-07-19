@@ -7,6 +7,7 @@ import { jsPDF } from 'jspdf';
 import { ClipboardService } from 'ngx-clipboard';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
+
 @Component({
   selector: 'app-browse-archive',
   templateUrl: './browse-archive.component.html',
@@ -86,13 +87,14 @@ export class BrowseArchiveComponent implements OnInit {
   ) {
     var textLines = doc.splitTextToSize(text, textWidth); // Split the text into lines
     var pageHeight = doc.internal.pageSize.height; // Get page height, well use this for auto-paging
-    doc.setFont(undefined, fontType);
+
     doc.setFont(undefined, fontSize);
+    doc.setFont(undefined, fontType);
+
     var cursorY = initialYPosition;
 
     textLines.forEach((lineText) => {
       if (cursorY + 50 > pageHeight) {
-        // Auto-paging
         doc.addPage();
         cursorY = pageWrapInitialYPosition;
       }
