@@ -12,7 +12,7 @@
     <img alt="" [src]="url" height="200" width="200" />
     <!-- select photo section -->
     <input
-      class="form-control"
+      class="form-control w-75"
       type="file"
       (change)="onselectFile($event)"
       formControlName="image"
@@ -24,7 +24,7 @@
     <label for="imageTitle" class="form-label">Title</label>
     <input
       type="text"
-      class="form-control"
+      class="form-control w-75"
       id="imagTitle"
       placeholder="What would you title this image"
       formControlName="imageTitle"
@@ -32,14 +32,14 @@
 
     <label for="imageDetails" class="form-label">Details</label>
     <textarea
-      class="form-control"
+      class="form-control w-75"
       id="imageDetails"
       rows="3"
       placeholder="Add a description"
       formControlName="imageDes"
     ></textarea>
 
-    <br /><br />
+    <br />
 
     <label for="cars">Image category</label>
     <select name="imageCategory" id="imageCategory">
