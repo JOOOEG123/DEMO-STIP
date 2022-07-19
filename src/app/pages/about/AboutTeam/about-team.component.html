@@ -1,62 +1,106 @@
+<div class="container-fluid">
+  <div class="container-fluid" style="padding-top: 80px; padding-bottom: 80px">
+    <h2 class="text-center">
+      {{
+        "projects_overview.projects_overview_meet_the_team_title" | translate
+      }}
+    </h2>
+  </div>
   <div class="container-fluid">
-    <div class="container-fluid" style="padding-top:80px; padding-bottom:80px;">
-      <h2 class="text-center">
-        {{ "projects_overview.projects_overview_meet_the_team_title" | translate }}
-      </h2>
-    </div>
-    <div class="container-fluid">
-      <div class="row text-center" style="padding-left:25%; padding-right:25%">
-        <div class="col-lg-4 col-md-6 my-3 pics" *ngFor="let profile of team_profile">
-          <img
-                  src="assets/homepage/{{ profile.picture }}"
-                  class="rounded-circle"
-                  style="width:220px; height:210px;"
-          />
-          <div class=" rounded-circle caption">
-            <p class="my-auto name">{{ profile.name }}</p>
-            <p class="team">{{ profile.team }}</p>
-            <p class="study">{{ profile.study }}</p>
-          </div>
+    <div class="row text-center" style="padding-left: 25%; padding-right: 25%">
+      <div
+        class="col-lg-4 col-md-6 my-3 pics"
+        *ngFor="let profile of team_profile"
+      >
+        <img
+          src="assets/homepage/{{ profile.picture }}"
+          class="rounded-circle"
+          style="width: 220px; height: 210px"
+        />
+        <div class="rounded-circle caption">
+          <p class="my-auto name">{{ profile.name }}</p>
+          <p class="team">{{ profile.team }}</p>
+          <p class="study">{{ profile.study }}</p>
         </div>
       </div>
     </div>
   </div>
-  <div>
-  <hr>
-  <div class="container-fluid" style="padding-top:80px; padding-bottom:80px;">
+</div>
+<div>
+  <hr />
+  <div class="container-fluid" style="padding-top: 80px; padding-bottom: 80px">
     <div class="text-center">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactUs">
-      Contact Us
-    </button>
-  </div>
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#contactUs"
+      >
+        Contact Us
+      </button>
+    </div>
     <!-- Modal -->
-    <div class="modal fade" id="contactUs" tabindex="-1" aria-labelledby="contactUs" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="contactUs"
+      tabindex="-1"
+      aria-labelledby="contactUs"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="contactUs">Contact Us</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" placeholder="First and last name">
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="First and last name"
+              />
             </div>
             <div class="mb-3">
-              <label for="contactMessage" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" placeholder="name@example.com">
+              <label for="contactMessage" class="form-label"
+                >Email address</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="name@example.com"
+              />
             </div>
             <div class="mb-3">
               <label for="contactMessage" class="form-label">Message</label>
-              <textarea class="form-control" id="contactMessage" rows="3" placeholder="Your message here..."></textarea>
+              <textarea
+                class="form-control"
+                id="contactMessage"
+                rows="3"
+                placeholder="Your message here..."
+              ></textarea>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
             <button type="button" class="btn btn-primary">Submit</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
+</div>
