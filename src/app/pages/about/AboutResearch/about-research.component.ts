@@ -74,11 +74,11 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
 
   bindChart() {
     var datatest = [
-      { name: 'Female', value: 2.47, color: '#8CC63E' },
+      { name: 'Female', value: 2.47, color: '#266461' },
 
-      { name: 'Male', value: 25.51, color: '#29AAE3' },
+      { name: 'Male', value: 25.51, color: '#D2D497' },
 
-      { name: 'Unknown', value: 72.02, color: '#23B574' },
+      { name: 'Unknown', value: 72.02, color: '#61AF87' },
     ];
     var width = 300,
       height = 300;
