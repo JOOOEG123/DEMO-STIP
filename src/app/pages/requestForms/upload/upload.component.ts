@@ -105,7 +105,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.memoirArray.removeAt(i);
   }
 
-  removeImageSection(i: number){
+  removeImageSection(i: number) {
     this.imageArray.removeAt(i);
   }
 

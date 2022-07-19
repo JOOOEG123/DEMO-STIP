@@ -4,11 +4,9 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-upload-image',
   templateUrl: './upload-image.component.html',
-  styleUrls: ['./upload-image.component.scss']
+  styleUrls: ['./upload-image.component.scss'],
 })
-
-export class UploadImageComponent{
-
+export class UploadImageComponent {
   imageArray = new FormArray([this.newImage()]);
   imageForm2 = new FormGroup({
     imageUpload: new FormControl(''),
@@ -44,12 +42,11 @@ export class UploadImageComponent{
     return this.imageArray.controls as FormGroup[];
   }
 
-  removeImageSection(i: number){
+  removeImageSection(i: number) {
     this.imageArray.removeAt(i);
   }
 
-  constructor(
-  ) {}
+  constructor() {}
 
   clearImage() {
     this.imageForm.reset();
@@ -59,5 +56,3 @@ export class UploadImageComponent{
     this.imageArray.push(this.newImage());
   }
 }
-
-
