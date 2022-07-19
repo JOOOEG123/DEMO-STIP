@@ -45,6 +45,8 @@
           placeholder="Year"
           autocomplete="off"
           formControlName="birthYear"
+          [minDate]="minDate2"
+          [maxDate]="maxDate2"
         />
       </div>
       <!-- col for occupation -->
@@ -77,6 +79,8 @@
           placeholder="Year"
           autocomplete="off"
           formControlName="rightestYear"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
         />
       </div>
     </div>
@@ -264,6 +268,8 @@
                   placeholder="Year"
                   [id]="'event_year' + i"
                   formControlName="startYear"
+                  [minDate]="minDate"
+                  [maxDate]="maxDate"
                 />
                 <label [for]="'event_content' + i"
                   >Event content/Description</label

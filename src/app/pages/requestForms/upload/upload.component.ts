@@ -25,6 +25,10 @@ export class UploadComponent implements OnInit, OnDestroy {
   selected2?: string;
   sub: Subscription[] = [];
   url = '';
+  minDate: Date = new Date('1940-01-01');
+  maxDate: Date = new Date('1965-01-01');
+  minDate2: Date = new Date('1840-01-01');
+  maxDate2: Date = new Date('1950-01-01');
 
   @Input() get contribution() {
     return this._contribution;
