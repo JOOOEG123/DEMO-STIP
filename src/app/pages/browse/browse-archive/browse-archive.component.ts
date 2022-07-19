@@ -6,7 +6,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { ClipboardService } from 'ngx-clipboard';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
-import {NotoSansFont} from 'src\app\share\Noto_Sans_SC';
+
 
 @Component({
   selector: 'app-browse-archive',
