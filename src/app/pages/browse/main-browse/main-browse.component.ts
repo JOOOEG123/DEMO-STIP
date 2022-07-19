@@ -46,6 +46,27 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   isloading!: boolean;
   original: any;
   searchSelect: string = 'All Fields';
+  db_attr: string[] = [
+    'birthYear',
+    'birthplace',
+    'deathYear',
+    'description',
+    'detailJob',
+    'education',
+    'ethnicity',
+    'events',
+    'firstName',
+    'gender',
+    'job',
+    'lastName',
+    'publish',
+    'memoir',
+    'reference',
+    'rightistYear',
+    'status',
+    'workplace',
+  ];
+
   @ViewChild(BrowseSearchFilterComponent)
   private browseSearchFilterComponent!: BrowseSearchFilterComponent;
 
@@ -153,25 +174,41 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   searchBar() {
+    console.log('search bar-------------');
     this.browseSearchFilterComponent?.clear();
     const userValues = this.searchInput.split(' ');
 
-    var db_attr = this.onOpenChange(this.searchSelect);
+    //this.onOpenChange(this.searchSelect);
+
+    console.log(this.db_attr, userValues);
 
     this.getNonFilterData('searchBar');
-    // if (this.db_result) {
+
     this.db_result = this.db_result.filter((record: any): boolean => {
       return userValues.every((keyword) => {
         var res: boolean = false;
-        Object.values(record).forEach((element) => {
-          res =
-            res ||
-            this.containKeyword(JSON.stringify(element, db_attr), keyword);
-        });
+
+        if (this.searchSelect == 'All Fields') {
+          Object.values(record).forEach((element) => {
+            // console.log('ele--------', element);
+            res =
+              res ||
+              this.containKeyword(
+                JSON.stringify(element, this.db_attr),
+                keyword
+              );
+          });
+        } else {
+          for (var attribute of this.db_attr) {
+            console.log('2. ', record[attribute], '3.');
+            res = res || this.containKeyword(record[attribute], keyword);
+          }
+        }
+
         return res;
       });
     });
-    // }
+
     if (!userValues.length) {
       this.getNonFilterData('searchBar');
     }
@@ -189,6 +226,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     } else {
       res = word.includes(keyword);
     }
+    // if (res) {
+    //   console.log(word);
+    // }
     return res;
   }
   filterValueschanges(valueEmitted: any) {
@@ -263,17 +303,19 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   onOpenChange(searchSelect: string) {
+    console.log('dropdown select------');
     this.searchSelect = searchSelect;
+
     switch (searchSelect) {
       case 'Description':
-        return ['description'];
+        this.db_attr = ['description'];
+        break;
       case 'Name':
         //An: need to add fullName attribute on db, otherwise this is a bug.
-        return ['firstName', 'lastName', 'fullName'];
-      case 'Events':
-        return ['events'];
+        this.db_attr = ['firstName', 'lastName', 'fullName'];
+        break;
       default:
-        return [
+        this.db_attr = [
           'birthYear',
           'birthplace',
           'deathYear',
@@ -294,5 +336,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
           'workplace',
         ];
     }
+    this.searchBar();
   }
 }

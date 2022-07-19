@@ -8,6 +8,7 @@
         type="button"
         class="btn border border-start-0 bg-white rounded-end rounded-pill dropdown-toggle"
         [value]="searchSelect"
+        (search)="searchBar()"
       >
         {{ searchSelect }}
       </button>
@@ -185,7 +186,23 @@
 
         <ng-template #elseEmptyBlock>
           <div *ngIf="isloading == false" class="bg-light">
-            No record has been found.
+            <p>No records found.</p>
+            <h4>
+              There are no results matching your search "{{ searchInput }}".
+            </h4>
+            <p>Suggestions:</p>
+            <ul>
+              <li>Make sure that all words are spelled correctly.</li>
+              <li>Try different keywords.</li>
+              <li>
+                Click on the “?” button next to the search bar to view “What to
+                search for?”
+              </li>
+              <li>
+                your search to a specific field in the All Fields dropdown to
+                the left of the search bar.
+              </li>
+            </ul>
           </div>
         </ng-template>
       </div>
@@ -223,7 +240,23 @@
         </div>
         <ng-template #elseEmptyBlock>
           <div *ngIf="isloading" class="bg-light">
-            No record has been found.
+            <p>No records found.</p>
+            <h4>
+              There are no results matching your search "{{ searchInput }}".
+            </h4>
+            <p>Suggestions:</p>
+            <ul>
+              <li>Make sure that all words are spelled correctly.</li>
+              <li>Try different keywords.</li>
+              <li>
+                Click on the “?” button next to the search bar to view “What to
+                search for?”
+              </li>
+              <li>
+                your search to a specific field in the All Fields dropdown to
+                the left of the search bar.
+              </li>
+            </ul>
           </div>
         </ng-template>
       </ng-template>
