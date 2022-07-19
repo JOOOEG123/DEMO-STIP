@@ -2,25 +2,59 @@
   <!-- search bar -->
   <div class="input-group m-5">
     <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="true">
-      <button id="button-basic" dropdownToggle type="button"
-        class="btn border border-start-0 bg-white rounded-end rounded-pill dropdown-toggle" [value]="searchSelect">
-        {{searchSelect}}
+      <button
+        id="button-basic"
+        dropdownToggle
+        type="button"
+        class="btn border border-start-0 bg-white rounded-end rounded-pill dropdown-toggle"
+        [value]="searchSelect"
+      >
+        {{ searchSelect }}
       </button>
-      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-        <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('All Fields')">All Fields</a></li>
-        <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('Name')">Name</a></li>
-        <li role="menuitem"><a class="dropdown-item" (click)="onOpenChange('Description')">Description</a>
+      <ul
+        id="dropdown-basic"
+        *dropdownMenu
+        class="dropdown-menu"
+        role="menu"
+        aria-labelledby="button-basic"
+      >
+        <li role="menuitem">
+          <a class="dropdown-item" (click)="onOpenChange('All Fields')"
+            >All Fields</a
+          >
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" (click)="onOpenChange('Name')">Name</a>
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" (click)="onOpenChange('Description')"
+            >Description</a
+          >
         </li>
       </ul>
     </div>
 
-    <input type="search" class="form-control" placeholder="Search for ... " [(ngModel)]="searchInput"
-      (search)="searchBar()" aria-label="Search for ... " aria-describedby="button-addon2" />
-    <button class="btn border border-start-0 bg-white rounded-start rounded-pill" type="button" (click)="searchBar()">
+    <input
+      type="search"
+      class="form-control"
+      placeholder="Search for ... "
+      [(ngModel)]="searchInput"
+      (search)="searchBar()"
+      aria-label="Search for ... "
+      aria-describedby="button-addon2"
+    />
+    <button
+      class="btn border border-start-0 bg-white rounded-start rounded-pill"
+      type="button"
+      (click)="searchBar()"
+    >
       <img src="assets/global/search.svg" alt="" width="20" />
     </button>
 
-    <a class="align-self-center mx-2" type="button" tooltip="What to search for?
+    <a
+      class="align-self-center mx-2"
+      type="button"
+      tooltip="What to search for?
     - Search for first name 
     and/or last name
     - Year of birth 
@@ -28,19 +62,26 @@
     - “Rightist” year
     - Chinese Ethnic Group
     - Occupation
-    - Gender" data-bs-toggle="tooltip" data-bs-placement="right">
+    - Gender"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+    >
       <img src="assets/browsepage/question-mark.svg" alt="" width="20" />
-
     </a>
   </div>
-
 </div>
 
-<div class="row justify-content-center" style="background-color: rgb(12, 19, 48)">
+<div
+  class="row justify-content-center"
+  style="background-color: rgb(12, 19, 48)"
+>
   <div class="col-10 border" style="border-color: #caa372">
     <h6 class="border-bottom fw-bold text-light my-3">Browse Archive</h6>
     <div class="my-4">
-      <app-browse-search-filter [(filterValues)]="filterValues" (filterValuesChange)="filterValueschanges($event)">
+      <app-browse-search-filter
+        [(filterValues)]="filterValues"
+        (filterValuesChange)="filterValueschanges($event)"
+      >
       </app-browse-search-filter>
     </div>
 
@@ -53,9 +94,16 @@
         </div>
 
         <div class="col-auto flex-shrink-0">
-          <label for="per_page_result" class="text-white">Result per page</label>
-          <select class="mx-2" aria-label="Result per page select" id="per_page_result" [(ngModel)]="itemsPerPage"
-            (change)="itemPerPageChanged()">
+          <label for="per_page_result" class="text-white"
+            >Result per page</label
+          >
+          <select
+            class="mx-2"
+            aria-label="Result per page select"
+            id="per_page_result"
+            [(ngModel)]="itemsPerPage"
+            (change)="itemPerPageChanged()"
+          >
             <option selected value="25">30</option>
             <option value="50">60</option>
             <option value="100">90</option>
@@ -63,7 +111,12 @@
         </div>
         <div class="col-auto flex-shrink-0">
           <label for="viewSelect" class="text-white">View</label>
-          <select class="mx-2" id="viewSelect" aria-label="View select" [(ngModel)]="curView">
+          <select
+            class="mx-2"
+            id="viewSelect"
+            aria-label="View select"
+            [(ngModel)]="curView"
+          >
             <option value="List" selected>List</option>
             <option value="Grid">Grid</option>
           </select>
@@ -73,13 +126,17 @@
       </div>
 
       <div class="d-flex border-bottom justify-content-between">
-
         <div class="btn-group d-inline-block btn-group-sm">
-          <button class="btn button-no-outline" *ngFor="let letter of letters" [ngClass]="
+          <button
+            class="btn button-no-outline"
+            *ngFor="let letter of letters"
+            [ngClass]="
               currentLetter === letter
                 ? 'btn-outline-light text-danger text-decoration-underline'
                 : 'text-light'
-            " (click)="lettersBtnClickOrReset(letter)">
+            "
+            (click)="lettersBtnClickOrReset(letter)"
+          >
             {{ letter }}
           </button>
         </div>
@@ -90,30 +147,40 @@
 
       <div *ngIf="curView === 'List'; else elseBlock">
         <div *ngIf="display.length; else elseEmptyBlock">
-
-
-          <a class="d-flex m-3 searchprofile" style="
+          <a
+            class="d-flex m-3 searchprofile"
+            style="
               height: 150px;
               border-radius: 28px;
               color: black;
               text-decoration: none;
               background-color: white;
-            " name="searchLayout" routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
-            ariaCurrentWhenActive="page" *ngFor="let result of display; let i=index">
-            <div class="m-3">{{(i+1)+ (currentPage-1) * itemsPerPage}}</div>
+            "
+            name="searchLayout"
+            routerLink="/browse/main/memoir/{{ result.profileId }}"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            *ngFor="let result of display; let i = index"
+          >
+            <div class="m-3">
+              {{ i + 1 + (currentPage - 1) * itemsPerPage }}
+            </div>
 
             <div class="m-3 col-3 text-capitalize">
               <div class="text-start fw-bold">
-                {{ result.firstName +" "+result.lastName }}
+                {{ result.firstName + " " + result.lastName }}
               </div>
-              <div class="text-start">Occupation: {{ result.job || "-"}}</div>
-              <div class="text-start">Ethnic Group: {{ result.ethnicity || "-"}}</div>
-              <div class="text-start">Gender: {{ result.gender || "-"}}</div>
+              <div class="text-start">Occupation: {{ result.job || "-" }}</div>
+              <div class="text-start">
+                Ethnic Group: {{ result.ethnicity || "-" }}
+              </div>
+              <div class="text-start">Gender: {{ result.gender || "-" }}</div>
             </div>
-            <div class="text-start col-6 m-3 ">{{ result.description }}</div>
+            <div class="text-start col-6 m-3 list-searchprofile">
+              {{ result.description }}
+            </div>
             <div class="col align-self-end fw-bold">read more ></div>
           </a>
-
         </div>
 
         <ng-template #elseEmptyBlock>
@@ -125,26 +192,33 @@
 
       <ng-template #elseBlock>
         <div *ngIf="display.length; else elseEmptyBlock">
-          <div class="d-flex justify-content-between p-2 flex-nowrap" name=" searchLayout"
-            *ngFor="let results of display | UpdateRows: 3 ; let i = index" style="height: 5cm;">
-
-            <div style="border-radius: 28px; background-color: #dbdde2; width: 30%;"
-              *ngFor="let result of results; let j= index">
-              <a routerLink="/browse/main/memoir/{{ result.profileId }}" routerLinkActive="active"
-                ariaCurrentWhenActive="page" style="color: black; text-decoration: none; ">
-                <b class="m-4">{{(3*i+(j+1)) + (currentPage-1) * itemsPerPage}}</b>
-                <p class="fw-bold">{{ result.firstName +" "+result.lastName }}</p>
-                <div #searchprofile>{{ result.description}}</div>
+          <div
+            class="d-flex justify-content-between p-2 flex-nowrap"
+            name=" searchLayout"
+            *ngFor="let results of display | UpdateRows: 3; let i = index"
+            style="height: 5cm"
+          >
+            <div
+              style="border-radius: 28px; background-color: #dbdde2; width: 30%"
+              *ngFor="let result of results; let j = index"
+            >
+              <a
+                class="m-3"
+                routerLink="/browse/main/memoir/{{ result.profileId }}"
+                routerLinkActive="active"
+                ariaCurrentWhenActive="page"
+                style="color: black; text-decoration: none"
+              >
+                <b class="m-4 mt-3">{{
+                  3 * i + (j + 1) + (currentPage - 1) * itemsPerPage
+                }}</b>
+                <p class="fw-bold">
+                  {{ result.firstName + " " + result.lastName }}
+                </p>
+                <div class="grid-searchprofile">{{ result.description }}</div>
                 <p class="fw-bold">read more ></p>
-                <!-- <div class="text-capitalize">
-                  <b class="">{{(3*i+(j+1)) + (currentPage-1) * itemsPerPage}}</b>
-                  <p class="fw-bold">{{ result.firstName +" "+result.lastName }}</p>
-                  <p class="fw-bold">read more ></p>
-
-                </div> -->
               </a>
             </div>
-
           </div>
         </div>
         <ng-template #elseEmptyBlock>
@@ -158,9 +232,20 @@
 
       <div class="d-flex flex-row-reverse">
         <nav aria-label="Page navigation">
-          <pagination class=" my-pagination" [rotate]="true" [totalItems]="db_result.length" [boundaryLinks]="true"
-            [itemsPerPage]="itemsPerPage" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"
-            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="10">
+          <pagination
+            class="my-pagination"
+            [rotate]="true"
+            [totalItems]="db_result.length"
+            [boundaryLinks]="true"
+            [itemsPerPage]="itemsPerPage"
+            [(ngModel)]="currentPage"
+            (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;"
+            nextText="&rsaquo;"
+            firstText="&laquo;"
+            lastText="&raquo;"
+            [maxSize]="10"
+          >
           </pagination>
         </nav>
 
