@@ -173,7 +173,9 @@ export const pagesRoutes = [
     canActivate: [AngularFireAuthGuard],
     data: {
       title: 'research',
-
+      },
+  },
+  {
     path: 'request-modify',
     component: RequestModifyComponent,
     data: {
