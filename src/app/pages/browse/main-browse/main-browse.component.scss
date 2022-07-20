@@ -30,14 +30,6 @@
     color: white !important;
     }
 
-    @media only screen and (max-width: 1400px), (max-height: 600px){
-      div.grid-searchprofile {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-
 
     @media only screen and (max-width: 700px), (max-height: 600px){
       div.list-searchprofile {
@@ -45,5 +37,28 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
+
     }
-  
+    @media only screen and (max-width: 1750px), (max-height: 600px){
+      div.grid-searchprofile {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    @media only screen and (max-width: 1100px){
+      div.arrow {
+        text-indent: 100%;
+        color: transparent;
+        display: none;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+
+
+    select {
+      border: 1px solid #fff;
+      background-color: transparent;
+  }

@@ -8,6 +8,7 @@ import {
   ViewChild,
   SimpleChanges,
   NgZone,
+  OnChanges,
 } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { concatAll, Subscription } from 'rxjs';
@@ -39,13 +40,36 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   olditemsPerPage = 25;
 
   //variables for search functionalities
-  db_result: any[] = [];
+  @Input() db_result: any[] = [];
+
+  db_result_thousands_seperator: string = '0';
   nonFilterData: any[] = [];
   archCacheAPI: any = {};
   archSubAPI: Subscription[] = [];
   isloading!: boolean;
   original: any;
   searchSelect: string = 'All Fields';
+  db_attr: string[] = [
+    'birthYear',
+    'birthplace',
+    'deathYear',
+    'description',
+    'detailJob',
+    'education',
+    'ethnicity',
+    'events',
+    'firstName',
+    'gender',
+    'job',
+    'lastName',
+    'publish',
+    'memoir',
+    'reference',
+    'rightistYear',
+    'status',
+    'workplace',
+  ];
+
   @ViewChild(BrowseSearchFilterComponent)
   private browseSearchFilterComponent!: BrowseSearchFilterComponent;
 
@@ -66,6 +90,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.archCacheAPI = {};
   }
 
+  ngDoCheck() {
+    this.thousandsSeperator();
+  }
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
@@ -156,22 +183,31 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.browseSearchFilterComponent?.clear();
     const userValues = this.searchInput.split(' ');
 
-    var db_attr = this.onOpenChange(this.searchSelect);
-
     this.getNonFilterData('searchBar');
-    // if (this.db_result) {
+
     this.db_result = this.db_result.filter((record: any): boolean => {
       return userValues.every((keyword) => {
         var res: boolean = false;
-        Object.values(record).forEach((element) => {
-          res =
-            res ||
-            this.containKeyword(JSON.stringify(element, db_attr), keyword);
-        });
+
+        if (this.searchSelect == 'All Fields') {
+          Object.values(record).forEach((element) => {
+            res =
+              res ||
+              this.containKeyword(
+                JSON.stringify(element, this.db_attr),
+                keyword
+              );
+          });
+        } else {
+          for (let attribute of this.db_attr) {
+            res = res || this.containKeyword(record[attribute], keyword);
+          }
+        }
+
         return res;
       });
     });
-    // }
+
     if (!userValues.length) {
       this.getNonFilterData('searchBar');
     }
@@ -189,6 +225,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     } else {
       res = word.includes(keyword);
     }
+
     return res;
   }
   filterValueschanges(valueEmitted: any) {
@@ -264,16 +301,17 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   onOpenChange(searchSelect: string) {
     this.searchSelect = searchSelect;
+
     switch (searchSelect) {
       case 'Description':
-        return ['description'];
+        this.db_attr = ['description'];
+        break;
       case 'Name':
         //An: need to add fullName attribute on db, otherwise this is a bug.
-        return ['firstName', 'lastName', 'fullName'];
-      case 'Events':
-        return ['events'];
+        this.db_attr = ['firstName', 'lastName', 'fullName'];
+        break;
       default:
-        return [
+        this.db_attr = [
           'birthYear',
           'birthplace',
           'deathYear',
@@ -294,5 +332,13 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
           'workplace',
         ];
     }
+    this.searchBar();
+  }
+
+  //to-do: might need to test when more data is avalible
+  thousandsSeperator() {
+    this.db_result_thousands_seperator = this.db_result.length
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 }
