@@ -46,7 +46,9 @@ export class ContributionComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.contribution)
+  }
 
   onApprove() {
     this.approve.emit(this.contribution);

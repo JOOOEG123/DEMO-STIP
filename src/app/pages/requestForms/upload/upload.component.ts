@@ -1,5 +1,5 @@
 import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
-import { Component, Input, OnInit, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy, ChangeDetectionStrategy, ɵɵsetComponentScope } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -26,12 +26,12 @@ import { UUID } from 'src/app/core/utils/uuid';
 export class UploadComponent implements OnInit, OnDestroy {
   private _contribution!: Contribution;
   contributionId!: string;
-  ethnicGroup: string[] = ETHNIC_GROUP_CONSTANTS;
-  occupation: string[] = LIST_OF_JOB;
   selected?: string;
   selected2?: string;
   sub: Subscription[] = [];
 
+  eventTitle: string = 'Event year and event content'
+  memoirTitle: string = 'Add Memoir, book, or other information'
 
   @Input() get contribution() {
     return this._contribution;
@@ -41,73 +41,14 @@ export class UploadComponent implements OnInit, OnDestroy {
       this._contribution = contribution;
     }
   }
+
   @Input() page?: string;
-  @Output() approve: EventEmitter<Contribution> = new EventEmitter();
-  @Output() edit: EventEmitter<Contribution> = new EventEmitter()
-  @Output() reject: EventEmitter<Contribution> = new EventEmitter();
-  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter();
+  @Output() formChange: EventEmitter<any> = new EventEmitter()
+  @Output() eventChange: EventEmitter<any> = new EventEmitter()
+  @Output() memoirChange: EventEmitter<any> = new EventEmitter()
+
   //image url
   url = '';
-
-  onApprove() {
-    this.editContribution()
-    if (this.contribution) {
-      this.approve.emit(this.contribution);
-    }
-  }
-
-  onEdit() {
-    this.editContribution()
-    if (this.contribution) {
-      this.edit.emit(this.contribution)
-    }
-  }
-
-  onReject() {
-    this.editContribution()
-    if (this.contribution) {
-      this.reject.emit(this.contribution);
-    }
-  }
-
-  onReconsider() {
-
-    this.editContribution()
-    if (this.contribution) {
-      this.reconsider.emit(this.contribution);
-    }
-  }
-
-  editContribution() {
-    const {
-      name,
-      gender,
-      status,
-      ethnic,
-      rightestYear,
-      occupation,
-      birthYear,
-    } = this.form.value;
-    const { content } = this.form2.value;
-
-    let rightist : Rightist = {
-      ...this.contribution.rightist!,
-      fullName: name,
-      gender,
-      status,
-      ethnicity: ethnic,
-      rightistYear: rightestYear,
-      job: occupation,
-      birthYear,
-      events: this.eventArray.value,
-      memoirs: this.memoirArray.value
-    }
-
-    this.contribution = {
-      ...this.contribution,
-      rightist: rightist
-    }
-  }
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -118,45 +59,20 @@ export class UploadComponent implements OnInit, OnDestroy {
     rightestYear: new FormControl('', Validators.required),
     birthYear: new FormControl('', Validators.required),
   });
+
   form2 = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
     content: new FormControl(''),
   });
-  eventArray = new FormArray([this.newEvent()]);
-  memoirArray = new FormArray([this.newMemoir()]);
+  
+  eventArray = new FormArray([]);
+  memoirArray = new FormArray([]);
+
   imageForm = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
   });
-
-  private newEvent() {
-    return new FormGroup({
-      startYear: new FormControl(''),
-      endYear: new FormControl(''),
-      event: new FormControl(''),
-    });
-  }
-
-  private newMemoir() {
-    return new FormGroup({
-      memoirTitle: new FormControl(''),
-      memoirContent: new FormControl(''),
-      memoirAuthor: new FormControl(''),
-    });
-  }
-
-  get eventControls() {
-    return this.eventArray.controls as FormGroup[];
-  }
-
-  get memoirControls() {
-    return this.memoirArray.controls as FormGroup[];
-  }
-
-  removeMemoir(i: number) {
-    this.memoirArray.removeAt(i);
-  }
 
   constructor(
     private contributionService: ContributionsService,
@@ -181,35 +97,11 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.imageForm.reset();
   }
 
-  addEvent() {
-    this.eventArray.push(this.newEvent());
-  }
-
-  removeEvent(i: number) {
-    this.eventArray.removeAt(i);
-  }
-
-  addMemoir() {
-    this.memoirArray.push(this.newMemoir());
-  }
-
   ngOnDestroy(): void {
     this.sub.forEach((sub) => sub.unsubscribe());
-    this.formSubscription?.unsubscribe()
-    this.form2Subscription?.unsubscribe()
-    this.eventSubscription?.unsubscribe()
-    this.memoirSubScription?.unsubscribe()
   }
 
-  formSubscription?: Subscription
-  form2Subscription?: Subscription
-  eventSubscription?: Subscription
-  memoirSubScription?: Subscription
-
-  changed: boolean = false
-
   ngOnInit(): void {
-
     if (this.page === 'contribution') {
       if (this.contribution) {
         if (this.contribution.contributionId && this.contribution.rightist) {
@@ -229,38 +121,9 @@ export class UploadComponent implements OnInit, OnDestroy {
             image: '',
             content: '',
           })
-    
-          for (const event of this.contribution.rightist.events) {
-            this.eventArray.push(new FormGroup({
-              startYear: new FormControl(event.startYear),
-              endYear: new FormControl(event.endYear),
-              event: new FormControl(event.event),
-            }))
-          }
-    
-          for (const memoir of this.contribution.rightist.memoirs) {
-            this.memoirArray.push(new FormGroup({
-              memoirTitle: new FormControl(memoir.memoirTitle),
-              memoirContent: new FormControl(memoir.memoirContent),
-              memoirAuthor: new FormControl(memoir.memoirAuthor),
-            }))
-          }
 
-          this.formSubscription = this.form.valueChanges.subscribe(() => {
-            this.changed = true
-          })
-
-          this.form2Subscription = this.form2.valueChanges.subscribe(() => {
-            this.changed = true
-          })
-
-          this.eventSubscription = this.eventArray.valueChanges.subscribe(() => {
-            this.changed = true
-          })
-
-          this.memoirSubScription = this.memoirArray.valueChanges.subscribe(() => {
-            this.changed = true
-          })
+          this.eventArray.patchValue(this.contribution.rightist!.events)
+          this.memoirArray.patchValue(this.contribution.rightist!.memoirs)
         }
       }
     } else {
@@ -283,6 +146,23 @@ export class UploadComponent implements OnInit, OnDestroy {
         })
       );
     }
+  }
+
+  onArrayChange(data: any) {
+    console.log(data)
+    if (data.type === 'event') {
+      this.eventArray.patchValue(data.array)
+      // this.eventChange.emit(this.eventArray)
+    }
+
+    if (data.type === 'memoir') {
+      this.memoirArray.patchValue(data.array)
+      // this.memoirChange.emit(this.memoirArray)
+    }
+  }
+
+  onFormChange(data: any) {
+    this.formChange.emit(data)
   }
 
   mapForm(rightist: Rightist) {
@@ -325,6 +205,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     const { content } = this.form2.value;
     const rightistId =
       this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
+    
+    console.log(this.eventArray.value)
+    console.log(this.memoirArray.value)
+    
     this.contributionService
       .contributionsAddEdit({
         contributionId: this.contributionId,

@@ -45,8 +45,17 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   activeCategory!: Categories;
 
-  selectedContribution!: Contribution;
-  updatedContribution?: Contribution
+  selectedContribution: Contribution = {
+    state: 'void',
+    contributionId: '',
+    contributorId: [],
+    rightistId: '',
+    publish: 'original',
+    contributedAt: new Date(),
+    approvedAt: new Date(),
+    lastUpdatedAt: new Date()
+  };
+  updatedContribution!: Contribution;
 
   categoriesList: Categories[] = [
     'New Contributions',
@@ -59,7 +68,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     'Rejected Contributions': this.rejectedContributions,
   };
 
-  disabled: boolean = false
+  disabled: boolean = false;
   readMoreRef?: BsModalRef;
   deleteRef?: BsModalRef;
 
@@ -87,6 +96,16 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         this.newContributions.length = 0;
         this.approvedContributions.length = 0;
         this.rejectedContributions.length = 0;
+        this.selectedContribution = {
+          state: 'void',
+          contributionId: '',
+          contributorId: [],
+          rightistId: '',
+          publish: 'original',
+          contributedAt: new Date(),
+          approvedAt: new Date(),
+          lastUpdatedAt: new Date()
+        }; 
         const test: ContributionJson[] = Object.values(data);
         for (let lol of test) {
           for (const contribution of Object.values(lol)) {
@@ -105,9 +124,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         for (let contribution of this.contributions) {
           let data: Contribution = {
             ...contribution,
-            contributedAt: new Date(contribution.contributedAt),
-            approvedAt: new Date(contribution.approvedAt),
-            lastUpdatedAt: new Date(contribution.lastUpdatedAt),
+            contributedAt: contribution.contributedAt,
+            approvedAt: contribution.approvedAt,
+            lastUpdatedAt: contribution.lastUpdatedAt,
             state: 'void',
           };
 
@@ -139,64 +158,81 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.contributionSubcription?.unsubscribe();
     this.rightistSubscription?.unsubscribe();
   }
-  
+
+  updateSelectedContribution() {
+    this.selectedContribution.rightist!.fullName =
+      this.updatedContribution.rightist!.fullName;
+    this.selectedContribution.rightist!.gender =
+      this.updatedContribution.rightist!.gender;
+    this.selectedContribution.rightist!.status =
+      this.updatedContribution.rightist!.status;
+    this.selectedContribution.rightist!.ethnicity =
+      this.updatedContribution.rightist!.ethnicity;
+    this.selectedContribution.rightist!.job =
+      this.updatedContribution.rightist!.job;
+    this.selectedContribution.rightist!.rightistYear =
+      this.updatedContribution.rightist!.rightistYear;
+    this.selectedContribution.rightist!.birthYear =
+      this.updatedContribution.rightist!.birthYear;
+    this.selectedContribution.rightist!.events =
+      this.updatedContribution.rightist!.events;
+    this.selectedContribution.rightist!.memoirs =
+      this.updatedContribution.rightist!.memoirs;
+    this.selectedContribution.lastUpdatedAt = new Date();
+  }
+
   onEdit(contribution: Contribution) {
-    this.readMoreRef?.hide()
-    contribution.lastUpdatedAt = new Date()
-    let contributorId = contribution.contributorId[contribution.contributorId.length - 1]
-    this.contributionAPI.updateUserContribution(contributorId, contribution.contributionId, contribution)
-    this.archiveAPI.editArchieveById(contribution.rightist, contribution.rightistId)
+    this.readMoreRef?.hide();
+    // this.updateSelectedContribution();
+    this.publish = 'approved'
+    this.selectedContribution.state = 'removed';
+    // let { state, rightist, ...result} = this.selectedContribution
+    // let contributorId = result.contributorId[result.contributorId.length - 1]
+    // let contributionId = result.contributionId
+    // this.contributionAPI.updateUserContribution(contributorId, contributionId, result)
+    // this.archiveAPI.editArchieveById(rightist, result.rightistId)
   }
 
   onApprove(contribution: Contribution) {
-    this.updatedContribution = contribution
-    this.readMoreRef?.hide()
-    const index = this.selectedContributions.findIndex(
-      (c) => c.contributionId == contribution.contributionId
-    );
-    this.selectedContribution = this.newContributions[index]
-    this.publish = 'approved'
-    this.selectedContribution.state = 'removed';    
+    this.readMoreRef?.hide();
+    this.selectedContribution = contribution;
+    this.publish = 'approved';
+    this.selectedContribution.state = 'removed';
   }
 
   onReject(contribution: Contribution) {
-    this.updatedContribution = contribution
-    this.readMoreRef?.hide()
-    const index = this.selectedContributions.findIndex(
-      (c) => c.contributionId == contribution.contributionId
-    );
-    this.selectedContribution = this.newContributions[index]
-    this.publish = 'rejected'
+    this.readMoreRef?.hide();
+    this.selectedContribution = contribution;
+    this.publish = 'rejected';
     this.selectedContribution.state = 'removed';
   }
 
   onReconsider(contribution: Contribution) {
-    this.updatedContribution = contribution
-    this.readMoreRef?.hide()
-    const index = this.selectedContributions.findIndex(
-      (c) => c.contributionId == contribution.contributionId
-    );
-    this.selectedContribution = this.rejectedContributions[index]
-    this.publish = 'approved'
-    this.selectedContribution.state = 'removed'
+    this.readMoreRef?.hide();
+    this.selectedContribution = contribution;
+    this.publish = 'approved';
+    this.selectedContribution.state = 'removed';
   }
 
   onRemove(template: TemplateRef<any>, contribution: Contribution) {
-    this.selectedContribution = contribution
-    this.readMoreRef?.hide()
-    this.deleteRef = this.modalService.show(template, { class: 'modal-dialog-centered', backdrop: 'static'})
+    this.selectedContribution = contribution;
+    this.readMoreRef?.hide();
+    this.deleteRef = this.modalService.show(template, {
+      class: 'modal-dialog-centered',
+      backdrop: 'static',
+    });
   }
 
   onDelete() {
-    this.deleteRef?.hide()
-    this.publish = 'deleted'
-    this.selectedContribution.state = 'removed'
+    this.deleteRef?.hide();
+    this.publish = 'deleted';
+    this.selectedContribution.state = 'removed';
   }
 
   onCancel() {
-    this.deleteRef?.hide()
+    this.deleteRef?.hide();
   }
-  
+
   setActiveCategory(category: Categories) {
     this.activeCategory = category;
     this.selectedContributions = this.categories[this.activeCategory];
@@ -213,51 +249,106 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.selectedContribution &&
       this.selectedContribution.state === 'removed'
     ) {
-      // update the current timestamp
-      this.selectedContribution.lastUpdatedAt = new Date();
+      this.updateSelectedContribution();
 
       if (this.selectedContribution.rightist) {
-        let contributorId = 
-          this.selectedContribution.contributorId[this.selectedContribution.contributorId.length - 1]
-        let contributionId = this.selectedContribution.contributionId
-        let rightistId = this.selectedContribution.rightistId
+        let contributorId =
+          this.selectedContribution.contributorId[
+            this.selectedContribution.contributorId.length - 1
+          ];
+        let contributionId = this.selectedContribution.contributionId;
+        let rightistId = this.selectedContribution.rightistId;
 
-        this.selectedContribution.publish = this.publish
-        
-        const {state, ...contribution} = this.selectedContribution
-        
-        if (this.publish === 'approved') {
-          let { rightist, ...result} = contribution
+        this.selectedContribution.publish = this.publish;
 
-          rightist = this.updatedContribution?.rightist
-          result.rightistId = rightist!.rightistId
-          result.approvedAt = new Date()
-          this.archiveAPI.addNewArchieve(rightist!).then(data => console.log(data))
-          console.log(result)
+        const { state, ...contribution } = this.selectedContribution;
+  
+        console.log(contribution);
+        if (this.selectedContribution.publish === 'approved') {
+          let { rightist, ...result } = contribution;
+
+          rightist = this.selectedContribution.rightist;
+          result.rightistId = rightist.rightistId;
+          result.approvedAt = new Date();
+
+          this.archiveAPI
+            .addNewArchieve(rightist)
+            .then((data) => console.log(data));
           this.contributionAPI.updateUserContribution(
             contributorId,
             this.selectedContribution.contributionId,
-            result)
-        }
-        else if (this.publish === 'deleted') {
-          this.contributionAPI.removeUserContribution(contributorId, contributionId)
-          this.archiveAPI.removeArchieveById(rightistId)
-        }
-        else {
+            result
+          );
+        } else if (this.selectedContribution.publish === 'deleted') {
+          this.contributionAPI.removeUserContribution(
+            contributorId,
+            contributionId
+          );
+          this.archiveAPI.removeArchieveById(rightistId);
+        } else {
           this.contributionAPI.updateUserContribution(
             contributorId,
             this.selectedContribution.contributionId,
             contribution
           );
         }
-
-        this.selectedContribution.state = 'void';
+        this.selectedContribution.state = 'void'
       }
     }
   }
 
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
-    this.selectedContribution = contribution
-    this.readMoreRef = this.modalService.show(template, { class: 'modal-xl'})
+    this.selectedContribution = contribution;
+    this.updatedContribution = { ...contribution };
+    this.readMoreRef = this.modalService.show(template, { class: 'modal-xl' });
+  }
+
+  onFormChange(data: any) { 
+    console.log(data)
+    let { name, gender, status, ethnic, occupation, rightestYear, birthYear } =
+      data; 
+    if (
+      name &&
+      gender &&
+      status &&
+      ethnic &&
+      occupation &&
+      rightestYear &&
+      birthYear
+    ) {
+      this.updatedContribution = {
+        ...this.updatedContribution!,
+        rightist: {
+          ...this.updatedContribution!.rightist!,
+          fullName: data.name,
+          gender: data.gender,
+          status: data.status,
+          ethnicity: data.ethnic,
+          job: data.occupation,
+          rightistYear: data.rightestYear,
+          birthYear: data.birthYear,
+        },
+      };
+    }
+  }
+
+  onEventChange(data: any) {
+    this.updatedContribution = {
+      ...this.updatedContribution!,
+      rightist: {
+        ...this.updatedContribution!.rightist!,
+        events: data.value,
+      },
+    };
+  }
+
+  onMemoirChange(data: any) {
+    this.updatedContribution = {
+      ...this.updatedContribution!,
+      rightist: {
+        ...this.updatedContribution!.rightist!,
+        memoirs: data.value,
+      },
+    };
   }
 }
