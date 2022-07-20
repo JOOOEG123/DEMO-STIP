@@ -5,12 +5,17 @@
 /* You can add global styles to this file, and also import other style files */
 $khaki: #cea374;
 $khaki-dark: #a76724;
-$medium-blue: #0c1e3c;
-$dark-blue: #0c1330;
+$medium-blue: #266461;
+$dark-blue: #09363c;
 $black: #000000;
 $orange-red: #df4028;
 $white: white;
 $light-grey: #f5f5f5;
+$jade: #61af87;
+
+.text-orange-red {
+  color: $orange-red;
+}
 
 dl {
   @extend .row;
@@ -25,10 +30,30 @@ body {
 }
 
 .bg-image-blue {
-  background-image: url("/assets/homepage/stip-design.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  .bg-colors {
+    background-color: $jade;
+    padding-bottom: 0.5rem;
+    clip-path: polygon(100% 0%, 100% 70%, 50% 90%, 50% 90%, 0 70%, 0 0);
+    .bg-image-blue-inner {
+      clip-path: polygon(100% 0%, 100% 70%, 50% 90%, 50% 90%, 0 70%, 0 0);
+      background-color: $dark-blue;
+      &-pb-10 {
+        padding-bottom: 10rem;
+      }
+      &-pb-15 {
+        padding-bottom: 15rem;
+      }
+    }
+  }
+  background-color: $medium-blue;
+}
+
+.bg-right-slash {
+  background-color: $medium-blue;
+  padding-bottom: 12rem;
+  @extend .bg-image-blue;
+  height: min-content;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 90%, 0 0);
 }
 
 .card-border {
