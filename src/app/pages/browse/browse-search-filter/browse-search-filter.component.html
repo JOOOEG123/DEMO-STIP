@@ -1,5 +1,10 @@
-<div class="container border px-0 rounded w-100">
-  <div class="d-flex bd-highlight bg-light ps-2">
+<div
+  class="container border px-0 rounded w-100"
+  style="background-color: #e0e0e0"
+>
+  <div
+    class="d-flex bd-highlight ps-2 border-bottom border-secondary border-opacity-25"
+  >
     <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">Filter</h6>
     <div class="bd-highlight">
       <button
@@ -20,12 +25,7 @@
       </button>
     </div>
   </div>
-  <div
-    class="bg-white"
-    id="collapseBasic"
-    [collapse]="drop"
-    [isAnimated]="true"
-  >
+  <div id="collapseBasic" [collapse]="drop" [isAnimated]="true">
     <form class="row p-2" [formGroup]="formValues">
       <fieldset class="col-12 col-md-2">
         <legend class="h6 fw-bold">Gender</legend>
@@ -157,7 +157,7 @@
         </div>
       </div>
       <div class="col-12 d-flex">
-        <div class="ms-auto">
+        <div class="ms-auto mb-2">
           <button
             class="btn mx-3 rounded-pill shadow"
             style="background-color: white"

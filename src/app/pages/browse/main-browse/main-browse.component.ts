@@ -77,16 +77,13 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     private archApi: ArchieveApiService,
     private route: ActivatedRoute,
     private changeDetection: ChangeDetectorRef
-  ) {
-    console.log(this.db_result.length);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       this.searchInput = params['searchTerm'] || '';
       this.lettersBtnClickOrReset('All');
     });
-    console.log(this.db_result.length);
   }
   ngOnDestroy(): void {
     this.archSubAPI.forEach((sub) => sub.unsubscribe());
@@ -183,11 +180,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   searchBar() {
-    console.log('search bar-------------');
     this.browseSearchFilterComponent?.clear();
     const userValues = this.searchInput.split(' ');
-
-    console.log(this.db_attr, userValues);
 
     this.getNonFilterData('searchBar');
 
@@ -205,8 +199,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
               );
           });
         } else {
-          for (var attribute of this.db_attr) {
-            console.log('2. ', record[attribute], '3.');
+          for (let attribute of this.db_attr) {
             res = res || this.containKeyword(record[attribute], keyword);
           }
         }

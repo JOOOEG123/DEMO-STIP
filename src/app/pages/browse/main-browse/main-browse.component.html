@@ -1,72 +1,61 @@
-<div class="container-fluid">
-  <div class="bg-khaki bg-opacity-25 d-flex">
-    <!-- search bar -->
-    <div class="input-group m-5">
-      <div
-        class="btn-group"
-        dropdown
-        #dropdown="bs-dropdown"
-        [autoClose]="true"
-      >
-        <button
-          id="button-basic"
-          dropdownToggle
-          type="button"
-          class="btn border border-start-0 bg-white rounded-end rounded-pill dropdown-toggle"
-          [value]="searchSelect"
-          (search)="searchBar()"
-        >
-          {{ searchSelect }}
-        </button>
-        <ul
-          id="dropdown-basic"
-          *dropdownMenu
-          class="dropdown-menu"
-          role="menu"
-          aria-labelledby="button-basic"
-        >
-          <li role="menuitem">
-            <a class="dropdown-item" (click)="onOpenChange('All Fields')"
-              >All Fields</a
-            >
-          </li>
-          <li role="menuitem">
-            <a class="dropdown-item" (click)="onOpenChange('Name')">Name</a>
-          </li>
-          <li role="menuitem">
-            <a class="dropdown-item" (click)="onOpenChange('Description')"
-              >Description</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <input
-        type="search"
-        class="form-control"
-        placeholder="Search for ... "
-        [(ngModel)]="searchInput"
-        (search)="searchBar()"
-        aria-label="Search for ... "
-        aria-describedby="button-addon2"
-      />
+<div class="bg-khaki bg-opacity-25 row" style="max-width: 100vw">
+  <!-- search bar -->
+  <div class="input-group m-5 col">
+    <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="true">
       <button
-        class="btn border border-start-0 bg-white rounded-start rounded-pill"
+        id="button-basic"
+        dropdownToggle
         type="button"
-        (click)="searchBar()"
+        class="btn border border-start-0 bg-white rounded-end rounded-pill dropdown-toggle text-muted"
+        [value]="searchSelect"
+        (search)="searchBar()"
       >
-        <img
-          src="assets/global/search.svg"
-          alt=""
-          width="20"
-          style="background-color: #0000"
-        />
+        {{ searchSelect }}
       </button>
+      <ul
+        id="dropdown-basic"
+        *dropdownMenu
+        class="dropdown-menu"
+        role="menu"
+        aria-labelledby="button-basic"
+      >
+        <li role="menuitem">
+          <a class="dropdown-item" (click)="onOpenChange('All Fields')"
+            >All Fields</a
+          >
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" (click)="onOpenChange('Name')">Name</a>
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" (click)="onOpenChange('Description')"
+            >Description</a
+          >
+        </li>
+      </ul>
+    </div>
 
-      <a
-        class="align-self-center mx-2"
-        type="button"
-        tooltip="What to search for?
+    <input
+      type="search"
+      class="form-control"
+      placeholder="Search the Archive..."
+      [(ngModel)]="searchInput"
+      (search)="searchBar()"
+      aria-label="Search for ... "
+      aria-describedby="button-addon2"
+    />
+    <button
+      class="btn border border-start-0 bg-white rounded-start rounded-pill"
+      type="button"
+      (click)="searchBar()"
+    >
+      <img src="assets/global/search.svg" alt="" width="20" />
+    </button>
+
+    <a
+      class="align-self-center mx-2"
+      type="button"
+      tooltip="What to search for?
     - Search for first name 
     and/or last name
     - Year of birth 
@@ -75,265 +64,269 @@
     - Chinese Ethnic Group
     - Occupation
     - Gender"
-        data-bs-toggle="tooltip"
-        data-bs-placement="bottom"
-      >
-        <img
-          src="assets/browsepage/question-mark.svg"
-          fill="#AB7C94"
-          alt=""
-          width="20"
-        />
-      </a>
-    </div>
+      data-bs-toggle="tooltip"
+      data-bs-placement="bottom"
+    >
+      <img
+        src="assets/browsepage/question-mark.svg"
+        fill="#cca474"
+        alt=""
+        width="20"
+      />
+    </a>
   </div>
+</div>
 
+<div class="row justify-content-center" style="background-color: #09363c">
   <div
-    class="row justify-content-center"
-    style="background-color: rgb(12, 19, 48)"
+    class="col-10 border"
+    style="border-color: #caa372; background-color: #266461"
   >
-    <div class="col-10 border" style="border-color: #caa372">
-      <h3 class="border-bottom fw-bold text-light my-3">Browse Archive</h3>
-      <div class="my-4">
-        <app-browse-search-filter
-          [(filterValues)]="filterValues"
-          (filterValuesChange)="filterValueschanges($event)"
-        >
-        </app-browse-search-filter>
+    <h3
+      class="border-bottom fw-bold text-light my-3"
+      style="border-color: rgba(175, 151, 112, 255)"
+    >
+      Browse Archive
+    </h3>
+    <div class="my-4">
+      <app-browse-search-filter
+        [(filterValues)]="filterValues"
+        (filterValuesChange)="filterValueschanges($event)"
+      >
+      </app-browse-search-filter>
+    </div>
+
+    <!-- search result -->
+    <div class="container-fluid">
+      <div class="d-flex">
+        <h4 class="me-auto p-2 text-light text-nowrap" [value]="db_result">
+          {{ this.db_result_thousands_seperator }} Results
+        </h4>
+
+        <div class="col-auto flex-shrink-0">
+          <label for="per_page_result" class="text-white"
+            >Result per page</label
+          >
+          <select
+            class="mx-2 text-light"
+            aria-label="Result per page select"
+            id="per_page_result"
+            [(ngModel)]="itemsPerPage"
+            (change)="itemPerPageChanged()"
+          >
+            <option selected value="25">30</option>
+            <option value="50">60</option>
+            <option value="100">90</option>
+          </select>
+        </div>
+        <div class="col-auto flex-shrink-0">
+          <label for="viewSelect" class="text-white">View</label>
+          <select
+            class="mx-2 text-light"
+            id="viewSelect"
+            aria-label="View select"
+            [(ngModel)]="curView"
+          >
+            <option value="List" selected>List</option>
+            <option value="Grid">Grid</option>
+          </select>
+        </div>
+
+        <div class="mb-1 text-light text-nowrap">|&emsp;Order by: A-Z</div>
       </div>
 
-      <!-- search result -->
-      <div class="container-fluid">
-        <div class="d-flex">
-          <h4 class="me-auto p-2 text-light text-nowrap" [value]="db_result">
-            {{ this.db_result_thousands_seperator }} Results
-          </h4>
-
-          <div class="col-auto flex-shrink-0">
-            <label for="per_page_result" class="text-white"
-              >Result per page</label
-            >
-            <select
-              class="mx-2"
-              aria-label="Result per page select"
-              id="per_page_result"
-              [(ngModel)]="itemsPerPage"
-              (change)="itemPerPageChanged()"
-            >
-              <option selected value="25">30</option>
-              <option value="50">60</option>
-              <option value="100">90</option>
-            </select>
-          </div>
-          <div class="col-auto flex-shrink-0">
-            <label for="viewSelect" class="text-white">View</label>
-            <select
-              class="mx-2"
-              id="viewSelect"
-              aria-label="View select"
-              [(ngModel)]="curView"
-            >
-              <option value="List" selected>List</option>
-              <option value="Grid">Grid</option>
-            </select>
-          </div>
-
-          <div class="mb-1 text-light text-nowrap">|&emsp;Order by: A-Z</div>
+      <div class="d-flex justify-content-between">
+        <div class="btn-group d-inline-block btn-group-sm">
+          <button
+            class="btn button-no-outline"
+            *ngFor="let letter of letters"
+            [ngClass]="
+              currentLetter === letter
+                ? 'btn-outline-light text-danger text-decoration-underline'
+                : 'text-light'
+            "
+            (click)="lettersBtnClickOrReset(letter)"
+          >
+            {{ letter }}
+          </button>
         </div>
+      </div>
 
-        <div class="d-flex justify-content-between">
-          <div class="btn-group d-inline-block btn-group-sm">
-            <button
-              class="btn button-no-outline"
-              *ngFor="let letter of letters"
-              [ngClass]="
-                currentLetter === letter
-                  ? 'btn-outline-light text-danger text-decoration-underline'
-                  : 'text-light'
-              "
-              (click)="lettersBtnClickOrReset(letter)"
-            >
-              {{ letter }}
-            </button>
-          </div>
-        </div>
+      <!-- display search results -->
+      <app-stip-spinner [isLoading]="isloading"></app-stip-spinner>
 
-        <!-- display search results -->
-        <app-stip-spinner [isLoading]="isloading"></app-stip-spinner>
-
-        <div *ngIf="curView === 'List'; else elseBlock">
-          <div *ngIf="display.length; else elseEmptyBlock">
-            <a
-              class="d-flex m-3 list-searchprofile"
-              style="
-                height: 150px;
-                border-radius: 28px;
-                color: black;
-                text-decoration: none;
-                background-color: white;
-              "
-              name="searchLayout"
-              routerLink="/browse/main/memoir/{{ result.profileId }}"
-              routerLinkActive="active"
-              ariaCurrentWhenActive="page"
-              *ngFor="let result of display; let i = index"
-            >
-              <div class="col ms-4 mt-3">
-                {{ i + 1 + (currentPage - 1) * itemsPerPage }}
-              </div>
-
-              <div class="m-4 col-3 text-capitalize" style="color: #2b5256">
-                <h2 class="text-start fw-bold">
-                  {{ result.firstName + " " + result.lastName }}
-                </h2>
-              </div>
-              <div
-                class="text-start col-6 m-3 list-searchprofile"
-                style="color: #676667"
-              >
-                {{ result.description }}
-              </div>
-              <div
-                class="col align-self-end mb-3 me-3 arrow"
-                style="display: inline-block; white-space: nowrap"
-              >
-                read more
-                <img
-                  src="/assets/browsepage/arrow-right.svg"
-                  alt="Bootstrap"
-                  width="20"
-                  height="20"
-                />
-              </div>
-            </a>
-          </div>
-
-          <ng-template #elseEmptyBlock>
-            <div *ngIf="isloading == false" class="bg-light">
-              <p>No records found.</p>
-              <h4>
-                There are no results matching your search "{{ searchInput }}".
-              </h4>
-              <p>Suggestions:</p>
-              <ul>
-                <li>Make sure that all words are spelled correctly.</li>
-                <li>Try different keywords.</li>
-                <li>
-                  Click on the “?” button next to the search bar to view “What
-                  to search for?”
-                </li>
-                <li>
-                  your search to a specific field in the All Fields dropdown to
-                  the left of the search bar.
-                </li>
-              </ul>
+      <div *ngIf="curView === 'List'; else elseBlock">
+        <div *ngIf="display.length; else elseEmptyBlock">
+          <a
+            class="d-flex m-3 list-searchprofile"
+            style="
+              height: 150px;
+              border-radius: 28px;
+              color: black;
+              text-decoration: none;
+              background-color: #d4e0df;
+            "
+            name="searchLayout"
+            routerLink="/browse/main/memoir/{{ result.profileId }}"
+            routerLinkActive="active"
+            ariaCurrentWhenActive="page"
+            *ngFor="let result of display; let i = index"
+          >
+            <div class="col ms-4 mt-3">
+              {{ i + 1 + (currentPage - 1) * itemsPerPage }}
             </div>
-          </ng-template>
-        </div>
 
-        <ng-template #elseBlock>
-          <div *ngIf="display.length; else elseEmptyBlock">
+            <div class="m-4 col-3 text-capitalize" style="color: #2b5256">
+              <h2 class="text-start fw-bold">
+                {{ result.firstName + " " + result.lastName }}
+              </h2>
+            </div>
             <div
-              class="d-flex justify-content-between p-2 flex-nowrap"
-              name=" searchLayout"
-              *ngFor="let results of display | UpdateRows: 3; let i = index"
-              style="height: 5cm"
+              class="text-start col-6 m-3 list-searchprofile"
+              style="color: #676667"
             >
-              <div
-                style="
-                  border-radius: 28px;
-                  background-color: #dbdde2;
-                  width: 30%;
-                "
-                *ngFor="let result of results; let j = index"
-              >
-                <a
-                  class="d-flex flex-column"
-                  routerLink="/browse/main/memoir/{{ result.profileId }}"
-                  routerLinkActive="active"
-                  ariaCurrentWhenActive="page"
-                  style="color: black; text-decoration: none"
-                >
-                  <div class="ms-4 mt-2">
-                    {{ 3 * i + (j + 1) + (currentPage - 1) * itemsPerPage }}
-                  </div>
-                  <div class="fw-bold ms-4 h4" style="color: #2b5256">
-                    {{ result.firstName + " " + result.lastName }}
-                  </div>
-                  <div
-                    class="grid-searchprofile ms-4 flex-grow-1"
-                    style="color: #676667"
-                  >
-                    {{ result.description }}
-                  </div>
+              {{ result.description }}
+            </div>
+            <div
+              class="align-self-end mb-3 me-5 pe-5 arrow"
+              style="display: inline-block; white-space: nowrap"
+            >
+              read more
+              <img
+                src="/assets/browsepage/arrow-right.svg"
+                alt="Bootstrap"
+                width="15"
+                height="15"
+                class="me-5"
+              />
+            </div>
+          </a>
+        </div>
 
-                  <div
-                    class="align-self-end mb-3 me-3 arrow mt-auto"
-                    style="
-                      display: inline-block;
-                      white-space: nowrap;
-                      justify-content: flex-end;
-                    "
-                  >
-                    read more
-                    <img
-                      src="/assets/browsepage/arrow-right.svg"
-                      alt="Bootstrap"
-                      width="20"
-                      height="20"
-                    />
-                  </div>
-                </a>
-              </div>
-            </div>
+        <ng-template #elseEmptyBlock>
+          <div
+            *ngIf="isloading == false"
+            class="text-white d-flex flex-column m-2"
+          >
+            <p>No records found.</p>
+            <h4>
+              There are no results matching your search "{{ searchInput }}".
+            </h4>
+            <p>Suggestions:</p>
+            <ul>
+              <li>Make sure that all words are spelled correctly.</li>
+              <li>Try different keywords.</li>
+              <li>
+                Click on the “?” button next to the search bar to view “What to
+                search for?”
+              </li>
+              <li>
+                your search to a specific field in the All Fields dropdown to
+                the left of the search bar.
+              </li>
+            </ul>
           </div>
-          <ng-template #elseEmptyBlock>
-            <div *ngIf="isloading" class="bg-light">
-              <p>No records found.</p>
-              <h4>
-                There are no results matching your search "{{ searchInput }}".
-              </h4>
-              <p>Suggestions:</p>
-              <ul>
-                <li>Make sure that all words are spelled correctly.</li>
-                <li>Try different keywords.</li>
-                <li>
-                  Click on the “?” button next to the search bar to view “What
-                  to search for?”
-                </li>
-                <li>
-                  your search to a specific field in the All Fields dropdown to
-                  the left of the search bar.
-                </li>
-              </ul>
-            </div>
-          </ng-template>
         </ng-template>
+      </div>
 
-        <!-- search nav -->
-
-        <div class="d-flex flex-row-reverse">
-          <nav aria-label="Page navigation">
-            <pagination
-              class="my-pagination"
-              [rotate]="true"
-              [totalItems]="db_result.length"
-              [boundaryLinks]="true"
-              [itemsPerPage]="itemsPerPage"
-              [(ngModel)]="currentPage"
-              (pageChanged)="pageChanged($event)"
-              previousText="&lsaquo;"
-              nextText="&rsaquo;"
-              firstText="&laquo;"
-              lastText="&raquo;"
-              [maxSize]="10"
+      <ng-template #elseBlock>
+        <div *ngIf="display.length; else elseEmptyBlock">
+          <div
+            class="d-flex justify-content-between p-2 flex-nowrap"
+            name=" searchLayout"
+            *ngFor="let results of display | UpdateRows: 3; let i = index"
+            style="height: 5cm"
+          >
+            <div
+              style="border-radius: 28px; background-color: #d8e4dc; width: 30%"
+              *ngFor="let result of results; let j = index"
             >
-            </pagination>
-          </nav>
+              <a
+                class="d-flex flex-column"
+                routerLink="/browse/main/memoir/{{ result.profileId }}"
+                routerLinkActive="active"
+                ariaCurrentWhenActive="page"
+                style="color: black; text-decoration: none"
+              >
+                <div class="ms-4 mt-2">
+                  {{ 3 * i + (j + 1) + (currentPage - 1) * itemsPerPage }}
+                </div>
+                <div class="fw-bold ms-4 h4" style="color: #2b5256">
+                  {{ result.firstName + " " + result.lastName }}
+                </div>
+                <div
+                  class="grid-searchprofile ms-4 flex-grow-1"
+                  style="color: #676667"
+                >
+                  {{ result.description }}
+                </div>
 
-          <div class="p-2 bd-highlight">
-            page {{ this.currentPage }} of {{ this.maxPage }}
+                <div
+                  class="align-self-end mb-3 me-3 arrow mt-auto"
+                  style="
+                    display: inline-block;
+                    white-space: nowrap;
+                    justify-content: flex-end;
+                  "
+                >
+                  read more
+                  <img
+                    src="/assets/browsepage/arrow-right.svg"
+                    alt="Bootstrap"
+                    width="20"
+                    height="20"
+                  />
+                </div>
+              </a>
+            </div>
           </div>
+        </div>
+        <ng-template #elseEmptyBlock>
+          <div *ngIf="isloading" class="text-white d-flex flex-column m-2">
+            <p>No records found.</p>
+            <h4>
+              There are no results matching your search "{{ searchInput }}".
+            </h4>
+            <p>Suggestions:</p>
+            <ul>
+              <li>Make sure that all words are spelled correctly.</li>
+              <li>Try different keywords.</li>
+              <li>
+                Click on the “?” button next to the search bar to view “What to
+                search for?”
+              </li>
+              <li>
+                your search to a specific field in the All Fields dropdown to
+                the left of the search bar.
+              </li>
+            </ul>
+          </div>
+        </ng-template>
+      </ng-template>
+
+      <!-- search nav -->
+
+      <div class="d-flex flex-row-reverse">
+        <nav aria-label="Page navigation">
+          <pagination
+            class="my-pagination"
+            [rotate]="true"
+            [totalItems]="db_result.length"
+            [boundaryLinks]="true"
+            [itemsPerPage]="itemsPerPage"
+            [(ngModel)]="currentPage"
+            (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;"
+            nextText="&rsaquo;"
+            firstText="&laquo;"
+            lastText="&raquo;"
+            [maxSize]="10"
+          >
+          </pagination>
+        </nav>
+
+        <div class="p-2 bd-highlight text-white">
+          page {{ this.currentPage }} of {{ this.maxPage }}
         </div>
       </div>
     </div>
