@@ -8,7 +8,6 @@
     "about_page": "About",
     "about_movement": "About the movement",
     "projects_overview": "Projects overview",
-    "meet_the_team": "Meet the team",
     "resources_page": "Other Resources",
     "research_page": "Research",
     "broswer_page": " Browse Archives",
@@ -170,8 +169,16 @@
     "gallery_top_cat_three_button": "Camps",
     "gallery_top_cat_four_button": "People",
     "gallery_top_cat_five_button": "Albums",
-    "gallery_image_button": "Learn More"
-  },
+    "gallery_image_button": "Learn More",
+    "gallery_overlay_category": "Category",
+    "gallery_overlay_category_other": "Chinese Category",
+    "gallery_overlay_title": "Title",
+    "gallery_overlay_title_other": "Chinese Title",
+    "gallery_overlay_detail": "Detail",
+    "gallery_overlay_detail_other": "Chinese Detail",
+    "gallery_overlay_source": "Source",
+    "gallery_overlay_source_other": "Chinese Source"
+  }, 
   "repository": {
     "repository_top_title": "Archive Repositories",
     "repository_tabs": [["Forward", "Forward Title", "Document", ["A large dictionary of the names of the victims in 1957"]],["Publication Notes"],["Appendix","Title",
