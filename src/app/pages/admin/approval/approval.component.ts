@@ -122,6 +122,16 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         });
 
         for (let contribution of this.contributions) {
+          if (contribution.rightist) {
+            if (!contribution.rightist.events) {
+              contribution.rightist!.events = []
+            }
+  
+            if (!contribution.rightist.memoirs) {
+              contribution.rightist!.memoirs = []
+            }
+          }
+
           let data: Contribution = {
             ...contribution,
             contributedAt: contribution.contributedAt,
@@ -131,6 +141,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           };
 
           if (contribution.publish == 'new') {
+            
             this.newContributions.push(data);
           }
 
@@ -138,6 +149,15 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             this.archiveAPI
               .getPersonById(data.rightistId)
               .subscribe((rightist: any) => {
+                // Initialize empty array because Firebase does not store empty arrays
+                if (!rightist.events) {
+                  rightist.events = []
+                }
+
+                if (!rightist.memoirs) {
+                  rightist.memoirs = []
+                }
+
                 data.rightist = rightist;
               });
 
@@ -200,6 +220,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.selectedContribution.state = 'removed';
   }
 
+
   onReject(contribution: Contribution) {
     this.readMoreRef?.hide();
     this.selectedContribution = contribution;
@@ -249,7 +270,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.selectedContribution &&
       this.selectedContribution.state === 'removed'
     ) {
-      this.updateSelectedContribution();
+      if (this.updated) {
+        this.updateSelectedContribution();
+      }
 
       if (this.selectedContribution.rightist) {
         let contributorId =
@@ -293,6 +316,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           );
         }
         this.selectedContribution.state = 'void'
+        this.updated = false
       }
     }
   }
@@ -303,8 +327,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.readMoreRef = this.modalService.show(template, { class: 'modal-xl' });
   }
 
+  updated: boolean = false
+
   onFormChange(data: any) { 
-    console.log(data)
     let { name, gender, status, ethnic, occupation, rightestYear, birthYear } =
       data; 
     if (
@@ -315,7 +340,8 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       occupation &&
       rightestYear &&
       birthYear
-    ) {
+    ) { 
+      this.updated = true
       this.updatedContribution = {
         ...this.updatedContribution!,
         rightist: {
@@ -333,6 +359,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   onEventChange(data: any) {
+    this.updated = true
     this.updatedContribution = {
       ...this.updatedContribution!,
       rightist: {
@@ -343,6 +370,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   onMemoirChange(data: any) {
+    this.updated = true
     this.updatedContribution = {
       ...this.updatedContribution!,
       rightist: {

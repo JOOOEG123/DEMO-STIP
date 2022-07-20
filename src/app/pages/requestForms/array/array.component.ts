@@ -1,27 +1,32 @@
 import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
-import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-array',
   templateUrl: './array.component.html',
-  styleUrls: ['./array.component.scss']
+  styleUrls: ['./array.component.scss'],
 })
 export class ArrayComponent implements OnInit, OnDestroy {
-
   @Input() array!: FormArray
-  @Input() title!: string
-  @Input() type!: string
-  @Output() change: EventEmitter<any> = new EventEmitter()
+  @Input() title!: string;
+  @Input() type!: string;
+  @Output() change: EventEmitter<any> = new EventEmitter();
 
-  localArray: FormArray = new FormArray([])
 
-  eventYear?: number
-  eventContent?: string
-  memoirTitle?: string
-  memoirAuthor?: string
-  memoirContent?: string
+  eventYear?: number;
+  eventContent?: string;
+  memoirTitle?: string;
+  memoirAuthor?: string;
+  memoirContent?: string;
 
   private newEvent() {
     return new FormGroup({
@@ -39,58 +44,84 @@ export class ArrayComponent implements OnInit, OnDestroy {
     });
   }
 
-  arraySubscription?: Subscription
+  arraySubscription?: Subscription;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+
     if (this.array.length == 0) {
       if (this.type == 'event') {
-        this.localArray.push(this.newEvent());
+        this.array.push(this.newEvent());
       }
-  
+
       if (this.type == 'memoir') {
-        this.localArray.push(this.newMemoir());
-      } 
-    }
-    else {
-      this.localArray.patchValue(this.array.value)
+        this.array.push(this.newMemoir());
+      }
     }
 
-    console.log(this.array.value)
-    console.log(this.localArray.value)
+    this.change.emit({
+      type: this.type,
+      array: this.array,
+    });
 
-    this.arraySubscription = this.localArray.valueChanges.subscribe((data) => {
-      this.change.emit({
-        type: this.type,
-        array: this.localArray.value
-      })
-    })
+    // if (this.type === 'event') {
+    //   this.array.push(this.newEvent())
+    //   // for (const [i, value] of this.array.value.entries()) {
+    //   //   console.log(i)
+    //   //   this.localArray.at(i).patchValue({
+    //   //     startYear: value.startYear,
+    //   //     endYear: value.endYear,
+    //   //     event: value.event
+    //   //   })
+    //   // }
+    // }
+
+    // if (this.type === 'memoir') {
+    //   this.array.push(this.newMemoir())
+    //   // for (const [i, value] of this.array.value.entries()) {
+    //   //   this.localArray.at(i).patchValue({
+    //   //     memoirTitle: value.memoirTitle,
+    //   //     memoirAuthor: value.memoirAuthor,
+    //   //     memoirContent: value.memoirContent
+    //   //   })
+    //   // }
+    // }
   }
 
   ngOnDestroy(): void {
-    this.arraySubscription?.unsubscribe()
+    this.arraySubscription?.unsubscribe();
   }
 
   onContentChange(event: Event) {
-    console.log(event)
+    console.log(event);
   }
 
   get controls() {
-    return this.localArray.controls as FormGroup[];
+    return this.array.controls as FormGroup[];
   }
 
   add() {
+    console.log(this.array);
     if (this.type == 'event') {
-      this.localArray.push(this.newEvent());
+      this.array.push(this.newEvent());
     }
 
     if (this.type == 'memoir') {
-      this.localArray.push(this.newMemoir());
-    } 
+      this.array.push(this.newMemoir());
+    }
+
+    this.change.emit({
+      type: this.type,
+      array: this.array,
+    });
   }
 
   remove(i: number) {
-    this.localArray.removeAt(i)
+    this.array.removeAt(i);
+    this.change.emit({
+      type: this.type,
+      array: this.array,
+    });
   }
 }

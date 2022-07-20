@@ -101,6 +101,19 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.sub.forEach((sub) => sub.unsubscribe());
   }
 
+  // updateFormArray(type: string, data: any[]) {
+  //   if (type == 'event') {
+  //     for (const [i, event] of data.entries()) {
+  //       const target = this.eventArray.at(i)
+  //       target.patchValue({
+  //         startYear: event.startYear,
+  //         endYear: event.endYear,
+  //         event: event.event
+  //       })
+  //     }
+  //   }
+  // }
+
   ngOnInit(): void {
     if (this.page === 'contribution') {
       if (this.contribution) {
@@ -122,8 +135,23 @@ export class UploadComponent implements OnInit, OnDestroy {
             content: '',
           })
 
-          this.eventArray.patchValue(this.contribution.rightist!.events)
-          this.memoirArray.patchValue(this.contribution.rightist!.memoirs)
+          // for (const [i, value] of this.contribution.rightist!.events.entries()) {
+          //   console.log(i)
+          //   this.eventArray.at(i).patchValue({
+          //     startYear: value.startYear,
+          //     endYear: value.endYear,
+          //     event: value.event
+          //   })
+          // }
+
+          // for (const [i, value] of this.contribution.rightist!.memoirs.entries()) {
+          //   console.log(i)
+          //   this.memoirArray.at(i).patchValue({
+          //     memoirTitle: value.memoirTitle,
+          //     memoirAuthor: value.memoirAuthor,
+          //     memoirContent: value.memoirContent
+          //   })
+          // }
         }
       }
     } else {
@@ -148,17 +176,18 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
   }
 
-  onArrayChange(data: any) {
-    console.log(data)
+  onArrayChange(data: any) {   
     if (data.type === 'event') {
-      this.eventArray.patchValue(data.array)
-      // this.eventChange.emit(this.eventArray)
+      this.eventChange.emit(this.eventArray)
     }
 
     if (data.type === 'memoir') {
-      this.memoirArray.patchValue(data.array)
-      // this.memoirChange.emit(this.memoirArray)
+      console.log(this.memoirArray.value)
+      this.memoirChange.emit(this.memoirArray)
     }
+
+    console.log(this.eventArray.value)
+    console.log(this.memoirArray.value)
   }
 
   onFormChange(data: any) {
