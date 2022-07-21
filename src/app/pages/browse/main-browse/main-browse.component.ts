@@ -33,11 +33,11 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   display: any[] = [];
   filterValues: FilterTypes = {} as FilterTypes;
 
-  itemsPerPage = 25;
+  itemsPerPage = 30;
   searchInput = '';
   letters = LETTERS;
   maxPage = 1;
-  olditemsPerPage = 25;
+  olditemsPerPage = 30;
 
   //variables for search functionalities
   @Input() db_result: any[] = [];
@@ -299,10 +299,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  onOpenChange(searchSelect: string) {
-    this.searchSelect = searchSelect;
+  onOpenChange(display: string) {
+    this.searchSelect = display;
 
-    switch (searchSelect) {
+    switch (this.searchSelect) {
       case 'Description':
         this.db_attr = ['description'];
         break;

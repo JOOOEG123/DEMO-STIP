@@ -76,7 +76,10 @@
     "other_resources_title": "Resources"
   },
   "archive": {
-    "archive_searchbar_placeholder": "Search for ...",
+    "archive_searchbar_all": "All Fields",
+    "archive_searchbar_name": "Name",
+    "archive_searchbar_description": "Description",
+    "archive_searchbar_placeholder": "Search the Archive...",
     "archive_top_title": "Browse Archive",
     "archive_filter_title": "Filter",
     "archive_filter_cat_one_title": "Gender",
@@ -89,8 +92,15 @@
     "archive_filter_cat_three_title": "Chinese Ethnic Group",
     "archive_filter_cat_three_textbox_placeholder": "Type to search ethnic groups..",
     "archive_filter_cat_four_title": "Occupation",
-    "archive_filter_cat_five_title": "Year of Becoming A \"Rightist\"",
-    "archive_filter_reset_button": "Clear"
+    "archive_filter_cat_five_title": "\"Rightist\" Year",
+    "archive_filter_reset_button": "Clear Filters", 
+    "archive_num_result":"Results",
+    "archive_results_per_page":"Results Per Page", 
+    "archive_view":"View",
+    "archive_view_list":"List",
+    "archive_view_grid":"Grid",
+    "archive_order_by":"Order by", 
+    "archive_read_more":"read more"
   },
   "gallery": {
     "gallery_top_title": "Gallery",
