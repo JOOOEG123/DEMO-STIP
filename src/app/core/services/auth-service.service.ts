@@ -54,6 +54,7 @@ export class AuthServiceService {
           this._hasAdminRole = token.claims?.['admin'];
           this._hasVerifiedEmail = user.emailVerified;
           this.isAdmin.next(this.hasAdminRole || false);
+          console.log('is Admin: ', this.hasAdminRole);
           localStorage.setItem(
             'user',
             JSON.stringify({ user: this.user, token: token })
@@ -170,6 +171,8 @@ export class AuthServiceService {
 
   signOut() {
     return this.auth.signOut().then(() => {
+      this._hasAdminRole = false;
+      this.isAdmin.next(false);
       localStorage.removeItem('user');
       this.router.navigate(['/']);
     });

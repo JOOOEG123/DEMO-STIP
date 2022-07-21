@@ -17,6 +17,15 @@ $jade: #61af87;
   color: $orange-red;
 }
 
+
+
+.border-green {
+  border-color: $jade !important
+}
+.text-green {
+  color : $medium-blue
+}
+
 dl {
   @extend .row;
   dt,
@@ -27,6 +36,20 @@ dl {
 
 body {
   font-family: "Times New Roman", Times, serif !important;
+}
+.outer-bg {
+  position: relative;
+  background-color: $dark-blue!important;
+}
+
+.inner-bg {
+  position: relative;
+  background-color: $medium-blue !important;
+}
+
+.filter {
+  position: relative;
+  z-index: 2;
 }
 
 .bg-image-blue {
