@@ -7,7 +7,6 @@ import { jsPDF } from 'jspdf';
 import { ClipboardService } from 'ngx-clipboard';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
-
 @Component({
   selector: 'app-browse-archive',
   templateUrl: './browse-archive.component.html',
@@ -34,12 +33,30 @@ export class BrowseArchiveComponent implements OnInit {
   ngOnInit(): void {
     this.arch.getPersonById(this.id).subscribe((res) => {
       this.profile = res;
+      //sorting event based on starting year
+      this.profile.events.sort(function (a, b) {
+        return a.start_year - b.start_year;
+      });
+
       this.replaceNewline();
     });
 
     this.auth.isAdmin.subscribe((x) => {
       this.isAdmin = x;
     });
+    this.auth.isLoggedIn.subscribe((x) => {
+      this.isAdmin = this.isAdmin && x;
+    });
+  }
+  ngDoCheck() {
+    this.auth.isAdmin.subscribe((x) => {
+      this.isAdmin = x;
+    });
+    // console.log('1. ', this.isAdmin);
+    // this.auth.isLoggedIn.subscribe((x) => {
+    //   this.isAdmin = this.isAdmin && x;
+    // });
+    console.log('2.', this.isAdmin);
   }
 
   display: string[] = [];

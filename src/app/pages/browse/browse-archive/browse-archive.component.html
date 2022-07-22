@@ -1,161 +1,290 @@
 <div class="container-fluid bg-dark">
-
-  <div class="d-flex ">
-    <div class=" flex-column align-items-center flex-shrink-1">
-      <div class="">
-        <img src="assets\browsepage\tempprofile.png" class="img-fluid rounded-circle mx-5 align-self-center">
-        <p class="text-light">ID: {{id}} </p>
-      </div>
+  <div class="d-flex">
+    <div class="d-flex flex-column align-items-center flex-shrink-1 my-5">
+      <img
+        src="assets\browsepage\tempprofile.png"
+        class="img-fluid rounded-circle mx-5 align-self-center"
+      />
+      <div class="text-light mx-auto">ID: {{ id || "-" }}</div>
     </div>
-    <div class="d-flex flex-column align-self-center text-light flex-fill" style="height: 100%;">
-
-      <div class="fs-1">{{ profile.firstName }} {{ profile.lastName }}</div>
-      <div class=" pb-3">{{ profile.detailJob }}</div>
-
+    <div
+      class="d-flex flex-column align-self-center text-light flex-fill"
+      style="height: 100%"
+    >
+      <div class="fs-1">{{ profile.fullName || "-" }}</div>
     </div>
-
-
-
   </div>
 </div>
 
-<div class="container-fluid ">
-  <div class="row ">
-    <div class="col-2 ">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
       <div class="col align-self-end">
         <ul class="list-group sticky-sm-top">
-          <li class="list-group-item border-0 " style="background-color: #E8E8E8;">
-            <label class="border-bottom border-dark fw-bold"> Gallery&emsp;</label>
+          <li
+            class="list-group-item border-0"
+            style="background-color: #e8e8e8"
+          >
+            <label class="border-bottom border-dark fw-bold">
+              Gallery&emsp;</label
+            >
           </li>
-
         </ul>
       </div>
     </div>
 
-
     <div class="col-7 border-start m-3">
-      <app-request-modify></app-request-modify>
-      <a class="btn btn-light border-khaki">Delete</a>
-      <a class="share m-2" data-bs-toggle="modal" data-bs-target="#shareModal">
-        <img src="/assets/browsepage/share.svg">
-      </a>
-      
-      <!-- Modal -->
-      <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Share file</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div>
-                <p>Copy Link</p>
-                <div class="input-group mb-3">
-                  <span class="input-group-text" id="basic-addon1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                      class="bi bi-link-45deg" viewBox="0 0 16 16">
-                      <path
-                        d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z" />
-                      <path
-                        d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z" />
-                    </svg>
-                  </span>
-                  <input type="text" class="form-control" placeholder="URL" aria-label="URL"
-                    aria-describedby="basic-addon1" value={{url}} readonly #inputTarget />
-                  <button class="btn btn-outline-secondary" type="button" [ngxClipboard]="inputTarget"
-                    (click)="copyURL()">
-                    Copy
-                  </button>
+      <div
+        class="d-flex justify-content-end align-items-center align-items-center"
+      >
+        <div *ngIf="isAdmin; else elseBlock">
+          <button
+            class="btn rounded-pill shadow border-green m-2"
+            style="background-color: white"
+            type="button"
+          >
+            Delete
+          </button>
+          <button
+            class="btn rounded-pill shadow m-2 border-green"
+            style="background-color: white"
+            type="button"
+          >
+            <img
+              src="assets/browsepage/request-to-modify.svg"
+              alt=""
+              width="20"
+            />
+            Modify File
+          </button>
+        </div>
+        <ng-template #elseBlock>
+          <app-request-modify class="m-2"></app-request-modify>
+
+          <a
+            type="button"
+            tooltip="All account users have the ability to 
+          send a request form to Admin for 
+          modification of any incorrect or updated 
+          information about a specific file. 
+          
+          A follow-up email will be sent within 3-5 
+          business days to notify the user if the 
+          request has been accepted or rejected."
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            class="m-2"
+          >
+            <img src="assets/browsepage/question-mark.svg" alt="" width="20" />
+          </a>
+        </ng-template>
+        <a
+          class="share m-2"
+          data-bs-toggle="modal"
+          data-bs-target="#shareModal"
+        >
+          <img src="/assets/browsepage/share.svg" />
+        </a>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="shareModal"
+          tabindex="-1"
+          aria-labelledby="shareModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Share file</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div>
+                  <p>Copy Link</p>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-link-45deg"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"
+                        />
+                        <path
+                          d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"
+                        />
+                      </svg>
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="URL"
+                      aria-label="URL"
+                      aria-describedby="basic-addon1"
+                      value="{{ url }}"
+                      readonly
+                      #inputTarget
+                    />
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      [ngxClipboard]="inputTarget"
+                      (click)="copyURL()"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                  <br />
+                  <div style="padding-bottom: 10px"></div>
+                  <a
+                    (click)="SavePDF('infoContent')"
+                    class="btn btn-light border-khaki"
+                    >Download</a
+                  >
                 </div>
-                <br />
-                <div style="padding-bottom: 10px"></div>
-                <a (click)="SavePDF('infoContent')" class="btn btn-light border-khaki">Download</a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <a class="" type="button" tooltip="hi" data-bs-toggle="tooltip" data-bs-placement="right">
-        <img src="assets/browsepage/question-mark.svg" alt="" width="20" />
-      </a>
-
-
-
       <div class="" id="infoContent" #infoContent>
-        <div class="row border-bottom ">
+        <div class="row py-2 h6 ms-2 mt-2 mb-3">
           <div class="col-12">
-            <label class="fw-bold"> Detail Information:&emsp;</label>
-
+            <h5 class="fw-bold">Details:&emsp;</h5>
           </div>
           <div class="col-12 col-md-6 row mt-2">
-            <div class="col-12 py-2">First Name: {{ profile.firstName|| "-"}}</div>
-            <div class="col-12 py-2">Last Name: {{ profile.lastName || "-"}}</div>
-            <div class="col-12 py-2">Ethic Group:{{profile.ethnicity || "-"}}</div>
-            <div class="col-12 py-2">Education:{{profile.education|| "-"}}</div>
+            <div class="col-12 py-2">
+              Full name: {{ profile.fullName || "-" }}
+            </div>
+            <div class="col-12 py-2">Gender: {{ profile.gender || "-" }}</div>
+            <div class="col-12 py-2">
+              Ethic Group:{{ profile.ethnicity || "-" }}
+            </div>
+            <div class="col-12 py-2">
+              Occupation: {{ profile.detailJob || "-" }}
+            </div>
           </div>
           <div class="col-12 col-md-6 row mt-2">
-            <div class="col-12 py-2">Occupation: {{profile.detailJob|| "-"}}</div>
+            <div class="col-12 py-2">
+              "Rightist" Year: {{ profile.righttistYear || "-" }}
+            </div>
             <div class="col-12 py-2">
               Year of Birth: {{ profile.birthYear || "-" }}
             </div>
+            <div class="col-12 py-2">Status: {{ profile.status || "-" }}</div>
             <div class="col-12 py-2">
               Year of Death: {{ profile.deathYear || "-" }}
-            </div>
-            <div class="col-12 py-2">
-              "Rightist" Year: {{ profile.righttistYear || "-" }}
             </div>
           </div>
         </div>
 
-
-        <div class="row border-bottom ">
-          <div class="col-12 py-2 h6 fw-bold ms-3 mt-2">
-            Description/Timeline:
+        <div class="row border-bottom border-top mb-4">
+          <h5 class="col-12 py-2 fw-bold ms-3 mt-2">Description:</h5>
+          <div class="col-12 py-2 ms-3">
+            {{ profile.description || "-" }}
           </div>
-          <div class="col-12 py-2 ms-3">{{ profile.description | slice:1 || "-" }}</div>
+        </div>
+        <div class="row border-bottom">
+          <h5 class="col-12 py-2 fw-bold ms-3 mt-2">Biography:</h5>
           <div class="col-12 ms-3" *ngFor="let event of profile.events">
-            Start Year:{{event.start_year}}, End Year:
-            {{event.end_year}}: {{event.event[0].toUpperCase()+event.event.substr(1)|| "-"}}
+            In {{ event.start_year || "unknown" }} --
+            {{ event.end_year || "unknown" }},
+            {{ event.event[0].toUpperCase() + event.event.substr(1) || "-" }}
           </div>
-
         </div>
       </div>
 
       <div class="row ms-2 my-3">
-        <div class="col-12 fs-4 fw-bold text-uppercase ">Additional Files </div>
-        <div class="col-12 border px-0 rounded w-100 m-2" id="memContent" #memContent
-          *ngFor=" let memoir of profile.memoirs">
+        <div class="d-flex">
+          <div class="fs-5 fw-bold text-capitalize flex-grow-1">
+            Additional Files
+          </div>
+          <p class="ms-auto text-green">Expand all</p>
+        </div>
 
+        <div
+          class="col-12 border px-0 rounded w-100 m-2"
+          id="memContent"
+          #memContent
+          *ngFor="let memoir of profile.memoirs"
+        >
           <div class="d-flex ps-2">
-            <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">Memior</h6>
+            <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">
+              {{ memoir.memoirTitle }}
+            </h6>
 
-            <button class="btn" type="button" [attr.aria-expanded]="!drop" aria-controls="collapseBasic"
-              (click)="updateCollapse()">
-              <img src="/assets/filters/collapse-{{ drop ? 'minus' : 'plus' }}.svg" alt="filter" width="20" />
-              <span class="visually-hidden">click to {{ drop ? "collapse" : "expand" }}</span>
+            <button
+              class="btn"
+              type="button"
+              [attr.aria-expanded]="!drop"
+              aria-controls="collapseBasic"
+              (click)="updateCollapse()"
+            >
+              <img
+                src="/assets/browsepage/Arrow-{{ drop ? 'Down' : 'Up' }}.svg"
+                alt="filter"
+                width="20"
+              />
             </button>
-
           </div>
 
-          <div class="bg-white" id="collapseBasic" [collapse]="drop" [isAnimated]="true">
+          <div
+            class="bg-white"
+            id="collapseBasic"
+            [collapse]="drop"
+            [isAnimated]="true"
+          >
             <div class="card scrollable">
-              <div class="card-body ">
-                <div class="card-text limit-content" *ngFor="let d of memoir.memoir ; let i = index">
-                  <div *ngIf="i < 10"> {{d || "-"}} </div>
+              <div class="card-body">
+                <p>{{ memoir.memoirTitle }}</p>
+                <div>by: {{ memoir.memoirAuthor }}</div>
+                <div
+                  class="card-text limit-content"
+                  *ngFor="let d of memoir.memoirContent; let i = index"
+                >
+                  <div *ngIf="i < 10">{{ d || "-" }}</div>
                 </div>
-                <div class="card-body my-3" style="background-color: rgba(245,245,245,255);">
-                  You reached the max content view.
-                  To read more, download
-                  the full PDF.
+                <div
+                  class="card-body my-3 fw-bold border border-dark"
+                  style="background-color: rgba(245, 245, 245, 255)"
+                >
+                  You reached the max content view. To read more, download the
+                  full PDF.
                 </div>
-
               </div>
-              <a (click)="SavePDF('memoirContent')" class="btn btn-light border-khaki">Memoir PDF Link</a>
+              <div class="text-green ms-3" style="display: inline-block">
+                <button
+                  type="button"
+                  (click)="SavePDF('memoirContent')"
+                  class="btn btn-sm"
+                >
+                  <img
+                    src="/assets/browsepage/pdf-icon.svg"
+                    alt="filter"
+                    width="20"
+                  />
+                </button>
+                PDF Full Text
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <span class="ms-2 my-3">File last modified: </span>
+      <span class="ms-2 my-3"
+        >File last modified: {{ profile.lastUpdatedAt }}</span
+      >
     </div>
+  </div>
+</div>
