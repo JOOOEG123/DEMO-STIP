@@ -17,7 +17,7 @@ export const contactUs = functions.https.onCall( async (data: any, context: any)
   const {email: email = '', name: name = '', message: message = ''} = data;
   const msg = {
     to: ALL_ADMIN_EMAIL,
-    from: 'joeladeniji123@gmail.com' || 'User@stip-demo.web.app.com',
+    from: 'joeladeniji123@gmail.com',
     subject: `${name || 'User'} Contact Us (${email || 'User'})`,
     text: message,
     // html: `<strong>${message}</strong>`,
