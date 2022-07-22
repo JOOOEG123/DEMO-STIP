@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { FormBuilder, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import {
   TEAM_PROFILES,
   Profile,
@@ -11,8 +14,26 @@ import {
 })
 export class AboutTeamComponent implements OnInit {
   team_profile: Profile[] = TEAM_PROFILES;
-
-  constructor() {}
+  contactForm = this.fb.group({
+    name: ['', Validators.required],
+    email: ['', Validators.required],
+    message: ['', Validators.required],
+  });
+  modalRef?: BsModalRef;
+  @ViewChild('contactUsTemplate') contactUsTemplate!: TemplateRef<any>;
+  constructor(private fb: FormBuilder, private modalService: BsModalService, private customApi: AngularFireFunctions,) {}
 
   ngOnInit(): void {}
+
+  openContactUsModal(template: TemplateRef<any> = this.contactUsTemplate) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  ngSubmit() {
+    console.log(this.contactForm.value);
+    this.customApi.httpsCallable('sendGridMail')(this.contactForm.getRawValue()).subscribe((res) => {
+      console.log(res);
+      this.modalRef?.hide();
+    });
+  }
 }
