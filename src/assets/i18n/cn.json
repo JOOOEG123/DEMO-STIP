@@ -99,7 +99,21 @@
     "archive_view_list":"列表",
     "archive_view_grid":"网格", 
     "archive_order_by":"排序依据",
-    "archive_read_more":"更多"
+    "archive_read_more":"更多", 
+    "archive_no_result_title":"没有找到档案", 
+    "archive_no_result_body":"找不到和您的查询相符的档案",
+    "archive_no_result_suggest": "建议", 
+    "archive_no_result_suggest_one":"请检查输入字词有无错误。", 
+    "archive_no_result_suggest_two":"请换用另外的查询字词。",
+    "archive_no_result_suggest_three":"请点击在搜索栏右方的 “?” 按钮，查看“要搜索什么”", 
+    "archive_no_result_suggest_four":"请在搜索栏左侧的“所有字段”下拉框中对特定字段搜索。", 
+    "archive_tooltip_year":"‘右派年份’是个人成为‘右派’的时间。",
+    "archive_tooltip_searchbar":""
+  },
+  "profile": {
+    "profile_tooltip":"", 
+    "profile_information":""
+
   },
   "gallery": {
     "gallery_top_title": "画廊",

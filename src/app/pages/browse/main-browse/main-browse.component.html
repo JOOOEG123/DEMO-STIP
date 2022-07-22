@@ -58,15 +58,7 @@
     <a
       class="align-self-center mx-2"
       type="button"
-      tooltip="What to search for?
-    - Search for first name
-    and/or last name
-    - Year of birth
-    - Year of death
-    - “Rightist” year
-    - Chinese Ethnic Group
-    - Occupation
-    - Gender"
+      tooltip="{{ 'archive.archive_tooltip_searchbar' | translate }}"
       data-bs-toggle="tooltip"
       data-bs-placement="bottom"
     >
@@ -217,21 +209,21 @@
             *ngIf="isloading == false"
             class="text-white d-flex flex-column m-2"
           >
-            <p>No records found.</p>
+            <p>{{ "archive.archive_no_result_title" | translate }}</p>
             <h4>
-              There are no results matching your search "{{ searchInput }}".
+              {{ "archive.archive_no_result_body" | translate }} "{{
+                searchInput
+              }}".
             </h4>
-            <p>Suggestions:</p>
+            <p>{{ "archive.archive_no_result_suggest" | translate }}:</p>
             <ul>
-              <li>Make sure that all words are spelled correctly.</li>
-              <li>Try different keywords.</li>
+              <li>{{ "archive.archive_no_result_suggest_one" | translate }}</li>
+              <li>{{ "archive.archive_no_result_suggest_two" | translate }}</li>
               <li>
-                Click on the “?” button next to the search bar to view “What to
-                search for?”
+                {{ "archive.archive_no_result_suggest_three" | translate }}
               </li>
               <li>
-                your search to a specific field in the All Fields dropdown to
-                the left of the search bar.
+                {{ "archive.archive_no_result_suggest_four" | translate }}
               </li>
             </ul>
           </div>
