@@ -5,8 +5,5 @@ npm run lint -- --fix
 # Email Setup
 https://dev.to/chideraao/sending-emails-in-your-firebase-app-with-nodemailer-5ff9
 
+# ENV VARIABLE
 firebase functions:config:set gmail.useremail="yourgoogleemail@gmail.com" gmail.clientid="yourclientid.apps.googleusercontent.com" gmail.refreshtoken="1//04zKnDTh1mXdLCgYI-yourrefreshtoken" gmail.clientsecret="mbFQnYOurCLienTSecREt"
-
-633439428468-a9p9r0oroc3inkmcno5jbibcko018mev.apps.googleusercontent.com
-
-firebase functions:config:set gmail.useremail="joeladeniji123@gmail.com" gmail.clientid="633439428468-a9p9r0oroc3inkmcno5jbibcko018mev.apps.googleusercontent.com" gmail.refreshtoken="1//04DiHXAdeNo06CgYIARAAGAQSNwF-L9IrRo5BkQ7DhueTeQkjulifs5rRp9xvJ_3B5EqV8AoF4sil3rgXHDUnfg0I5RvZJv6YbLY" gmail.clientsecret="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" gmail.accesstoken="ya29.A0AVA9y1tB0hlEVR5WArdA5Da5vz33Zjo7mYUWJfsOCRwE6zQFjA0kGwIUQoGeqyYYqIj-GNtW8Qfk9xbnVOv7zm9jEgY_mRAH1VzupwUTjYhFi3Rwqy2sUW6o-YAFgx-nL-UsxLpL7L_Fkzv_0v7pp2fwHLoPYUNnWUtBVEFTQVRBU0ZRRTY1ZHI4UDBLTjgycktpQXB5S203R1l4bUN5QQ0163"
