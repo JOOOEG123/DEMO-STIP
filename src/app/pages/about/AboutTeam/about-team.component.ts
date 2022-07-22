@@ -31,7 +31,7 @@ export class AboutTeamComponent implements OnInit {
 
   ngSubmit() {
     console.log(this.contactForm.value);
-    this.customApi.httpsCallable('sendGridMail')(this.contactForm.getRawValue()).subscribe((res) => {
+    this.customApi.httpsCallable('sendGridMail')(this.contactForm.value).subscribe((res) => {
       console.log(res);
       this.modalRef?.hide();
       this.contactForm.reset();
