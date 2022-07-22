@@ -34,6 +34,7 @@ export class AboutTeamComponent implements OnInit {
     this.customApi.httpsCallable('sendGridMail')(this.contactForm.getRawValue()).subscribe((res) => {
       console.log(res);
       this.modalRef?.hide();
+      this.contactForm.reset();
     });
   }
 }
