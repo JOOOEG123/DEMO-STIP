@@ -1,8 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AngularFireFunctions } from '@angular/fire/compat/functions';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
@@ -11,14 +8,7 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 })
 export class HomepageComponent implements OnInit {
   data$: any;
-  constructor(
-    private arch: ArchieveApiService,
-    private func: AngularFireFunctions,
-    private router: Router,
-    private route: ActivatedRoute,
-    private customApi: AngularFireFunctions,
-    private http: HttpClient
-  ) {}
+  constructor(private router: Router) {}
   searchTerm: string = '';
   transPath = 'homepage.component.';
 
@@ -40,28 +30,7 @@ export class HomepageComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {
-    // this is left here for future reference.
-    // this.customApi
-    //   .httpsCallable('getArchives')
-    //   .subscribe((result) => console.log(result));
-
-    // const callable = this.customApi.httpsCallable('app');
-    // this.data$ = callable({ name: 'John' });
-    // this.data$.subscribe((result: any) => console.log(result));
-
-    //   this.http.get('https://us-central1-stip-demo.cloudfunctions.net/app/allArchies', {}).subscribe((result: any) => {
-    //     console.log(result);
-    //     result.data.forEach((item: any) => {
-    //       console.log(item);
-    //     }
-    //     );
-    // })
-    this.func
-      .httpsCallable('add')({ respo: '' })
-      .subscribe((result: any) => {
-      });
-  }
+  ngOnInit(): void {}
   searchArchives() {
     this.router.navigate(['/browse/main'], {
       queryParams: { searchTerm: this.searchTerm },
