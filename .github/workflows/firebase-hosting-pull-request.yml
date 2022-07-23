@@ -19,9 +19,7 @@ jobs:
         name: Deploy to Firebase
       - uses: FirebaseExtended/action-hosting-deploy@v0
         - name: Install npm packages
-        run: |
-          cd functions
-          npm install
+        run: cd functions && npm install
         # Deploying the functions to firebase
         - name:  Deploy to Firebase
           uses: w9jds/firebase-action@main
