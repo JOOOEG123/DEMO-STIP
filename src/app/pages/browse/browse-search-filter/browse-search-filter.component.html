@@ -31,7 +31,7 @@
     <form class="row p-2" [formGroup]="formValues">
       <fieldset class="col-12 col-md-2">
         <legend class="h6 fw-bold">
-          {{ "archive.archive_filter_cat_one_title" | translate }}
+          {{ "archive.gender_title" | translate }}
         </legend>
         <div class="form-check ms-3">
           <input
@@ -43,7 +43,7 @@
             id="gender-male"
           />
           <label class="form-check-label" for="gender-male">
-            {{ "archive.archive_filter_cat_one_checkbox_one" | translate }}
+            {{ "archive.gender_male" | translate }}
           </label>
         </div>
         <div class="form-check ms-3">
@@ -56,14 +56,14 @@
             id="gender-female"
           />
           <label class="form-check-label" for="gender-female">
-            {{ "archive.archive_filter_cat_one_checkbox_two" | translate }}
+            {{ "archive.gender_female" | translate }}
           </label>
         </div>
       </fieldset>
 
       <fieldset class="col-12 col-md-2">
         <legend class="h6 fw-bold">
-          {{ "archive.archive_filter_cat_two_title" | translate }}
+          {{ "archive.status_title" | translate }}
         </legend>
 
         <div class="form-check ms-3">
@@ -111,7 +111,7 @@
 
       <div class="col-12 col-md-2">
         <label for="chinese-ethic-group" class="form-label col fw-bold">{{
-          "archive.archive_filter_cat_three_title" | translate
+          "archive.ethnic_title" | translate
         }}</label>
         <div class="col-auto">
           <input
@@ -146,7 +146,7 @@
           <label
             for="year-of-becoming-rightest"
             class="form-label col fw-bold"
-            >{{ "archive.archive_filter_cat_five_title" | translate }}</label
+            >{{ "archive.rightist_year_title" | translate }}</label
           >
           <a
             class="align-self-center mx-2 float-end"
