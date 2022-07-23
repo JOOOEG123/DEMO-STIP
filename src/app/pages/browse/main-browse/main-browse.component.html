@@ -31,7 +31,7 @@
         </li>
         <li role="menuitem">
           <a #dd3 class="dropdown-item" (click)="onOpenChange(dd3.text)">{{
-            "archive.archive_searchbar_description" | translate
+            "archive.description" | translate
           }}</a>
         </li>
       </ul>
@@ -109,9 +109,9 @@
               [(ngModel)]="itemsPerPage"
               (change)="itemPerPageChanged()"
             >
-              <option selected value="25">30</option>
-              <option value="50">60</option>
-              <option value="100">90</option>
+              <option selected value="30">30</option>
+              <option value="60">60</option>
+              <option value="90">90</option>
             </select>
           </div>
           <div class="col-auto flex-shrink-0">
@@ -239,7 +239,7 @@
         <ng-template #elseBlock>
           <div *ngIf="display.length; else elseEmptyBlock">
             <div
-              class="d-flex justify-content-between p-2 flex-nowrap"
+              class="d-flex justify-content-between p-2 flex-nowrap mb-3"
               name=" searchLayout"
               *ngFor="let results of display | UpdateRows: 3; let i = index"
               style="height: 5cm"
@@ -292,6 +292,16 @@
                   </div>
                 </a>
               </div>
+              <div
+                *ngIf="(i + 1) * 3 == display.length + 1"
+                class="text-primary flex-column h-100"
+                style="
+                  border-radius: 28px;
+                  background-color: #d8e4dc;
+                  width: 30%;
+                  opacity: 0;
+                "
+              ></div>
             </div>
           </div>
           <ng-template #elseEmptyBlock>
@@ -343,7 +353,10 @@
           </nav>
 
           <div class="p-2 bd-highlight text-white">
-            page {{ this.currentPage }} of {{ this.maxPage }}
+            {{ "archive.archive_page_word_one" | translate }}
+            {{ this.currentPage }} {{ "archive.archive_page" | translate
+            }}{{ "archive.archive_page_word_two" | translate }} {{ this.maxPage
+            }}{{ "archive.archive_page" | translate }}
           </div>
         </div>
       </div>

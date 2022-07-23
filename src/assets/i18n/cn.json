@@ -75,23 +75,31 @@
     "other_resources_title": "未知"
   },
   "archive": {
+    "gender_title": "性别",
+    "gender_male": "Male",
+    "gender_female": "Female",
+    "status_title": "现状",
+    "ethnic_title": "少数名族",
+    "rightist_year_title": "\"右派\" 年份",
+    "description": "简介",
+
     "archive_searchbar_all": "所有信息栏",
-    "archive_searchbar_name": "名字",
-    "archive_searchbar_description": "简介",
+    "archive_searchbar_name": "姓名",
+
     "archive_searchbar_placeholder": "搜索档案。。。",
     "archive_top_title": "浏览档案",
     "archive_filter_title": "高级检索",
-    "archive_filter_cat_one_title": "性别",
+
     "archive_filter_cat_one_checkbox_one": "男性",
     "archive_filter_cat_one_checkbox_two": "女性",
-    "archive_filter_cat_two_title": "现状",
+
     "archive_filter_cat_two_checkbox_one": "在世",
     "archive_filter_cat_two_checkbox_two": "亡故",
     "archive_filter_cat_two_checkbox_three": "未知",
-    "archive_filter_cat_three_title": "中华少数名族",
+
     "archive_filter_cat_three_textbox_placeholder": "未知",
     "archive_filter_cat_four_title": "未知",
-    "archive_filter_cat_five_title": "\"右派\" 年份",
+
     "archive_filter_reset_button": "清除高级检索", 
     "archive_num_result":"搜索结果",
     "archive_results_per_page":"每页显示结果", 
@@ -100,21 +108,39 @@
     "archive_view_grid":"网格", 
     "archive_order_by":"排序依据",
     "archive_read_more":"更多", 
+    "archive_page_word_one":"第", 
+    "archive_page":"页", 
+    "archive_page_word_two":"/共", 
     "archive_no_result_title":"没有找到档案", 
     "archive_no_result_body":"找不到和您的查询相符的档案",
     "archive_no_result_suggest": "建议", 
     "archive_no_result_suggest_one":"请检查输入字词有无错误。", 
     "archive_no_result_suggest_two":"请换用另外的查询字词。",
-    "archive_no_result_suggest_three":"请点击在搜索栏右方的 “?” 按钮，查看“要搜索什么”", 
+    "archive_no_result_suggest_three":"请点击在搜索栏右方的 “?” 按钮，查看“怎么搜索”", 
     "archive_no_result_suggest_four":"请在搜索栏左侧的“所有字段”下拉框中对特定字段搜索。", 
     "archive_tooltip_year":"‘右派年份’是个人成为‘右派’的时间。",
-    "archive_tooltip_searchbar":""
+    "archive_tooltip_searchbar":"怎么搜索?\n - 以名和/或者姓氏\n- 出生年份\n- 亡故年份\n- \"右派\" 年份\n- 中华少数名族\n- 职业\n- 性别",
+    
+    "profile_tooltip":"用户可以向管理者申请修改更新任何不正确的档案。在3-5个工作日内，您会收到关于此修改是否通过的后续邮件。", 
+    "profile_detail_title":"详情",  
+    "profile_detail_name": "姓名",
+    "profile_birth_year":"出生年份", 
+    "profile_death_year":"去世年份", 
+    "profile_admin_modify_button":"修改档案", 
+    "profile_admin_delete_button":"删除", 
+    "profile_user_modify_button":"申请修改档案",
+    "profile_share_file_title":"分享档案", 
+    "profile_copy_link_title":"复制链接", 
+    "profile_copy_button":"复制", 
+    "profile_download_button":"下载", 
+    "profile_biography":"生平",
+    "profile_additional_files":"附加文件",
+    "profile_expand":"显示所有文件",
+    "profile_pdf_message":"您已阅读最大阅读内容， 如要浏览更多， 请下载完整PDF文件.",
+    "profile_full_text": "全文",
+    "profile_last_modify":"最近档案修改时间"
   },
-  "profile": {
-    "profile_tooltip":"", 
-    "profile_information":""
 
-  },
   "gallery": {
     "gallery_top_title": "画廊",
     "gallery_top_cat_one_button": "全部",

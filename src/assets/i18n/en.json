@@ -76,23 +76,28 @@
     "other_resources_title": "Resources"
   },
   "archive": {
+    "gender_title": "Gender",
+    "gender_male": "Male",
+    "gender_female": "Female",
+    "status_title": "Status",
+    "ethnic_title": "Chinese Ethnic Group",
+    "rightist_year_title": "\"Rightist\" Year",
+    "description": "Description",
+
     "archive_searchbar_all": "All Fields",
     "archive_searchbar_name": "Name",
-    "archive_searchbar_description": "Description",
+    
     "archive_searchbar_placeholder": "Search the Archive...",
     "archive_top_title": "Browse Archive",
     "archive_filter_title": "Filter",
-    "archive_filter_cat_one_title": "Gender",
-    "archive_filter_cat_one_checkbox_one": "Male",
-    "archive_filter_cat_one_checkbox_two": "Female",
-    "archive_filter_cat_two_title": "Status",
+
     "archive_filter_cat_two_checkbox_one": "Alive",
     "archive_filter_cat_two_checkbox_two": "Deceased",
     "archive_filter_cat_two_checkbox_three": "Unknown",
-    "archive_filter_cat_three_title": "Chinese Ethnic Group",
+
     "archive_filter_cat_three_textbox_placeholder": "Type to search ethnic groups..",
     "archive_filter_cat_four_title": "Occupation",
-    "archive_filter_cat_five_title": "\"Rightist\" Year",
+
     "archive_filter_reset_button": "Clear Filters", 
     "archive_num_result":"Results",
     "archive_results_per_page":"Results Per Page", 
@@ -100,7 +105,10 @@
     "archive_view_list":"List",
     "archive_view_grid":"Grid",
     "archive_order_by":"Order by", 
-    "archive_read_more":"read more", 
+    "archive_read_more":"read more",
+    "archive_page_word_one":"", 
+    "archive_page":"Page", 
+    "archive_page_word_two":"of", 
     "archive_no_result_title":"No records found.", 
     "archive_no_result_body":"There are no results matching your search",
     "archive_no_result_suggest": "Suggestions", 
@@ -109,12 +117,28 @@
     "archive_no_result_suggest_three":"Click on the “?” button next to the search bar to view “What to search for?”",
     "archive_no_result_suggest_four":"Your search to a specific field in the All Fields dropdown to the left of the search bar.", 
     "archive_tooltip_year":"“Rightist Year” is when the individual became a “rightist”.",
-    "archive_tooltip_searchbar":"What to search for?\\n - Search for first name and/or last name\\n- Year of birth\\n- Year of death\\n- “Rightist” year\\n- Chinese Ethnic Group\\n- Occupation\\n- Gender"
+    "archive_tooltip_searchbar":"What to search for?\\n - Search for first name and/or last name\\n- Year of birth\\n- Year of death\\n- “Rightist” year\\n- Chinese Ethnic Group\\n- Occupation\\n- Gender",
+    
+    "profile_tooltip":"All account users have the ability to send a request form to Admin for modification of any incorrect or updated information about a specific file. A follow-up email will be sent within 3-5 business days to notify the user if the request has been accepted or rejected.", 
+    "profile_detail_title":"Details", 
+    "profile_detail_name": "Full name",
+    "profile_birth_year":"Year of Birth", 
+    "profile_death_year":"Year of Death", 
+    "profile_admin_modify_button":"Modify File",
+    "profile_admin_delete_button":"Delete", 
+    "profile_user_modify_button":"Request to Modify",
+    "profile_share_file_title":"Share File", 
+    "profile_copy_link_title":"Copy Link", 
+    "profile_copy_button":"Copy", 
+    "profile_download_button":"Download", 
+    "profile_biography":"Biography",
+    "profile_additional_files":"Additional Files",
+    "profile_expand":"Expand all",
+    "profile_pdf_message":"You reached the max content view. To read more, download the full PDF.",
+    "profile_full_text": "Full Text",
+    "profile_last_modify":"File last modified"
   },
-  "profile": {
-    "profile_tooltip":"", 
-    "profile_information":""
-  },
+
   "gallery": {
     "gallery_top_title": "Gallery",
     "gallery_top_cat_one_button": "All",
