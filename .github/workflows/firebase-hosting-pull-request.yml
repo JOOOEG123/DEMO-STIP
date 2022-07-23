@@ -17,11 +17,6 @@ jobs:
           projectId: stip-demo
       - uses: actions/checkout@v2
       - run: cd functions/ && npm install
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_STIP_DEMO }}'
-          projectId: stip-demo
       - name: deploy to production
         uses: w9jds/firebase-action@main
         with:
