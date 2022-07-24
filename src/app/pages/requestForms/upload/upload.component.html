@@ -37,6 +37,7 @@
             rows="5"
             placeholder="Add content/description here..."
             [(ngModel)]="description"
+            (ngModelChange)="onContentChange($event)"
           ></textarea>
         </div>
       </div>
@@ -81,6 +82,7 @@
       type="button"
       class="btn btn-lg btn-outline-dark me-3 rounded-pill mx-2 px-4"
       (click)="onSubmit()"
+      [disabled]="isWarning"
     >
       Submit
     </button>

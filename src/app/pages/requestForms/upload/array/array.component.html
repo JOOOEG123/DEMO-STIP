@@ -42,12 +42,13 @@
       ></textarea>
     </div>
 
+    <div *ngIf="isWarning && last" class="text-danger h3">Please add {{ title }}</div>
     <!-- Remove button -->
     <button
       type="button"
       tooltip="Remove this event"
       placement="auto"
-      *ngIf="!first || !last"
+      *ngIf="!last"
       class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
       (click)="remove(i)"
     >
@@ -61,6 +62,7 @@
       tooltip="Add another event"
       placement="auto"
       class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
+      [disabled]="!isWarning"
     >
       Add Event
       <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
@@ -98,7 +100,7 @@
       />
       <br />
       <!-- memoir content -->
-      <label [for]="'memoir_content' + i">Content/Discription</label>
+      <label [for]="'memoir_content' + i">Content/Description</label>
       <textarea
         type="text"
         class="form-control"
@@ -108,14 +110,14 @@
         formControlName="memoirContent"
       ></textarea>
     </div>
-
+    <div *ngIf="isWarning && last" class="text-danger h3">Please add {{ title }}</div>
     <br />
     <!-- removes memoir -->
     <button
       type="button"
       tooltip="Remove this Memoir"
       placement="auto"
-      *ngIf="!first || !last"
+      *ngIf="!last"
       class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
       (click)="remove(i)"
     >
@@ -129,8 +131,9 @@
       tooltip="Add another Memoir"
       placement="auto"
       class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
+      [disabled]="!isWarning"
     >
-      Add Memoir
+      Select Memoir
       <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
     </button>
   </section>
@@ -205,7 +208,7 @@
       </select>
 
       <br /><br />
-
+  
       <!-- radio buttons for choosing if user wants to include photo in gallery -->
       <br />
       <p>
@@ -243,6 +246,8 @@
         <label class="form-check-label" for="inlineRadio2">No</label>
       </div>
       <br /><br />
+      <div *ngIf="isWarning && last" class="text-danger h3">Please add {{ title }}</div>
+
       <button
         *ngIf="last"
         type="button"
@@ -250,15 +255,16 @@
         tooltip="Add another image"
         placement="auto"
         class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
+        [disabled]="!isWarning"
       >
-        Add Image
+        Select Image
         <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
       </button>
       <button
         type="button"
         tooltip="Remove this image"
         placement="auto"
-        *ngIf="!first || !last"
+        *ngIf="!last"
         class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
         (click)="remove(i)"
       >

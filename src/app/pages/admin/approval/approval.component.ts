@@ -240,17 +240,20 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       if (this.selectedContribution.rightist) {
     
         this.selectedContribution.publish = this.publish;
-        this.updateSelectedContribution();
+        
+        if (this.isReadMore) {
+          this.updateSelectedContribution();
 
-        console.log(this.selectedContribution)
-
-        if (this.isImagedAdded) {
-          await this.removePreviousImages(this.selectedContribution);
-          await this.addNewImages(this.selectedContribution);
-          this.selectedContribution.rightist.imageId = this.imageResult
-          this.isImagedAdded = false
+          console.log(this.selectedContribution)
+  
+          if (this.isImagedAdded) {
+            await this.removePreviousImages(this.selectedContribution);
+            await this.addNewImages(this.selectedContribution);
+            this.selectedContribution.rightist.imageId = this.imageResult
+            this.isImagedAdded = false
+          }
         }
-    
+       
         const { state, ...contribution } = this.selectedContribution;
 
         // When approved
@@ -276,11 +279,13 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         }
 
         this.selectedContribution.state = 'void';
+        this.isReadMore = false
       }
     }
   }
 
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
+    this.isReadMore = true
     this.selectedContribution = contribution;
     this.updatedContribution = { ...contribution };
     this.modalRef = this.modalService.show(template, { class: 'modal-xl' });
@@ -296,6 +301,8 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.selectedContribution = this.selectedContributions[index];
     this.selectedContribution.state = 'removed';
   }
+
+  isReadMore: boolean = false
 
   onFormChange(data: any) {
     let { name, gender, status, ethnic, occupation, rightistYear, birthYear } =
@@ -361,7 +368,15 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     console.log(this.updatedContribution);
   }
 
-  onContentChange(data: any) {}
+  onContentChange(data: any) {
+    this.updatedContribution = {
+      ...this.updatedContribution,
+      rightist: {
+        ...this.updatedContribution.rightist!,
+        description: data,
+      }
+    }
+  }
 
   updateSelectedContribution() {
     this.selectedContribution.rightist!.fullName =
