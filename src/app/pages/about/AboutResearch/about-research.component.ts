@@ -32,8 +32,6 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
   constructor(private archiveAPI: ArchieveApiService) {}
 
   ngOnInit(): void {
-    this.bindChart();
-
     this.rightistSubscription = this.archiveAPI
       .getArchiveList()
       .subscribe((data: any) => {
@@ -69,16 +67,44 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
               this.femaleRightistList.length,
           },
         ];
+        this.bindChart();
       });
   }
 
   bindChart() {
-    var datatest = [
-      { name: 'Female', value: 2.47, color: '#266461' },
+    const chartId = document.getElementById('chart');
+    const chartElement = document.getElementById('chartElement');
+    if (chartId) {
+      chartId.remove();
+    }
+    if (chartElement) {
+      const newChart = document.createElement('div');
+      newChart.setAttribute('id', 'chart');
+      chartElement.appendChild(newChart);
+    }
+    let datatest = [
+      {
+        name: 'Female',
+        value: ((this.femaleRightistList.length / this.total!) * 100).toFixed(2),
+        color: '#266461',
+      },
 
-      { name: 'Male', value: 25.51, color: '#D2D497' },
+      {
+        name: 'Male',
+        value: ((this.maleRightistList.length / this.total!) * 100).toFixed(2),
+        color: '#D2D497',
+      },
 
-      { name: 'Unknown', value: 72.02, color: '#61AF87' },
+      {
+        name: 'Unknown',
+        value:
+          (((this.total! -
+            this.maleRightistList.length -
+            this.femaleRightistList.length) /
+            this.total!) *
+          100).toFixed(2),
+        color: '#61AF87',
+      },
     ];
     var width = 300,
       height = 300;
@@ -149,8 +175,8 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .text(function (d) {
           return d.data.value + '%';
         })
-        .style('fill', '#fff')
-        .style('font-size', '10px');
+        .style('fill', 'black')
+        .style('font-size', '1rem');
 
       var legendRectSize = 20;
       var legendSpacing = 7;
@@ -185,7 +211,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .attr('y', 15)
         .text(function (d) {
           console.log(d.name);
-          return d.name;
+          return d.name + ' ' + d.value + '%';
         })
         .style('fill', function (d) {
           return d.color;
