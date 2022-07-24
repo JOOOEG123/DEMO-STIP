@@ -104,7 +104,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.olditemsPerPage = this.itemsPerPage;
   }
 
-
   setDisplayInfo(startItemsPerPage: number) {
     var start = (this.currentPage - 1) * startItemsPerPage;
     var end = start + this.itemsPerPage;
