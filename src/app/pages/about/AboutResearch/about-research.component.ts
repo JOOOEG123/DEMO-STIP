@@ -214,7 +214,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .style('fill', (d) =>{
           return d.color;
         })
-        .style('font-size', '10px');
+        .style('font-size', '15px');
     };
     const chartNewId = document.getElementById('chart');
     if (chartNewId) {
