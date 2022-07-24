@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
+import { RequestModification } from 'src/app/core/types/emails.types';
 
 @Component({
   selector: 'app-homepage',
@@ -8,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class HomepageComponent implements OnInit {
   data$: any;
-  constructor(private router: Router) {}
+  constructor(private router: Router, private func: AngularFireFunctions) {}
   searchTerm: string = '';
   transPath = 'homepage.component.';
 
@@ -35,5 +37,20 @@ export class HomepageComponent implements OnInit {
     this.router.navigate(['/browse/main'], {
       queryParams: { searchTerm: this.searchTerm },
     });
+  }
+
+  sendRequestForm() {
+    const payload: RequestModification = {
+      email: 'test@gmail.com',
+      rightistId: 'A00000000',
+      modifyRequest: 'HJ 23232H3JJ23H2J3H2J3H23HJ23',
+      reasonRequest: 'I want to modify my request',
+      url: location.href,
+    };
+    this.func
+      .httpsCallable('modifyRightistRequest')(payload)
+      .subscribe((res) => {
+        console.log('Function: ', res);
+      });
   }
 }
