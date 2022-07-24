@@ -80,7 +80,6 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
     if (chartElement) {
       const newChart = document.createElement('div');
       newChart.setAttribute('id', 'chart');
-      // newChart.setAttribute('class', 'shadow rounded-circle');
       chartElement.appendChild(newChart);
     }
     let datatest = [
