@@ -80,6 +80,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
     if (chartElement) {
       const newChart = document.createElement('div');
       newChart.setAttribute('id', 'chart');
+      // newChart.setAttribute('class', 'shadow rounded-circle');
       chartElement.appendChild(newChart);
     }
     let datatest = [
@@ -213,9 +214,15 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .style('fill', (d) =>{
           return d.color;
         })
-        .style('font-size', '14px');
+        .style('font-size', '10px');
     };
-
+    const chartNewId = document.getElementById('chart');
+    if (chartNewId) {
+      const svg = chartNewId.getElementsByTagName('svg')?.item(0);
+      if (svg) {
+        svg.setAttribute('class', 'shadow rounded-circle border border-opacity-25 border-success bg-info bg-opacity-10');
+      }
+    }
     setTimeout(restOfTheData, 1000);
   }
 
