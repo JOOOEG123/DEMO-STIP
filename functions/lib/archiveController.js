@@ -9,7 +9,6 @@ const allArchies = async (req, res) => {
         // eslint-disable-next-line max-len
         await firebase_1.database.ref(`/persons/requestArchieve/persons`).once('value', (v) => {
             const o = v.val();
-            console.log('New ', o);
             if (!o) {
                 throw new Error('No data');
             }

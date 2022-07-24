@@ -3,6 +3,7 @@
 # Security Admin file
 stip-demo-firebase-adminsdk-ngmvo-4c0d5ea446.json
 set-custom-roles.js
+/functions/lib
 
 # Compiled output
 /dist
