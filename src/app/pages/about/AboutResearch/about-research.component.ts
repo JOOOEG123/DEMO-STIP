@@ -32,8 +32,6 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
   constructor(private archiveAPI: ArchieveApiService) {}
 
   ngOnInit(): void {
-    this.bindChart();
-
     this.rightistSubscription = this.archiveAPI
       .getArchiveList()
       .subscribe((data: any) => {
@@ -69,16 +67,44 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
               this.femaleRightistList.length,
           },
         ];
+        this.bindChart();
       });
   }
 
   bindChart() {
-    var datatest = [
-      { name: 'Female', value: 2.47, color: '#266461' },
+    const chartId = document.getElementById('chart');
+    const chartElement = document.getElementById('chartElement');
+    if (chartId) {
+      chartId.remove();
+    }
+    if (chartElement) {
+      const newChart = document.createElement('div');
+      newChart.setAttribute('id', 'chart');
+      chartElement.appendChild(newChart);
+    }
+    let datatest = [
+      {
+        name: 'Female',
+        value: ((this.femaleRightistList.length / this.total!) * 100).toFixed(2),
+        color: '#266461',
+      },
 
-      { name: 'Male', value: 25.51, color: '#D2D497' },
+      {
+        name: 'Male',
+        value: ((this.maleRightistList.length / this.total!) * 100).toFixed(2),
+        color: '#D2D497',
+      },
 
-      { name: 'Unknown', value: 72.02, color: '#61AF87' },
+      {
+        name: 'Unknown',
+        value:
+          (((this.total! -
+            this.maleRightistList.length -
+            this.femaleRightistList.length) /
+            this.total!) *
+          100).toFixed(2),
+        color: '#61AF87',
+      },
     ];
     var width = 300,
       height = 300;
@@ -119,21 +145,19 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
       .enter()
       .append('path')
       .attr('d', arc)
-      .attr('fill', function (d) {
+      .attr('fill', (d) => {
         return d.data.color;
       });
 
     path
       .transition()
       .duration(1000)
-      .attrTween('d', function (d) {
+      .attrTween('d', (d) => {
         const interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
-        return function (t) {
-          return arc(interpolate(t));
-        };
+        return (t) => arc(interpolate(t));
       });
 
-    var restOfTheData = function () {
+    var restOfTheData = () => {
       var text = svg
         .selectAll('text')
         .data(pie1(datatest as any))
@@ -141,7 +165,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .append('text')
         .transition()
         .duration(200)
-        .attr('transform', function (d) {
+        .attr('transform', (d)  => {
           return 'translate(' + arc.centroid(d) + ')';
         })
         .attr('dy', '.4em')
@@ -149,8 +173,8 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .text(function (d) {
           return d.data.value + '%';
         })
-        .style('fill', '#fff')
-        .style('font-size', '10px');
+        .style('fill', 'black')
+        .style('font-size', '1rem');
 
       var legendRectSize = 20;
       var legendSpacing = 7;
@@ -162,7 +186,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .enter()
         .append('g')
         .attr('class', 'legend')
-        .attr('transform', function (d, i) {
+        .attr('transform', (d, i) => {
           //Just a calculation for x & y position
           return 'translate(-50,' + (i * legendHeight - 55) + ')';
         });
@@ -172,10 +196,10 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .attr('height', legendRectSize)
         .attr('rx', 20)
         .attr('ry', 20)
-        .style('fill', function (d) {
+        .style('fill', (d) => {
           return d.color;
         })
-        .style('stroke', function (d) {
+        .style('stroke', (d) => {
           return d.color;
         });
 
@@ -183,16 +207,21 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .append('text')
         .attr('x', 30)
         .attr('y', 15)
-        .text(function (d) {
-          console.log(d.name);
-          return d.name;
+        .text((d) => {
+          return d.name + ' ' + d.value + '%';
         })
-        .style('fill', function (d) {
+        .style('fill', (d) =>{
           return d.color;
         })
-        .style('font-size', '14px');
+        .style('font-size', '15px');
     };
-
+    const chartNewId = document.getElementById('chart');
+    if (chartNewId) {
+      const svg = chartNewId.getElementsByTagName('svg')?.item(0);
+      if (svg) {
+        svg.setAttribute('class', 'shadow rounded-circle border border-opacity-25 border-success bg-info bg-opacity-10');
+      }
+    }
     setTimeout(restOfTheData, 1000);
   }
 

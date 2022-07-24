@@ -6,7 +6,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 import {allArchies} from './archiveController';
 import {testFetchDetails} from './testController';
-import {contactUs, sendMail, sendMailApprovedContribution} from './emailController';
+import {contactUs, modifyRightistRequest, sendMail, sendMailApprovedRejectNotificationContribution} from './emailController';
 // https://firebase.google.com/docs/functions/typescript
 // https://firebase.google.com/docs/database/extend-with-functions
 
@@ -17,7 +17,8 @@ app.post('/', (_req, res) => res.status(200).send('Hello World!'));
 app.post('/allArchies', allArchies);
 
 exports.sendMail = sendMail;
+exports.modifyRightistRequest = modifyRightistRequest;
+exports.sendMailApprovedRejectNotificationContribution = sendMailApprovedRejectNotificationContribution;
 exports.contactUs = contactUs;
-exports.sendMailApprovedContribution = sendMailApprovedContribution;
 exports.testFetchDetails = functions.https.onCall(testFetchDetails);
 exports.app = functions.https.onRequest(app);

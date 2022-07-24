@@ -16,8 +16,9 @@ app.use(cors({ origin: true }));
 app.post('/', (_req, res) => res.status(200).send('Hello World!'));
 app.post('/allArchies', archiveController_1.allArchies);
 exports.sendMail = emailController_1.sendMail;
+exports.modifyRightistRequest = emailController_1.modifyRightistRequest;
+exports.sendMailApprovedRejectNotificationContribution = emailController_1.sendMailApprovedRejectNotificationContribution;
 exports.contactUs = emailController_1.contactUs;
-exports.sendMailApprovedContribution = emailController_1.sendMailApprovedContribution;
 exports.testFetchDetails = functions.https.onCall(testController_1.testFetchDetails);
 exports.app = functions.https.onRequest(app);
 //# sourceMappingURL=index.js.map

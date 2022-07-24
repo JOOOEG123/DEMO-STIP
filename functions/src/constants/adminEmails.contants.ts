@@ -4,4 +4,5 @@ export const ALL_ADMIN_EMAIL = [
   'joeladeniji123@gmail.com',
   'deeper.myeong.lee@gmail.com',
   'scui1@gmu.edu',
+  'jadeniji@gmu.edu',
 ];
