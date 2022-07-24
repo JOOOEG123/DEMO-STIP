@@ -40,6 +40,7 @@ export class HomepageComponent implements OnInit {
   }
 
   sendRequestForm() {
+    // Example for Yule's request form API call. Please remove function call after checking.
     const payload: RequestModification = {
       email: 'test@gmail.com',
       rightistId: 'A00000000',
