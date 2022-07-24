@@ -1,35 +1,42 @@
-<div *ngIf="!this.page">
-  <h2 class="text-center pb-5 pt-5 mt-5">Request Form</h2>
+<div *ngIf="!page">
+  <h2 class="text-center pb-5 pt-5 mt-5">Contribution Upload</h2>
   <h3 class="text-center pt-3 pb-5">Upload</h3>
 </div>
 
-<div *ngIf="this.page">
+<div *ngIf="page">
   <h3 class="text-center pb-5 pt-5 mt-5">Detailed/Edit Contribution</h3>
 </div>
 
 <div class="container-fluid">
   <div class="row">
-    <app-form [form]="form" (change)="onFormChange($event)"></app-form>
+    <app-form [data]="formData" (change)="onFormChange($event)"></app-form>
   </div>
 
   <div class="row">
     <div class="col-md-4 ms-5 ps-5 photo">
       <!-- photo upload section -->
-      <app-upload-image></app-upload-image>
+      <app-array
+        *ngIf="isImageLoaded"
+        [data]="images"
+        [cleared]="isImageCleared"
+        title="Image"
+        type="image"
+        (change)="onImageChange($event)"
+      ></app-array>
     </div>
 
     <!-- col for contents input box -->
     <div class="col-md-6">
       <div class="my-4">
         <h4>Contents</h4>
-        <div [formGroup]="form2" class="border p-2 shadow rounded">
+        <div class="border p-2 shadow rounded">
           <label for="add_content" class="form-label h4">Add Content</label>
           <textarea
             class="form-control"
             id="add_content"
             rows="5"
             placeholder="Add content/description here..."
-            formControlName="content"
+            [(ngModel)]="description"
           ></textarea>
         </div>
       </div>
@@ -37,10 +44,11 @@
       <div class="row">
         <div class="col">
           <app-array
-            [array]="eventArray"
+            [data]="events"
+            [cleared]="isEventCleared"
             title="Event"
             type="event"
-            (change)="onChangeArray($event)"
+            (change)="onEventChange($event)"
           ></app-array>
         </div>
       </div>
@@ -49,10 +57,11 @@
       <div class="row">
         <div class="col">
           <app-array
-            [array]="memoirArray"
+            [data]="memoirs"
+            [cleared]="isMemoirCleared"
             title="Memoir"
             type="memoir"
-            (change)="onChangeArray($event)"
+            (change)="onMemoirChange($event)"
           ></app-array>
         </div>
       </div>
@@ -60,7 +69,7 @@
   </div>
   <br /><br />
   <!-- submit and clear buttons -->
-  <div class="d-flex col-11 mx-auto mb-5" *ngIf="this.page != 'contribution'">
+  <div class="d-flex col-11 mx-auto mb-5" *ngIf="page != 'contribution'">
     <button
       type="button"
       class="btn btn-lg btn-outline-dark rounded-pill ms-auto px-4"
@@ -71,7 +80,6 @@
     <button
       type="button"
       class="btn btn-lg btn-outline-dark me-3 rounded-pill mx-2 px-4"
-      [disabled]="form.invalid || form2.invalid"
       (click)="onSubmit()"
     >
       Submit

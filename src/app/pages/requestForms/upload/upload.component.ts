@@ -1,5 +1,4 @@
-import { ThisReceiver } from '@angular/compiler';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,8 +8,31 @@ import {
 } from 'src/app/core/constants/group.constants';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
-import { Contribution, Rightist } from 'src/app/core/types/adminpage.types';
+import { ImagesService } from 'src/app/core/services/images.service';
+import { StorageApIService } from 'src/app/core/services/storage-api.service';
+import { Contribution, Memoir, Event, Status, Gender, Ethnicity, ImageSchema } from 'src/app/core/types/adminpage.types';
 import { UUID } from 'src/app/core/utils/uuid';
+
+type FormData = {
+  name: string,
+  gender: Gender,
+  status: Status,
+  ethnic: Ethnicity,
+  occupation: string,
+  rightistYear: number,
+  birthYear: number
+}
+
+type ImageData = {
+  imageId: string,
+  imageUrl: string,
+  imageUpload: string,
+  image: string,
+  imageCategory: string,
+  imageTitle: string,
+  imageDes: string,
+  imageSource: string
+}
 
 @Component({
   selector: 'app-upload',
@@ -22,14 +44,18 @@ export class UploadComponent implements OnInit, OnDestroy {
   contributionId!: string;
   ethnicGroup: string[] = ETHNIC_GROUP_CONSTANTS;
   occupation: string[] = LIST_OF_JOB;
-  selected?: string;
-  selected2?: string;
   sub: Subscription[] = [];
-  url = '';
   minDate: Date = new Date('1940-01-01');
   maxDate: Date = new Date('1965-01-01');
   minDate2: Date = new Date('1840-01-01');
   maxDate2: Date = new Date('1950-01-01');
+
+  isFormCleared: boolean = false
+  isEventCleared: boolean = false
+  isMemoirCleared: boolean = false
+  isImageCleared: boolean = false
+
+  isImageLoaded: boolean = false
 
   @Input() get contribution() {
     return this._contribution;
@@ -39,136 +65,56 @@ export class UploadComponent implements OnInit, OnDestroy {
       this._contribution = contribution;
     }
   }
+
   @Input() page?: string;
+  @Output() formChange: EventEmitter<any> = new EventEmitter()
+  @Output() arrayChange: EventEmitter<any> = new EventEmitter()
+  @Output() contentChange: EventEmitter<any> = new EventEmitter()
 
-  form = new FormGroup({
-    name: new FormControl('', Validators.required),
-    gender: new FormControl(''),
-    status: new FormControl(''),
-    ethnic: new FormControl(''),
-    occupation: new FormControl('', Validators.required),
-    rightestYear: new FormControl('', Validators.required),
-    birthYear: new FormControl('', Validators.required),
-  });
-  form2 = new FormGroup({
-    imageUpload: new FormControl(''),
-    image: new FormControl(''),
-    content: new FormControl(''),
-  });
-
-  imageForm = new FormGroup({
-    imageTitle: new FormControl(''),
-    imageDes: new FormControl(''),
-  });
-
-  imageArray = new FormArray([this.newImage()]);
-  eventArray = new FormArray([this.newEvent()]);
-  memoirArray = new FormArray([this.newMemoir()]);
-  imageForm2 = new FormGroup({
-    imageUpload: new FormControl(''),
-    image: new FormControl(''),
-  });
-
-  private newImage() {
-    return new FormGroup({
-      imageUpload: new FormControl(''),
-      image: new FormControl(''),
-      imageTitle: new FormControl(''),
-      imageDes: new FormControl(''),
-    });
-  }
-
-  private newEvent() {
-    return new FormGroup({
-      startYear: new FormControl(''),
-      endYear: new FormControl(''),
-      event: new FormControl(''),
-    });
-  }
-
-  private newMemoir() {
-    return new FormGroup({
-      memoirTitle: new FormControl(''),
-      memoirContent: new FormControl(''),
-      memoirAuthor: new FormControl(''),
-    });
-  }
-
-  get eventControls() {
-    return this.eventArray.controls as FormGroup[];
-  }
-
-  get imageControls() {
-    return this.imageArray.controls as FormGroup[];
-  }
-
-  get memoirControls() {
-    return this.memoirArray.controls as FormGroup[];
-  }
-
-  removeMemoir(i: number) {
-    this.memoirArray.removeAt(i);
-  }
-
-  removeImageSection(i: number) {
-    this.imageArray.removeAt(i);
-  }
+  formData?: FormData
+  events: Event[] = []
+  memoirs: Memoir[] = []
+  images: ImageData[] = []
+  description: string = ''
 
   constructor(
     private contributionService: ContributionsService,
     private auth: AuthServiceService,
     private route: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private imageAPI: ImagesService,
+    private storageAPI: StorageApIService
   ) {}
 
   clear() {
-    this.form.reset();
+    if (this.formData) {
+      this.formData.name = ''
+      this.formData.gender = ''
+      this.formData.status = ''
+      this.formData.ethnic = ''
+      this.formData.occupation = ''
+      this.formData.birthYear = 0
+      this.formData.rightistYear = 0
+    }
   }
 
   clear2() {
-    this.url = '';
-    this.form2.reset();
-    this.imageForm.reset();
-    this.eventArray.reset();
-    this.memoirArray.reset();
+    this.isEventCleared = true
+    this.isMemoirCleared = true
+    this.isImageCleared = true
+    this.description = ''
   }
 
-  clearImage() {
-    this.imageForm.reset();
-  }
-
-  addImage() {
-    this.imageArray.push(this.newImage());
-  }
-
-  addEvent() {
-    this.eventArray.push(this.newEvent());
-  }
-
-  removeEvent(i: number) {
-    this.eventArray.removeAt(i);
-  }
-
-  addMemoir() {
-    this.memoirArray.push(this.newMemoir());
-  }
 
   ngOnDestroy(): void {
     this.sub.forEach((sub) => sub.unsubscribe());
-  }
-
-  onFormChange(event: Event) {
-    console.log(event)
+    this.imageSubscription?.unsubscribe()
   }
 
   ngOnInit(): void {
+    console.log(this.contribution)
     if (this.page === 'contribution') {
-      if (this.contribution) {
-        if (this.contribution.contributionId && this.contribution.rightist) {
-          const rightist: Rightist = this.contribution.rightist;
-          this.mapForm(rightist);
-        }
-      }
+      this.updateData()
     } else {
       this.sub.push(
         this.activatedRoute.queryParams.subscribe((params) => {
@@ -181,118 +127,229 @@ export class UploadComponent implements OnInit, OnDestroy {
                   .fetchContributorByContributionId(this.contributionId)
                   .subscribe((contribution: any) => {
                     this.contribution = contribution;
-                    this.mapForm(contribution.rightist);
+                    this.updateData()
                   })
               );
             }
+          }
+          else {
+            this.isImageLoaded = true
           }
         })
       );
     }
   }
 
-  mapForm(rightist: Rightist) {
-    if (this.form && this.form2 && this.eventArray && this.memoirArray) {
-      this.form.patchValue({
-        name: rightist.lastName + ' ' + rightist.firstName,
-        occupation: rightist.job,
-        ethnic: rightist.ethnicity,
-        rightestYear: rightist.rightistYear,
-        ...rightist,
-      });
-      this.form2.patchValue({
-        content: rightist.description,
-      });
-      for (const [index, event] of rightist.events.entries()) {
-        this.eventArray.at(index).patchValue({
-          startYear: event.startYear,
-          endYear: event.endYear,
-          event: event.event
-        })
-      }
+  imageSubscription?: Subscription
 
-      for (const [index, memoir] of rightist.memoirs.entries()) {
-        this.memoirArray.at(index).patchValue({
-          memoirTitle: memoir.memoirTitle,
-          memoirAuthor: memoir.memoirAuthor,
-          memoirContent: memoir.memoirContent
-        })
+  updateData() {
+    if (this.contribution) {
+      this.contributionId = this.contribution.contributionId
+      if (this.contribution.rightist) {
+        let rightist = this.contribution.rightist
+        
+        if (this.contribution.rightist!.imageId.length > 0) {   
+          console.log("asd")
+          this.description = rightist.description
+  
+          // ensure events exist
+          if (rightist.events) {
+            for (const event of rightist.events) {
+              this.events.push(event)
+            }
+          }
+          
+          // ensure memoirs exist
+          if (rightist.memoirs) {
+            for (const memoir of rightist.memoirs) {
+              this.memoirs.push(memoir)
+            }
+          }
+  
+          if (rightist.imageId) {
+            let counter = 0
+            console.log("inside")
+            for (const imageId of rightist.imageId) {
+              
+              this.imageSubscription = this.imageAPI.getImage(imageId).subscribe((data: any) => {
+            
+                this.storageAPI.getGalleryImageURL(imageId).subscribe((imageUrl) => {
+                  counter += 1
+                  this.images.push({
+                    imageId: imageId,
+                    imageUrl: imageUrl,
+                    imageUpload: data.isGallery ? 'yes' : 'no',
+                    image: '',
+                    imageCategory: data.galleryCategory,
+                    imageTitle: data.galleryTitle,
+                    imageDes: data.galleryDetail,
+                    imageSource: data.gallerySource
+                  })
+                  
+                  // ensure all images are loaded before display
+                  if (counter == rightist.imageId.length) {
+                    this.isImageLoaded = true
+                  }
+                })
+              })
+            }
+          }
+        }
+        // No Images Stored
+        else {
+          this.isImageLoaded = true
+        }
+  
+        this.formData = {
+          name: rightist.fullName,
+          gender: rightist.gender!,
+          ethnic: rightist.ethnicity,
+          status: rightist.status,
+          occupation: rightist.workplaceCombined,
+          rightistYear: rightist.rightistYear,
+          birthYear: rightist.birthYear
+        }
       }
+    }
+    console.log(this.images)
+  }
+
+  onFormChange(data: any) {
+    if (data.type == 'form') {
+      this.formData = {...data.value}
+      this.formChange.emit(data.value)
     }
   }
 
-  onselectFile(e) {
-    if (e.target.files) {
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
-      };
+  onEventChange(data: any) {
+    if (this.isEventCleared) {
+      this.isEventCleared = false
     }
-  }
-
-  onChangeArray(data: any) {
     if (data.type === 'event') {
-      this.eventArray = data.array
+      console.log('inside event')
+      console.log(data.value)
+      this.events = [...data.value]
+      this.arrayChange.emit({
+        type: data.type,
+        value: this.events
+      })
     }
-
-    if (data.type === 'memoir') {
-      this.memoirArray = data.array
-    }
-
-    console.log(this.eventArray)
-    console.log(this.memoirArray)
   }
 
-  onSubmit() {
+  onMemoirChange(data: any) {
+    if (this.isMemoirCleared) {
+      this.isMemoirCleared = false
+    }
+    if (data.type === 'memoir') {
+      console.log('inside memoir')
+      this.memoirs = data.value
+      this.arrayChange.emit({
+        type: data.type,
+        value: this.memoirs
+      })
+    }
+  }
+
+  onImageChange(data: any) {
+    console.log(data)
+    if (this.isImageCleared) {
+      this.isImageCleared = false
+    }
+
+    if (data.type === 'image') {
+      console.log('inside Image')
+      this.images = data.value
+      console.log(this.images)
+      this.arrayChange.emit({
+        type: data.type,
+        value: this.images
+      })
+    }
+  }
+
+
+  async onSubmit() {
+    // remove the last element that contains no data
+    this.events = this.events.slice(0, this.events.length - 1)
+    this.memoirs = this.memoirs.slice(0, this.memoirs.length - 1)
+    this.images = this.images.slice(0, this.images.length - 1)
+    
+    let imageResult: string[] = []
+
+    const rightistId =
+      this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
+
+    for (const image of this.images) {
+      let imageId = `Image-${UUID()}`
+      await fetch(image.imageUrl)
+        .then(async response => {
+          const contentType = response.headers.get('content-type')
+          const blob = await response.blob()
+          const file = new File([blob], UUID(), { type: contentType! })
+          let imageDb : ImageSchema = {
+            imageId: imageId,
+            rightistId: rightistId,
+            isGallery: image.imageUpload === 'yes',
+            galleryCategory: image.imageCategory,
+            galleryTitle: image.imageTitle,
+            galleryDetail: image.imageDes,
+            gallerySource: image.imageSource
+          }
+          await this.imageAPI.addImage(imageDb)
+            .then(() => {
+              this.storageAPI.uploadGalleryImage(imageId, file)
+            })
+            .then(() => {
+              imageResult.push(imageId)
+            })
+        }) 
+    }
+
     const {
       name,
       gender,
       status,
       ethnic,
-      rightestYear,
+      rightistYear,
       occupation,
       birthYear,
-    } = this.form.value;
-    const { content } = this.form2.value;
-    const rightistId =
-      this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
+    } = this.formData!;
+
     this.contributionService
       .contributionsAddEdit({
-        contributionId: this.contributionId,
-        contributorId: [this.auth.uid],
-        contributedAt: new Date(),
+        contributionId: this.contributionId || UUID(),
+        contributorId: this.auth.uid,
         rightistId: rightistId,
+        contributedAt: new Date(),
         approvedAt: new Date(),
+        rejectedAt: new Date(),
         publish: 'new',
         rightist: {
           rightistId: rightistId,
-          imageId: [this.url],
+          imageId: [...imageResult],
           initial: name.trim().charAt(0).toUpperCase(),
           firstName: '',
           lastName: '',
           fullName: name,
-          gender: gender || '',
+          gender: gender,
           birthYear: birthYear,
           deathYear: 0,
-          rightistYear: rightestYear,
+          rightistYear: rightistYear,
           status: status || 'Unknown',
           ethnicity: ethnic || '',
-          job: occupation,
+          job: '',
           detailJob: '',
           workplace: '',
-          workplaceCombined: '',
-          events: this.eventArray.value,
-          memoirs: this.memoirArray.value,
+          workplaceCombined: occupation,
+          events: this.events,
+          memoirs: this.memoirs,
           reference: '',
-          description: content,
+          description: this.description,
           lastUpdatedAt: new Date(),
           source: 'contributed'
         },
       })
       .then(() => {
-        this.clear();
-        this.clear2();
         this.route.navigateByUrl('/account');
       });
   }

@@ -5,8 +5,9 @@ export type Categories =
 
 export type CategoryList = Record<Categories, Contribution[]>;
 
-type Gender = 'Male' | 'Female' | undefined;
-type Ethnicity =
+export type Gender = 'Male' | 'Female' | '';
+
+export type Ethnicity =
   | 'Han'
   | 'Zhuang'
   | 'Hui'
@@ -62,9 +63,10 @@ type Ethnicity =
   | 'Gaoshan'
   | 'Lhoba'
   | 'Tatar'
-  | 'Bai';
+  | 'Bai'
+  | ''
 
-export type Status = 'Deceased' | 'Alive' | 'Unknown';
+export type Status = 'Deceased' | 'Alive' | 'Unknown' | '';
 
 export type State = 'void' | 'removed';
 
@@ -72,15 +74,13 @@ export type Publish = 'new' | 'approved' | 'rejected'
 
 export type Source = 'original' | 'contributed'
 
-interface Event {
-  eventId: string;
+export interface Event {
   startYear: number;
   endYear: number;
   event: string;
 }
 
-interface Memoir {
-  memoirId: string;
+export interface Memoir {
   memoirTitle: string;
   memoirContent: string;
   memoirAuthor: string;
@@ -119,12 +119,13 @@ export interface RightistJson {
 
 export interface ContributionSchema {
   contributionId: string; // set from the service when creating a new contribution
-  contributorId: string[]; // set from the service when creating a new contribution
+  contributorId: string; // set from the service when creating a new contribution
   rightist?: Rightist;
   rightistId: string;
   publish: Publish;
   contributedAt: Date; // set from the service when creating a new contribution
   approvedAt: Date; // set from the service when approving a contribution
+  rejectedAt: Date; 
   notificationMessage?: string; // set from the service when approving a contribution
 }
 

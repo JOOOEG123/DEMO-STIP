@@ -1,4 +1,3 @@
-import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
 import {
   Component,
   Input,
@@ -6,6 +5,7 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
+  SimpleChanges,
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -16,17 +16,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./array.component.scss'],
 })
 export class ArrayComponent implements OnInit, OnDestroy {
-  @Input() array!: FormArray
+  @Input() data!: any[];
+  @Input() cleared!: boolean;
   @Input() title!: string;
   @Input() type!: string;
   @Output() change: EventEmitter<any> = new EventEmitter();
 
-
-  eventYear?: number;
-  eventContent?: string;
-  memoirTitle?: string;
-  memoirAuthor?: string;
-  memoirContent?: string;
+  array = new FormArray([]);
 
   private newEvent() {
     return new FormGroup({
@@ -44,52 +40,152 @@ export class ArrayComponent implements OnInit, OnDestroy {
     });
   }
 
-  arraySubscription?: Subscription;
+  private newImage() {
+    return new FormGroup({
+      imageUrl: new FormControl(''),
+      imageUpload: new FormControl(''),
+      image: new FormControl(''),
+      imageCategory: new FormControl(''),
+      imageTitle: new FormControl(''),
+      imageDes: new FormControl(''),
+      imageSource: new FormControl('')
+    });
+  }
+
+  arraySubcription?: Subscription;
 
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.array)
-    if (this.array.length == 0) {
-      if (this.type == 'event') {
+    if (this.type == 'event') {
+      if (this.data!.length == 0) {
         this.array.push(this.newEvent());
-      }
-
-      if (this.type == 'memoir') {
-        this.array.push(this.newMemoir());
+      } else {
+        for (const item of this.data!) {
+          this.array.push(
+            new FormGroup({
+              startYear: new FormControl(item.startYear),
+              endYear: new FormControl(item.endYear),
+              event: new FormControl(item.event),
+            })
+          );
+        }
       }
     }
 
-    // if (this.type === 'event') {
-    //   this.array.push(this.newEvent())
-    //   // for (const [i, value] of this.array.value.entries()) {
-    //   //   console.log(i)
-    //   //   this.localArray.at(i).patchValue({
-    //   //     startYear: value.startYear,
-    //   //     endYear: value.endYear,
-    //   //     event: value.event
-    //   //   })
-    //   // }
-    // }
+    if (this.type == 'memoir') {
+      if (this.data!.length == 0) {
+        this.array.push(this.newMemoir());
+      } else {
+        for (const item of this.data!) {
+          this.array.push(
+            new FormGroup({
+              memoirTitle: new FormControl(item.memoirTitle),
+              memoirAuthor: new FormControl(item.memoirAuthor),
+              memoirContent: new FormControl(item.memoirContent),
+            })
+          );
+        }
+      }
+    }
 
-    // if (this.type === 'memoir') {
-    //   this.array.push(this.newMemoir())
-    //   // for (const [i, value] of this.array.value.entries()) {
-    //   //   this.localArray.at(i).patchValue({
-    //   //     memoirTitle: value.memoirTitle,
-    //   //     memoirAuthor: value.memoirAuthor,
-    //   //     memoirContent: value.memoirContent
-    //   //   })
-    //   // }
-    // }
+    console.log(this.type)
+    if (this.type == 'image') {
+      console.log(this.data)
+      if (this.data!.length == 0) {
+        this.array.push(this.newImage());
+      } else {
+        for (const item of this.data!) {
+          this.array.push(
+            new FormGroup({
+              imageUrl: new FormControl(item.imageUrl),
+              imageUpload: new FormControl(item.imageUpload),
+              image: new FormControl(item.image),
+              imageCategory: new FormControl(item.imageCategory),
+              imageTitle: new FormControl(item.imageTitle),
+              imageDes: new FormControl(item.imageDes),
+              imageSource: new FormControl(item.imageSource)
+            })
+          );
+        }
+      }
+    }
+
+    this.array.valueChanges.subscribe((data) => {
+      this.change.emit({
+        type: this.type,
+        value: data,
+      });
+    });
+  }
+
+  onselectFile(e, i) {
+    if (e.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (event: any) => {
+        this.array.controls[i].patchValue({
+          imageUrl: event.target.result
+        })
+      };
+    }
+
+    console.log(this.array.at(i).get('imageUrl'))
   }
 
   ngOnDestroy(): void {
-    this.arraySubscription?.unsubscribe();
+    this.arraySubcription?.unsubscribe();
   }
 
-  onContentChange(event: Event) {
-    console.log(event);
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.type == 'event') {
+      if (changes['cleared']) {
+        if (changes['cleared'].currentValue == true) {
+          this.array.clear();
+          this.data = [];
+
+          this.array.push(this.newEvent());
+          this.change.emit({
+            type: this.type,
+            value: this.data,
+          });
+        }
+      }
+    }
+
+    if (this.type == 'memoir') {
+      if (changes['cleared']) {
+        if (changes['cleared'].currentValue == true) {
+          console.log('inside memoir');
+          this.array.clear();
+
+          this.data = [];
+
+          this.array.push(this.newMemoir());
+          this.change.emit({
+            type: this.type,
+            value: this.data,
+          });
+        }
+      }
+    }
+
+    if (this.type == 'image') {
+      if (changes['cleared']) {
+        if (changes['cleared'].currentValue == true) {
+          console.log('inside image');
+          this.array.clear();
+
+          this.data = [];
+
+          this.array.push(this.newImage());
+          this.change.emit({
+            type: this.type,
+            value: this.data,
+          });
+        }
+      }
+    }
   }
 
   get controls() {
@@ -105,17 +201,20 @@ export class ArrayComponent implements OnInit, OnDestroy {
       this.array.push(this.newMemoir());
     }
 
-    this.change.emit({
-      type: this.type,
-      array: this.array,
-    });
+    if (this.type == 'image'){
+      this.array.push(this.newImage())
+    }
+    // this.change.emit({
+    //   type: this.type,
+    //   value: this.array.value,
+    // });
   }
 
   remove(i: number) {
     this.array.removeAt(i);
-    this.change.emit({
-      type: this.type,
-      array: this.array,
-    });
+    // this.change.emit({
+    //   type: this.type,
+    //   value: this.array.value,
+    // });
   }
 }

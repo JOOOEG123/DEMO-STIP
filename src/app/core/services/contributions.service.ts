@@ -47,7 +47,7 @@ export class ContributionsService {
     const contributionId = UUID();
     obj.contributionId = contributionId;
     obj.contributedAt = new Date();
-    obj.contributorId = [this.auth.uid];
+    obj.contributorId = this.auth.uid;
     obj.publish = 'new';
     return st.update({ [contributionId]: obj }).catch((e) => {
       return st.set({ [contributionId]: obj });
