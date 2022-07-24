@@ -19,6 +19,7 @@ import { BrowseSearchFilterComponent } from 'src/app/pages/browse/browse-search-
 import { BsDropdownModule, BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-main-browse',
@@ -33,11 +34,11 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   display: any[] = [];
   filterValues: FilterTypes = {} as FilterTypes;
 
-  itemsPerPage = 25;
+  itemsPerPage = 30;
   searchInput = '';
   letters = LETTERS;
   maxPage = 1;
-  olditemsPerPage = 25;
+  olditemsPerPage = 30;
 
   //variables for search functionalities
   @Input() db_result: any[] = [];
@@ -70,13 +71,16 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     'workplace',
   ];
 
+  currentLanguage = this.translate.currentLang;
+
   @ViewChild(BrowseSearchFilterComponent)
   private browseSearchFilterComponent!: BrowseSearchFilterComponent;
 
   constructor(
     private archApi: ArchieveApiService,
     private route: ActivatedRoute,
-    private changeDetection: ChangeDetectorRef
+    private changeDetection: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -299,10 +303,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  onOpenChange(searchSelect: string) {
-    this.searchSelect = searchSelect;
+  onOpenChange(display: string) {
+    this.searchSelect = display;
 
-    switch (searchSelect) {
+    switch (this.searchSelect) {
       case 'Description':
         this.db_attr = ['description'];
         break;

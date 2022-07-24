@@ -1,47 +1,43 @@
 <div class="container">
-  <h2 class="text-center my-4 fw-bold">Archive Repositories</h2>
+  <h2 class="text-center my-4 fw-bold">
+    {{ "repository.repository_top_title" | translate }}
+  </h2>
 
   <div class="d-flex justify-content-center flex-wrap">
     <div
-      *ngFor="let title of repository_titles; let i = index"
+      *ngFor="
+        let title of 'repository.repository_tabs' | translate;
+        let i = index
+      "
       class="p-2 mx-4"
     >
       <button
         #image
         [ngClass]="{
-          'border-3 btn-underline-orange-red ': selectedCategory == title[i],
-          btn: selectedCategory != title[i]
+          'border-3 btn-underline-orange-red ': selectedCategory == i,
+          btn: selectedCategory != i
         }"
         class="fw-bold"
-        (click)="setActive(title[i])"
+        (click)="setActive(i)"
       >
-        <b>{{ title[0] }}</b>
+        <b> {{ title[0] }} </b>
       </button>
     </div>
   </div>
   <br />
   <br />
   <div>
-    <div *ngFor="let title of repository_titles; let i = index">
-      <div
-        *ngIf="selectedCategory == title[i]"
-        class="row justify-content-evenly"
-      >
+    <div
+      *ngFor="
+        let title of 'repository.repository_tabs' | translate;
+        let i = index
+      "
+    >
+      <div *ngIf="selectedCategory == i" class="row justify-content-evenly">
         <b class="col-6">{{ title[1] }}</b>
         <b class="col-6">{{ title[2] }}</b>
 
-        <div
-          class="row justify-content-evenly"
-          *ngFor="let filename of title[3]; let i = index"
-        >
-          <b class="col-6">{{ filename }}</b>
-          <div class="col-6">
-            <button (click)="downloadFromAsset(filename, title[0])">
-              <img src="/assets/repositoryData/icons/download.svg" />
-            </button>
-          </div>
-        </div>
-        <div *ngIf="title[i] == title[1]">
+        <div *ngIf="selectedCategory == 1 && currentLanguage == 'en'">
           <h6>Imprint</h6>
           <br />
           <p>
@@ -85,9 +81,42 @@
             2020.8.11
           </p>
         </div>
-        <div *ngIf="title[i] == title[2]"></div>
+        <div *ngIf="selectedCategory == 1 && currentLanguage == 'cn'">
+          <h6>版本说明</h6>
+          <br />
+          <p>
+            1.《1957年受難者姓名大辭典》自2000年开始收集、编辑，由于编辑思路、剪裁方法的不断演进，也由于时间、资源之不足，所以十多年间的体例、格式、编排，难免有前后不统一的情况，错误、遗漏、甚至不规范，这些请读者多多批评指正，逐渐纠正、克服。
+          </p>
+          <p>
+            2.本项目得到丁抒教授等专家学者的关心、指导；得到香港中文大学中国研究服务中心老师、五七学社同仁的帮助；得到1957年受难者及其后人在提供史料、回忆录等方面的支持。
+          </p>
+          <p>
+            3.宋永毅教授主编之《中国反右运动数据库1957-》、香港中文大学中国研究服务中心收藏的《内部参考》及有关报刊书籍、铁流和北京五七老人编辑出版的《往事微痕》、郭德宏教授《“反右运动”编年史》（书稿）等，对本项目帮助尤大。中国研究服务中心还提供有关技术支援。
+          </p>
+          <p>
+            4.2019年《1957年受難者姓名大辭典》得到美国劳改研究基金会资助，出版数据库版。向劳改研究基金会及同仁，各有关学者、老师、朋友、义工表示衷心感谢！并请继续帮助、支持！
+          </p>
 
-        <div *ngIf="title[i] == title[3]"></div>
+          <p>
+            编者谨识
+            <br />
+            2020.8.11
+          </p>
+        </div>
+
+        <div *ngIf="selectedCategory != 1">
+          <div
+            class="row justify-content-evenly"
+            *ngFor="let filename of title[3]; let j = index"
+          >
+            <b class="col-6">{{ filename }}</b>
+            <div class="col-6">
+              <button (click)="downloadFromAsset(filename, title[0])">
+                <img src="/assets/repositoryData/icons/download.svg" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

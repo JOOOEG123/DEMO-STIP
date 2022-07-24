@@ -5,7 +5,9 @@
   <div
     class="d-flex bd-highlight ps-2 border-bottom border-secondary border-opacity-25"
   >
-    <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">Filter</h6>
+    <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">
+      {{ "archive.archive_filter_title" | translate }}
+    </h6>
     <div class="bd-highlight">
       <button
         class="btn"
@@ -28,7 +30,9 @@
   <div id="collapseBasic" [collapse]="drop" [isAnimated]="true">
     <form class="row p-2" [formGroup]="formValues">
       <fieldset class="col-12 col-md-2">
-        <legend class="h6 fw-bold">Gender</legend>
+        <legend class="h6 fw-bold">
+          {{ "archive.gender_title" | translate }}
+        </legend>
         <div class="form-check ms-3">
           <input
             class="form-check-input"
@@ -38,7 +42,9 @@
             name="gender"
             id="gender-male"
           />
-          <label class="form-check-label" for="gender-male"> Male </label>
+          <label class="form-check-label" for="gender-male">
+            {{ "archive.gender_male" | translate }}
+          </label>
         </div>
         <div class="form-check ms-3">
           <input
@@ -49,12 +55,16 @@
             name="gender"
             id="gender-female"
           />
-          <label class="form-check-label" for="gender-female"> Female </label>
+          <label class="form-check-label" for="gender-female">
+            {{ "archive.gender_female" | translate }}
+          </label>
         </div>
       </fieldset>
 
       <fieldset class="col-12 col-md-2">
-        <legend class="h6 fw-bold">Status</legend>
+        <legend class="h6 fw-bold">
+          {{ "archive.status_title" | translate }}
+        </legend>
 
         <div class="form-check ms-3">
           <input
@@ -65,7 +75,9 @@
             name="status"
             id="alive"
           />
-          <label class="form-check-label" for="alive"> Alive </label>
+          <label class="form-check-label" for="alive">
+            {{ "archive.status_alive" | translate }}
+          </label>
         </div>
 
         <div class="form-check ms-3">
@@ -77,7 +89,9 @@
             name="status"
             id="deceased"
           />
-          <label class="form-check-label" for="deceased"> Deceased </label>
+          <label class="form-check-label" for="deceased">
+            {{ "archive.status_death" | translate }}
+          </label>
         </div>
 
         <div class="form-check ms-3">
@@ -89,14 +103,16 @@
             name="status"
             id="unknown"
           />
-          <label class="form-check-label" for="unknown"> Unknown </label>
+          <label class="form-check-label" for="unknown">
+            {{ "archive.archive_filter_cat_two_checkbox_three" | translate }}
+          </label>
         </div>
       </fieldset>
 
       <div class="col-12 col-md-2">
-        <label for="chinese-ethic-group" class="form-label col fw-bold"
-          >Chinese Ethnic Group</label
-        >
+        <label for="chinese-ethic-group" class="form-label col fw-bold">{{
+          "archive.ethnic_title" | translate
+        }}</label>
         <div class="col-auto">
           <input
             class="form-control form-control-sm"
@@ -105,13 +121,17 @@
             [typeahead]="groups"
             typeaheadOptionField="viewValue"
             [typeaheadOptionsLimit]="5"
-            placeholder="Type to search ethnic groups..."
+            placeholder="{{
+              'archive.archive_filter_cat_three_textbox_placeholder' | translate
+            }}"
           />
         </div>
       </div>
       <div class="col-12 col-md-3">
-        <label for="chinese-ethic-group fw-bold" class="form-label col fw-bold"
-          >Occupation</label
+        <label
+          for="chinese-ethic-group fw-bold"
+          class="form-label col fw-bold"
+          >{{ "archive.profession" | translate }}</label
         >
         <div class="col-auto">
           <select
@@ -127,13 +147,15 @@
       </div>
       <div class="col-12 col-md-3">
         <div class="form-group">
-          <label for="year-of-becoming-rightest" class="form-label col fw-bold"
-            >"Rightist" Year</label
+          <label
+            for="year-of-becoming-rightest"
+            class="form-label col fw-bold"
+            >{{ "archive.rightist_year_title" | translate }}</label
           >
           <a
             class="align-self-center mx-2 float-end"
             type="button"
-            tooltip="“Rightist Year” is when the individual became a “rightist”."
+            tooltip="{{ 'archive.archive_tooltip_year' | translate }}"
             data-bs-toggle="tooltip"
             data-bs-placement="right"
           >
@@ -164,7 +186,7 @@
             type="button"
             (click)="clear()"
           >
-            Clear Filters
+            {{ "archive.archive_filter_reset_button" | translate }}
           </button>
         </div>
       </div>

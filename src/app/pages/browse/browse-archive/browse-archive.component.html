@@ -43,7 +43,7 @@
             style="background-color: white"
             type="button"
           >
-            Delete
+            {{ "archive.profile_admin_delete_button" | translate }}
           </button>
           <button
             class="btn rounded-pill shadow m-2 border-green"
@@ -54,8 +54,7 @@
               src="assets/browsepage/request-to-modify.svg"
               alt=""
               width="20"
-            />
-            Modify File
+            />{{ "archive.profile_admin_modify_button" | translate }}
           </button>
         </div>
         <ng-template #elseBlock>
@@ -63,14 +62,7 @@
 
           <a
             type="button"
-            tooltip="All account users have the ability to 
-          send a request form to Admin for 
-          modification of any incorrect or updated 
-          information about a specific file. 
-          
-          A follow-up email will be sent within 3-5 
-          business days to notify the user if the 
-          request has been accepted or rejected."
+            tooltip="{{ 'archive.profile_tooltip' | translate }}"
             data-bs-toggle="tooltip"
             data-bs-placement="right"
             class="m-2"
@@ -97,7 +89,9 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Share file</h5>
+                <h5 class="modal-title" id="exampleModalLabel">
+                  {{ "archive.profile_share_file_title" | translate }}
+                </h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -107,7 +101,7 @@
               </div>
               <div class="modal-body">
                 <div>
-                  <p>Copy Link</p>
+                  <p>{{ "archive.profile_copy_link_title" | translate }}</p>
                   <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">
                       <svg
@@ -142,7 +136,7 @@
                       [ngxClipboard]="inputTarget"
                       (click)="copyURL()"
                     >
-                      Copy
+                      {{ "archive.profile_copy_button" | translate }}
                     </button>
                   </div>
                   <br />
@@ -150,7 +144,7 @@
                   <a
                     (click)="SavePDF('infoContent')"
                     class="btn btn-light border-khaki"
-                    >Download</a
+                    >{{ "archive.profile_download_button" | translate }}</a
                   >
                 </div>
               </div>
@@ -162,42 +156,61 @@
       <div class="" id="infoContent" #infoContent>
         <div class="row py-2 h6 ms-2 mt-2 mb-3">
           <div class="col-12">
-            <h5 class="fw-bold">Details:&emsp;</h5>
+            <h5 class="fw-bold">
+              {{ "archive.profile_detail_title" | translate }}:&emsp;
+            </h5>
           </div>
           <div class="col-12 col-md-6 row mt-2">
             <div class="col-12 py-2">
-              Full name: {{ profile.fullName || "-" }}
-            </div>
-            <div class="col-12 py-2">Gender: {{ profile.gender || "-" }}</div>
-            <div class="col-12 py-2">
-              Ethic Group:{{ profile.ethnicity || "-" }}
+              {{ "archive.profile_detail_name" | translate }}:
+              {{ profile.fullName || "-" }}
             </div>
             <div class="col-12 py-2">
-              Occupation: {{ profile.detailJob || "-" }}
+              {{ "archive.gender_title" | translate }}:
+              {{ profile.gender || "-" }}
+            </div>
+            <div class="col-12 py-2">
+              {{ "archive.ethnic_title" | translate }}:{{
+                profile.ethnicity || "-"
+              }}
+            </div>
+            <div class="col-12 py-2">
+              {{ "archive.profession" | translate }}:
+              {{ profile.workplaceCombined || "-" }}
             </div>
           </div>
           <div class="col-12 col-md-6 row mt-2">
             <div class="col-12 py-2">
-              "Rightist" Year: {{ profile.righttistYear || "-" }}
+              {{ "archive.rightist_year_title" | translate }}:
+              {{ profile.righttistYear | date: "dd/MM/yyyy" || "-" }}
             </div>
             <div class="col-12 py-2">
-              Year of Birth: {{ profile.birthYear || "-" }}
+              {{ "archive.profile_birth_year" | translate }}:
+              {{ profile.birthYear || "-" }}
             </div>
-            <div class="col-12 py-2">Status: {{ profile.status || "-" }}</div>
             <div class="col-12 py-2">
-              Year of Death: {{ profile.deathYear || "-" }}
+              {{ "archive.status_title" | translate }}:
+              {{ profile.status || "-" }}
+            </div>
+            <div class="col-12 py-2">
+              {{ "archive.profile_death_year" | translate }}:
+              {{ profile.deathYear || "-" }}
             </div>
           </div>
         </div>
 
         <div class="row border-bottom border-top mb-4">
-          <h5 class="col-12 py-2 fw-bold ms-3 mt-2">Description:</h5>
+          <h5 class="col-12 py-2 fw-bold ms-3 mt-2">
+            {{ "archive.description" | translate }}:
+          </h5>
           <div class="col-12 py-2 ms-3">
             {{ profile.description || "-" }}
           </div>
         </div>
         <div class="row border-bottom">
-          <h5 class="col-12 py-2 fw-bold ms-3 mt-2">Biography:</h5>
+          <h5 class="col-12 py-2 fw-bold ms-3 mt-2">
+            {{ "archive.profile_biography" | translate }}:
+          </h5>
           <div class="col-12 ms-3" *ngFor="let event of profile.events">
             In {{ event.start_year || "unknown" }} --
             {{ event.end_year || "unknown" }},
@@ -209,9 +222,11 @@
       <div class="row ms-2 my-3">
         <div class="d-flex">
           <div class="fs-5 fw-bold text-capitalize flex-grow-1">
-            Additional Files
+            {{ "archive.profile_additional_files" | translate }}
           </div>
-          <p class="ms-auto text-green">Expand all</p>
+          <p class="ms-auto text-green">
+            {{ "archive.profile_expand" | translate }}
+          </p>
         </div>
 
         <div
@@ -260,8 +275,7 @@
                   class="card-body my-3 fw-bold border border-dark"
                   style="background-color: rgba(245, 245, 245, 255)"
                 >
-                  You reached the max content view. To read more, download the
-                  full PDF.
+                  {{ "archive.profile_pdf_message" | translate }}
                 </div>
               </div>
               <div class="text-green ms-3" style="display: inline-block">
@@ -276,14 +290,15 @@
                     width="20"
                   />
                 </button>
-                PDF Full Text
+                PDF {{ "archive.profile_full_text" | translate }}
               </div>
             </div>
           </div>
         </div>
       </div>
       <span class="ms-2 my-3"
-        >File last modified: {{ profile.lastUpdatedAt }}</span
+        >{{ "archive.profile_last_modify" | translate }}:
+        {{ profile.lastUpdatedAt }}</span
       >
     </div>
   </div>
