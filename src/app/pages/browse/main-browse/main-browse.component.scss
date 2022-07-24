@@ -16,20 +16,6 @@
 
 
 
-  .my-pagination::ng-deep .ngx-pagination {
-    color: white;
-    }
-    
-    /* sets font color for number color when hovering */
-    .my-pagination::ng-deep .ngx-pagination a:hover {
-    color: red;
-    }
-    
-    /* sets font color for disabled previous or next words */
-    .my-pagination::ng-deep .ngx-pagination .disabled {
-    color: white !important;
-    }
-
 
     @media only screen and (max-width: 700px), (max-height: 600px){
       div.list-searchprofile {
@@ -73,7 +59,32 @@
 
   }
 
-  flex-item {
-    flex-basis: 20%;
-    background-color: red;
+
+
+  .my-pagination::ng-deep a {
+    background-color: #266461;
+    color: black;
+    font-size: 14px;
+    border-style: none;
+  }
+
+  .page ::ng-deep a:active {
+    background-color: hotpink;
+  } 
+
+  .page2 ::ng-deep li {
+    background-color: hotpink;
+  } 
+  
+
+  .test
+  {
+      color: black;       // default color
+ 
+      :host-context(.a) &
+      {
+        background-color: hotpink;
+      }
+ 
+
   }

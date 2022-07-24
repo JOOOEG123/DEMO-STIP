@@ -80,9 +80,12 @@
     "gender_male": "Male",
     "gender_female": "Female",
     "status_title": "Status",
+    "status_alive": "Alive",
+    "status_death": "Deceased",
     "ethnic_title": "Chinese Ethnic Group",
     "rightist_year_title": "\"Rightist\" Year",
     "description": "Description",
+    "profession":"Profession",
 
     "archive_searchbar_all": "All Fields",
     "archive_searchbar_name": "Name",
@@ -91,8 +94,7 @@
     "archive_top_title": "Browse Archive",
     "archive_filter_title": "Filter",
 
-    "archive_filter_cat_two_checkbox_one": "Alive",
-    "archive_filter_cat_two_checkbox_two": "Deceased",
+
     "archive_filter_cat_two_checkbox_three": "Unknown",
 
     "archive_filter_cat_three_textbox_placeholder": "Type to search ethnic groups..",
@@ -149,10 +151,12 @@
     "gallery_image_button": "Learn More"
   },
   "repository": {
-    "gallery_top_title": "Archive Repositories",
-    "gallery_top_cat_one_button": "Forward",
-    "gallery_top_cat_two_button": "Publication Notes",
-    "gallery_top_cat_three_button": "Appendix",
-    "gallery_top_cat_four_button": "Preface"
+    "repository_top_title": "Archive Repositories",
+    "repository_forward": "Forward",
+    "repository_publish": "Publication Notes",
+    "repository_appendix": "Appendix",
+    "repository_preface": "Preface", 
+    "Forward": ["200329References",
+      "0200329References"]
   }
 }

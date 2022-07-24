@@ -18,18 +18,14 @@ $jade: #61af87;
 }
 
 
-select {
+.display-select {
   padding: 5px;
   color: #000;
   font-size: 12px;
   background: transparent;
-
-
-}
-
-select option{
   background-color: $medium-blue;
 }
+
 
 .border-green {
   border-color: $jade !important
