@@ -145,21 +145,19 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
       .enter()
       .append('path')
       .attr('d', arc)
-      .attr('fill', function (d) {
+      .attr('fill', (d) => {
         return d.data.color;
       });
 
     path
       .transition()
       .duration(1000)
-      .attrTween('d', function (d) {
+      .attrTween('d', (d) => {
         const interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
-        return function (t) {
-          return arc(interpolate(t));
-        };
+        return (t) => arc(interpolate(t));
       });
 
-    var restOfTheData = function () {
+    var restOfTheData = () => {
       var text = svg
         .selectAll('text')
         .data(pie1(datatest as any))
@@ -167,7 +165,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .append('text')
         .transition()
         .duration(200)
-        .attr('transform', function (d) {
+        .attr('transform', (d)  => {
           return 'translate(' + arc.centroid(d) + ')';
         })
         .attr('dy', '.4em')
@@ -188,7 +186,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .enter()
         .append('g')
         .attr('class', 'legend')
-        .attr('transform', function (d, i) {
+        .attr('transform', (d, i) => {
           //Just a calculation for x & y position
           return 'translate(-50,' + (i * legendHeight - 55) + ')';
         });
@@ -198,10 +196,10 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .attr('height', legendRectSize)
         .attr('rx', 20)
         .attr('ry', 20)
-        .style('fill', function (d) {
+        .style('fill', (d) => {
           return d.color;
         })
-        .style('stroke', function (d) {
+        .style('stroke', (d) => {
           return d.color;
         });
 
@@ -209,11 +207,10 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .append('text')
         .attr('x', 30)
         .attr('y', 15)
-        .text(function (d) {
-          console.log(d.name);
+        .text((d) => {
           return d.name + ' ' + d.value + '%';
         })
-        .style('fill', function (d) {
+        .style('fill', (d) =>{
           return d.color;
         })
         .style('font-size', '14px');
