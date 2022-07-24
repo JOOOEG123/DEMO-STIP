@@ -19,6 +19,7 @@ import { BrowseSearchFilterComponent } from 'src/app/pages/browse/browse-search-
 import { BsDropdownModule, BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-main-browse',
@@ -70,13 +71,16 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     'workplace',
   ];
 
+  currentLanguage = this.translate.currentLang;
+
   @ViewChild(BrowseSearchFilterComponent)
   private browseSearchFilterComponent!: BrowseSearchFilterComponent;
 
   constructor(
     private archApi: ArchieveApiService,
     private route: ActivatedRoute,
-    private changeDetection: ChangeDetectorRef
+    private changeDetection: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -99,6 +103,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.setDisplayInfo(this.olditemsPerPage);
     this.olditemsPerPage = this.itemsPerPage;
   }
+
 
   setDisplayInfo(startItemsPerPage: number) {
     var start = (this.currentPage - 1) * startItemsPerPage;

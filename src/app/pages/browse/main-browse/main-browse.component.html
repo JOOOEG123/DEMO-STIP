@@ -62,12 +62,7 @@
       data-bs-toggle="tooltip"
       data-bs-placement="bottom"
     >
-      <img
-        src="assets/browsepage/question-mark.svg"
-        fill="#cca474"
-        alt=""
-        width="20"
-      />
+      <img src="assets/browsepage/question-mark-color-brown.svg" width="20" />
     </a>
   </div>
 </div>
@@ -103,7 +98,7 @@
               "archive.archive_results_per_page" | translate
             }}</label>
             <select
-              class="mx-2 text-light"
+              class="mx-2 text-light display-select"
               aria-label="Result per page select"
               id="per_page_result"
               [(ngModel)]="itemsPerPage"
@@ -119,7 +114,7 @@
               "archive.archive_view" | translate
             }}</label>
             <select
-              class="mx-2 text-light"
+              class="mx-2 text-light display-select"
               id="viewSelect"
               aria-label="View select"
               [(ngModel)]="curView"
@@ -336,7 +331,7 @@
         <div class="d-flex flex-row-reverse">
           <nav aria-label="Page navigation">
             <pagination
-              class="my-pagination"
+              class="my-pagination page2"
               [rotate]="true"
               [totalItems]="db_result.length"
               [boundaryLinks]="true"

@@ -76,7 +76,7 @@
             id="alive"
           />
           <label class="form-check-label" for="alive">
-            {{ "archive.archive_filter_cat_two_checkbox_one" | translate }}
+            {{ "archive.status_alive" | translate }}
           </label>
         </div>
 
@@ -90,7 +90,7 @@
             id="deceased"
           />
           <label class="form-check-label" for="deceased">
-            {{ "archive.archive_filter_cat_two_checkbox_two" | translate }}
+            {{ "archive.status_death" | translate }}
           </label>
         </div>
 
@@ -121,13 +121,17 @@
             [typeahead]="groups"
             typeaheadOptionField="viewValue"
             [typeaheadOptionsLimit]="5"
-            placeholder="Type to search ethnic groups..."
+            placeholder="{{
+              'archive.archive_filter_cat_three_textbox_placeholder' | translate
+            }}"
           />
         </div>
       </div>
       <div class="col-12 col-md-3">
-        <label for="chinese-ethic-group fw-bold" class="form-label col fw-bold"
-          >Occupation</label
+        <label
+          for="chinese-ethic-group fw-bold"
+          class="form-label col fw-bold"
+          >{{ "archive.profession" | translate }}</label
         >
         <div class="col-auto">
           <select

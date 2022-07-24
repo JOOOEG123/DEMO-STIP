@@ -175,13 +175,14 @@
               }}
             </div>
             <div class="col-12 py-2">
-              Occupation: {{ profile.detailJob || "-" }}
+              {{ "archive.profession" | translate }}:
+              {{ profile.workplaceCombined || "-" }}
             </div>
           </div>
           <div class="col-12 col-md-6 row mt-2">
             <div class="col-12 py-2">
               {{ "archive.rightist_year_title" | translate }}:
-              {{ profile.righttistYear || "-" }}
+              {{ profile.righttistYear | date: "dd/MM/yyyy" || "-" }}
             </div>
             <div class="col-12 py-2">
               {{ "archive.profile_birth_year" | translate }}:

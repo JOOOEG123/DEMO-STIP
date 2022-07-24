@@ -1,5 +1,7 @@
 <div class="container">
-  <h2 class="text-center my-4 fw-bold">Archive Repositories</h2>
+  <h2 class="text-center my-4 fw-bold">
+    {{ "repository.repository_top_title" | translate }}
+  </h2>
 
   <div class="d-flex justify-content-center flex-wrap">
     <div
@@ -30,10 +32,24 @@
         <b class="col-6">{{ title[1] }}</b>
         <b class="col-6">{{ title[2] }}</b>
 
+        <!-- <div
+          class="row justify-content-evenly"
+          *ngFor="let filename of 'repository.title[0] }' | translate"
+        >
+          <b class="col-6">{{ filename }}</b>
+          <div class="col-6">
+            <button (click)="downloadFromAsset(filename, title[0])">
+              <img src="/assets/repositoryData/icons/download.svg" />
+            </button>
+          </div>
+        </div> -->
+        hi
         <div
           class="row justify-content-evenly"
-          *ngFor="let filename of title[3]; let i = index"
+          *ngFor="let filename of this.pdf[selectedCategory]; let i = index"
         >
+          {{ i }}
+          hi
           <b class="col-6">{{ filename }}</b>
           <div class="col-6">
             <button (click)="downloadFromAsset(filename, title[0])">

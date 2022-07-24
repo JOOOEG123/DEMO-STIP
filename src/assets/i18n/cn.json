@@ -13,7 +13,7 @@
     "broswer_page": "查询",
     "archive_page": "“右派”人物",
     "gallery_page": "图片",
-    "repository_page":"仓库",
+    "repository_page":"资源库",
     "login_signup": "登录或注册"
   },
   "login.component": {
@@ -76,12 +76,15 @@
   },
   "archive": {
     "gender_title": "性别",
-    "gender_male": "Male",
-    "gender_female": "Female",
+    "gender_male": "男性",
+    "gender_female": "女性",
     "status_title": "现状",
+    "status_alive": "在世",
+    "status_death": "亡故",
     "ethnic_title": "少数名族",
     "rightist_year_title": "\"右派\" 年份",
     "description": "简介",
+    "profession":"职业",
 
     "archive_searchbar_all": "所有信息栏",
     "archive_searchbar_name": "姓名",
@@ -89,15 +92,9 @@
     "archive_searchbar_placeholder": "搜索档案。。。",
     "archive_top_title": "浏览档案",
     "archive_filter_title": "高级检索",
-
-    "archive_filter_cat_one_checkbox_one": "男性",
-    "archive_filter_cat_one_checkbox_two": "女性",
-
-    "archive_filter_cat_two_checkbox_one": "在世",
-    "archive_filter_cat_two_checkbox_two": "亡故",
     "archive_filter_cat_two_checkbox_three": "未知",
 
-    "archive_filter_cat_three_textbox_placeholder": "未知",
+    "archive_filter_cat_three_textbox_placeholder": "搜索少数民族",
     "archive_filter_cat_four_title": "未知",
 
     "archive_filter_reset_button": "清除高级检索", 
@@ -149,5 +146,16 @@
     "gallery_top_cat_four_button": "人们",
     "gallery_top_cat_five_button": "专辑名称",
     "gallery_image_button": "学到更多"
+  },
+  "repository":{
+  "repository_top_title": "资源库",
+  "repository_top_cat_one_button": "全部",
+  "repository_top_cat_two_button": "神器",
+  "repository_top_cat_three_button": "营地",
+  "repository_top_cat_four_button": "人们",
+  "repository_top_cat_five_button": "专辑名称",
+  "repository_image_button": "学到更多", 
+  "Forward": ["0中共中央划分右派分子的标准",
+    "0毛泽东事情正在起变化 中央政治研究室"]
   }
 }
