@@ -5,7 +5,7 @@ export type Categories =
 
 export type CategoryList = Record<Categories, Contribution[]>;
 
-export type Gender = 'Male' | 'Female' | '';
+export type Gender = 'Male' | 'Female' | '男性' | '女性' | '';
 
 export type Ethnicity =
   | 'Han'
@@ -66,7 +66,7 @@ export type Ethnicity =
   | 'Bai'
   | ''
 
-export type Status = 'Deceased' | 'Alive' | 'Unknown' | '';
+export type Status = 'Deceased' | 'Alive' | '活' | '死者' | 'Unknown' | '';
 
 export type State = 'void' | 'removed';
 

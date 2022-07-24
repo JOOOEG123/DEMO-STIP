@@ -6,13 +6,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import {
-  ETHNIC_GROUP_CONSTANTS,
-  LIST_OF_JOB,
-} from 'src/app/core/constants/group.constants';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
 import { ImagesService } from 'src/app/core/services/images.service';
@@ -57,13 +52,10 @@ type ImageData = {
 export class UploadComponent implements OnInit, OnDestroy {
   private _contribution!: Contribution;
   contributionId!: string;
-  ethnicGroup: string[] = ETHNIC_GROUP_CONSTANTS;
-  occupation: string[] = LIST_OF_JOB;
   sub: Subscription[] = [];
-  minDate: Date = new Date('1940-01-01');
-  maxDate: Date = new Date('1965-01-01');
-  minDate2: Date = new Date('1840-01-01');
-  maxDate2: Date = new Date('1950-01-01');
+
+  language!: string
+  otherLanguage!: string
 
   isFormCleared: boolean = false;
   isEventCleared: boolean = false;
@@ -87,10 +79,14 @@ export class UploadComponent implements OnInit, OnDestroy {
   @Output() contentChange: EventEmitter<any> = new EventEmitter();
 
   formData?: FormData;
+  otherFormData?: FormData
+
   events: Event[] = [];
   memoirs: Memoir[] = [];
   images: ImageData[] = [];
   description: string = '';
+
+  isAdmin: boolean = false;
 
   constructor(
     private contributionService: ContributionsService,
@@ -126,7 +122,13 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.contribution);
+    this.language = localStorage.getItem('lang')!
+    this.otherLanguage = this.language === 'en' ? 'cn' : 'en'
+
+    if (this.auth.isAdmin.value) {
+      this.isAdmin = true;
+    }
+
     if (this.page === 'contribution') {
       this.updateData();
     } else {
@@ -156,13 +158,13 @@ export class UploadComponent implements OnInit, OnDestroy {
   imageSubscription?: Subscription;
 
   updateData() {
-    console.log(this.contribution)
+    console.log(this.contribution);
     if (this.contribution) {
       this.contributionId = this.contribution.contributionId;
       if (this.contribution.rightist) {
         let rightist = this.contribution.rightist;
         this.description = rightist.description;
-        console.log(rightist)
+        console.log(rightist);
 
         // ensure events exist
         if (rightist.events) {
@@ -224,6 +226,18 @@ export class UploadComponent implements OnInit, OnDestroy {
           rightistYear: rightist.rightistYear,
           birthYear: rightist.birthYear,
         };
+        console.log(rightist)
+        if (this.isAdmin) {
+          this.otherFormData = {
+            name: '未知',
+            gender: '男性',
+            ethnic: rightist.ethnicity,
+            status: '活',
+            occupation: rightist.workplaceCombined,
+            rightistYear: rightist.rightistYear,
+            birthYear: rightist.birthYear,
+          };
+        }
       }
     }
     console.log(this.images);
@@ -236,7 +250,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
   }
 
-  isWarning: boolean = false
+  isWarning: boolean = false;
 
   onEventChange(data: any) {
     if (this.isEventCleared) {
@@ -246,7 +260,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       console.log('inside event');
       console.log(data.value);
       this.events = [...data.value];
-      this.isWarning = data.warning
+      this.isWarning = data.warning;
       this.arrayChange.emit({
         type: data.type,
         value: this.events,
@@ -261,7 +275,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     if (data.type === 'memoir') {
       console.log('inside memoir');
       this.memoirs = [...data.value];
-      this.isWarning = data.warning
+      console.log(this.memoirs);
+      this.isWarning = data.warning;
       this.arrayChange.emit({
         type: data.type,
         value: this.memoirs,
@@ -279,7 +294,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       console.log('inside Image');
       this.images = [...data.value];
       console.log(this.images);
-      this.isWarning = data.warning
+      this.isWarning = data.warning;
       this.arrayChange.emit({
         type: data.type,
         value: this.images,
@@ -289,8 +304,8 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   onContentChange(data: any) {
     this.contentChange.emit({
-      value: data
-    })
+      value: data,
+    });
   }
 
   async onSubmit() {

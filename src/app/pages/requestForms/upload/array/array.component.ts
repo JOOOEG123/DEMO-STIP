@@ -124,6 +124,7 @@ export class ArrayComponent implements OnInit, OnDestroy {
       }
 
       this.removeWhenLastEmpty = false;
+      this.elementAdded = false
 
       this.change.emit({
         type: this.type,
