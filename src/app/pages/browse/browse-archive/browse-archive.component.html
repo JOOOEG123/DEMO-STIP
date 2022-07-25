@@ -4,7 +4,7 @@
       <div class="d-flex flex-column align-items-center flex-shrink-1 my-5">
         <img
           [src]="
-          this.profile.profileImageId !== ''
+            this.profile.profileImageId !== ''
               ? this.profile.profileImageId
               : 'assets\browsepage\tempprofile.png'
           "
@@ -38,26 +38,7 @@
         </div>
       </div>
 
-          <a
-            type="button"
-            tooltip="{{ 'archive.profile_tooltip' | translate }}"
-            data-bs-toggle="tooltip"
-            data-bs-placement="right"
-            class="m-2 shadow rounded-circle"
-          >
-            <img src="assets/browsepage/question-mark.svg" alt="" width="20" />
-          </a>
-        </ng-template>
-        <a
-          class="btn rounded-circle share m-2 border-success"
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#shareModal"
-        >
-          <img src="/assets/browsepage/share.svg" />
-        </a>
-
-        <!-- Modal -->
+      <div class="col-7 border-start m-3">
         <div
           class="d-flex justify-content-end align-items-center align-items-center"
         >
@@ -98,13 +79,13 @@
               />
             </a>
           </ng-template>
-          <a
-            class="share m-2"
+          <button
+            class="share m-2 btn rounded-circle border-success"
             data-bs-toggle="modal"
             data-bs-target="#shareModal"
           >
             <img src="/assets/browsepage/share.svg" />
-          </a>
+          </button>
 
           <!-- Modal -->
           <div
