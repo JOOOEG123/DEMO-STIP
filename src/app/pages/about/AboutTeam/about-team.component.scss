@@ -1,57 +1,44 @@
-img {
-    display: block;
+.main {
+  background-color: #09363c;
 }
 
-.pics{
-    position: relative;
-    display: inline-block;
+.contact {
+  background-color: #09363c;
 }
 
-.caption{
-    position: absolute;
-    top: 50%;
-    left: 50.8%;
-    transform: translate( -50%, -50% );
-    height: 13.125rem;
-    width: 13.75rem;
-    text-align: center;
-    color: #FFFFFF;
-    font-weight: bold;
-    opacity: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+.contact_us {
+  background: #ffffff;
 }
 
-.caption:hover{
-    opacity: 1;
+.image-container {
+  position: relative;
+  width: 90%;
 }
 
-.name{
-    position:absolute;
-    top:40%;
-    left:30%;
+.image {
+  opacity: 1;
+  display: block;
+  width: 90%;
+  height: auto;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
 }
 
-.team{
-    position:absolute;
-    top:50%;
-    left:5%
+.middle {
+  transition: 0.5s ease;
+  opacity: 0.4;
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
 }
 
-.study{
-    position:absolute;
-    top:60%;
-    left:10%
+.image-container:hover .image {
+  opacity: 0.1;
 }
 
-.main{
-    background-color: #09363C;
-}
-
-.contact{
-    background-color: #09363C;
-}
-
-.contact_us{
-    background: #FFFFFF
-    
+.image-container:hover .middle {
+  opacity: 1;
 }

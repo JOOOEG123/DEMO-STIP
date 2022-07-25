@@ -22,10 +22,8 @@ export class ContributionsService {
   }
 
   private callAPI_List() {
-    return this.db.list(
-      `/persons/requestArchieve/contributions/${this.auth.uid}`
-    );
-  }
+    return this.db.list(`/persons/requestArchieve/contributions/${this.auth.uid}`, ref => ref.orderByChild('contributedAt'));
+    }
 
   fetchContributorByContributionId(contId: string) {
     return this.db

@@ -9,19 +9,28 @@
   <div class="container-fluid">
     <div class="row text-center" style="padding-left: 25%; padding-right: 25%">
       <div
-        class="col-lg-4 col-md-6 my-3 pics"
+        class="col-lg-4 col-md-6 my-3"
         *ngFor="let profile of team_profile"
       >
-        <img
-          src="assets/homepage/{{ profile.picture }}"
-          class="rounded-circle"
-          style="width: 220px; height: 210px"
-        />
-        <div class="rounded-circle caption">
-          <p class="my-auto name">{{ profile.name }}</p>
-          <p class="team">{{ profile.team }}</p>
-          <p class="study">{{ profile.study }}</p>
+      <div class="image-container">
+        <div class="rounded-circle">
+          <img
+            src="assets/homepage/{{ profile.picture }}"
+            class="rounded-circle image"
+          />
+          <div class="middle">
+            <div class="text-white">
+              <h3>{{ profile.name }}</h3>
+              <p>{{ profile.team }}</p>
+              <p>{{ profile.study }}</p>
+
+              <!-- <p class="my-auto name">{{ profile.name }}</p>
+              <p class="team">{{ profile.team }}</p>
+              <p class="study">{{ profile.study }}</p> -->
+            </div>
+          </div>
         </div>
+      </div>
       </div>
     </div>
   </div>
