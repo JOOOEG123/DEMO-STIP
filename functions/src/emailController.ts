@@ -11,11 +11,8 @@ import {contactUsTemplate, modifyRequestTemplate} from './email templates/reques
 const sendGrid_api_key = functions.config().sendgrid.key;
 sdmail.setApiKey(sendGrid_api_key);
 
-export const contactUs = functions.https.onCall( async (data: ContactUs, context: any) => {
-  // if (!context.auth) {
-  //   throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' + 'while authenticated.');
-  // }
-  const {email: email = '', name: name = ''} = data;
+// Fetch admin emails that want notification from firestore.
+const adminEmails = async () => {
   const admins = (await fireStore.collection('adminEmailsNotification').get()).docs;
   const sendAdminEmail = [];
 
@@ -25,9 +22,17 @@ export const contactUs = functions.https.onCall( async (data: ContactUs, context
       sendAdminEmail.push(adminEmail);
     }
   });
+  return [...sendAdminEmail, ...ALL_ADMIN_EMAIL];
+};
 
+export const contactUs = functions.https.onCall( async (data: ContactUs, context: any) => {
+  // if (!context.auth) {
+  //   throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' + 'while authenticated.');
+  // }
+  const {email: email = '', name: name = ''} = data;
+  const to = await adminEmails();
   const msg = {
-    to: [...sendAdminEmail, ...ALL_ADMIN_EMAIL],
+    to,
     from: 'joeladeniji123@gmail.com',
     subject: `${name || 'User'} Contact Us (${email || 'User'})`,
     html: contactUsTemplate(data),
@@ -55,18 +60,9 @@ export const modifyRightistRequest = functions.https.onCall( async (data: Reques
     rightistId: rightistId = '',
     modifyRequest: modifyRequest = '',
     reasonRequest: reasonRequest = ''} = data;
-  const admins = (await fireStore.collection('adminEmailsNotification').get()).docs;
-  const sendAdminEmail = [];
-
-  admins.forEach((admin) => {
-    const {email: adminEmail, isNotified: isNotified} = admin.data();
-    if (isNotified === true) {
-      sendAdminEmail.push(adminEmail);
-    }
-  });
-
+  const to = await adminEmails();
   const msg = {
-    to: [...sendAdminEmail, ...ALL_ADMIN_EMAIL],
+    to,
     from: 'joelAdeniji123@gmail.com',
     subject: `New Request to Modify Rightist ${email || 'User'} (${
       rightistId || 'User'
