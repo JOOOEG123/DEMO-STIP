@@ -16,8 +16,18 @@ export const contactUs = functions.https.onCall( async (data: ContactUs, context
   //   throw new functions.https.HttpsError('failed-precondition', 'The function must be called ' + 'while authenticated.');
   // }
   const {email: email = '', name: name = ''} = data;
+  const admins = (await fireStore.collection('adminEmailsNotification').get()).docs;
+  const sendAdminEmail = [];
+
+  admins.forEach((admin) => {
+    const {email: adminEmail, isNotified: isNotified} = admin.data();
+    if (isNotified === true) {
+      sendAdminEmail.push(adminEmail);
+    }
+  });
+
   const msg = {
-    to: ALL_ADMIN_EMAIL,
+    to: [...sendAdminEmail, ...ALL_ADMIN_EMAIL],
     from: 'joeladeniji123@gmail.com',
     subject: `${name || 'User'} Contact Us (${email || 'User'})`,
     html: contactUsTemplate(data),
@@ -45,8 +55,18 @@ export const modifyRightistRequest = functions.https.onCall( async (data: Reques
     rightistId: rightistId = '',
     modifyRequest: modifyRequest = '',
     reasonRequest: reasonRequest = ''} = data;
+  const admins = (await fireStore.collection('adminEmailsNotification').get()).docs;
+  const sendAdminEmail = [];
+
+  admins.forEach((admin) => {
+    const {email: adminEmail, isNotified: isNotified} = admin.data();
+    if (isNotified === true) {
+      sendAdminEmail.push(adminEmail);
+    }
+  });
+
   const msg = {
-    to: ALL_ADMIN_EMAIL,
+    to: [...sendAdminEmail, ...ALL_ADMIN_EMAIL],
     from: 'joelAdeniji123@gmail.com',
     subject: `New Request to Modify Rightist ${email || 'User'} (${
       rightistId || 'User'
