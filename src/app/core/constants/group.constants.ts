@@ -1,7 +1,5 @@
-const ETHNIC_GROUP_CONSTANTS = 
-{
-  "en": 
-  [
+const ETHNIC_GROUP_CONSTANTS = {
+  en: [
     'Zhuang',
     'Hui',
     'Han',
@@ -61,33 +59,37 @@ const ETHNIC_GROUP_CONSTANTS =
     'Undistinguished',
     'Naturalized Citizen',
   ],
-  "cn": 
-  [
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-    "未知",
-  ]
-}
+  cn: [
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+    '未知',
+  ],
+};
 
 const LIST_OF_GENDER = {
-  'en': ['Male', 'Female'],
-  'cn': ['男性', '女性']
-}
+  en: ['Male', 'Female'],
+  cn: ['男性', '女性'],
+};
 
 const LIST_OF_STATUS = {
-  'en': ['Alive', 'Deceased'],
-  'cn': ['活', '死者']
-}
+  en: ['Alive', 'Deceased'],
+  cn: ['活', '死者'],
+};
+
+const LIST_OF_IMAGE_CATEGORIES = {
+  en: ['People', 'Media', 'Camps', 'Other'],
+  cn: ['人们', '媒体', '营地', '其他'],
+};
 
 const LIST_OF_JOB = [
   'Deputy',
@@ -112,4 +114,10 @@ const LIST_OF_JOB = [
   'Deputy Secretary General',
 ];
 
-export { ETHNIC_GROUP_CONSTANTS, LIST_OF_JOB, LIST_OF_GENDER, LIST_OF_STATUS };
+export {
+  ETHNIC_GROUP_CONSTANTS,
+  LIST_OF_JOB,
+  LIST_OF_GENDER,
+  LIST_OF_STATUS,
+  LIST_OF_IMAGE_CATEGORIES,
+};

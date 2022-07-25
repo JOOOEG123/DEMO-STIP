@@ -26,6 +26,9 @@
         *ngIf="isImageLoaded"
         [isAdmin]="isAdmin"
         [data]="images"
+        [otherData]="otherImages"
+        [language]="language"
+        [otherLanguage]="otherLanguage"
         [cleared]="isImageCleared"
         title="Image"
         type="image"
@@ -55,6 +58,7 @@
           <app-array
             [isAdmin]="isAdmin"
             [data]="events"
+            [otherData]="otherEvents"
             [cleared]="isEventCleared"
             title="Event"
             type="event"
@@ -69,6 +73,7 @@
           <app-array
             [isAdmin]="isAdmin"
             [data]="memoirs"
+            [otherData]="otherMemoirs"
             [cleared]="isMemoirCleared"
             title="Memoir"
             type="memoir"

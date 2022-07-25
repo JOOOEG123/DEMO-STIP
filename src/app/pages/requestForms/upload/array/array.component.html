@@ -40,6 +40,17 @@
         placeholder="Add event details here..."
         formControlName="event"
       ></textarea>
+      
+      <div *ngIf="isAdmin">
+        <label [for]="'other_event_content' + i">Other event content</label>
+        <textarea
+          class="form-control"
+          [id]="'other_event_content' + i"
+          rows="5"
+          placeholder="Add event details here..."
+          formControlName="otherEvent"
+        ></textarea>
+      </div>
     </div>
 
     <div *ngIf="isWarning && last" class="text-danger h3">Please add {{ title }}</div>
@@ -79,39 +90,83 @@
   >
     <div [formGroup]="memoir" class="border p-2 shadow my-4 rounded">
       <!-- memoir title -->
-      <label [for]="'memoir_title' + i">Title</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Add title here..."
-        [id]="'memoir_title' + i"
-        formControlName="memoirTitle"
-      />
-      <br />
+      <div>
+        <label [for]="'memoir_title' + i">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Add title here..."
+          [id]="'memoir_title' + i"
+          formControlName="memoirTitle"
+        />
+      </div>
+
+      <div *ngIf="isAdmin">
+        <label [for]="'other_memoir_title' + i">Other Title</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Add title here..."
+          [id]="'other_memoir_title' + i"
+          formControlName="otherMemoirTitle"
+        />
+      </div>
+
       <!-- memoir author -->
-      <label [for]="'memoir_author' + i">Author</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Add author here.."
-        [id]="'memoir_author' + i"
-        aria-describedby="basic-addon1"
-        formControlName="memoirAuthor"
-      />
-      <br />
+      <div>
+        <label [for]="'memoir_author' + i">Author</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Add author here.."
+          [id]="'memoir_author' + i"
+          aria-describedby="basic-addon1"
+          formControlName="memoirAuthor"
+        />
+      </div>
+      
+      <div *ngIf="isAdmin">
+        <label [for]="'other_memoir_author' + i">Other Author</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Add author here.."
+          [id]="'other_memoir_author' + i"
+          aria-describedby="basic-addon1"
+          formControlName="otherMemoirAuthor"
+        />
+      </div>
+      
+      <div>
+        <label [for]="'memoir_content' + i">Content/Description</label>
+        <textarea
+          type="text"
+          class="form-control"
+          [id]="'memoir_content' + i"
+          placeholder="Add memoir here..."
+          rows="5"
+          formControlName="memoirContent"
+        ></textarea>
+      </div>
+
       <!-- memoir content -->
-      <label [for]="'memoir_content' + i">Content/Description</label>
-      <textarea
-        type="text"
-        class="form-control"
-        [id]="'memoir_content' + i"
-        placeholder="Add memoir here..."
-        rows="5"
-        formControlName="memoirContent"
-      ></textarea>
+      <div *ngIf="isAdmin">
+        <label [for]="'other_memoir_content' + i">Other Content/Description</label>
+        <textarea
+          type="text"
+          class="form-control"
+          [id]="'other_memoir_content' + i"
+          placeholder="Add memoir here..."
+          rows="5"
+          formControlName="otherMemoirContent"
+        ></textarea>
+      </div>
+    
+      
     </div>
     <div *ngIf="isWarning && last" class="text-danger h3">Please add {{ title }}</div>
     <br />
+
     <!-- removes memoir -->
     <button
       type="button"
@@ -165,86 +220,138 @@
         (change)="onselectFile($event, i)"
         formControlName="image"
       />
+      
+      <div class="mb-4">
+        <div>
+          <label for="imageTitle" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control w-75"
+            id="imageTitle"
+            placeholder="What would you title this image"
+            formControlName="imageTitle"
+          />
+        </div>
+  
+        <div *ngIf="isAdmin">
+          <label for="otherImageTitle" class="form-label">Chinese Title</label>
+          <input
+            type="text"
+            class="form-control w-75"
+            id="otherImageTitle"
+            placeholder="What would you title this image"
+            formControlName="otherImageTitle"
+          />
+        </div>
+      </div>
 
-      <label for="imageTitle" class="form-label">Title</label>
-      <input
-        type="text"
-        class="form-control w-75"
-        id="imagTitle"
-        placeholder="What would you title this image"
-        formControlName="imageTitle"
-      />
-
-      <label for="imageDetails" class="form-label">Details</label>
-      <textarea
-        class="form-control w-75"
-        id="imageDetails"
-        rows="3"
-        placeholder="Add a description"
-        formControlName="imageDes"
-      ></textarea>
-
-      <label for="imageSource" class="form-label">Source</label>
-      <textarea
-        class="form-control w-75"
-        id="imageSource"
-        rows="3"
-        placeholder="Image Source"
-        formControlName="imageSource"
-      ></textarea>
-
-      <br />
-
-      <label for="cars">Image category</label>
-      <select
-        formControlName="imageCategory"
-        name="imageCategory"
-        id="imageCategory"
-      >
-        <option value="People">People</option>
-        <option value="Media">Media</option>
-        <option value="Camps">Camps</option>
-        <option value="Other">Other</option>
-      </select>
-
-      <br /><br />
+      
+      <div class="mb-4">
+        <div>
+          <label for="imageDetails" class="form-label">Details</label>
+          <textarea
+            class="form-control w-75"
+            id="imageDetails"
+            rows="3"
+            placeholder="Add a description"
+            formControlName="imageDes"
+          ></textarea>
+        </div>
+  
+        <div *ngIf="isAdmin">
+          <label for="otherImageDetails" class="form-label">Chinese Details</label>
+          <textarea
+            class="form-control w-75"
+            id="otherImageDetails"
+            rows="3"
+            placeholder="Add a description"
+            formControlName="otherImageDes"
+          ></textarea>
+        </div>
+      </div>
+      
+      <div class="mb-4">
+        <div>
+          <label for="imageSource" class="form-label">Source</label>
+          <textarea
+            class="form-control w-75"
+            id="imageSource"
+            rows="3"
+            placeholder="Image Source"
+            formControlName="imageSource"
+          ></textarea>
+        </div>
+  
+        <div *ngIf="isAdmin">
+          <label for="otherImageSource" class="form-label">Chinese Source</label>
+          <textarea
+            class="form-control w-75"
+            id="otherImageSource"
+            rows="3"
+            placeholder="Image Source"
+            formControlName="otherImageSource"
+          ></textarea>
+        </div>
+      </div>
+      
+      <div>
+        <div>
+          <label for="categories">Image category</label>
+          <select
+            formControlName="imageCategory"
+            name="imageCategory"
+            id="imageCategory"
+            class="form-select w-75"
+            (change)="onImageCategoryChange($event, i)"
+          > 
+            <option *ngFor="let category of imageCategories" [value]="category">{{ category }}</option>
+          </select>
+          <div *ngIf="isAdmin">
+            <input readonly formControlName="otherImageCategory" class="form-control w-75" />
+          </div>
+        </div>
+      </div>
   
       <!-- radio buttons for choosing if user wants to include photo in gallery -->
       <br />
-      <p>
-        Include this image in gallery
-        <img
-          src="assets/upload/icons-question.png"
-          tooltip="Choose to include the photo in website gallery"
-          placement="auto"
-          class="mx-2 shadow rounded-circle p-1"
-          width="30"
-        />
-      </p>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="galleryNo"
-          id="galleryYes"
-          value="yes"
-          formControlName="imageUpload"
-        />
-        <!-- yes button -->
-        <label class="form-check-label" for="inlineRadio1">Yes</label>
+      <div *ngIf="isAdmin">
+        <p>
+          Include this image in gallery
+          <img
+            src="assets/upload/icons-question.png"
+            tooltip="Choose to include the photo in website gallery"
+            placement="auto"
+            class="mx-2 shadow rounded-circle p-1"
+            width="30"
+          />
+        </p>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="galleryNo"
+            id="galleryYes"
+            value="yes"
+            formControlName="imageUpload"
+          />
+          <!-- yes button -->
+          <label class="form-check-label" for="inlineRadio1">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="galleryNo"
+            id="galleryNo"
+            value="no"
+            formControlName="imageUpload"
+          />
+          <!-- no button -->
+          <label class="form-check-label" for="inlineRadio2">No</label>
+        </div>
       </div>
-      <div class="form-check form-check-inline">
-        <input
-          class="form-check-input"
-          type="radio"
-          name="galleryNo"
-          id="galleryNo"
-          value="no"
-          formControlName="imageUpload"
-        />
-        <!-- no button -->
-        <label class="form-check-label" for="inlineRadio2">No</label>
-      </div>
+
+      
       <br /><br />
       <div *ngIf="isWarning && last" class="text-danger h3">Please add {{ title }}</div>
 

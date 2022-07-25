@@ -62,7 +62,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   constructor() { }
 
-
   onEthnicChange(data: any) {
     console.log(data.target.value)
     let index = Object.keys(this.ethnicGroup).find(key => this.ethnicGroup[key] === data.target.value)

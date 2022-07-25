@@ -113,6 +113,7 @@
         formControlName="ethnic"
         class="form-select"
       >
+        <option disabled selected value> -- select an option -- </option>
         <option *ngFor="let ethnic of ethnicGroup">
           {{ ethnic }}
         </option>

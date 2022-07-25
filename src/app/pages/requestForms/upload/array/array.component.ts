@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { LIST_OF_IMAGE_CATEGORIES } from 'src/app/core/constants/group.constants';
 
 @Component({
   selector: 'app-array',
@@ -17,26 +18,38 @@ import { Subscription } from 'rxjs';
 })
 export class ArrayComponent implements OnInit, OnDestroy {
   @Input() data!: any[];
+  @Input() otherData!: any[]
+  @Input() language?: string
+  @Input() otherLanguage?: string
+
   @Input() cleared!: boolean;
+  @Input() isAdmin!: boolean
   @Input() title!: string;
   @Input() type!: string;
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   array = new FormArray([]);
 
+  imageCategories: string[] = []
+  otherImageCategories: string[] = []
+
   private newEvent() {
     return new FormGroup({
       startYear: new FormControl(''),
       endYear: new FormControl(''),
       event: new FormControl(''),
+      otherEvent: new FormControl('')
     });
   }
 
   private newMemoir() {
     return new FormGroup({
       memoirTitle: new FormControl(''),
+      otherMemoirTitle: new FormControl(''),
       memoirContent: new FormControl(''),
+      otherMemoirContent: new FormControl(''),
       memoirAuthor: new FormControl(''),
+      otherMemoirAuthor: new FormControl('')
     });
   }
 
@@ -49,6 +62,10 @@ export class ArrayComponent implements OnInit, OnDestroy {
       imageTitle: new FormControl(''),
       imageDes: new FormControl(''),
       imageSource: new FormControl(''),
+      otherImageCategory: new FormControl(''),
+      otherImageTitle: new FormControl(''),
+      otherImageDes: new FormControl(''),
+      otherImageSource: new FormControl('')
     });
   }
 
@@ -63,12 +80,13 @@ export class ArrayComponent implements OnInit, OnDestroy {
       if (this.data!.length == 0) {
         this.array.push(this.newEvent());
       } else {
-        for (const item of this.data!) {
+        for (const [index, item] of this.data!.entries()) {
           this.array.push(
             new FormGroup({
               startYear: new FormControl(item.startYear),
               endYear: new FormControl(item.endYear),
               event: new FormControl(item.event),
+              otherEvent: new FormControl(this.otherData[index].event || '')
             })
           );
         }
@@ -92,6 +110,9 @@ export class ArrayComponent implements OnInit, OnDestroy {
     }
 
     if (this.type == 'image') {
+      this.imageCategories = LIST_OF_IMAGE_CATEGORIES[this.language!]
+      this.otherImageCategories = LIST_OF_IMAGE_CATEGORIES[this.otherLanguage!]
+
       console.log(this.data);
       if (this.data!.length == 0) {
         this.array.push(this.newImage());
@@ -113,6 +134,7 @@ export class ArrayComponent implements OnInit, OnDestroy {
     }
 
     this.array.valueChanges.subscribe((data) => {
+      console.log(data)
       if (this.removeWhenLastEmpty) {
         this.isWarning = false;
       } else if (this.cleared) {
@@ -229,5 +251,16 @@ export class ArrayComponent implements OnInit, OnDestroy {
   remove(i: number) {
     this.removeWhenLastEmpty = true;
     this.array.removeAt(i);
+  }
+
+  onImageCategoryChange(data: any, i: number) {
+    if (this.isAdmin) {
+      if (this.type === 'image') {
+        let index = Object.keys(this.imageCategories).find(key => this.imageCategories[key] === data.target.value)
+        this.array.at(i).patchValue({
+          otherImageCategory: this.otherImageCategories[index!]
+        })
+      }
+    }
   }
 }

@@ -82,8 +82,14 @@ export class UploadComponent implements OnInit, OnDestroy {
   otherFormData?: FormData
 
   events: Event[] = [];
+  otherEvents: Event[] = []
+
   memoirs: Memoir[] = [];
+  otherMemoirs: Memoir[] = []
+
   images: ImageData[] = [];
+  otherImages: ImageData[] = []
+  
   description: string = '';
 
   isAdmin: boolean = false;
@@ -119,15 +125,18 @@ export class UploadComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.sub.forEach((sub) => sub.unsubscribe());
     this.imageSubscription?.unsubscribe();
+    this.authSubscription?.unsubscribe()
   }
+
+  authSubscription?: Subscription
 
   ngOnInit(): void {
     this.language = localStorage.getItem('lang')!
     this.otherLanguage = this.language === 'en' ? 'cn' : 'en'
 
-    if (this.auth.isAdmin.value) {
-      this.isAdmin = true;
-    }
+    this.authSubscription = this.auth.isAdmin.subscribe((data) => {
+      this.isAdmin = data;
+    })
 
     if (this.page === 'contribution') {
       this.updateData();
@@ -158,6 +167,10 @@ export class UploadComponent implements OnInit, OnDestroy {
   imageSubscription?: Subscription;
 
   updateData() {
+    if (this.isAdmin) {
+      // Get the other contribution
+    }
+
     console.log(this.contribution);
     if (this.contribution) {
       this.contributionId = this.contribution.contributionId;
@@ -226,6 +239,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           rightistYear: rightist.rightistYear,
           birthYear: rightist.birthYear,
         };
+
         console.log(rightist)
         if (this.isAdmin) {
           this.otherFormData = {
@@ -245,7 +259,25 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   onFormChange(data: any) {
     if (data.type == 'form') {
-      this.formData = { ...data.value };
+      this.formData = { 
+        name: data.value.name,
+        gender: data.value.gender,
+        status: data.value.status,
+        ethnic: data.value.ethnic,
+        occupation: data.value.occupation,
+        birthYear: data.value.birthYear,
+        rightistYear: data.value.rightistYear
+      }
+
+      this.otherFormData = {
+        name: data.value.otherName,
+        gender: data.value.otherGender,
+        status: data.value.otherStatus,
+        ethnic: data.value.otherEthnic,
+        occupation: data.value.otherOccupation,
+        birthYear: data.value.birthYear,
+        rightistYear: data.value.rightistYear
+      }
       this.formChange.emit(data.value);
     }
   }
@@ -259,7 +291,27 @@ export class UploadComponent implements OnInit, OnDestroy {
     if (data.type === 'event') {
       console.log('inside event');
       console.log(data.value);
-      this.events = [...data.value];
+
+      let result: Event[] = []
+      let otherResult: Event[] = []
+
+      for (const event of data.value) {
+        result.push({
+          startYear: event.startYear,
+          endYear: event.endYear,
+          event: event.event
+        })
+
+        otherResult.push({
+          startYear: event.startYear,
+          endYear: event.endYear,
+          event: event.otherEvent
+        })
+      }
+
+      this.events = result
+      this.otherEvents = otherResult
+
       this.isWarning = data.warning;
       this.arrayChange.emit({
         type: data.type,
@@ -274,8 +326,30 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
     if (data.type === 'memoir') {
       console.log('inside memoir');
-      this.memoirs = [...data.value];
-      console.log(this.memoirs);
+
+      let result: Memoir[] = []
+      let otherResult: Memoir[] = []
+      console.log(data.value)
+      for (const memoir of data.value) {
+        result.push({
+          memoirTitle: memoir.memoirTitle,
+          memoirAuthor: memoir.memoirAuthor,
+          memoirContent: memoir.memoirContent
+        })
+
+        otherResult.push({
+          memoirTitle: memoir.otherMemoirTitle,
+          memoirAuthor: memoir.otherMemoirAuthor,
+          memoirContent: memoir.otherMemoirContent
+        })
+      }
+
+      this.memoirs = result
+      this.otherMemoirs = otherResult
+
+      console.log(this.memoirs)
+      console.log(this.otherMemoirs)
+
       this.isWarning = data.warning;
       this.arrayChange.emit({
         type: data.type,
@@ -292,8 +366,37 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     if (data.type === 'image') {
       console.log('inside Image');
-      this.images = [...data.value];
-      console.log(this.images);
+
+      let result: ImageData[] = []
+      let otherResult: ImageData[] = []
+
+      for (const image of data.value) {
+        result.push({
+          imageId: image.imageId,
+          imageUrl: image.imageUrl,
+          imageUpload: image.imageUpload,
+          image: image.image,
+          imageCategory: image.imageCategory,
+          imageTitle: image.imageTitle,
+          imageDes: image.imageDes,
+          imageSource: image.imageSource
+        })
+
+        otherResult.push({
+          imageId: image.imageId,
+          imageUrl: image.imageUrl,
+          imageUpload: image.imageUpload,
+          image: image.image,
+          imageCategory: image.otherImageCategory,
+          imageTitle: image.otherImageTitle,
+          imageDes: image.otherImageDes,
+          imageSource: image.otherImageSource
+        })
+      }
+      
+      this.images = result
+      this.otherImages = otherResult
+
       this.isWarning = data.warning;
       this.arrayChange.emit({
         type: data.type,
@@ -311,87 +414,104 @@ export class UploadComponent implements OnInit, OnDestroy {
   async onSubmit() {
     // remove the last element that contains no data
     this.events = this.events.slice(0, this.events.length - 1);
+    this.otherEvents = this.otherEvents.slice(0, this.otherEvents.length - 1)
+
     this.memoirs = this.memoirs.slice(0, this.memoirs.length - 1);
+    this.otherMemoirs = this.otherMemoirs.slice(0, this.otherMemoirs.length - 1)
+
     this.images = this.images.slice(0, this.images.length - 1);
+    this.otherImages = this.otherImages.slice(0, this.otherImages.length - 1)
 
-    let imageResult: string[] = [];
+    console.log(this.formData)
+    console.log(this.otherFormData)
 
-    const rightistId =
-      this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
+    console.log(this.events)
+    console.log(this.otherEvents)
 
-    for (const image of this.images) {
-      let imageId = `Image-${UUID()}`;
-      await fetch(image.imageUrl).then(async (response) => {
-        const contentType = response.headers.get('content-type');
-        const blob = await response.blob();
-        const file = new File([blob], UUID(), { type: contentType! });
-        let imageDb: ImageSchema = {
-          imageId: imageId,
-          rightistId: rightistId,
-          isGallery: image.imageUpload === 'yes',
-          galleryCategory: image.imageCategory,
-          galleryTitle: image.imageTitle,
-          galleryDetail: image.imageDes,
-          gallerySource: image.imageSource,
-        };
-        await this.imageAPI
-          .addImage(imageDb)
-          .then(() => {
-            this.storageAPI.uploadGalleryImage(imageId, file);
-          })
-          .then(() => {
-            imageResult.push(imageId);
-          });
-      });
-    }
+    console.log(this.memoirs)
+    console.log(this.otherMemoirs)
 
-    const {
-      name,
-      gender,
-      status,
-      ethnic,
-      rightistYear,
-      occupation,
-      birthYear,
-    } = this.formData!;
+    console.log(this.images)
+    console.log(this.otherImages)
 
-    this.contributionService
-      .contributionsAddEdit({
-        contributionId: this.contributionId || UUID(),
-        contributorId: this.auth.uid,
-        rightistId: rightistId,
-        contributedAt: new Date(),
-        approvedAt: new Date(),
-        rejectedAt: new Date(),
-        publish: 'new',
-        rightist: {
-          rightistId: rightistId,
-          contributorId: this.auth.uid,
-          imageId: [...imageResult],
-          initial: name.trim().charAt(0).toUpperCase(),
-          firstName: '',
-          lastName: '',
-          fullName: name,
-          gender: gender,
-          birthYear: birthYear,
-          deathYear: 0,
-          rightistYear: rightistYear,
-          status: status || 'Unknown',
-          ethnicity: ethnic || '',
-          job: '',
-          detailJob: '',
-          workplace: '',
-          workplaceCombined: occupation,
-          events: this.events,
-          memoirs: this.memoirs,
-          reference: '',
-          description: this.description,
-          lastUpdatedAt: new Date(),
-          source: 'contributed',
-        },
-      })
-      .then(() => {
-        this.route.navigateByUrl('/account');
-      });
+    // let imageResult: string[] = [];
+
+    // const rightistId =
+    //   this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
+
+    // for (const image of this.images) {
+    //   let imageId = `Image-${UUID()}`;
+    //   await fetch(image.imageUrl).then(async (response) => {
+    //     const contentType = response.headers.get('content-type');
+    //     const blob = await response.blob();
+    //     const file = new File([blob], UUID(), { type: contentType! });
+    //     let imageDb: ImageSchema = {
+    //       imageId: imageId,
+    //       rightistId: rightistId,
+    //       isGallery: image.imageUpload === 'yes',
+    //       galleryCategory: image.imageCategory,
+    //       galleryTitle: image.imageTitle,
+    //       galleryDetail: image.imageDes,
+    //       gallerySource: image.imageSource,
+    //     };
+    //     await this.imageAPI
+    //       .addImage(imageDb)
+    //       .then(() => {
+    //         this.storageAPI.uploadGalleryImage(imageId, file);
+    //       })
+    //       .then(() => {
+    //         imageResult.push(imageId);
+    //       });
+    //   });
+    // }
+
+    // const {
+    //   name,
+    //   gender,
+    //   status,
+    //   ethnic,
+    //   rightistYear,
+    //   occupation,
+    //   birthYear,
+    // } = this.formData!;
+
+    // this.contributionService
+    //   .contributionsAddEdit({
+    //     contributionId: this.contributionId || UUID(),
+    //     contributorId: this.auth.uid,
+    //     rightistId: rightistId,
+    //     contributedAt: new Date(),
+    //     approvedAt: new Date(),
+    //     rejectedAt: new Date(),
+    //     publish: 'new',
+    //     rightist: {
+    //       rightistId: rightistId,
+    //       contributorId: this.auth.uid,
+    //       imageId: [...imageResult],
+    //       initial: name.trim().charAt(0).toUpperCase(),
+    //       firstName: '',
+    //       lastName: '',
+    //       fullName: name,
+    //       gender: gender,
+    //       birthYear: birthYear,
+    //       deathYear: 0,
+    //       rightistYear: rightistYear,
+    //       status: status || 'Unknown',
+    //       ethnicity: ethnic || '',
+    //       job: '',
+    //       detailJob: '',
+    //       workplace: '',
+    //       workplaceCombined: occupation,
+    //       events: this.events,
+    //       memoirs: this.memoirs,
+    //       reference: '',
+    //       description: this.description,
+    //       lastUpdatedAt: new Date(),
+    //       source: 'contributed',
+    //     },
+    //   })
+    //   .then(() => {
+    //     this.route.navigateByUrl('/account');
+    //   });
   }
 }
