@@ -21,6 +21,7 @@ export class AboutTeamComponent implements OnInit {
   });
   modalRef?: BsModalRef;
   @ViewChild('contactUsTemplate') contactUsTemplate!: TemplateRef<any>;
+  @ViewChild('exitTemplate') exitTemplate!: TemplateRef<any>;
   constructor(private fb: FormBuilder, private modalService: BsModalService, private customApi: AngularFireFunctions,) {}
 
   ngOnInit(): void {}
@@ -29,12 +30,15 @@ export class AboutTeamComponent implements OnInit {
     this.modalRef = this.modalService.show(template);
   }
 
+  openExitModal(template: TemplateRef<any> = this.exitTemplate) {
+    this.modalRef = this.modalService.show(template);
+  }
+
   ngSubmit() {
-    console.log(this.contactForm.value);
     this.customApi.httpsCallable('contactUs')(this.contactForm.value).subscribe((res) => {
-      console.log(res);
       this.modalRef?.hide();
       this.contactForm.reset();
     });
   }
+
 }

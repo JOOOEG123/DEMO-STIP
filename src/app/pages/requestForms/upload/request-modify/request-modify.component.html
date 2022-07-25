@@ -55,10 +55,25 @@
     <button
       type="button"
       (click)="sendRequestForm()"
+      (click)="openExitModal()"
       class="btn btn-primary"
       [disabled]="modForm.invalid"
     >
       Submit Request
     </button>
+  </div>
+</ng-template>
+<ng-template #exitTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Submitted</h4>
+    <button type="button" class="btn-close close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Thank you for you submission, your request will now be reviewed by the
+      admin. We will notify the status of your request via email
+    </p>
   </div>
 </ng-template>

@@ -18,6 +18,7 @@ import { RequestModification } from 'src/app/core/types/emails.types';
 })
 export class RequestModifyComponent implements OnInit, OnDestroy{
   @ViewChild('modTemplate') modTemplate!: TemplateRef<any>;
+  @ViewChild('exitTemplate') exitTemplate!: TemplateRef<any>;
   sub!: Subscription;
   modalRef?: BsModalRef;
   modForm = this.fb.group({
@@ -39,7 +40,6 @@ export class RequestModifyComponent implements OnInit, OnDestroy{
     }
   }
   sendRequestForm() {
-    // Example for Yule's request form API call. Please remove function call after checking.
     const payload: RequestModification = {
       email: this.modForm.value.email,
       rightistId: 'A00000000',
@@ -52,8 +52,14 @@ export class RequestModifyComponent implements OnInit, OnDestroy{
       .subscribe((res) => {
         console.log('Function: ', res);
       });
+      this.modalRef?.hide();
+      this.modForm.reset();
+    this.modalRef?.hide();
   }
   openModModal(template: TemplateRef<any> = this.modTemplate) {
+    this.modalRef = this.modalService.show(template);
+  }
+  openExitModal(template: TemplateRef<any> = this.exitTemplate) {
     this.modalRef = this.modalService.show(template);
   }
 }
