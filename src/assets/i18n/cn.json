@@ -121,6 +121,9 @@
     "summary_body" : "...",
     "team_button" : "与研究背后的团队会面"
   },
+  "resources":{
+    "resources": "资源"
+  },
   "about_movement": {
     "about_movement_introduction_title": "关于1950年代的中国反右运动",
     "about_movement_introduction_body": "此处的示例文本",

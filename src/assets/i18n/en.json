@@ -78,7 +78,9 @@
     "summary_body" : "...",
     "team_button" : "Meet the team behind the research"
   },
-
+  "resources":{
+    "resources": "Resources"
+  },
   "common": {
     "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
     "movement_brief": "Brief History",
