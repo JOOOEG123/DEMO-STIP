@@ -14,7 +14,12 @@
     "archive_page": "“右派”人物",
     "gallery_page": "图片",
     "repository_page":"资源库",
-    "login_signup": "登录或注册"
+    "login_signup": "登录或注册",
+    "account": "帐户",
+    "upload" : "上载",
+    "log_out" : "登出",
+    "account2" : "帐户",
+    "search_placeholder" : "搜索档案"
   },
   "login.component": {
     "first_name":"名",
@@ -48,14 +53,14 @@
     "yes": "确认",
     "no": "拒绝",
     "cancel" : "取消",
-    "save" : "保存",
-    "delete_account" : "删除帐户"
+    "save" : "保存"
   },
 
   "log":{
     "log_out" : "您要退出吗？",
     "edit_announcement" : "编辑公告",
     "announcement" : "添加/更改公告",
+    "delete_account" : "删除帐户",
     "delete_warning" : "您确定要删除您的帐户吗？此操作无法撤消。您的所有数据和贡献将被永久删除。",
     "save_account_changes" : "保存帐户更改",
     "save_account_warning" : "您确定要保存帐户更改吗？此操作无法撤消。这将更新您的帐户详细信息。",

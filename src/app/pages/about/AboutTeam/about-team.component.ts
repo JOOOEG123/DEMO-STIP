@@ -46,5 +46,6 @@ export class AboutTeamComponent implements OnInit {
         this.contactForm.reset();
       });
     this.modalRef?.hide();
+    this.openExitModal();
   }
 }

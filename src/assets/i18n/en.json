@@ -15,7 +15,12 @@
     "archive_page": "Archive",
     "gallery_page": "Gallery",
     "repository_page":"Repository",
-    "login_signup": "Login/Signup"
+    "login_signup": "Login/Signup",
+    "account": "Account",
+    "upload" : "Upload",
+    "log_out" : "Log Out",
+    "account2": "ACCOUNT",
+    "search_placeholder" : "Search for Archives"
   },
   "login.component": {
     "first_name":"First name",
