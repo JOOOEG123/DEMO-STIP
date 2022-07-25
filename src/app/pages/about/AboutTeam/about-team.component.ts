@@ -22,7 +22,11 @@ export class AboutTeamComponent implements OnInit {
   modalRef?: BsModalRef;
   @ViewChild('contactUsTemplate') contactUsTemplate!: TemplateRef<any>;
   @ViewChild('exitTemplate') exitTemplate!: TemplateRef<any>;
-  constructor(private fb: FormBuilder, private modalService: BsModalService, private customApi: AngularFireFunctions,) {}
+  constructor(
+    private fb: FormBuilder,
+    private modalService: BsModalService,
+    private customApi: AngularFireFunctions
+  ) {}
 
   ngOnInit(): void {}
 
@@ -35,10 +39,11 @@ export class AboutTeamComponent implements OnInit {
   }
 
   ngSubmit() {
-    this.customApi.httpsCallable('contactUs')(this.contactForm.value).subscribe((res) => {
-      this.modalRef?.hide();
-      this.contactForm.reset();
-    });
+    this.customApi
+      .httpsCallable('contactUs')(this.contactForm.value)
+      .subscribe((res) => {
+        this.modalRef?.hide();
+        this.contactForm.reset();
+      });
   }
-
 }

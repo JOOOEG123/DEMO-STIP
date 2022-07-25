@@ -16,7 +16,7 @@ import { RequestModification } from 'src/app/core/types/emails.types';
   templateUrl: './request-modify.component.html',
   styleUrls: ['./request-modify.component.scss'],
 })
-export class RequestModifyComponent implements OnInit, OnDestroy{
+export class RequestModifyComponent implements OnInit, OnDestroy {
   @ViewChild('modTemplate') modTemplate!: TemplateRef<any>;
   @ViewChild('exitTemplate') exitTemplate!: TemplateRef<any>;
   sub!: Subscription;
@@ -52,8 +52,8 @@ export class RequestModifyComponent implements OnInit, OnDestroy{
       .subscribe((res) => {
         console.log('Function: ', res);
       });
-      this.modalRef?.hide();
-      this.modForm.reset();
+    this.modalRef?.hide();
+    this.modForm.reset();
     this.modalRef?.hide();
   }
   openModModal(template: TemplateRef<any> = this.modTemplate) {
