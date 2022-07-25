@@ -2,79 +2,63 @@
 <button
   type="button"
   class="btn rounded-pill shadow border-green"
-  data-bs-toggle="modal"
-  data-bs-target="#modifyModal"
+  (click)="openModModal()"
 >
   <img src="assets/browsepage/request-to-modify.svg" alt="" width="20" />
   {{ "archive.profile_user_modify_button" | translate }}
 </button>
 
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="modifyModal"
-  tabindex="-1"
-  aria-labelledby="modifyModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modifyLabel">Modify Request</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body" [formGroup]=modForm>
-        <label for="request" class="form-label">Modification Request</label>
-        <textarea
-          class="form-control"
-          id="request"
-          value="Mark"
-          rows="6"
-          required
-          placeholder="What are you requesting to modify?"
-          formControlName="request"
-        ></textarea>
-        <br /><br />
-        <label for="reson" class="form-label">Resoning Behind Request</label>
-        <textarea
-          class="form-control"
-          id="reson"
-          rows="6"
-          formControlName="reason"
-          placeholder="Why should this file be modified?"
-        ></textarea>
-        <br /><br />
-        <label for="email" class="form-label">Email address</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          formControlName="email"
-          placeholder="name@example.com"
-        />
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            (click)="sendRequestForm()"
-            [disabled]="modForm.invalid"
-          >
-            Submit Request
-          </button>
-        </div>
-      </div>
+<ng-template #modTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Request to Modify</h4>
+    <button type="button" class="btn-close close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body" [formGroup]="modForm">
+    <div class="mb-3">
+      <label for="request" class="form-label">Request</label>
+      <textarea
+        class="form-control"
+        id="reason"
+        formControlName="request"
+        rows="5"
+        placeholder="What would you like to change..."
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="reason" class="form-label">Reason</label>
+      <textarea
+        class="form-control"
+        id="reason"
+        formControlName="reason"
+        rows="5"
+        placeholder="Your reason for modification..."
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+        placeholder="name@example.com"
+      />
     </div>
   </div>
-</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">
+      Close
+    </button>
+    <button
+      type="button"
+      (click)="sendRequestForm()"
+      class="btn btn-primary"
+      [disabled]="modForm.invalid"
+    >
+      Submit Request
+    </button>
+  </div>
+</ng-template>

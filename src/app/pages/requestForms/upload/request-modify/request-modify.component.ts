@@ -17,6 +17,7 @@ import { RequestModification } from 'src/app/core/types/emails.types';
   styleUrls: ['./request-modify.component.scss'],
 })
 export class RequestModifyComponent implements OnInit, OnDestroy{
+  @ViewChild('modTemplate') modTemplate!: TemplateRef<any>;
   sub!: Subscription;
   modalRef?: BsModalRef;
   modForm = this.fb.group({
@@ -51,5 +52,8 @@ export class RequestModifyComponent implements OnInit, OnDestroy{
       .subscribe((res) => {
         console.log('Function: ', res);
       });
+  }
+  openModModal(template: TemplateRef<any> = this.modTemplate) {
+    this.modalRef = this.modalService.show(template);
   }
 }
