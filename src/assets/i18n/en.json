@@ -92,7 +92,26 @@
   "common": {
     "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
     "movement_brief": "Brief History",
-    "page_title": "Chinese \"Rightist\" Archives"
+    "page_title": "Chinese \"Rightist\" Archives",
+    "yes": "Yes",
+    "no": "No",
+    "cancel" : "Cancel",
+    "save" : "Save"
+  },
+  "log":{
+    "log_out" : "Do you want to log out?",
+    "edit_announcement" : "Edit Announcement",
+    "announcement" : "Add/Change Announcement",
+    "delete_account" : "Delete Account",
+    "delete_warning" : "Are you sure you want to delete your account? This action cannot be undone. All your data and Contribution will be permanently deleted.",
+    "save_account_changes" : "Save account changes",
+    "save_account_warning" : "Are you sure you want to Save account changes? This action cannot be undone. This will update your account details.",
+    "change_password" : "Change Password",
+    "pass_change_msg" : "Please check your email for a link to reset your password. If you do not receive an email, please check your spam folder.",
+    "email_veri" : "Send Email verification",
+    "change_email" : "Change Email",
+    "new_email" : "New Email",
+    "change_account" : "Change Account"
   },
   "navbar": {
     "navbar_top_title": "Chinese Anti-Rightist Archives",

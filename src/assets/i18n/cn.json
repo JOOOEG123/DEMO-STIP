@@ -44,7 +44,27 @@
   },
   "common": {
     "chinese_anti_rightist_archives": "中国“右派”档案",
-    "movement_brief": "反右运动简介"
+    "movement_brief": "反右运动简介",
+    "yes": "确认",
+    "no": "拒绝",
+    "cancel" : "取消",
+    "save" : "保存",
+    "delete_account" : "删除帐户"
+  },
+
+  "log":{
+    "log_out" : "您要退出吗？",
+    "edit_announcement" : "编辑公告",
+    "announcement" : "添加/更改公告",
+    "delete_warning" : "您确定要删除您的帐户吗？此操作无法撤消。您的所有数据和贡献将被永久删除。",
+    "save_account_changes" : "保存帐户更改",
+    "save_account_warning" : "您确定要保存帐户更改吗？此操作无法撤消。这将更新您的帐户详细信息。",
+    "change_password" : "更改密码",
+    "pass_change_msg" : "请检查您的电子邮件以获取重置密码的链接。如果您没有收到电子邮件，请检查您的垃圾邮件文件夹。",
+    "email_veri" : "发送电子邮件验证",
+    "change_email" : "更改电子邮件",
+    "new_email" : "新邮件",
+    "change_account" : "更改帐户"
   },
 
   "request-modify": {
