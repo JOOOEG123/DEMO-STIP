@@ -4,6 +4,7 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { RightistSchema } from 'src/app/core/types/adminpage.types';
 import * as d3 from 'd3';
 import { Arc, DefaultArcObject } from 'd3';
+
 interface FilterData {
   filter: string;
   count: number;
@@ -15,8 +16,6 @@ interface FilterData {
   styleUrls: ['./about-research.component.scss'],
 })
 export class AboutResearchComponent implements OnInit, OnDestroy {
-  name = 'Angular ' + VERSION.major;
-
   total?: number;
   rightistSubscription?: Subscription;
   maleRightistList: RightistSchema[] = [];
@@ -85,7 +84,9 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
     let datatest = [
       {
         name: 'Female',
-        value: ((this.femaleRightistList.length / this.total!) * 100).toFixed(2),
+        value: ((this.femaleRightistList.length / this.total!) * 100).toFixed(
+          2
+        ),
         color: '#266461',
       },
 
@@ -97,12 +98,13 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
 
       {
         name: 'Unknown',
-        value:
-          (((this.total! -
+        value: (
+          ((this.total! -
             this.maleRightistList.length -
             this.femaleRightistList.length) /
             this.total!) *
-          100).toFixed(2),
+          100
+        ).toFixed(2),
         color: '#61AF87',
       },
     ];
@@ -165,7 +167,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .append('text')
         .transition()
         .duration(200)
-        .attr('transform', (d)  => {
+        .attr('transform', (d) => {
           return 'translate(' + arc.centroid(d) + ')';
         })
         .attr('dy', '.4em')
@@ -210,7 +212,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         .text((d) => {
           return d.name + ' ' + d.value + '%';
         })
-        .style('fill', (d) =>{
+        .style('fill', (d) => {
           return d.color;
         })
         .style('font-size', '15px');
@@ -219,7 +221,10 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
     if (chartNewId) {
       const svg = chartNewId.getElementsByTagName('svg')?.item(0);
       if (svg) {
-        svg.setAttribute('class', 'shadow rounded-circle border border-opacity-25 border-success bg-info bg-opacity-10');
+        svg.setAttribute(
+          'class',
+          'shadow rounded-circle border border-opacity-25 border-success bg-info bg-opacity-10'
+        );
       }
     }
     setTimeout(restOfTheData, 1000);
