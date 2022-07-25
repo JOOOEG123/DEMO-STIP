@@ -42,6 +42,19 @@
     "enter_msg":"Enter the email address you use to sign in to our website and we'll send you a link to reset your password."
 
   },
+
+  "request-modify": {
+    "request_to_modify": "Request to Modify",
+    "Request": "Request",
+    "Reason": "Reason",
+    "Email" : "Email Address",
+    "request_placeholder" : "What would you like to change",
+    "reason_placeholder" : "Your reason for modification",
+    "email_placeholder" : "name@example.com",
+    "close" : "Close",
+    "submit" : "Submit Request"
+  },
+
   "common": {
     "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
     "movement_brief": "Brief History",

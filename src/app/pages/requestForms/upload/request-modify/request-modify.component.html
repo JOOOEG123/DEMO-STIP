@@ -10,7 +10,7 @@
 
 <ng-template #modTemplate>
   <div class="modal-header">
-    <h4 class="modal-title text-center">Request to Modify</h4>
+    <h4 class="modal-title text-center">{{ "request-modify.request_to_modify" | translate }}</h4>
     <button type="button" class="btn-close close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
@@ -18,39 +18,39 @@
 
   <div class="modal-body" [formGroup]="modForm">
     <div class="mb-3">
-      <label for="request" class="form-label">Request</label>
+      <label for="request" class="form-label">{{ "request-modify.Request" | translate }}</label>
       <textarea
         class="form-control"
         id="reason"
         formControlName="request"
         rows="5"
-        placeholder="What would you like to change..."
+        placeholder= '{{ "request-modify.request_placeholder" | translate }}'
       ></textarea>
     </div>
     <div class="mb-3">
-      <label for="reason" class="form-label">Reason</label>
+      <label for="reason" class="form-label">{{ "request-modify.Reason" | translate }}</label>
       <textarea
         class="form-control"
         id="reason"
         formControlName="reason"
         rows="5"
-        placeholder="Your reason for modification..."
+        placeholder='{{ "request-modify.reason_placeholder" | translate }}'
       ></textarea>
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
+      <label for="email" class="form-label">{{ "request-modify.Email" | translate }}</label>
       <input
         type="email"
         class="form-control"
         id="email"
         formControlName="email"
-        placeholder="name@example.com"
+        placeholder='{{ "request-modify.email_placeholder" | translate }}'
       />
     </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modalRef?.hide()">
-      Close
+      {{ "request-modify.close" | translate }}
     </button>
     <button
       type="button"
@@ -59,7 +59,7 @@
       class="btn btn-primary"
       [disabled]="modForm.invalid"
     >
-      Submit Request
+    {{ "request-modify.submit" | translate }}
     </button>
   </div>
 </ng-template>
