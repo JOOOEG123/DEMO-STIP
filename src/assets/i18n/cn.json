@@ -138,6 +138,11 @@
   "other_resources": {
     "other_resources_title": "未知"
   },
+  "modify_submitted":{
+    "submitted" : "递交成功",
+    "submit_message" : "感谢您的修改请求！我们将通过以下方式与您联系一旦管理员对您的请求做出决定，您提供的电子邮件。"
+
+  },
   "archive": {
     "gender_title": "性别",
     "gender_male": "男性",

@@ -54,7 +54,6 @@ export class RequestModifyComponent implements OnInit, OnDestroy {
       });
     this.modalRef?.hide();
     this.modForm.reset();
-    this.modalRef?.hide();
   }
   openModModal(template: TemplateRef<any> = this.modTemplate) {
     this.modalRef = this.modalService.show(template);

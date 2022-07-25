@@ -81,6 +81,14 @@
   "resources":{
     "resources": "Resources"
   },
+  "modify_submitted":{
+    "submitted" : "Submitted",
+    "submit_message" : "Thank you for your modification request! We will reach out to you via the email you have provided, once Admin makes a decision on your request."
+  },
+  "contact_us_submit":{
+    "submitted" : "Submitted",
+    "submit_message" : "Thank you for contacting us. Your response has been submitted. Someone from our admin team will contact you soon."
+  },
   "common": {
     "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
     "movement_brief": "Brief History",
