@@ -28,49 +28,52 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">
-        <form class="needs-validation" novalidate>
-          <label for="request" class="form-label">Modification Request</label>
-          <textarea
-            class="form-control"
-            id="request"
-            value="Mark"
-            rows="6"
-            required
-            placeholder="What are you requesting to modify?"
-            required
-          ></textarea>
-          <br /><br />
-          <label for="reson" class="form-label">Resoning Behind Request</label>
-          <textarea
-            class="form-control"
-            id="reson"
-            rows="6"
-            required
-            placeholder="Why should this file be modified?"
-          ></textarea>
-          <br /><br />
-          <label for="email" class="form-label">Email address</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            placeholder="name@example.com"
-            required
-          />
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="submit" class="btn btn-primary">
-              Submit Request
-            </button>
-          </div>
-        </form>
+      <div class="modal-body" [formGroup]=modForm>
+        <label for="request" class="form-label">Modification Request</label>
+        <textarea
+          class="form-control"
+          id="request"
+          value="Mark"
+          rows="6"
+          required
+          placeholder="What are you requesting to modify?"
+          formControlName="request"
+        ></textarea>
+        <br /><br />
+        <label for="reson" class="form-label">Resoning Behind Request</label>
+        <textarea
+          class="form-control"
+          id="reson"
+          rows="6"
+          formControlName="reason"
+          placeholder="Why should this file be modified?"
+        ></textarea>
+        <br /><br />
+        <label for="email" class="form-label">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          placeholder="name@example.com"
+        />
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            (click)="sendRequestForm()"
+            [disabled]="modForm.invalid"
+          >
+            Submit Request
+          </button>
+        </div>
       </div>
     </div>
   </div>
