@@ -1,9 +1,17 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AnnouncementService } from 'src/app/core/services/announcement.service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { EmailService } from 'src/app/core/services/email.service';
 import { Profile } from 'src/app/core/types/auth.types';
 
 @Component({
@@ -13,6 +21,7 @@ import { Profile } from 'src/app/core/types/auth.types';
 })
 export class ModalTemplateComponent implements OnInit {
   modalRef?: BsModalRef;
+  @Input() isNotifyEnabled = false;
 
   @ViewChild('announceModal') announceModal!: TemplateRef<any>;
   @ViewChild('changeEmailTemplate') changeEmailTemplate!: TemplateRef<any>;
@@ -29,13 +38,15 @@ export class ModalTemplateComponent implements OnInit {
   sub: Subscription[] = [];
   announceText!: string;
   edit_form!: Profile;
+  hasAdminNotification = false;
   constructor(
     private auth: AuthServiceService,
     private modalService: BsModalService,
     private announce: AnnouncementService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private emailService: EmailService,
+    private alertService: AlertService
   ) {}
-
   ngOnInit(): void {
     // For annuncement template.
     this.sub.push(
@@ -88,15 +99,31 @@ export class ModalTemplateComponent implements OnInit {
   // function to close modal
   changeEmail() {
     const email = this.changeEmailForm.value.newEmail;
-    this.auth.changeEmail(email).then(() => {
-      this.modalRef?.hide();
-    });
+    this.auth
+      .changeEmail(email)
+      .then(() => {
+        this.modalRef?.hide();
+        this.emailService.adminEmailsNotification({
+          email,
+          isNotified: this.isNotifyEnabled,
+        });
+        this.changeEmailForm.reset();
+      })
+      .catch((e) => {
+        this.changeEmailForm.reset();
+        this.alertService.emitAlert(e.message);
+      });
   }
 
   deleteAccount() {
-    this.auth.deleteAccount().then(() => {
-      this.modalRef?.hide();
-    });
+    this.auth
+      .deleteAccount()
+      .then(() => {
+        this.modalRef?.hide();
+      })
+      .catch((e) => {
+        this.alertService.emitAlert(e.message);
+      });
   }
 
   logout() {
@@ -112,16 +139,26 @@ export class ModalTemplateComponent implements OnInit {
   }
 
   saveAllAccountChanges() {
-    this.auth.editProfile(this.edit_form).then(() => {
-      this.modalRef?.hide();
-      this.edit_form = {} as Profile;
-    });
+    this.auth
+      .editProfile(this.edit_form)
+      .then(() => {
+        this.modalRef?.hide();
+        this.edit_form = {} as Profile;
+      })
+      .catch((e) => {
+        this.alertService.emitAlert(e.message);
+      });
   }
 
   sendEmailResetPassword() {
-    this.auth.changePassword(this.edit_form.email).then(() => {
-      this.modalRef?.hide();
-      this.edit_form = {} as Profile;
-    });
+    this.auth
+      .changePassword(this.edit_form.email)
+      .then(() => {
+        this.modalRef?.hide();
+        this.edit_form = {} as Profile;
+      })
+      .catch((e) => {
+        this.alertService.emitAlert(e.message);
+      });
   }
 }
