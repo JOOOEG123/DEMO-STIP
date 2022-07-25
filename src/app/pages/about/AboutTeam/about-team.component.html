@@ -118,14 +118,14 @@
 </ng-template>
 <ng-template #exitTemplate>
   <div class="modal-header">
-    <h4 class="modal-title text-center">Submitted</h4>
+    <h4 class="modal-title text-center">{{ "contact_us_submit.submitted" | translate }}</h4>
     <button type="button" class="btn-close close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <p>
-      Thank you for you submission, we will contact you back as soon as we can.
+      {{ "contact_us_submit.submit_message" | translate }}
     </p>
   </div>
 </ng-template>
