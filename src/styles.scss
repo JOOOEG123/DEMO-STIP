@@ -13,6 +13,48 @@ $white: white;
 $light-grey: #f5f5f5;
 $jade: #61af87;
 
+
+.bg-image-blue {
+  .bg-colors {
+    background-color: $jade;
+    padding-bottom: 0.5rem;
+    clip-path: polygon(100% 0%, 100% 70%, 50% 90%, 50% 90%, 0 70%, 0 0);
+    .bg-image-blue-inner {
+      clip-path: polygon(100% 0%, 100% 70%, 50% 90%, 50% 90%, 0 70%, 0 0);
+      background-color: $dark-blue;
+      &-pb-10 {
+        padding-bottom: 10rem;
+      }
+      &-pb-15 {
+        padding-bottom: 15rem;
+      }
+    }
+  }
+  background-color: $medium-blue;
+}
+
+.profile-bg-image-blue {
+  .profile-bg-colors {
+    background-color: $medium-blue;
+    padding-bottom: 0.5rem;
+    clip-path: polygon(100% 0%, 100% 70%, 50% 80%, 40% 90%, 0 100%, 0 0);
+    .profile-bg-image-blue-inner {
+      clip-path: polygon(100% 0%, 100% 60%, 50% 80%, 40% 90%, 0 100%, 0 0);
+      background-color: $dark-blue;
+      &-pb-10 {
+        padding-bottom: 10rem;
+      }
+      &-pb-15 {
+        padding-bottom: 15rem;
+      }
+    }
+  }
+  background-color: white;
+}
+
+
+
+
 .text-orange-red {
   color: $orange-red;
 }
@@ -60,24 +102,7 @@ body {
   z-index: 2;
 }
 
-.bg-image-blue {
-  .bg-colors {
-    background-color: $jade;
-    padding-bottom: 0.5rem;
-    clip-path: polygon(100% 0%, 100% 70%, 50% 90%, 50% 90%, 0 70%, 0 0);
-    .bg-image-blue-inner {
-      clip-path: polygon(100% 0%, 100% 70%, 50% 90%, 50% 90%, 0 70%, 0 0);
-      background-color: $dark-blue;
-      &-pb-10 {
-        padding-bottom: 10rem;
-      }
-      &-pb-15 {
-        padding-bottom: 15rem;
-      }
-    }
-  }
-  background-color: $medium-blue;
-}
+
 
 .bg-right-slash {
   background-color: $medium-blue;

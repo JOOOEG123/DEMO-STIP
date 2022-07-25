@@ -27,4 +27,8 @@ export class ImagesService {
   deleteImage(imageId: string) {
     return this.db.object(`persons/requestArchieve/images/${imageId}`).remove();
   }
+
+  getImage(imageId:string) {
+    return this.db.object(`persons/requestArchieve/images/${imageId}`).valueChanges()
+  }
 }
