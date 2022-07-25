@@ -34,7 +34,6 @@ type FormData = {
 };
 
 type ImageData = {
-  imageId: string;
   imageUrl: string;
   imageUpload: string;
   image: string;
@@ -199,14 +198,13 @@ export class UploadComponent implements OnInit, OnDestroy {
             console.log('inside');
             for (const imageId of rightist.imageId) {
               this.imageSubscription = this.imageAPI
-                .getImage(imageId)
+                .getImage(this.language, imageId)
                 .subscribe((data: any) => {
                   this.storageAPI
                     .getGalleryImageURL(imageId)
                     .subscribe((imageUrl) => {
                       counter += 1;
                       this.images.push({
-                        imageId: imageId,
                         imageUrl: imageUrl,
                         imageUpload: data.isGallery ? 'yes' : 'no',
                         image: '',
@@ -372,7 +370,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
       for (const image of data.value) {
         result.push({
-          imageId: image.imageId,
           imageUrl: image.imageUrl,
           imageUpload: image.imageUpload,
           image: image.image,
@@ -383,7 +380,6 @@ export class UploadComponent implements OnInit, OnDestroy {
         })
 
         otherResult.push({
-          imageId: image.imageId,
           imageUrl: image.imageUrl,
           imageUpload: image.imageUpload,
           image: image.image,
@@ -434,10 +430,15 @@ export class UploadComponent implements OnInit, OnDestroy {
     console.log(this.images)
     console.log(this.otherImages)
 
-    // let imageResult: string[] = [];
+    let otherImageResult: string[] = []
+    let imageResult: string[] = [];
+    
+    const rightistId =
+      this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
 
-    // const rightistId =
-    //   this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
+    if (this.isAdmin) {
+
+    } 
 
     // for (const image of this.images) {
     //   let imageId = `Image-${UUID()}`;

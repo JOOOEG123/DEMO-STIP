@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { Rightist } from '../types/adminpage.types';
+import { Rightist, RightistSchema } from '../types/adminpage.types';
 
 @Injectable({
   providedIn: 'root',
@@ -166,5 +166,32 @@ export class ArchieveApiService {
         ref.orderByChild('event').equalTo(word)
       )
       .valueChanges();
+  }
+
+  // Latest Update
+  fetchAllRightists(language: string) {
+    return this.db.object(`/persons/data/${language}/rightists`).valueChanges();
+  }
+
+  fetchAllRightistList(language: string) {
+    return this.db.list(`/persons/data/${language}/rightists`).valueChanges();
+  }
+
+  getRightist(language: string, rightistId: string) {
+    return this.db
+      .object(`/persons/data/${language}/rightists/${rightistId}`)
+      .valueChanges();
+  }
+
+  addOrUpdateRightist(language: string, rightist: RightistSchema) {
+    return this.db
+      .object(`/persons/data/${language}/rightists/${rightist.rightistId}`)
+      .update({ [rightist.rightistId]: rightist });
+  }
+
+  removeRightist(language: string, rightistId: string) {
+    return this.db
+      .object(`/persons/data/${language}/rightists/${rightistId}`)
+      .remove();
   }
 }

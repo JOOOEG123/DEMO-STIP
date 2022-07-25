@@ -74,19 +74,46 @@ export class ContributionsService {
   }
 
   // Admin get all contribution
-  fetchAllContributions() {
+  fetchAllContributions(language: string) {
     return this.db
-      .object(`/persons/requestArchieve/contributions`)
+      .object(`/persons/data/${language}/contributions`)
       .valueChanges();
   }
 
-  updateUserContribution(
+  fetchAllContributionsList(language: string) {
+    return this.db
+      .list(`/persons/data/${language}/contributions`)
+      .valueChanges();
+  }
+
+  addOrUpdateUserContribution(
+    language: string,
     contributorId: string,
     contributionId: string,
     obj: ContributionSchema
   ) {
     return this.db
-      .object(`/persons/requestArchieve/contributions/${contributorId}`)
+      .object(`/persons/data/${language}/contributions/${contributorId}`)
       .update({ [contributionId]: obj });
+  }
+
+  getUserContribution(
+    language: string,
+    contributorId: string,
+    contributionId: string
+  ) {
+    return this.db
+      .object(`/persons/data/${language}/contributions/${contributorId}/${contributionId}`)
+      .valueChanges()
+  }
+
+  removeUserContribution(
+    language: string,
+    contributorId: string,
+    contributionId: string
+  ) {
+    return this.db
+      .object(`/persons/data/${language}/contributions/${contributorId}/${contributionId}`)
+      .remove()
   }
 }

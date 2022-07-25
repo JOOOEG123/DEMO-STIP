@@ -75,6 +75,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   emptyContributionMessage = 'Nothing Here!';
 
+  language?: string
+  otherLanguage?: string
+
   constructor(
     private modalService: BsModalService,
     private contributionAPI: ContributionsService,
@@ -84,8 +87,11 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.language = localStorage.getItem('lang')!
+    this.otherLanguage = this.language === 'en' ? 'cn' : 'en'
+
     this.contributionSubcription = this.contributionAPI
-      .fetchAllContributions()
+      .fetchAllContributions(this.language)
       .subscribe((data: any) => {
         this.contributions.length = 0;
         this.newContributions.length = 0;
@@ -240,7 +246,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       if (this.selectedContribution.rightist) {
     
         this.selectedContribution.publish = this.publish;
-        
+
         if (this.isReadMore) {
           this.updateSelectedContribution();
 
@@ -264,14 +270,16 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           result.approvedAt = new Date();
 
           this.archiveAPI.addNewArchieve(rightist!).then(() => {});
-          this.contributionAPI.updateUserContribution(
+          this.contributionAPI.addOrUpdateUserContribution(
+            this.language!,
             this.selectedContribution.contributorId,
             this.selectedContribution.contributionId,
             result
           );
           //  When not approved
         } else {
-          this.contributionAPI.updateUserContribution(
+          this.contributionAPI.addOrUpdateUserContribution(
+            this.language!,
             this.selectedContribution.contributorId,
             this.selectedContribution.contributionId,
             contribution
@@ -406,7 +414,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       let imagesId = contribution.rightist.imageId;
       for (const imageId of imagesId) {
         this.storageAPI.removeGalleryImage(imageId);
-        await this.imageAPI.deleteImage(imageId);
+        await this.imageAPI.deleteImage(this.language!, imageId);
       }
     }
   }
@@ -432,7 +440,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           galleryDetail: image.imageDes,
           gallerySource: image.imageSource,
         };
-        this.imageAPI.addImage(imageDb)
+        this.imageAPI.addOrUpdateImage(this.language!, imageDb)
         this.storageAPI.uploadGalleryImage(imageId, file)
       })
     }

@@ -59,6 +59,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
   @ViewChild('image') imageRef?: ElementRef;
   @ViewChild(NgxMasonryComponent) masonry?: NgxMasonryComponent;
 
+  language?: string
+  otherLanguage?: string
+
   constructor(
     private translate: TranslateService,
     private storageAPI: StorageApIService,
@@ -67,13 +70,16 @@ export class GalleryComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.language = localStorage.getItem('lang')!
+    this.otherLanguage = this.language === 'en' ? 'cn' : 'en'
+
     this.imageSubscription = this.imagesAPI
-      .getAllImages()
+      .getAllImagesList(this.language)
       .subscribe((data: any) => {
         this.categoryImages.length = 0;
         this.display.length = 0;
         this.images.length = 0;
-        let images: Image[] = Object.values(data);
+        let images : Image[] = data
         for (const image of images) {
           this.storageAPI
             .getGalleryImageURL(`${image.imageId}`)
@@ -196,7 +202,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.modalService.hide();
         let { opacity, imagePath, ...result } = image;
         console.log(result);
-        this.imagesAPI.updateImage(result);
+        this.imagesAPI.addOrUpdateImage(this.language!, result);
       }
     }
 
@@ -215,7 +221,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     let image = data.image;
     if (data.status == 'delete') {
       this.modalService.hide();
-      this.imagesAPI.deleteImage(image.imageId);
+      this.imagesAPI.deleteImage(this.language!, image.imageId);
       this.storageAPI.removeGalleryImage(image.imageId);
       console.log(image);
     }
