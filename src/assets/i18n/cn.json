@@ -188,5 +188,38 @@
       "阎长贵先生赐文",
       "魏燮中先生序"
     ]]]
+  }, 
+  "account": {
+    "account_info":"账户信息",
+    "username":"用户名",
+    "email":"邮箱地址",
+    "about":"关于",
+    "ethnicity":"少数民族", 
+    "gender":"性别",
+    "male":"男性", 
+    "female":"女性",
+    "upload":"上传", 
+    "logout":"注销",
+    "view_contributions":"查看公众投稿",
+    "edit_announcement":"编辑公告", 
+    "your_contributions":"您的投稿",
+    "no_contribution":"您暂时还没有提交任何投稿。请重新登录 Log out and log in again after verifying account if you can't still navigate upload page.",
+    "verify_account_msg":"You need to verify account before you can add Contribution. Log out and log in again after verifying account if you can't still navigate upload page.",
+    "verify_account":"Verify Account",
+
+    "add_photo":"添加照片", 
+    "user":"用户", 
+    "edit_account":"编辑账号信息", 
+    "firstname":"名",
+    "lastname":"姓氏", 
+    "occupation":"职业", 
+    "about_me":"关于我", 
+    "change_email":"更改邮箱", 
+    "change_password":"更改密码", 
+    "go_back_account":"返回账户信息", 
+    "delete":"D删除账号", 
+    "save":"保存修改", 
+    "notification": "Admin Notification for Contact us / Modification request"
+    
   }
 }

@@ -192,5 +192,39 @@
       "Quotes from Deng Xiaoping",
       "Text by Mr. Yan Changgui"
     ]]]
+  }, 
+  "account": {
+    "account_info":"Account Information",
+    "username":"User Name",
+    "email":"Email address",
+    "about":"About",
+    "ethnicity":"Ethnicity", 
+    "gender":"Gender",
+    "male":"Male", 
+    "female":"Female",
+    "upload":"Upload", 
+    "logout":"Log Out",
+    "view_contributions":"View Public Contributions",
+    "edit_announcement":"Edit Announcement", 
+    "your_contributions":"Your Contributions",
+    "no_contribution":"You do not have any contribution yet. Log out and log in again after verifying account if you still can't navigate to the Upload page.",
+    "verify_account_msg":"You need to verify account before you can add Contribution. Log out and log in again after verifying account if you can't still navigate upload page.",
+    "verify_account":"Verify Account",
+  
+    "add_photo":"ADD PHOTO", 
+    "user":"User", 
+    "edit_account":"Edit Account Information", 
+    "firstname":"First Name",
+    "lastname":"Last Name", 
+    "occupation":"Occupation", 
+    "about_me":"About me ", 
+    "change_email":"Change Email", 
+    "change_password":"Change Password",
+    "go_back_account":"Go Back to Account", 
+    "delete":"Delete Account", 
+    "save":"Save Changes", 
+    "notification":"Admin Notification for Contact us / Modification request"
+
+
   }
 }
