@@ -44,9 +44,6 @@ export class AccountComponent implements OnInit, OnDestroy {
               });
           }
         }
-        console.log(x.sort((a, b) => {
-          return b.contributedAt - a.contributedAt;
-        }));
         this.userContribution = x.sort((a, b) => {
           return new Date(b.contributedAt).getTime() - new Date(a.contributedAt).getTime();
         });
