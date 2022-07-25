@@ -65,6 +65,19 @@
     "close" : "Close",
     "submit" : "Submit"
   },
+  "research":{
+    "overview": "Archive Project Overview",
+    "overview_body": "...",
+    "research_found": "Research and what we found",
+    "research_body": "...",
+    "data1" : "Data",
+    "data2" : "Data",
+    "data1_body" : "...",
+    "data2_body" : "...",
+    "summary" : "Summary",
+    "summary_body" : "...",
+    "team_button" : "Meet the team behind the research"
+  },
 
   "common": {
     "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",

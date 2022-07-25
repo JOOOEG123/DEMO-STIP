@@ -108,6 +108,19 @@
     "close" : "封闭",
     "submit" : "提交"
   },
+  "research":{
+    "overview": "存档项目概述",
+    "overview_body": "...",
+    "research_found": "研究和我们的发现",
+    "research_body": "...",
+    "data1" : "数据",
+    "data2" : "数据",
+    "data1_body" : "...",
+    "data2_body" : "...",
+    "summary" : "概括",
+    "summary_body" : "...",
+    "team_button" : "与研究背后的团队会面"
+  },
   "about_movement": {
     "about_movement_introduction_title": "关于1950年代的中国反右运动",
     "about_movement_introduction_body": "此处的示例文本",
