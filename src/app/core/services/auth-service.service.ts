@@ -13,13 +13,16 @@ import { AlertService } from './alert.service';
 export class AuthServiceService {
   private _hasAdminRole = false;
   private _hasVerifiedEmail = false;
+  private _userDetaills = new BehaviorSubject<Profile>({} as Profile);
+  private _isAdmin = new BehaviorSubject<boolean>(false);
+  readonly isAdmin = this._isAdmin.asObservable();
 
   user: any;
   isLoggedIn = new Subject<boolean>();
-  userDetaills = new BehaviorSubject<Profile>({} as Profile);
 
-  private _isAdmin = new BehaviorSubject<boolean>(false);
-  readonly isAdmin = this._isAdmin.asObservable();
+  get userDetaills() {
+    return this._userDetaills.asObservable();
+  }
 
   get hasAdminRole() {
     return this._hasAdminRole;
@@ -28,9 +31,11 @@ export class AuthServiceService {
   get hasVerifiedEmail() {
     return this._hasVerifiedEmail || this._hasAdminRole;
   }
+
   get uid() {
     return this.getUserDetails()?.uid;
   }
+
   private userDocs(uid: string = this.uid) {
     return this.store.doc<any>(`users/${uid}`);
   }
@@ -58,7 +63,6 @@ export class AuthServiceService {
           this._hasAdminRole = token.claims?.['admin'];
           this._hasVerifiedEmail = user.emailVerified;
           this._isAdmin.next(this.hasAdminRole || false);
-          console.log('is Admin: ', this.hasAdminRole);
           localStorage.setItem(
             'user',
             JSON.stringify({ user: this.user, token: token })
@@ -66,7 +70,7 @@ export class AuthServiceService {
           this.userDocs()
             .valueChanges()
             .subscribe((user) => {
-              this.userDetaills.next(user);
+              this._userDetaills.next(user);
             });
           this.isLoggedIn.next(this.isLoggedInCheck);
         });
@@ -166,7 +170,7 @@ export class AuthServiceService {
             .doc<any>(`users/${p.uid}`)
             .set(profile, { merge: true })
             .then(() => {
-              this.userDetaills.next({ ...(profile as any) });
+              this._userDetaills.next({ ...(profile as any) });
             });
         }
       }
