@@ -1,18 +1,18 @@
 {
   "homepage.component": {
-    "chinese_anti_rightist_archives": "Chinese \"Rightist\" Archive",
-    "featured_victims_of_the_anti-rightists_movement": "Featured “Rightists”"
+    "chinese_anti_rightist_archives": "Chinese \"Rightist\" Archives",
+    "featured_victims_of_the_anti-rightists_movement": "Featured \"Rightist\" Contributors"
   },
   "header.component": {
     "home_page": "Home",
     "about_page": "About",
-    "about_movement": "About the movement",
-    "projects_overview": "Projects overview",
+    "about_movement": "About Movement",
+    "projects_overview": "Project Overview",
     "meet_the_team": "Meet the team",
-    "resources_page": "Other Resources",
+    "resources_page": "Resources",
     "research_page": "Research",
-    "broswer_page": " Browse Archives",
-    "archive_page": "Archive",
+    "browser_page": "Browse",
+    "archive_page": "Collections",
     "gallery_page": "Gallery",
     "repository_page": "Repository",
     "login_signup": "Login/Signup",
@@ -94,7 +94,7 @@
     "submit_message": "Thank you for contacting us. Your response has been submitted. Someone from our admin team will contact you soon."
   },
   "common": {
-    "chinese_anti_rightist_archives": "Chinese Rightist Archives",
+    "chinese_anti_rightist_archives": "Chinese \"Rightist\" Archive",
     "movement_brief": "Brief History",
     "page_title": "Chinese \"Rightist\" Archives",
     "yes": "Yes",
@@ -120,24 +120,27 @@
     "change_account": "Change Account"
   },
   "navbar": {
-    "navbar_top_title": "Chinese Rightist Archives",
-    "navbar_searchbar_placeholder": "Search for Archives",
+    "navbar_top_title": "Chinese \"Rightist\" Archive",
+    "navbar_searchbar_placeholder": "Search the Archive...",
     "navbar_button_one": "Home",
     "navbar_button_two": "About",
-    "navbar_button_two_subbutton_one": "About the Movement",
-    "navbar_button_two_subbutton_two": "Projects Overview",
-    "navbar_button_two_subbutton_three": "Other Resources",
-    "navbar_button_three": "Browse Archives",
-    "navbar_button_three_subbutton_one": "Archive",
+    "navbar_button_two_subbutton_one": "About Movement",
+    "navbar_button_two_subbutton_two": "Project Overview",
+    "navbar_button_two_subbutton_three": "Resources",
+    "navbar_button_three": "Browse",
+    "navbar_button_three_subbutton_one": "Collections",
     "navbar_button_three_subbutton_two": "Gallery",
     "navbar_button_three_subbutton_three": "Repository",
     "navbar_language_one": "English",
     "navbar_language_two": "Chinese",
     "navbar_auth_button": "Login / Signup",
     "navbar_account_button": "Account",
-    "navbar_account_button_subbutton_one": "Account",
-    "navbar_account_button_subbutton_two": "Upload",
-    "navbar_account_button_subbutton_three": "Logout"
+    "navbar_account_button_subbutton_one": "Account Home",
+    "navbar_account_button_subbutton_two": "Edit Account",
+    "navbar_account_button_subbutton_three": "New \"Rightist\" Contribution",
+    "navbar_account_button_subbutton_four": "New Gallery Image",
+    "navbar_account_button_subbutton_five": "Public Contribution",
+    "navbar_account_button_subbutton_six": "Log Out"
   },
   "footer": {
     "copyright": "© Copyright 2022 STIP",
