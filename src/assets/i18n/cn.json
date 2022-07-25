@@ -97,16 +97,27 @@
     "home_history_title": "未知",
     "home_history_body": "未知"
   },
+  "contact_us":{
+    "contact_us": "联系我们",
+    "name": "姓名",
+    "email": "电邮",
+    "message": "讯息",
+    "name_placeholder": "名字和姓氏",
+    "email_placeholder" : "姓名@例子.com",
+    "message_placeholder" : "您的留言",
+    "close" : "封闭",
+    "submit" : "提交"
+  },
   "about_movement": {
-    "about_movement_introduction_title": "未知",
-    "about_movement_introduction_body": "未知",
-    "about_movement_introduction_button": "未知",
-    "about_movement_map_title": "未知",
-    "about_movement_map_body": "未知",
-    "about_movement_learn_more_button": "未知"
+    "about_movement_introduction_title": "关于1950年代的中国反右运动",
+    "about_movement_introduction_body": "此处的示例文本",
+    "about_movement_introduction_button": "查看来源",
+    "about_movement_map_title": "地图",
+    "about_movement_map_body": "地图",
+    "about_movement_learn_more_button": "了解有关这项研究的更多信息"
   },
   "projects_overview": {
-    "projects_overview_meet_the_team_title": "未知"
+    "projects_overview_meet_the_team_title": "认识研究背后的团队"
   },
   "other_resources": {
     "other_resources_title": "未知"

@@ -54,6 +54,17 @@
     "close" : "Close",
     "submit" : "Submit Request"
   },
+  "contact_us":{
+    "contact_us": "Contact Us",
+    "name": "Name",
+    "email": "Email Address",
+    "message": "Message",
+    "name_placeholder": "First and Last name",
+    "email_placeholder" : "name@example.com",
+    "message_placeholder" : "Your message here...",
+    "close" : "Close",
+    "submit" : "Submit"
+  },
 
   "common": {
     "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
