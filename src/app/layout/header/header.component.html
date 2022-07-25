@@ -172,4 +172,16 @@
       <div>{{ count }}</div>
     </div>
   </alert>
+  <alert
+    *ngFor="let alert of globalErrorMessage"
+    type="danger pb-5 m-0"
+    [dismissible]="true"
+    [hidden]="!globalErrorMessage.length"
+  >
+    <div class="d-flex">
+      <div class="flex-grow-1 message ml-4">
+        <p>{{ alert }}</p>
+      </div>
+    </div>
+  </alert>
 </header>

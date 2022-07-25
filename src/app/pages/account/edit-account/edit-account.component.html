@@ -1,4 +1,7 @@
-<app-modal-template #modaltemplate></app-modal-template>
+<app-modal-template
+  #modaltemplate
+  [isNotifyEnabled]="adminNotification"
+></app-modal-template>
 <div class="container">
   <div class="row">
     <div class="col-12 col-md">
@@ -39,6 +42,19 @@
         </div>
         <small class="linebtntext w-100">User ID</small>
         <small class="my-2 text-center">{{ userId }}</small>
+        <div class="form-check form-switch" *ngIf="isAdmin">
+          <input
+            class="form-check-input"
+            [ngClass]="{ 'bg-success': adminNotification }"
+            [(ngModel)]="adminNotification"
+            (ngModelChange)="updateNotify()"
+            type="checkbox"
+            id="flexSwitchCheckDefault"
+          />
+          <label class="form-check-label" for="flexSwitchCheckDefault"
+            >Admin Notification for Contact us / Modification request</label
+          >
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-8">

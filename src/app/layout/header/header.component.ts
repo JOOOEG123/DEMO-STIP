@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { AlertService } from 'src/app/core/services/alert.service';
 import { AnnouncementService } from 'src/app/core/services/announcement.service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { LoginComponent } from 'src/app/layout/login/login.component';
@@ -20,11 +21,13 @@ export class HeaderComponent implements OnInit {
   navbars: NavBarLinks = NavBar;
   timeId: any;
   transPath = 'header.component.';
+  globalErrorMessage: string[] = [];
   constructor(
     private auth: AuthServiceService,
     private annoucement: AnnouncementService,
     private outsideScope: NgZone,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private alertService: AlertService
   ) {}
   h = 'home_page';
 
@@ -41,6 +44,9 @@ export class HeaderComponent implements OnInit {
       this.message = x;
       this.createCounter();
       this.outsideScope.run(this.createCounter);
+    });
+    this.alertService.alerts.subscribe((x) => {
+      this.globalErrorMessage = x;
     });
   }
   loginLogin() {
@@ -71,5 +77,9 @@ export class HeaderComponent implements OnInit {
     if (navbar) {
       navbar.classList.remove('show');
     }
+  }
+  clearGlobalErrorMessage() {
+    this.globalErrorMessage = [];
+    this.alertService.clearAlerts();
   }
 }

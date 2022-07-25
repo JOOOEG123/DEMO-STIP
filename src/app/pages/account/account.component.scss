@@ -3,3 +3,9 @@
   height: 14rem !important;
   padding: 0.5rem;
 }
+
+.contribution-scroller {
+  height: 95rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

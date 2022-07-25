@@ -5,6 +5,7 @@ import * as provider from 'firebase/auth';
 import { Router } from '@angular/router';
 import { EmailPassword, Profile } from '../types/auth.types';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,9 @@ export class AuthServiceService {
   isLoggedIn = new Subject<boolean>();
   userDetaills = new BehaviorSubject<Profile>({} as Profile);
 
-  isAdmin = new BehaviorSubject<boolean>(false);
+  private _isAdmin = new BehaviorSubject<boolean>(false);
+  readonly isAdmin = this._isAdmin.asObservable();
+
   get hasAdminRole() {
     return this._hasAdminRole;
   }
@@ -45,7 +48,8 @@ export class AuthServiceService {
     private store: AngularFirestore,
     private auth: AngularFireAuth,
     private router: Router,
-    private outsideScope: NgZone
+    private outsideScope: NgZone,
+    private alertService: AlertService
   ) {
     this.auth.authState.subscribe((user) => {
       if (user) {
@@ -53,7 +57,7 @@ export class AuthServiceService {
         user.getIdTokenResult().then((token) => {
           this._hasAdminRole = token.claims?.['admin'];
           this._hasVerifiedEmail = user.emailVerified;
-          this.isAdmin.next(this.hasAdminRole || false);
+          this._isAdmin.next(this.hasAdminRole || false);
           console.log('is Admin: ', this.hasAdminRole);
           localStorage.setItem(
             'user',
@@ -172,7 +176,7 @@ export class AuthServiceService {
   signOut() {
     return this.auth.signOut().then(() => {
       this._hasAdminRole = false;
-      this.isAdmin.next(false);
+      this._isAdmin.next(false);
       localStorage.removeItem('user');
       this.router.navigate(['/']);
     });
@@ -190,15 +194,20 @@ export class AuthServiceService {
     return this.auth.currentUser.then((user: any) => {
       if (user) {
         // need to delete all the data from the database and api.
-        user.delete();
         this.store
           .doc<any>(`users/${this.uid}`)
           .delete()
           .then(() => {
-            user.delete();
+            user
+              .delete()
+              .then(() => {})
+              .catch((e) => {
+                this.alertService.emitAlert(e.message);
+              });
             this.signOut();
           })
-          .catch((error) => {
+          .catch((e) => {
+            this.alertService.emitAlert(e.message);
             location.reload();
             this.signOut();
           });
@@ -209,9 +218,14 @@ export class AuthServiceService {
   changeEmail(email: string) {
     return this.auth.currentUser.then((user: any) => {
       if (user) {
-        user.updateEmail(email).then(() => {
-          this.userDocs().update({ email });
-        });
+        user
+          .updateEmail(email)
+          .then(() => {
+            this.userDocs().update({ email });
+          })
+          .catch((error) => {
+            this.alertService.emitAlert(error.message);
+          });
       }
     });
   }
