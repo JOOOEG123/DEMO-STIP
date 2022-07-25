@@ -18,6 +18,28 @@
     "login_signup": "Login/Signup"
   },
   "login.component": {
+    "first_name":"First name",
+    "last_name":"Last name",
+    "comfirm_email":"Confirm Email address",
+    "login":"Log In", 
+    "email_address":"Email address", 
+    "password":"Password",
+    "forgot_password":"Forget your password?",
+    "or":"OR",
+    "login_facebook":"Log In with Facebook",
+    "signup_facebook":"Sign Up with Facebook",
+    "login_google":"Log In with Google",
+    "no_account":"Don't have an account?", 
+    "already_account":"Already have an account?",
+    "signup":"Sign Up",
+    "continue":"By continuing, you agree to our",
+    "term_service":"Terms of Service",
+    "acknowledge":"and acknowledge you've read our",
+    "privacy_police":"Privacy Policy", 
+    "period":".",
+    "send":"Send",
+    "back_login":"Back to log in",
+    "enter_msg":"Enter the email address you use to sign in to our website and we'll send you a link to reset your password."
 
   },
   "common": {

@@ -14,7 +14,11 @@
     *ngIf="isSignIn === 'signup' || isSignIn === 'signin'"
   >
     <h3 class="modal-title text-center my-3">
-      {{ isSignIn === "signup" ? "Create an account" : "Log In" }}
+      {{
+        isSignIn === ("login.component.signup" | translate)
+          ? "Create an account"
+          : ("login.component.login" | translate)
+      }}
     </h3>
     <form [formGroup]="loginForm" (ngSubmit)="signUpwithEmail()">
       <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
@@ -31,7 +35,8 @@
           placeholder="First name"
         />
         <label for="firstName"
-          >First name <span class="text-danger">*</span></label
+          >{{ "login.component.first_name" | translate }}
+          <span class="text-danger">*</span></label
         >
       </div>
       <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
@@ -48,7 +53,8 @@
           }"
         />
         <label for="lastname"
-          >Last name <span class="text-danger">*</span></label
+          >{{ "login.component.last_name" | translate
+          }}<span class="text-danger">*</span></label
         >
       </div>
 
@@ -65,7 +71,8 @@
           }"
         />
         <label for="email"
-          >Email address <span class="text-danger">*</span></label
+          >{{ "login.component.email_address" | translate }}
+          <span class="text-danger">*</span></label
         >
       </div>
       <div class="form-floating mb-3" *ngIf="isSignIn === 'signup'">
@@ -82,7 +89,8 @@
           }"
         />
         <label for="confirmEmail"
-          >Confirm Email address <span class="text-danger">*</span></label
+          >{{ "login.component.comfirm_email" | translate }}
+          <span class="text-danger">*</span></label
         >
       </div>
       <div class="form-floating mb-3">
@@ -99,7 +107,8 @@
           }"
         />
         <label for="password"
-          >Password <span class="text-danger">*</span></label
+          >{{ "login.component.password" | translate }}
+          <span class="text-danger">*</span></label
         >
       </div>
       <button
@@ -107,7 +116,7 @@
         class="btn btn-link link-dark p-0 my-2"
         (click)="isSignIn = 'forgetpassword'; errorMessage = ''"
       >
-        Forget your password?
+        {{ "login.component.forgot_password" | translate }}
       </button>
 
       <div class="d-grid gap-2 col-12">
@@ -117,9 +126,11 @@
           [disabled]="loginForm.invalid"
           type="submit"
         >
-          Log in
+          {{ "login.component.login" | translate }}
         </button>
-        <div class="linebtntext w-100">OR</div>
+        <div class="linebtntext w-100">
+          {{ "login.component.or" | translate }}
+        </div>
         <button
           class="btn btn-light rounded-pill border"
           type="button"
@@ -131,7 +142,11 @@
             class="img-fluid"
             width="25"
           />
-          {{ isSignIn === "signup" ? "Sign Up " : "Log In " }}with Facebook
+          {{
+            isSignIn === "signup"
+              ? ("login.component.signup_facebook" | translate)
+              : ("login.component.login_facebook" | translate)
+          }}
         </button>
         <button
           class="btn btn-light rounded-pill border"
@@ -144,33 +159,48 @@
             class="img-fluid"
             width="20"
           />
-          {{ isSignIn === "signup" ? "Sign Up " : "Log In " }}with Google
+          {{
+            isSignIn === "signup"
+              ? ("login.component.signup_google" | translate)
+              : ("login.component.login_google" | translate)
+          }}
         </button>
         <div class="text-center">
           {{
             isSignIn === "signin"
-              ? "Don't have an account?"
-              : "Already have an account?"
+              ? ("login.component.no_account" | translate)
+              : ("login.component.already_account" | translate)
           }}
           <button
             class="btn btn-link p-0"
             type="button"
             (click)="switchState()"
           >
-            {{ isSignIn === "signup" ? "Log In" : "Sign Up" }}
+            {{
+              isSignIn === "signup"
+                ? ("login.component.login" | translate)
+                : ("login.component.signup" | translate)
+            }}
           </button>
         </div>
         <div class="text-center col-6 mx-auto">
-          By continuing, you agree to our
-          <a routerLink="/" class="link-dark fw-bold">Terms of Service</a> and
-          acknowledge you've read our
-          <a routerLink="/" class="link-dark fw-bold">Privacy Policy</a>.
+          {{ "login.component.continue" | translate }}
+          <a routerLink="/" class="link-dark fw-bold">{{
+            "login.component.term_service" | translate
+          }}</a>
+          {{ "login.component.acknowledge" | translate }}
+          <a routerLink="/" class="link-dark fw-bold">{{
+            "login.component.privacy_police" | translate
+          }}</a
+          >{{ "login.component.period" | translate }}
         </div>
       </div>
     </form>
   </div>
   <div class="modal-body" *ngIf="isSignIn === 'forgetpassword'">
-    <h3 class="modal-title text-center my-3">Forget your password</h3>
+    <h3 class="modal-title text-center my-3">
+      {{ "login.component.forgot_password" | translate }}
+    </h3>
     <form [formGroup]="forgetForm" (ngSubmit)="forgetPassword()">
       <div class="form-floating mb-3">
         <input
@@ -185,12 +215,13 @@
               forgetForm.controls['email'].touched
           }"
         />
+
         <label for="email"
-          >Email address <span class="text-danger">*</span></label
+          >{{ "login.component.email_address" | translate
+          }}<span class="text-danger">*</span></label
         >
         <small class="text-small text-muted">
-          Enter the email address you use to sign in to our website and we'll
-          send you a link to reset your password.
+          {{ "login.component.enter_msg" | translate }}
         </small>
       </div>
 
@@ -201,14 +232,14 @@
           [disabled]="forgetForm.invalid"
           type="submit"
         >
-          Send
+          {{ "login.component.send" | translate }}
         </button>
         <button
           type="button"
           class="btn btn-link link-dark p-0 my-2"
           (click)="isSignIn = 'signin'; errorMessage = ''"
         >
-          Back to log in
+          {{ "login.component.back_login" | translate }}
         </button>
       </div>
     </form>

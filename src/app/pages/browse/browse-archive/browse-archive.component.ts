@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { ClipboardService } from 'ngx-clipboard';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { ImagesService } from 'src/app/core/services/images.service';
 
 @Component({
   selector: 'app-browse-archive',
@@ -27,20 +28,23 @@ export class BrowseArchiveComponent implements OnInit {
     private route: ActivatedRoute,
     private arch: ArchieveApiService,
     private clipboardApi: ClipboardService,
-    private auth: AuthServiceService
+    private auth: AuthServiceService,
+    private images: ImagesService
   ) {}
 
   ngOnInit(): void {
     this.arch.getPersonById(this.id).subscribe((res) => {
       this.profile = res;
+
       //sorting event based on starting year
       this.profile.events.sort(function (a, b) {
         return a.start_year - b.start_year;
       });
-
       this.replaceNewline();
     });
-
+    this.images.getImage(this.profile.profileImageId).subscribe((res) => {
+      this.profile.profileImageId = res;
+    });
     this.auth.isAdmin.subscribe((x) => {
       this.isAdmin = x;
     });
@@ -52,11 +56,6 @@ export class BrowseArchiveComponent implements OnInit {
     this.auth.isAdmin.subscribe((x) => {
       this.isAdmin = x;
     });
-    // console.log('1. ', this.isAdmin);
-    // this.auth.isLoggedIn.subscribe((x) => {
-    //   this.isAdmin = this.isAdmin && x;
-    // });
-    console.log('2.', this.isAdmin);
   }
 
   display: string[] = [];

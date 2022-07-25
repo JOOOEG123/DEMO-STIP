@@ -17,6 +17,29 @@
     "login_signup": "登录或注册"
   },
   "login.component": {
+    "first_name":"名",
+    "last_name":"姓氏",
+    "comfirm_email":"确认邮箱地址",
+    "login":"登录", 
+    "email_address":"邮箱地址", 
+    "password":"密码",
+    "forgot_password":"忘记密码?",
+    "or":"或者",
+    "login_facebook":"Facebook登录",
+    "signup_facebook":"Facebook注册",
+    "login_google":"Google登录",
+    "signup_google":"Google注册",
+    "no_account":"没有账户?", 
+    "already_account":"已有账户?",
+    "signup":"注册账号",
+    "continue":"继续，已阅读并同意",
+    "term_service":"服务协议",
+    "acknowledge":"和",
+    "privacy_police":"隐私保护指引", 
+    "period":"。", 
+    "send":"发送",
+    "back_login":"注册",
+    "enter_msg":"请输入您用来注册我们网站的邮箱地址， 您将会收到一个重置密码链接。"
 
   },
   "common": {
