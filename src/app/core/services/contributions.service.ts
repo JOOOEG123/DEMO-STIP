@@ -107,6 +107,12 @@ export class ContributionsService {
       .valueChanges()
   }
 
+  getUserContributionByAuth(language: string, contributionId: string) {
+    return this.db
+    .object(`/persons/data/${language}/contributions/${this.auth.uid}/${contributionId}`)
+    .valueChanges()
+  }
+
   removeUserContribution(
     language: string,
     contributorId: string,

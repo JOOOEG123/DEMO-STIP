@@ -115,7 +115,7 @@ export class FormComponent implements OnInit, OnDestroy {
       this.form.patchValue({
         otherName: this.otherData.name,
         otherOccupation: this.otherData.occupation,
-        otherEthnicGroup: this.otherData.ethnic,
+        otherEthnic: this.otherData.ethnic,
         otherGender: this.otherData.gender,
         otherStatus: this.otherData.status
       })

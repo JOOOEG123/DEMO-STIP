@@ -52,9 +52,6 @@
         <app-contribution
           [contribution]="contribution"
           [activeCategory]="activeCategory"
-          (approve)="onApprove($event)"
-          (reject)="onReject($event)"
-          (reconsider)="onReconsider($event)"
           (readMore)="onReadMore(readMoreTemplate, $event)"
         ></app-contribution>
       </div>
@@ -76,7 +73,7 @@
   >
     <button
       type="button"
-      (click)="onApprove(selectedContribution)"
+      (click)="onApprove()"
       class="btn btn-transparent btn-lg mx-2 display-4 check-icon"
     >
       <span class="check-icon">&checkmark;</span>
@@ -84,7 +81,7 @@
 
     <button
       type="button"
-      (click)="onReject(selectedContribution)"
+      (click)="onReject()"
       class="btn btn-transparent btn-lg mx-2 cross-icon"
     >
       <span class="cross-icon">&cross;</span>
@@ -96,7 +93,7 @@
     *ngIf="selectedContribution.publish == 'approved'"
   >
     <button
-      (click)="onEdit(selectedContribution)"
+      (click)="onEdit()"
       type="button"
       class="btn btn-transparent btn-lg mx-2 pencil-icon"
     >
@@ -109,7 +106,7 @@
     *ngIf="selectedContribution.publish == 'rejected'"
   >
     <button
-      (click)="onReconsider(selectedContribution)"
+      (click)="onReconsider()"
       type="button"
       class="btn btn-transparent btn-lg mx-2 pencil-icon"
     >

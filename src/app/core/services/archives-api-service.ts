@@ -185,7 +185,7 @@ export class ArchieveApiService {
 
   addOrUpdateRightist(language: string, rightist: RightistSchema) {
     return this.db
-      .object(`/persons/data/${language}/rightists/${rightist.rightistId}`)
+      .object(`/persons/data/${language}/rightists`)
       .update({ [rightist.rightistId]: rightist });
   }
 

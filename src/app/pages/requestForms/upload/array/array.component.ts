@@ -10,6 +10,7 @@ import {
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LIST_OF_IMAGE_CATEGORIES } from 'src/app/core/constants/group.constants';
+import { ImagesService } from 'src/app/core/services/images.service';
 
 @Component({
   selector: 'app-array',
@@ -17,6 +18,7 @@ import { LIST_OF_IMAGE_CATEGORIES } from 'src/app/core/constants/group.constants
   styleUrls: ['./array.component.scss'],
 })
 export class ArrayComponent implements OnInit, OnDestroy {
+  @Input() page?: string
   @Input() data!: any[];
   @Input() otherData!: any[]
   @Input() language?: string
@@ -29,6 +31,9 @@ export class ArrayComponent implements OnInit, OnDestroy {
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   array = new FormArray([]);
+
+  profileControl = new FormControl('')
+  profileIndex?: number
 
   imageCategories: string[] = []
   otherImageCategories: string[] = []
@@ -70,12 +75,21 @@ export class ArrayComponent implements OnInit, OnDestroy {
   }
 
   isWarning: boolean = false;
+  profileImageAdded: boolean = false
 
   arraySubcription?: Subscription;
 
   constructor() {}
 
   ngOnInit(): void {
+    console.log(this.data)
+    console.log(this.otherData)
+
+    this.profileControl.valueChanges.subscribe((data: any) => {
+      this.profileIndex = data
+      console.log(this.profileIndex)
+    })
+
     if (this.type == 'event') {
       if (this.data!.length == 0) {
         this.array.push(this.newEvent());
@@ -86,7 +100,7 @@ export class ArrayComponent implements OnInit, OnDestroy {
               startYear: new FormControl(item.startYear),
               endYear: new FormControl(item.endYear),
               event: new FormControl(item.event),
-              otherEvent: new FormControl(this.otherData[index].event || '')
+              otherEvent: new FormControl(this.otherData[index].event)
             })
           );
         }
@@ -97,12 +111,15 @@ export class ArrayComponent implements OnInit, OnDestroy {
       if (this.data!.length == 0) {
         this.array.push(this.newMemoir());
       } else {
-        for (const item of this.data!) {
+        for (const [index, item] of this.data!.entries()) {
           this.array.push(
             new FormGroup({
               memoirTitle: new FormControl(item.memoirTitle),
               memoirAuthor: new FormControl(item.memoirAuthor),
               memoirContent: new FormControl(item.memoirContent),
+              otherMemoirTitle: new FormControl(this.otherData[index].memoirTitle),
+              otherMemoirAuthor: new FormControl(this.otherData[index].memoirAuthor),
+              otherMemoirContent: new FormControl(this.otherData[index].memoirContent)
             })
           );
         }
@@ -113,12 +130,11 @@ export class ArrayComponent implements OnInit, OnDestroy {
       this.imageCategories = LIST_OF_IMAGE_CATEGORIES[this.language!]
       this.otherImageCategories = LIST_OF_IMAGE_CATEGORIES[this.otherLanguage!]
 
-      console.log(this.data);
       if (this.data!.length == 0) {
         this.array.push(this.newImage());
       } else {
-        for (const item of this.data!) {
-          this.array.push(
+        for (const [index, item] of this.data!.entries()) {
+          this.array.push(   
             new FormGroup({
               imageUrl: new FormControl(item.imageUrl),
               imageUpload: new FormControl(item.imageUpload),
@@ -127,6 +143,10 @@ export class ArrayComponent implements OnInit, OnDestroy {
               imageTitle: new FormControl(item.imageTitle),
               imageDes: new FormControl(item.imageDes),
               imageSource: new FormControl(item.imageSource),
+              otherImageCategory: new FormControl(this.otherData[index].imageCategory),
+              otherImageTitle: new FormControl(this.otherData[index].imageTitle),
+              otherImageDes: new FormControl(this.otherData[index].imageDes),
+              otherImageSource: new FormControl(this.otherData[index].imageSource)
             })
           );
         }
@@ -135,6 +155,17 @@ export class ArrayComponent implements OnInit, OnDestroy {
 
     this.array.valueChanges.subscribe((data) => {
       console.log(data)
+      this.profileImageAdded = false
+      
+      for (const [index, image] of data.entries()) {
+        if (index === this.profileIndex) {
+          image.isProfile = 'yes'
+        }
+        else {
+          image.isProfile = 'no'
+        }
+      }
+
       if (this.removeWhenLastEmpty) {
         this.isWarning = false;
       } else if (this.cleared) {
@@ -147,6 +178,8 @@ export class ArrayComponent implements OnInit, OnDestroy {
 
       this.removeWhenLastEmpty = false;
       this.elementAdded = false
+
+      console.log(data)
 
       this.change.emit({
         type: this.type,
@@ -231,7 +264,7 @@ export class ArrayComponent implements OnInit, OnDestroy {
   get controls() {
     return this.array.controls as FormGroup[];
   }
-
+  
   add() {
     this.elementAdded = true;
 

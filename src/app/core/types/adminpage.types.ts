@@ -90,6 +90,7 @@ export interface RightistSchema {
   rightistId: string,
   contributorId: string,
   imageId: string[],
+  profileImageId: string,
   initial: string;
   firstName: string;
   lastName: string;

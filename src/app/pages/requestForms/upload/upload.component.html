@@ -10,6 +10,7 @@
 <div class="container-fluid">
   <div class="row">
     <app-form
+      *ngIf="loaded"
       [isAdmin]="isAdmin"
       [language]="language"
       [otherLanguage]="otherLanguage"
@@ -24,6 +25,7 @@
       <!-- photo upload section -->
       <app-array
         *ngIf="isImageLoaded"
+        [page]="page"
         [isAdmin]="isAdmin"
         [data]="images"
         [otherData]="otherImages"
@@ -50,12 +52,23 @@
             [(ngModel)]="description"
             (ngModelChange)="onContentChange($event)"
           ></textarea>
+          <textarea
+            *ngIf="isAdmin"
+            class="form-control"
+            id="other_add_content"
+            rows="5"
+            placeholder="Add content/description here..."
+            [(ngModel)]="otherDescription"
+            (ngModelChange)="onOtherContentChange($event)"
+          ></textarea>
         </div>
       </div>
       <!-- event detail and date -->
       <div class="row">
         <div class="col">
           <app-array
+            *ngIf="loaded"
+            [page]="page"
             [isAdmin]="isAdmin"
             [data]="events"
             [otherData]="otherEvents"
@@ -71,6 +84,8 @@
       <div class="row">
         <div class="col">
           <app-array
+            *ngIf="loaded"
+            [page]="page"
             [isAdmin]="isAdmin"
             [data]="memoirs"
             [otherData]="otherMemoirs"
