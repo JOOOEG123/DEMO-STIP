@@ -139,11 +139,22 @@
     "navbar_account_button_subbutton_three": "Logout"
   },
   "footer": {
-    "footer_social_media_title": "Social Media",
-    "footer_social_media_button_one": "Facebook",
-    "footer_social_media_button_two": "Twitter",
-    "footer_social_media_button_three": "Google",
-    "footer_footnote": "© Copyright 2022 STIP"
+    "copyright": "© Copyright 2022 STIP",
+    "GMU": "George Mason University",
+    "nav": "NAVIGATION",
+    "faq": "FAQ",
+    "about": "About",
+    "archive": "Archive",
+    "gallery": "Gallery",
+    "proj_overview": "Project Overview",
+    "team": "Meet the Team",
+    "resources": "Resources",
+    "terms": "Terms & Contributions",
+    "account": "Account",
+    "research": "Research",
+    "contact": "Contact Us",
+    "address": "4400 University Dr, Fairfax, VA 22030",
+    "email": "stip@gmu.com"
   },
   "home": {
     "home_introduction_title": "Chinese Anti-Rightist Archives",

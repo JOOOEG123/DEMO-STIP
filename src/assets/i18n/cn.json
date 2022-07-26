@@ -105,15 +105,26 @@
     "navbar_account_button_subbutton_two": "未知",
     "navbar_account_button_subbutton_three": "未知"
   },
+
   "footer": {
-    "footer_social_media_title": "未知",
-    "footer_buttons": {
-      "footer_social_media_button_one": "未知",
-      "footer_social_media_button_two": "未知",
-      "footer_social_media_button_three": "未知"
-    },
-    "footer_footnote": "未知"
+    "copyright": "© 版权 2022 STIP",
+    "GMU": "乔治·梅森大学",
+    "nav": "导航",
+    "faq": "常问问题",
+    "about": "关于",
+    "archive": "档案",
+    "gallery": "画廊",
+    "proj_overview": "项目概况",
+    "team": "认识团队",
+    "resources": "资源",
+    "terms": "条款和贡献",
+    "account": "帐户",
+    "research": "研究",
+    "contact": "联系我们",
+    "address": "4400 大学路, 费尔法克斯, 弗吉尼亚州 22030",
+    "email": "stip@gmu.com"
   },
+
   "home": {
     "home_introduction_title": "未知",
     "home_introduction_body": "未知",
