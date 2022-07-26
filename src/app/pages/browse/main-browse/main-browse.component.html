@@ -233,7 +233,7 @@
       <ng-template #elseBlock>
         <div *ngIf="display.length; else elseEmptyBlock">
           <div
-            class="d-flex justify-content-between p-2 flex-nowrap"
+            class="d-flex justify-content-between p-2 flex-nowrap mb-3"
             name=" searchLayout"
             *ngFor="let results of display | UpdateRows: 3; let i = index"
             style="height: 5cm"
@@ -243,7 +243,7 @@
               *ngFor="let result of results; let j = index"
             >
               <a
-                class="d-flex flex-column"
+                class="d-flex flex-column h-100"
                 routerLink="/browse/main/memoir/{{ result.profileId }}"
                 routerLinkActive="active"
                 ariaCurrentWhenActive="page"
@@ -263,23 +263,35 @@
                 </div>
 
                 <div
-                  class="align-self-end mb-3 me-3 arrow mt-auto"
+                  class="align-self-end ms-auto arrow mt-auto"
                   style="
                     display: inline-block;
                     white-space: nowrap;
                     justify-content: flex-end;
                   "
                 >
-                  {{ "archive.archive_read_more" | translate }}
-                  <img
-                    src="/assets/browsepage/arrow-right.svg"
-                    alt="Bootstrap"
-                    width="20"
-                    height="20"
-                  />
+                  <span class="p-3 pb-5 mb-1">
+                    {{ "archive.archive_read_more" | translate }}
+                    <img
+                      src="/assets/browsepage/arrow-right.svg"
+                      alt="Bootstrap"
+                      width="20"
+                      height="20"
+                    />
+                  </span>
                 </div>
               </a>
             </div>
+            <div
+              *ngIf="(i + 1) * 3 == display.length + 1"
+              class="text-primary flex-column h-100"
+              style="
+                border-radius: 28px;
+                background-color: #d8e4dc;
+                width: 30%;
+                opacity: 0;
+              "
+            ></div>
           </div>
         </div>
         <ng-template #elseEmptyBlock>
