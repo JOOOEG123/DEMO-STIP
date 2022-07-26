@@ -269,10 +269,10 @@ export class UploadComponent implements OnInit, OnDestroy {
               for (const imageId of rightist.imageId) {
                 this.sub.push(
                   this.imageAPI
-                    .getImage(this.language, imageId)
+                    .getImageUpdated(this.language, imageId)
                     .subscribe((data: any) => {
                       this.imageAPI
-                        .getImage(this.otherLanguage, imageId)
+                        .getImageUpdated(this.otherLanguage, imageId)
                         .subscribe((other: any) => {
                           this.storageAPI
                             .getImageURL(imageId)

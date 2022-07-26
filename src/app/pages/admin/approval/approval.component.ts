@@ -251,7 +251,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         ] of this.updatedContribution.rightist!.imageId.entries()) {
           this.sub.push(
             this.imageAPI
-              .getImage(this.language!, imageId)
+              .getImageUpdated(this.language!, imageId)
               .subscribe(async (data: any) => {
                 let imageDb: ImageSchema = {
                   imageId: data.imageId,
