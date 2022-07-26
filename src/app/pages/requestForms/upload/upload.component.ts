@@ -575,6 +575,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     } = this.formData!;
 
     if (!this.contribution) {
+    
       let rightist: RightistSchema = {
         rightistId: rightistId,
         contributorId: this.auth.uid,
@@ -628,6 +629,11 @@ export class UploadComponent implements OnInit, OnDestroy {
         lastUpdatedAt: new Date(),
         source: 'contributed',
       };
+
+      if (this.language === 'en') {
+        rightist.initial = rightist.fullName.trim().charAt(0).toUpperCase()
+        otherRightist.initial = rightist.fullName.trim().charAt(0).toUpperCase()
+      }
 
       let contributionId = this.contributionId || UUID();
       console.log(rightist);

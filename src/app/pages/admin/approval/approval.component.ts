@@ -307,6 +307,16 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         const { rightist, ...result } = contribution;
         const { rightist: otherRightist, ...otherResult } = otherContribution;
 
+        // Update initial
+        if (this.language === 'en') {
+          rightist!.initial = rightist!.fullName.trim().charAt(0).toUpperCase()
+          otherRightist!.initial = rightist!.fullName.trim().charAt(0).toUpperCase()
+        }
+        else {
+          rightist!.initial = otherRightist!.fullName.trim().charAt(0).toUpperCase()
+          otherRightist!.initial = otherRightist!.fullName.trim().charAt(0).toUpperCase()
+        }
+
         // when approved
         if (this.publish === 'approved') {
           if (this.updatedContribution.publish === 'new') {
