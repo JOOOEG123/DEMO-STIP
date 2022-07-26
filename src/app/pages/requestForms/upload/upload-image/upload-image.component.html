@@ -1,4 +1,4 @@
-<h4>Upload a photo</h4>
+<h4>{{ "upload.upload_photo" | translate }}</h4>
 <section
   class="my-4"
   *ngFor="
@@ -18,35 +18,41 @@
       formControlName="image"
     />
     <br /><br />
-    <button class="btn btn-dark" (click)="clearImage()">Clear photo</button>
+    <button class="btn btn-dark" (click)="clearImage()">
+      {{ "upload.clear_photo" | translate }}
+    </button>
     <br /><br />
 
-    <label for="imageTitle" class="form-label">Title</label>
+    <label for="imageTitle" class="form-label">{{
+      "upload.title" | translate
+    }}</label>
     <input
       type="text"
       class="form-control w-75"
       id="imagTitle"
-      placeholder="What would you title this image"
+      placeholder="{{ 'upload.what_tooltip' | translate }}"
       formControlName="imageTitle"
     />
 
-    <label for="imageDetails" class="form-label">Details</label>
+    <label for="imageDetails" class="form-label">{{
+      "upload.detail" | translate
+    }}</label>
     <textarea
       class="form-control w-75"
       id="imageDetails"
       rows="3"
-      placeholder="Add a description"
+      placeholder="{{ 'upload.add_description' | translate }}"
       formControlName="imageDes"
     ></textarea>
 
     <br />
 
-    <label for="cars">Image category</label>
+    <label for="cars">{{ "upload.image_cat" | translate }}</label>
     <select name="imageCategory" id="imageCategory">
-      <option value="People">People</option>
-      <option value="Media">Media</option>
-      <option value="Camps">Camps</option>
-      <option value="Other">Other</option>
+      <option value="People">{{ "upload.people" | translate }}</option>
+      <option value="Media">{{ "upload.media" | translate }}</option>
+      <option value="Camps">{{ "upload.Camps" | translate }}</option>
+      <option value="Other">{{ "upload.other" | translate }}</option>
     </select>
 
     <br /><br />
@@ -54,7 +60,8 @@
     <!-- radio buttons for choosing if user wants to include photo in gallery -->
     <br />
     <p>
-      Include this image in gallery
+      {{ "upload.include" | translate }}
+
       <img
         src="assets/upload/icons-question.png"
         tooltip="Choose to include the photo in website gallery"
@@ -73,7 +80,9 @@
         formControlName="imageUpload"
       />
       <!-- yes button -->
-      <label class="form-check-label" for="inlineRadio1">Yes</label>
+      <label class="form-check-label" for="inlineRadio1">{{
+        "upload.yes" | translate
+      }}</label>
     </div>
     <div class="form-check form-check-inline">
       <input
@@ -85,29 +94,33 @@
         formControlName="imageUpload"
       />
       <!-- no button -->
-      <label class="form-check-label" for="inlineRadio2">No</label>
+      <label class="form-check-label" for="inlineRadio2">{{
+        "upload.no" | translate
+      }}</label>
     </div>
     <br /><br />
     <button
       *ngIf="last"
       type="button"
       (click)="addImage()"
-      tooltip="Add another image"
+      tooltip="{{ 'upload.add' | translate }}"
       placement="auto"
       class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
     >
-      Add Another Image
+      {{ "upload.add" | translate }}
+
       <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
     </button>
     <button
       type="button"
-      tooltip="Remove this image"
+      tooltip="{{ 'upload.remove' | translate }}"
       placement="auto"
       *ngIf="!first || !last"
       class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
       (click)="removeImageSection(i)"
     >
-      Remove
+      {{ "upload.remove" | translate }}
+
       <img src="assets/upload/icons-remove.png" class="mx-2" width="30" />
     </button>
   </form>

@@ -63,7 +63,7 @@
       data-bs-placement="bottom"
     >
       <img
-        src="assets/browsepage/question-mark.svg"
+        src="assets/browsepage/question-mark-color-brown.svg"
         fill="#cca474"
         alt=""
         width="20"
@@ -101,15 +101,15 @@
             "archive.archive_results_per_page" | translate
           }}</label>
           <select
-            class="mx-2 text-light"
+            class="mx-2 text-light display-select"
             aria-label="Result per page select"
             id="per_page_result"
             [(ngModel)]="itemsPerPage"
             (change)="itemPerPageChanged()"
           >
-            <option selected value="25">30</option>
-            <option value="50">60</option>
-            <option value="100">90</option>
+            <option selected value="30">30</option>
+            <option value="60">60</option>
+            <option value="90">90</option>
           </select>
         </div>
         <div class="col-auto flex-shrink-0">
@@ -117,7 +117,7 @@
             "archive.archive_view" | translate
           }}</label>
           <select
-            class="mx-2 text-light"
+            class="mx-2 text-light display-select"
             id="viewSelect"
             aria-label="View select"
             [(ngModel)]="curView"
@@ -233,7 +233,7 @@
       <ng-template #elseBlock>
         <div *ngIf="display.length; else elseEmptyBlock">
           <div
-            class="d-flex justify-content-between p-2 flex-nowrap"
+            class="d-flex justify-content-between p-2 flex-nowrap mb-3"
             name=" searchLayout"
             *ngFor="let results of display | UpdateRows: 3; let i = index"
             style="height: 5cm"
@@ -243,7 +243,7 @@
               *ngFor="let result of results; let j = index"
             >
               <a
-                class="d-flex flex-column"
+                class="d-flex flex-column h-100"
                 routerLink="/browse/main/memoir/{{ result.profileId }}"
                 routerLinkActive="active"
                 ariaCurrentWhenActive="page"
@@ -263,42 +263,54 @@
                 </div>
 
                 <div
-                  class="align-self-end mb-3 me-3 arrow mt-auto"
+                  class="align-self-end ms-auto arrow mt-auto"
                   style="
                     display: inline-block;
                     white-space: nowrap;
                     justify-content: flex-end;
                   "
                 >
-                  {{ "archive.archive_read_more" | translate }}
-                  <img
-                    src="/assets/browsepage/arrow-right.svg"
-                    alt="Bootstrap"
-                    width="20"
-                    height="20"
-                  />
+                  <span class="p-3 pb-5 mb-1">
+                    {{ "archive.archive_read_more" | translate }}
+                    <img
+                      src="/assets/browsepage/arrow-right.svg"
+                      alt="Bootstrap"
+                      width="20"
+                      height="20"
+                    />
+                  </span>
                 </div>
               </a>
             </div>
+            <div
+              *ngIf="(i + 1) * 3 == display.length + 1"
+              class="text-primary flex-column h-100"
+              style="
+                border-radius: 28px;
+                background-color: #d8e4dc;
+                width: 30%;
+                opacity: 0;
+              "
+            ></div>
           </div>
         </div>
         <ng-template #elseEmptyBlock>
           <div *ngIf="isloading" class="text-white d-flex flex-column m-2">
-            <p>No records found.</p>
+            <p>{{ "archive.archive_no_result_title" | translate }}</p>
             <h4>
-              There are no results matching your search "{{ searchInput }}".
+              {{ "archive.archive_no_result_body" | translate }} "{{
+                searchInput
+              }}".
             </h4>
-            <p>Suggestions:</p>
+            <p>{{ "archive.archive_no_result_suggest" | translate }}:</p>
             <ul>
-              <li>Make sure that all words are spelled correctly.</li>
-              <li>Try different keywords.</li>
+              <li>{{ "archive.archive_no_result_suggest_one" | translate }}</li>
+              <li>{{ "archive.archive_no_result_suggest_two" | translate }}</li>
               <li>
-                Click on the “?” button next to the search bar to view “What to
-                search for?”
+                {{ "archive.archive_no_result_suggest_three" | translate }}
               </li>
               <li>
-                your search to a specific field in the All Fields dropdown to
-                the left of the search bar.
+                {{ "archive.archive_no_result_suggest_four" | translate }}
               </li>
             </ul>
           </div>
@@ -308,9 +320,9 @@
       <!-- search nav -->
 
       <div class="d-flex flex-row-reverse">
-        <nav aria-label="Page navigation">
+        <nav aria-label="Page navigation ">
           <pagination
-            class="my-pagination"
+            class="my-pagination page"
             [rotate]="true"
             [totalItems]="db_result.length"
             [boundaryLinks]="true"

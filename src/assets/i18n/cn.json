@@ -141,13 +141,13 @@
     "name_placeholder": "名字和姓氏",
     "email_placeholder" : "姓名@例子.com",
     "message_placeholder" : "您的留言",
-    "close" : "封闭",
+    "close" : "关闭",
     "submit" : "提交"
   },
   "research":{
     "overview": "存档项目概述",
     "overview_body": "...",
-    "research_found": "研究和我们的发现",
+    "research_found": "我们的研究发现",
     "research_body": "...",
     "data1" : "数据",
     "data2" : "数据",
@@ -155,18 +155,18 @@
     "data2_body" : "...",
     "summary" : "概括",
     "summary_body" : "...",
-    "team_button" : "与研究背后的团队会面"
+    "team_button" : "我们的幕后研究团队成员"
   },
   "resources":{
     "resources": "资源"
   },
   "about_movement": {
-    "about_movement_introduction_title": "关于1950年代的中国反右运动",
-    "about_movement_introduction_body": "此处的示例文本",
+    "about_movement_introduction_title": "1950年-中国反右运动",
+    "about_movement_introduction_body": "示例文本",
     "about_movement_introduction_button": "查看来源",
     "about_movement_map_title": "地图",
     "about_movement_map_body": "地图",
-    "about_movement_learn_more_button": "了解有关这项研究的更多信息"
+    "about_movement_learn_more_button": "了解更多此研究项目"
   },
   "projects_overview": {
     "projects_overview_meet_the_team_title": "认识研究背后的团队"
@@ -251,11 +251,12 @@
   "gallery": {
     "gallery_top_title": "画廊",
     "gallery_top_cat_one_button": "全部",
-    "gallery_top_cat_two_button": "神器",
+    "gallery_top_cat_two_button": "文物",
     "gallery_top_cat_three_button": "营地",
-    "gallery_top_cat_four_button": "人们",
+    "gallery_top_cat_four_button": "人物",
     "gallery_top_cat_five_button": "专辑名称",
-    "gallery_image_button": "学到更多"
+    "gallery_image_button": "学到更多", 
+    "placeholder":"搜索画廊"
   },
   "repository":{
   "repository_top_title": "资源库",
@@ -323,9 +324,11 @@
     "edit_announcement":"编辑公告", 
     "your_contributions":"您的投稿",
     "no_contribution":"您暂时还没有提交任何投稿",
-    "verify_account_msg":"You need to verify account before you can add Contribution. Log out and log in again after verifying account if you can't still navigate upload page.",
-    "verify_account":"Verify Account",
+    "verify_account_msg":"仅账号用户拥有网站上传功能。请在使用此功能之前， 查验且通过您的邮件来设置您的相关用户信息",
+    "verify_account":"验证账户",
 
+
+   
     "add_photo":"添加照片", 
     "user":"用户", 
     "edit_account":"编辑账号信息", 
@@ -344,5 +347,62 @@
     "tell_me":"请自我介绍"
 
     
+  }, 
+  "upload": {
+    "upload_photo":"上传照片", 
+    "clear_photo":"清除照片", 
+    "title":"标题", 
+    "detail":"详细信息", 
+    "image_cat":"图片种类", 
+    "people":"人物", 
+    "media":"媒体", 
+    "camps":"集中营", 
+    "other":"其他", 
+    "include":"将这张图片加入图库", 
+    "add":"上传更多照片", 
+    "remove":"移除", 
+    "yes":"确认", 
+    "no":"反对", 
+    "remove_tooltip":"将此图片移除", 
+    "choose":"选择并将次图片加入网站图库", 
+
+
+    "add_description":"添加简介", 
+    "what_tooltip":"请为这张照片取名", 
+
+    "request_form":"申请表", 
+    "upload":"上传", 
+    "detail_edit":"Detailed/Edit Contribution", 
+    "name":"姓名",
+    "occupation":"职业", 
+    "birth_year": "出生年份", 
+    "rightist_year": "\"右派党与\" 年份",
+    "ethnicity": "少数民族",
+    "gender": "性别",
+
+
+    "gender_male": "男性",
+    "gender_female": "女性",
+    "status": "现状",
+    "status_alive": "在世",
+    "status_death": "亡故",
+    "clear":"清除", 
+    "add_content": "添加内容",
+    "event_content":"重要事件年份和其内容", 
+    "event_year":"重要事件内容", 
+    "event_content_description":"重要事件内容/详情", 
+    "add_event":"添加重要事件", 
+    "add_memoir_book":"添加其自传，书，或者其他相关信息", 
+    "author":"作者", 
+    "submit":"提交", 
+    "content_description":"内容/详情", 
+    "add_memoir":"添加个人自传",
+
+    "name_placeholder":"姓名", 
+    "add_content_placeholder":"请添加内容、详细简介...", 
+    "event_content_description_placeholder":"请添加重要事件的详细信息...", 
+    "title_placeholder":"请添加标题...", 
+    "author_placeholder":"请添加作者..", 
+    "content_description_placeholder":"请添加个人自传..."
   }
 }

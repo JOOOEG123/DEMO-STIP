@@ -61,30 +61,23 @@
 
 
 
-  .my-pagination::ng-deep a {
+  .my-pagination::ng-deep a{
     background-color: #266461;
+    color: white;
+    font-size: 14px;
+    border-style: none;
+
+
+  }
+
+
+
+  .page:ng-deep .active {
+    background-color: white;
     color: black;
     font-size: 14px;
     border-style: none;
-  }
+}
 
-  .page ::ng-deep a:active {
-    background-color: hotpink;
-  } 
 
-  .page2 ::ng-deep li {
-    background-color: hotpink;
-  } 
-  
 
-  .test
-  {
-      color: black;       // default color
- 
-      :host-context(.a) &
-      {
-        background-color: hotpink;
-      }
- 
-
-  }

@@ -252,7 +252,8 @@
     "gallery_top_cat_three_button": "Camps",
     "gallery_top_cat_four_button": "People",
     "gallery_top_cat_five_button": "Albums",
-    "gallery_image_button": "Learn More"
+    "gallery_image_button": "Learn More", 
+    "placeholder":"Search Gallery"
   },
   "repository": {
     "repository_top_title": "Archive Repositories",
@@ -320,7 +321,7 @@
     "edit_announcement":"Edit Announcement", 
     "your_contributions":"Your Contributions",
     "no_contribution":"You do not have any contribution yet.",
-    "verify_account_msg":"You need to verify account before you can add Contribution. Log out and log in again after verifying account if you can't still navigate upload page.",
+    "verify_account_msg":"The upload feature is limited to account users only. Please verify your account via email before logging back in to finish setting up your account. Once you verified your account, you will be able to upload on the website.",
     "verify_account":"Verify Account",
   
     "add_photo":"ADD PHOTO", 
@@ -339,6 +340,67 @@
     "enter":"Enter", 
     "view_email":"View email", 
     "tell_me":"Tell me a little about yourself"
+
+
+  }, 
+  "upload": {
+    "upload_photo":"Upload a photo", 
+    "clear_photo":"Clear photo", 
+    "title":"Title", 
+    "detail":"Details", 
+    "image_cat":"Image category", 
+    "people":"People", 
+    "media":"Media", 
+    "camps":"Camps", 
+    "other":"Other", 
+    "include":"Include this image in gallery", 
+    "add":"Add Another Image", 
+    "remove":"Remove", 
+
+
+    "yes":"Yes", 
+    "no":"No", 
+    "remove_tooltip":"Remove this image", 
+    "choose":"Choose to include the photo in website gallery", 
+    "add_description":"Add a description", 
+    "what_tooltip":"What would you title this image", 
+
+    "request_form":"Request Form", 
+    "upload":"Upload", 
+    "detail_edit":"Detailed/Edit Contribution", 
+    "name":"Name",
+    "occupation":"Occupation", 
+    "birth_year": "Birth of Year", 
+    "rightist_year": "\"Rightist\" Year",
+    "ethnicity": "Chinese Ethnic Group",
+    "gender": "Gender",
+
+
+    "gender_male": "Male",
+    "gender_female": "Female",
+    "status": "Status",
+    "status_alive": "Alive",
+    "status_death": "Deceased",
+    "clear":"Clear", 
+    "add_content": "Add Content",
+    "event_content":"Event year and event content", 
+    "event_year":" Year of event", 
+    "event_content_description":"Event content/Description", 
+    "add_event":"Add Event", 
+    "add_memoir_book":"Add Memoir, book, or other information", 
+    "author":"Author", 
+    "submit":"Submit", 
+    "content_description":"Content/Discription", 
+    "add_memoir":"Add Memoir", 
+
+    "name_placeholder":"Full Name", 
+    "add_content_placeholder":"Add content/description here...", 
+    "event_content_description_placeholder":"Add event details here...", 
+    "title_placeholder":"Add title here...", 
+    "author_placeholder":"Add author here..", 
+    "content_description_placeholder":"Add memoir here..."
+
+    
 
 
   }
