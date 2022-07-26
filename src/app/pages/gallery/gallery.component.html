@@ -50,7 +50,7 @@
     [ordered]="true"
     [options]="masonryOptions"
     [ngStyle]="{ width: '100%' }"
-    *ngIf="images[0]?.imagePath && images[images.length - 1]?.imagePath"
+    *ngIf="loaded"
   >
     <div
       ngxMasonryItem

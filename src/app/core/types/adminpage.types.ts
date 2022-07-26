@@ -71,14 +71,12 @@ export type State = 'void' | 'removed';
 export type Publish = 'original' | 'new' | 'approved' | 'rejected';
 
 interface Event {
-  eventId: string;
   startYear: number;
   endYear: number;
   event: string;
 }
 
 interface Memoir {
-  memoirId: string;
   memoirTitle: string;
   memoirContent: string;
   memoirAuthor: string;

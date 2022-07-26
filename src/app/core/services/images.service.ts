@@ -8,8 +8,20 @@ import { ImageSchema } from '../types/adminpage.types';
 export class ImagesService {
   constructor(private db: AngularFireDatabase) {}
 
-  getAllImages() {
-    return this.db.object(`persons/requestArchieve/images`).valueChanges();
+  getAllImages(language: string) {
+    return this.db.object(`persons/data/${language}/images`).valueChanges();
+  }
+
+  getAllImagesList(language: string) {
+    return this.db.list(`persons/data/${language}/images`).valueChanges();
+  }
+
+  getGalleryImages(language: string) {
+    return this.db
+      .list(`persons/data/${language}/images`, (ref) =>
+        ref.orderByChild('isGallery').equalTo(true)
+      )
+      .valueChanges();
   }
 
   addImage(language: string, image: ImageSchema) {
@@ -25,10 +37,20 @@ export class ImagesService {
   }
 
   deleteImage(language: string, imageId: string) {
-    return this.db.object(`persons/data/${language}/images/${imageId}`).remove();
+    return this.db
+      .object(`persons/data/${language}/images/${imageId}`)
+      .remove();
   }
 
-  getImage(language: string, imageId:string) {
-    return this.db.object(`persons/data/${language}/images/${imageId}`).valueChanges()
+  getImageUpdate(language: string, imageId: string) {
+    return this.db
+      .object(`persons/data/${language}/images/${imageId}`)
+      .valueChanges();
+  }
+
+  getImage(imageId: string) {
+    return this.db
+      .object(`persons/requestArchieve/images/${imageId}`)
+      .valueChanges();
   }
 }

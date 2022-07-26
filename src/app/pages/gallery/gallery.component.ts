@@ -65,36 +65,62 @@ export class GalleryComponent implements OnInit, OnDestroy {
     private modalService: BsModalService
   ) {}
 
-  ngOnInit(): void {
-    this.imageSubscription = this.imagesAPI
-      .getAllImages()
-      .subscribe((data: any) => {
-        this.categoryImages.length = 0;
-        this.display.length = 0;
-        this.images.length = 0;
-        let images: Image[] = Object.values(data);
-        for (const image of images) {
-          this.storageAPI
-            .getGalleryImageURL(`${image.imageId}`)
-            .subscribe((data) => {
-              image.imagePath = data;
-            });
-          this.images.push(image);
-          if (this.display.length < this.itemsPerPage) {
-            this.display.push(image);
-          }
-        }
-        this.categoryImages = this.images.slice();
-        this.searchImages = this.categoryImages;
-      });
+  language?: string;
+  otherLanguage?: string;
 
-    this.selectedCategory = 'All';
-    this.currentImageIndex = -1;
+  sub: Subscription[] = [];
+  loaded: boolean = false
+
+  ngOnInit(): void {
+    this.language = localStorage.getItem('lang')!
+    this.otherLanguage = this.language === 'en' ? 'cn' : 'en'
+
+    this.sub.push(this.translate.onLangChange.subscribe((data) => {
+      this.language = data.lang
+      this.otherLanguage = this.language === 'en' ? 'cn' : 'en'
+
+      console.log(this.language)
+
+      this.sub.push(
+        this.imagesAPI.getGalleryImages(this.language!).subscribe((imageList: any) => {
+          let count = 0
+          let dataLength = imageList.length
+
+          this.loaded = false
+          this.categoryImages.length = 0;
+          this.display.length = 0;
+          this.images.length = 0;
+
+          let images: Image[] = imageList
+          console.log(images)
+          console.log(data)
+          for (const image of images) {
+            this.storageAPI
+              .getImageUrl(`${image.imageId}`)
+              .subscribe((data) => {
+                count += 1
+                image.imagePath = data;
+                if (count == dataLength) {
+                  this.loaded = true
+                }
+              });
+            this.images.push(image);
+            if (this.display.length < this.itemsPerPage) {
+              this.display.push(image);
+            }
+          }
+          this.categoryImages = this.images.slice();
+          this.searchImages = this.categoryImages;
+        })
+      );
+  
+      this.selectedCategory = 'All';
+      this.currentImageIndex = -1;
+    }))
 
     // Translation
-    this.translationSubscription = this.translate
-      .stream('gallery')
-      .subscribe((data) => {
+    this.sub.push(
+      this.translate.stream('gallery').subscribe((data) => {
         this.galleries.length = 0;
 
         this.galleries.push(data['gallery_top_cat_one_button']);
@@ -104,12 +130,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.galleries.push(data['gallery_top_cat_five_button']);
         this.title = data['gallery_top_title'];
         this.imageButton = data['gallery_image_button'];
-      });
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.translationSubscription?.unsubscribe();
-    this.imageSubscription?.unsubscribe();
+    this.sub.forEach((x) => x.unsubscribe());
   }
 
   setActive(gallery: string) {
@@ -191,7 +217,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       if (data.status == 'update') {
         this.modalService.hide();
         let { opacity, imagePath, ...result } = image;
-        this.imagesAPI.updateImage(result);
+        this.imagesAPI.updateImage(this.language!, result);
       }
     }
     this.currentPage = 1;
@@ -201,7 +227,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     let image = data.image;
     if (data.status == 'delete') {
       this.modalService.hide();
-      this.imagesAPI.deleteImage(image.imageId);
+      this.imagesAPI.deleteImage(this.language!, image.imageId);
       this.storageAPI.removeGalleryImage(image.imageId);
     }
     this.currentPage = 1;
