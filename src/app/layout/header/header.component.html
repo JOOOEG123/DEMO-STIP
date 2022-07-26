@@ -34,7 +34,7 @@
                 <input
                   type="search"
                   class="form-control rounded-end rounded-pill"
-                  placeholder="Search for Archives"
+                  placeholder='{{ "header.component.search_placeholder" | translate }}'
                   aria-label="Search for Archives"
                   aria-describedby="searh_btn"
                 />
@@ -128,7 +128,7 @@
                   data-bs-toggle="dropdown"
                   id="account_btn"
                   role="button"
-                  >ACCOUNT</a
+                  >{{ "header.component.account2" | translate }}</a
                 >
                 <ul class="dropdown-menu" aria-labelledby="account_btn">
                   <li>
@@ -136,7 +136,7 @@
                       class="dropdown-item"
                       routerLink="account"
                       (click)="collapseNavbar()"
-                      >Account</a
+                      >{{ "header.component.account" | translate }}</a
                     >
                   </li>
                   <li>
@@ -144,7 +144,7 @@
                       class="dropdown-item"
                       routerLink="upload"
                       (click)="collapseNavbar()"
-                      >Upload</a
+                      >{{ "header.component.upload" | translate }}</a
                     >
                   </li>
                   <li>
@@ -154,7 +154,7 @@
                       (click)="
                         modalTemplates?.openLogoutModal(); collapseNavbar()
                       "
-                      >Log out</a
+                      >{{ "header.component.log_out" | translate }}</a
                     >
                   </li>
                 </ul>

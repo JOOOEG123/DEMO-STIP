@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class ContactUsComponent implements OnInit, OnDestroy {
   @ViewChild('contactUsTemplate') contactUsTemplate!: TemplateRef<any>;
+  @ViewChild('exitTemplate') exitTemplate!: TemplateRef<any>;
   sub!: Subscription;
   modalRef?: BsModalRef;
   contactForm = this.fb.group({
@@ -42,6 +43,10 @@ export class ContactUsComponent implements OnInit, OnDestroy {
     this.modalRef = this.modalService.show(template);
   }
 
+  openExitModal(template: TemplateRef<any> = this.exitTemplate) {
+    this.modalRef = this.modalService.show(template);
+  }
+
   ngSubmit() {
     this.sub = this.customApi
       .httpsCallable('contactUs')(this.contactForm.value)
@@ -49,5 +54,6 @@ export class ContactUsComponent implements OnInit, OnDestroy {
         this.modalRef?.hide();
         this.contactForm.reset();
       });
+    this.openExitModal();
   }
 }

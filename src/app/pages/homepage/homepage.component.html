@@ -10,7 +10,7 @@
               <input
                 type="search"
                 class="form-control rounded-end rounded-pill"
-                placeholder="Search for Archives"
+                placeholder='{{ "header.component.search_placeholder" | translate }}'
                 aria-label="Search for Archives"
                 aria-describedby="scearh_home__btn"
                 [(ngModel)]="searchTerm"
@@ -97,10 +97,6 @@
       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
       est laborum.
     </div>
-    <!-- Yule remove this out after testing this shows how to call the request mail API. Please check the typscript file also.-->
-    <!-- <button class="btn btn-outline-primary" (click)="sendRequestForm()">
-      send Request form test
-      </button> -->
   </div>
 
   <div class="container text-center">

@@ -1,22 +1,22 @@
 <ng-template #logoutModal>
   <div class="modal-body text-center">
-    <p>Do you want to log out?</p>
+    <p>{{ "log.log_out" | translate }}</p>
     <button
       type="button"
       class="btn btn-outline-dark px-3 me-3"
       (click)="logout()"
     >
-      Yes
+      {{ "common.yes" | translate }}
     </button>
     <button type="button" class="btn btn-dark px-3" (click)="modalRef?.hide()">
-      No
+      {{ "common.no" | translate }}
     </button>
   </div>
 </ng-template>
 
 <ng-template #announceModal>
   <div class="modal-body text-center">
-    <h1>Edit Announcement</h1>
+    <h1>{{ "log.edit_announcemen" | translate }}</h1>
     <div class="form-floating mb-2">
       <textarea
         class="form-control"
@@ -24,36 +24,35 @@
         id="announcement"
         [(ngModel)]="announceText"
       ></textarea>
-      <label for="announcement">Add/Change Announcement</label>
+      <label for="announcement">{{ "log.announcemen" | translate }}</label>
     </div>
     <button
       type="button"
       class="btn btn-outline-dark px-3 me-3"
       (click)="modalRef?.hide()"
     >
-      Cancel
+    {{ "common.cancel" | translate }}
     </button>
     <button
       type="button"
       class="btn btn-dark px-3"
       (click)="updateAnnouncement()"
     >
-      Save
+    {{ "log.save" | translate }}
     </button>
   </div>
 </ng-template>
 
 <ng-template #deleteConfirmation>
   <div class="modal-header">
-    <h4 class="modal-title text-center">Delete Account</h4>
+    <h4 class="modal-title text-center">{{ "log.delete_account" | translate }}</h4>
     <button type="button" class="btn-close close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <p>
-      Are you sure you want to delete your account? This action cannot be
-      undone. All your data and Contribution will be permanently deleted.
+      {{ "log.delete_warning" | translate }}
     </p>
   </div>
   <div class="modal-footer">
@@ -62,29 +61,28 @@
       class="btn btn-outline-danger rounded-pill"
       (click)="deleteAccount()"
     >
-      Delete Account
+    {{ "log.delete_account" | translate }}
     </button>
     <button
       type="button"
       class="btn btn-outline-secondary rounded-pill"
       (click)="modalRef?.hide()"
     >
-      Cancel
+    {{ "common.cancel" | translate }}
     </button>
   </div>
 </ng-template>
 
 <ng-template #saveAccountChanges>
   <div class="modal-header">
-    <h4 class="modal-title text-center">Save Account Changes</h4>
+    <h4 class="modal-title text-center">{{ "log.save_account_changes" | translate }}</h4>
     <button type="button" class="btn-close close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <p>
-      Are you sure you want to Save account changes? This action cannot be
-      undone. This will update your account details.
+      {{ "log.save_account_warning" | translate }}
     </p>
   </div>
   <div class="modal-footer">
@@ -93,29 +91,28 @@
       class="btn btn-outline-success rounded-pill"
       (click)="saveAllAccountChanges()"
     >
-      Save Account Changes
+    {{ "log.save_account_changes" | translate }}
     </button>
     <button
       type="button"
       class="btn btn-outline-secondary rounded-pill"
       (click)="modalRef?.hide()"
     >
-      Cancel
+    {{ "common.cancel" | translate }}
     </button>
   </div>
 </ng-template>
 
 <ng-template #saveAccountChanges>
   <div class="modal-header">
-    <h4 class="modal-title text-center">Save Account Changes</h4>
+    <h4 class="modal-title text-center">{{ "log.save_account_changes" | translate }}</h4>
     <button type="button" class="btn-close close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <p>
-      Are you sure you want to Save account changes? This action cannot be
-      undone. This will update your account details.
+      {{ "log.save_account_warning" | translate }}
     </p>
   </div>
   <div class="modal-footer">
@@ -124,29 +121,28 @@
       class="btn btn-outline-success rounded-pill"
       (click)="saveAllAccountChanges()"
     >
-      Save Account Changes
+    {{ "log.save_account_changes" | translate }}
     </button>
     <button
       type="button"
       class="btn btn-outline-secondary rounded-pill"
       (click)="modalRef?.hide()"
     >
-      Cancel
+    {{ "common.cancel" | translate }}
     </button>
   </div>
 </ng-template>
 
 <ng-template #sentEmailResetPassword>
   <div class="modal-header">
-    <h4 class="modal-title text-center">Change Password</h4>
+    <h4 class="modal-title text-center">{{ "log.change_password" | translate }}</h4>
     <button type="button" class="btn-close close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <p>
-      Please check your email for a link to reset your password. If you do not
-      receive an email, please check your spam folder.
+      {{ "log.pass_change_msg" | translate }}
     </p>
   </div>
   <div class="modal-footer">
@@ -155,21 +151,21 @@
       class="btn btn-outline-success rounded-pill"
       (click)="sendEmailResetPassword()"
     >
-      Send Email verification
+    {{ "log.email_veri" | translate }}
     </button>
     <button
       type="button"
       class="btn btn-outline-secondary rounded-pill"
       (click)="modalRef?.hide()"
     >
-      Cancel
+    {{ "common.cancel" | translate }}
     </button>
   </div>
 </ng-template>
 
 <ng-template #changeEmailTemplate>
   <div class="modal-header">
-    <h4 class="modal-title text-center">Change Email</h4>
+    <h4 class="modal-title text-center">{{ "log.change_email" | translate }}</h4>
     <button type="button" class="btn-close close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
@@ -185,7 +181,7 @@
           formControlName="newEmail"
         />
         <label for="newEmail"
-          >New Email <span class="text-danger">*</span></label
+          >{{ "log.new_email" | translate }} <span class="text-danger">*</span></label
         >
       </div>
     </form>
@@ -197,14 +193,14 @@
       [disabled]="!changeEmailForm.valid"
       (click)="changeEmail()"
     >
-      Change Account
+    {{ "log.change_account" | translate }}
     </button>
     <button
       type="button"
       class="btn btn-outline-secondary rounded-pill"
       (click)="modalRef?.hide()"
     >
-      Cancel
+    {{ "common.cancel" | translate }}
     </button>
   </div>
 </ng-template>
