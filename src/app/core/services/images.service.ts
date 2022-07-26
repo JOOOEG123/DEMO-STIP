@@ -12,23 +12,23 @@ export class ImagesService {
     return this.db.object(`persons/requestArchieve/images`).valueChanges();
   }
 
-  addImage(image: ImageSchema) {
+  addImage(language: string, image: ImageSchema) {
     return this.db
-      .object(`persons/requestArchieve/images`)
+      .object(`persons/data/${language}/images`)
       .update({ [image.imageId]: image });
   }
 
-  updateImage(image: ImageSchema) {
+  updateImage(language: string, image: ImageSchema) {
     return this.db
-      .object(`persons/requestArchieve/images`)
+      .object(`persons/data/${language}/images`)
       .update({ [image.imageId]: image });
   }
 
-  deleteImage(imageId: string) {
-    return this.db.object(`persons/requestArchieve/images/${imageId}`).remove();
+  deleteImage(language: string, imageId: string) {
+    return this.db.object(`persons/data/${language}/images/${imageId}`).remove();
   }
 
-  getImage(imageId:string) {
-    return this.db.object(`persons/requestArchieve/images/${imageId}`).valueChanges()
+  getImage(language: string, imageId:string) {
+    return this.db.object(`persons/data/${language}/images/${imageId}`).valueChanges()
   }
 }
