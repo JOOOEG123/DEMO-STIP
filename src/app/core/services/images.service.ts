@@ -37,7 +37,7 @@ export class ImagesService {
     return this.db.object(`persons/data/${language}/images/${imageId}`).remove();
   }
 
-  getImage(imageId:string) {
-    return this.db.object(`persons/requestArchieve/images/${imageId}`).valueChanges()
-  }
+  // getImage(imageId:string) {
+  //   return this.db.object(`persons/requestArchieve/images/${imageId}`).valueChanges()
+  // }
 }
