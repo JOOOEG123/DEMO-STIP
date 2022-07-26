@@ -58,8 +58,6 @@ export class BrowseArchiveComponent implements OnInit {
     });
   }
 
-  display: string[] = [];
-
   replaceNewline() {
     this.profile.memoirs.forEach((element: any, index: number) => {
       this.profile.memoirs[index].memoir = element.memoir.split('\\n');
