@@ -32,7 +32,8 @@ export class RequestModifyComponent implements OnInit, OnDestroy {
     private func: AngularFireFunctions
   ) {}
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    //this brokes profile page code.
+    // throw new Error('Method not implemented.');
   }
   ngOnInit(): void {
     if (this.sub) {
