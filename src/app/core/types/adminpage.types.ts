@@ -5,8 +5,9 @@ export type Categories =
 
 export type CategoryList = Record<Categories, Contribution[]>;
 
-type Gender = 'Male' | 'Female' | undefined;
-type Ethnicity =
+export type Gender = 'Male' | 'Female' | '男性' | '女性' | '';
+
+export type Ethnicity =
   | 'Han'
   | 'Zhuang'
   | 'Hui'
@@ -62,47 +63,54 @@ type Ethnicity =
   | 'Gaoshan'
   | 'Lhoba'
   | 'Tatar'
-  | 'Bai';
+  | 'Bai'
+  | ''
 
-export type Status = 'Dead' | 'Alive' | 'Unknown';
+export type Status = 'Deceased' | 'Alive' | '活' | '死者' | 'Unknown' | '';
 
 export type State = 'void' | 'removed';
 
-export type Publish = 'original' | 'new' | 'approved' | 'rejected';
+export type Publish = 'new' | 'approved' | 'rejected'
 
-interface Event {
-  eventId: string;
+export type Source = 'original' | 'contributed'
+
+export interface Event {
   startYear: number;
   endYear: number;
   event: string;
 }
 
-interface Memoir {
-  memoirId: string;
+export interface Memoir {
   memoirTitle: string;
   memoirContent: string;
   memoirAuthor: string;
 }
 
 export interface RightistSchema {
-  rightistId: string;
-  imagePath: string[];
+  rightistId: string,
+  contributorId: string,
+  imageId: string[],
+  profileImageId: string,
   initial: string;
   firstName: string;
   lastName: string;
+  fullName: string;
   gender: Gender;
   birthYear: number;
   deathYear: number;
   rightistYear: number;
-  status: Status;
-  ethnicity: Ethnicity;
-  job: string;
-  detailJob: string;
-  workplace: string;
-  events: Event[];
-  memoirs: Memoir[];
-  reference: string;
-  description: string;
+  status: Status,
+  ethnicity: Ethnicity,
+  job: string,
+  detailJob: string,
+  workplace: string,
+  workplaceCombined: string,
+  events: Event[],
+  memoirs: Memoir[],
+  reference: string,
+  description: string,
+  lastUpdatedAt: Date,
+  source: Source
 }
 
 export interface Rightist extends RightistSchema {}
@@ -113,13 +121,13 @@ export interface RightistJson {
 
 export interface ContributionSchema {
   contributionId: string; // set from the service when creating a new contribution
-  contributorId: string[]; // set from the service when creating a new contribution
+  contributorId: string; // set from the service when creating a new contribution
   rightist?: Rightist;
   rightistId: string;
   publish: Publish;
   contributedAt: Date; // set from the service when creating a new contribution
   approvedAt: Date; // set from the service when approving a contribution
-  lastUpdatedAt: Date; // set from the service when updating a contribution
+  rejectedAt: Date; 
   notificationMessage?: string; // set from the service when approving a contribution
 }
 

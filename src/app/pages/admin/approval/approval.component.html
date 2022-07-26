@@ -35,6 +35,7 @@
     </div>
 
     <!-- Categorized Contributions -->
+    
     <div class="container">
       <div
         class="row my-4 contribution-container border border-2"
@@ -51,9 +52,6 @@
         <app-contribution
           [contribution]="contribution"
           [activeCategory]="activeCategory"
-          (approve)="onApprove($event)"
-          (reject)="onReject($event)"
-          (reconsider)="onReconsider($event)"
           (readMore)="onReadMore(readMoreTemplate, $event)"
         ></app-contribution>
       </div>
@@ -65,14 +63,17 @@
   <app-upload
     [contribution]="selectedContribution"
     page="contribution"
+    (formChange)="onFormChange($event)"
+    (arrayChange)="onArrayChange($event)"
+    (contentChange)="onContentChange($event)"
   ></app-upload>
   <div
     class="col-12 mx-auto mb-5 text-center display-1"
-    *ngIf="selectedContribution?.publish == 'new'"
+    *ngIf="selectedContribution.publish == 'new'"
   >
     <button
       type="button"
-      (click)="onApprove(selectedContribution)"
+      (click)="onApprove()"
       class="btn btn-transparent btn-lg mx-2 display-4 check-icon"
     >
       <span class="check-icon">&checkmark;</span>
@@ -80,7 +81,7 @@
 
     <button
       type="button"
-      (click)="onReject(selectedContribution)"
+      (click)="onReject()"
       class="btn btn-transparent btn-lg mx-2 cross-icon"
     >
       <span class="cross-icon">&cross;</span>
@@ -89,10 +90,23 @@
 
   <div
     class="col-12 mx-auto mb-5 text-center display-1"
-    *ngIf="selectedContribution?.publish == 'rejected'"
+    *ngIf="selectedContribution.publish == 'approved'"
   >
     <button
-      (click)="onReconsider(selectedContribution)"
+      (click)="onEdit()"
+      type="button"
+      class="btn btn-transparent btn-lg mx-2 pencil-icon"
+    >
+      <span class="pencil-icon text-warning">Edit</span>
+    </button>
+  </div>
+
+  <div
+    class="col-12 mx-auto mb-5 text-center display-1"
+    *ngIf="selectedContribution.publish == 'rejected'"
+  >
+    <button
+      (click)="onReconsider()"
       type="button"
       class="btn btn-transparent btn-lg mx-2 pencil-icon"
     >

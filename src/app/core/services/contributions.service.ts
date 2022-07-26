@@ -38,7 +38,7 @@ export class ContributionsService {
   }
 
   editUserContributions(contributionId: string, obj: ContributionSchema) {
-    obj.lastUpdatedAt = new Date();
+    obj.rightist!.lastUpdatedAt = new Date();
     return this.callAPI().update({ [contributionId]: obj });
   }
 
@@ -47,7 +47,7 @@ export class ContributionsService {
     const contributionId = UUID();
     obj.contributionId = contributionId;
     obj.contributedAt = new Date();
-    obj.contributorId = [this.auth.uid];
+    obj.contributorId = this.auth.uid;
     obj.publish = 'new';
     return st.update({ [contributionId]: obj }).catch((e) => {
       return st.set({ [contributionId]: obj });
@@ -74,19 +74,52 @@ export class ContributionsService {
   }
 
   // Admin get all contribution
-  fetchAllContributions() {
+  fetchAllContributions(language: string) {
     return this.db
-      .object(`/persons/requestArchieve/contributions`)
+      .object(`/persons/data/${language}/contributions`)
       .valueChanges();
   }
 
-  updateUserContribution(
+  fetchAllContributionsList(language: string) {
+    return this.db
+      .list(`/persons/data/${language}/contributions`)
+      .valueChanges();
+  }
+
+  addOrUpdateUserContribution(
+    language: string,
     contributorId: string,
     contributionId: string,
     obj: ContributionSchema
   ) {
     return this.db
-      .object(`/persons/requestArchieve/contributions/${contributorId}`)
+      .object(`/persons/data/${language}/contributions/${contributorId}`)
       .update({ [contributionId]: obj });
+  }
+
+  getUserContribution(
+    language: string,
+    contributorId: string,
+    contributionId: string
+  ) {
+    return this.db
+      .object(`/persons/data/${language}/contributions/${contributorId}/${contributionId}`)
+      .valueChanges()
+  }
+
+  getUserContributionByAuth(language: string, contributionId: string) {
+    return this.db
+    .object(`/persons/data/${language}/contributions/${this.auth.uid}/${contributionId}`)
+    .valueChanges()
+  }
+
+  removeUserContribution(
+    language: string,
+    contributorId: string,
+    contributionId: string
+  ) {
+    return this.db
+      .object(`/persons/data/${language}/contributions/${contributorId}/${contributionId}`)
+      .remove()
   }
 }
