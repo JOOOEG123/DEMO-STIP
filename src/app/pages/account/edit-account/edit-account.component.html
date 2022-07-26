@@ -53,9 +53,9 @@
             type="checkbox"
             id="flexSwitchCheckDefault"
           />
-          <label class="form-check-label" for="flexSwitchCheckDefault"
-            >Admin Notification for Contact us / Modification request</label
-          >
+          <label class="form-check-label" for="flexSwitchCheckDefault">{{
+            "account.notification" | translate
+          }}</label>
         </div>
       </div>
     </div>
@@ -74,7 +74,9 @@
               class="form-control"
               formControlName="nickname"
               id="nickname"
-              placeholder="Enter nickname"
+              placeholder="{{ 'account.enter' | translate }}{{
+                'account.username' | translate
+              }}"
             />
           </div>
           <div class="form-group">
@@ -86,7 +88,9 @@
               class="form-control"
               formControlName="firstName"
               id="firstName"
-              placeholder="Enter first name"
+              placeholder="{{ 'account.enter' | translate }}{{
+                'account.firstname' | translate
+              }}"
             />
           </div>
           <div class="form-group">
@@ -98,7 +102,9 @@
               class="form-control"
               formControlName="lastName"
               id="firstName"
-              placeholder="Enter last name"
+              placeholder="{{ 'account.enter' | translate }}{{
+                'account.lastname' | translate
+              }}"
             />
           </div>
           <div class="form-group">
@@ -110,7 +116,7 @@
               class="form-control"
               formControlName="email"
               id="email"
-              placeholder="view email"
+              placeholder="{{ 'account.view_email' | translate }}"
             />
           </div>
           <div class="form-group">
@@ -122,7 +128,9 @@
               class="form-control"
               formControlName="occupation"
               id="occupation"
-              placeholder="Enter Occupation"
+              placeholder="{{ 'account.enter' | translate }}{{
+                'account.occupation' | translate
+              }}"
             />
           </div>
           <div class="form-group">
@@ -134,7 +142,9 @@
               class="form-control"
               formControlName="ethnic"
               id="ethnic"
-              placeholder="Enter Occupation"
+              placeholder="{{ 'account.enter' | translate }}{{
+                'account.ethnicity' | translate
+              }}"
             />
           </div>
           <div class="form-group">
@@ -145,7 +155,7 @@
               class="form-control"
               formControlName="desc"
               id="aboutContent"
-              placeholder="Enter about yourself and content you've shared"
+              placeholder="{{ 'account.tell_me' | translate }}"
             ></textarea>
           </div>
           <fieldset class="form-group d-flex flex-row my-1">
