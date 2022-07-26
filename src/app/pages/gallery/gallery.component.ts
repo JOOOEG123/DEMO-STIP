@@ -223,12 +223,13 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.currentPage = 1;
   }
 
-  onDelete(data: any) {
+  async onDelete(data: any) {
     let image = data.image;
     if (data.status == 'delete') {
       this.modalService.hide();
-      this.imagesAPI.deleteImage(this.language!, image.imageId);
-      this.storageAPI.removeGalleryImage(image.imageId);
+      await this.imagesAPI.deleteImage(this.language!, image.imageId);
+      await this.imagesAPI.deleteImage(this.otherLanguage!, image.imageId);
+      await this.storageAPI.removeImage(image.imageId);
     }
     this.currentPage = 1;
   }
