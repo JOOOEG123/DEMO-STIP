@@ -89,7 +89,9 @@ export class BrowseArchiveComponent implements OnInit {
   updateCollapse(index: number) {
     this.drop[index] = !this.drop[index];
   }
-
+  expandAll() {
+    this.drop = new Array(this.profile.memoirs.length).fill(false);
+  }
   addWrappedText(
     text,
     textWidth,

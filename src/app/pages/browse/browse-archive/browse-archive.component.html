@@ -233,7 +233,11 @@
             <div class="fs-5 fw-bold text-capitalize flex-grow-1">
               {{ "archive.profile_additional_files" | translate }}
             </div>
-            <button type="button" class="btn btn-white ms-auto text-green">
+            <button
+              type="button"
+              class="btn btn-white ms-auto text-green"
+              (click)="expandAll()"
+            >
               {{ "archive.profile_expand" | translate }}
             </button>
           </div>
