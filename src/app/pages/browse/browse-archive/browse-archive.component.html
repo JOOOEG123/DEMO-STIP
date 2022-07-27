@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="container-fluid profile-bg-image-blue-inner">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-2">
         <div class="col align-self-end">
@@ -233,7 +233,11 @@
             <div class="fs-5 fw-bold text-capitalize flex-grow-1">
               {{ "archive.profile_additional_files" | translate }}
             </div>
-            <button type="button" class="btn btn-white ms-auto text-green">
+            <button
+              type="button"
+              class="btn btn-white ms-auto text-green"
+              (click)="expandAll()"
+            >
               {{ "archive.profile_expand" | translate }}
             </button>
           </div>
@@ -242,7 +246,7 @@
             class="col-12 border px-0 rounded w-100 m-2"
             id="memContent"
             #memContent
-            *ngFor="let memoir of profile.memoirs"
+            *ngFor="let memoir of profile.memoirs; let i = index"
           >
             <div class="d-flex ps-2">
               <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">
@@ -252,9 +256,9 @@
               <button
                 class="btn"
                 type="button"
-                [attr.aria-expanded]="!drop"
-                aria-controls="collapseBasic"
-                (click)="updateCollapse()"
+                [attr.aria-expanded]="!drop[i]"
+                aria-controls="{{ 'collapseBasic' + i }}"
+                (click)="updateCollapse(i)"
               >
                 <img
                   src="/assets/browsepage/Arrow-{{ drop ? 'Down' : 'Up' }}.svg"
@@ -266,14 +270,16 @@
 
             <div
               class="bg-white"
-              id="collapseBasic"
-              [collapse]="drop"
+              id="{{ 'collapseBasic' + i }}"
+              [collapse]="drop[i]"
               [isAnimated]="true"
             >
               <div class="card scrollable">
                 <div class="card-body">
                   <p>{{ memoir.memoirTitle }}</p>
-                  <div>by: {{ memoir.memoirAuthor }}</div>
+                  <div>
+                    {{ "archive.by" | translate }}: {{ memoir.memoirAuthor }}
+                  </div>
                   <div
                     class="card-text limit-content"
                     *ngFor="let d of memoir.memoirContent; let i = index"

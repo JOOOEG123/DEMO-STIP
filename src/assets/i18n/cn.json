@@ -77,8 +77,8 @@
     "Request": "要求",
     "Reason": "原因",
     "Email" : "电子邮件",
-    "request_placeholder" : "您想改变什么",
-    "reason_placeholder" : "您修改的原因",
+    "request_placeholder" : "请输入相应的修改",
+    "reason_placeholder" : "请输入您修改的原因",
     "email_placeholder" : "姓名@例子.com",
     "close" : "关闭",
     "submit" : "提交请求"
@@ -97,7 +97,7 @@
     "navbar_button_three": "未知",
     "navbar_button_three_subbutton_one": "未知",
     "navbar_button_three_subbutton_two": "未知",
-    "navbar_language_one": "未知",
+    "navbar_language_one": "英文",
     "navbar_language_two": "未知",
     "navbar_auth_button": "未知",
     "navbar_account_button": "未知",
@@ -121,17 +121,18 @@
     "account": "帐户",
     "research": "研究",
     "contact": "联系我们",
-    "address": "4400 大学路, 费尔法克斯, 弗吉尼亚州 22030",
+    "address": "4400 University Dr, Fairfax, VA 22030",
     "email": "stip@gmu.com"
   },
 
   "home": {
-    "home_introduction_title": "未知",
+    "home_introduction_title": "中国“右派”档案",
     "home_introduction_body": "未知",
-    "home_searchbar_placeholder": "未知",
-    "home_featured_title": "未知",
-    "home_history_title": "未知",
-    "home_history_body": "未知"
+    "home_searchbar_placeholder": "搜索相关档案",
+    "home_featured_title": "“右派”代表",
+    "home_history_title": "历史摘要",
+    "home_history_body": "未知", 
+    "home_timeline":"时间线"
   },
   "contact_us":{
     "contact_us": "联系我们",
@@ -199,7 +200,7 @@
     "archive_searchbar_all": "所有信息栏",
     "archive_searchbar_name": "姓名",
 
-    "archive_searchbar_placeholder": "搜索档案。。。",
+    "archive_searchbar_placeholder": "搜索档案...",
     "archive_top_title": "浏览档案",
     "archive_filter_title": "高级检索",
     "archive_filter_cat_two_checkbox_three": "未知",
@@ -245,7 +246,8 @@
     "profile_expand":"显示所有文件",
     "profile_pdf_message":"您已阅读最大阅读内容， 如要浏览更多， 请下载完整PDF文件.",
     "profile_full_text": "全文",
-    "profile_last_modify":"最近档案修改时间"
+    "profile_last_modify":"最近档案修改时间", 
+    "by":"撰写"
   },
 
   "gallery": {
@@ -349,6 +351,7 @@
     
   }, 
   "upload": {
+    "content":"内容",
     "upload_photo":"上传照片", 
     "clear_photo":"清除照片", 
     "title":"标题", 

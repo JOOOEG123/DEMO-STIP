@@ -33,9 +33,14 @@
       }
     }
 
-    @media only screen and (max-width: 1100px){
+    @media only screen and (max-width: 950px){
       div.arrow {
-        text-indent: 100%;
+        color: transparent;
+        display: none;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      img.arrow {
         color: transparent;
         display: none;
         white-space: nowrap;
