@@ -116,9 +116,10 @@
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 m-3">
     <!-- col for ethnic group -->
     <div class="col">
-      <label for="ethnicGroup" class="form-label">{{
-        "upload.ethnicity" | translate
-      }}</label>
+      <label for="ethnicGroup" class="form-label"
+        >{{ "upload.ethnicity" | translate
+        }}<span class="text-danger">*</span></label
+      >
       <!-- ethnic group dropdown -->
       <select
         formControlName="ethnic"
@@ -144,7 +145,9 @@
 
     <!-- col for gender selection -->
     <fieldset class="col">
-      <legend class="h6 fw-normal">{{ "upload.gender" | translate }}</legend>
+      <legend class="h6 fw-normal">
+        {{ "upload.gender" | translate }} <span class="text-danger">*</span>
+      </legend>
 
       <div class="form-check form-check-inline" *ngFor="let gender of genders">
         <input
@@ -178,7 +181,9 @@
 
     <!-- Status -->
     <fieldset class="col">
-      <legend class="h6 fw-normal">{{ "upload.status" | translate }}</legend>
+      <legend class="h6 fw-normal">
+        {{ "upload.status" | translate }} <span class="text-danger">*</span>
+      </legend>
 
       <div
         class="form-check form-check-inline"

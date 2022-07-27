@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormBuilder,
+  FormGroup,
+  NG_VALIDATORS,
+  ValidationErrors,
+  Validator,
+  Validators,
+} from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import {
@@ -16,27 +25,32 @@ import { FormCustomProvider } from 'src/app/core/utils/helper';
   selector: 'app-rightist-info-form',
   templateUrl: './rightist-info-form.component.html',
   // styleUrls: ['./upload-images-form.component.scss'],
-  providers: [FormCustomProvider(RightistInfoFormComponent)],
+  providers: [
+    FormCustomProvider(RightistInfoFormComponent),
+    FormCustomProvider(RightistInfoFormComponent, NG_VALIDATORS),
+  ],
 })
-export class RightistInfoFormComponent implements OnInit, ControlValueAccessor {
+export class RightistInfoFormComponent
+  implements OnInit, ControlValueAccessor, Validator
+{
   private _disabled: boolean = false;
   otherEthnicGroup: any;
   Obj_Genders: any;
   Obj_Status: any;
   private newForm(a = {} as any) {
     return this.formBuilder.group({
-      name: [a.name || ''],
+      name: [a.name || '', Validators.required],
       otherName: [a.otherName || ''],
-      gender: [a.gender || ''],
+      gender: [a.gender || '', Validators.required],
       otherGender: [a.otherGender || ''],
-      status: [a.status || ''],
+      status: [a.status || '', Validators.required],
       otherStatus: [a.otherStatus || ''],
-      ethnic: [a.ethnic || ''],
+      ethnic: [a.ethnic || '', Validators.required],
       otherEthnic: [a.otherEthnic || ''],
-      occupation: [a.occupation || ''],
+      occupation: [a.occupation || '', Validators.required],
       otherOccupation: [a.otherOccupation || ''],
-      rightistYear: [a.rightistYear || ''],
-      birthYear: [a.birthYear || ''],
+      rightistYear: [a.rightistYear || '', Validators.required],
+      birthYear: [a.birthYear || '', Validators.required],
     });
   }
   form = this.newForm();
@@ -62,6 +76,9 @@ export class RightistInfoFormComponent implements OnInit, ControlValueAccessor {
     private auth: AuthServiceService,
     private transService: TranslateService
   ) {}
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.form.valid ? null : { invalid: true };
+  }
 
   ngOnInit(): void {
     this.sub.push(
@@ -88,14 +105,12 @@ export class RightistInfoFormComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: any): void {
-      if (!obj) {
-        obj = {} as any;
-      }
-      console.log('Rightist: ',obj);
-      this.form = this.newForm(obj?.[0] || obj);
-      this.form.patchValue(obj?.[0] || obj);
-      console.log('Rightist: ',this.form.value);
-      this.onFormChange();
+    if (!obj) {
+      obj = {} as any;
+    }
+    this.form = this.newForm(obj?.[0] || obj);
+    this.form.patchValue(obj?.[0] || obj);
+    this.onFormChange();
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;

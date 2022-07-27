@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormBuilder,
+  FormGroup,
+  NG_VALIDATORS,
+  ValidationErrors,
+  Validator,
+} from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
@@ -8,9 +16,14 @@ import { FormCustomProvider } from 'src/app/core/utils/helper';
 @Component({
   selector: 'app-event-info-form',
   templateUrl: './event-info-form.component.html',
-  providers: [FormCustomProvider(EventInfoFormComponent)],
+  providers: [
+    FormCustomProvider(EventInfoFormComponent),
+    FormCustomProvider(EventInfoFormComponent, NG_VALIDATORS),
+  ],
 })
-export class EventInfoFormComponent implements OnInit, ControlValueAccessor {
+export class EventInfoFormComponent
+  implements OnInit, ControlValueAccessor, Validator
+{
   private _disabled: boolean = false;
   private newEvent(a = {} as any): FormGroup {
     return this.formBuilder.group({
@@ -39,6 +52,10 @@ export class EventInfoFormComponent implements OnInit, ControlValueAccessor {
     private auth: AuthServiceService,
     private transService: TranslateService
   ) {}
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return this.eventArray.valid ? null : { eventArray: true };
+  }
 
   ngOnInit(): void {
     this.sub.push(
