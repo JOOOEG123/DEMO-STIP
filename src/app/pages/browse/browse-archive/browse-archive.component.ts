@@ -39,6 +39,7 @@ export class BrowseArchiveComponent implements OnInit {
 
   language?: string
   sub: Subscription[] = []
+  src: string = 'assets/browsepage/Logo_Placeholder.svg'
 
   ngOnInit(): void {
     this.language = localStorage.getItem('lang')!
@@ -47,11 +48,8 @@ export class BrowseArchiveComponent implements OnInit {
       this.language = langChange.lang
 
       this.arch.getRightistById(this.language!, this.id).subscribe((res) => {
-        this.profile = res;
 
-        console.log(res)
-  
-  
+        this.profile = res;
         //sorting event based on starting year
         this.profile.events.sort(function (a, b) {
           return a.start_year - b.start_year;
