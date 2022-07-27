@@ -6,7 +6,7 @@ export const FormCustomProvider = (FormCustomComponent: any, provide = NG_VALUE_
   console.log(FormCustomComponent);
   return {
     provide: provide,
-    useExisting: FormCustomComponent,
+    useExisting: forwardRef(() => FormCustomComponent),
     multi: true
   };
 }

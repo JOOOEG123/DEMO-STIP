@@ -1,5 +1,5 @@
-<div class="form-group">
-  <h4>Upload a photo</h4>
+<div class="form-group rounded shadow p-3 overflow-auto">
+  <h4>{{ "upload.upload_photo" | translate }}</h4>
   <section
     class="my-4"
     *ngFor="
@@ -10,35 +10,66 @@
     "
   >
     <form [formGroup]="imageForm">
-      <img alt="" [src]="imageForm.value!.imageUrl" height="200" width="200" />
-      <input formControlName="imageUrl" class="d-none" />
       <!-- select photo section -->
-      <input
-        class="form-control w-75 mb-4"
-        type="file"
-        (change)="onselectFile($event, i)"
-        formControlName="image"
-      />
+      <div class="d-flex">
+        <button class="main-canvas" (click)="uploadFile.click()">
+          <input
+            type="file"
+            #uploadFile
+            id="profile-image"
+            class="visually-hidden"
+            accept="image/*"
+            formControlName="image"
+            (change)="onselectFile($event, i)"
+          />
+
+          <img
+            *ngIf="imageForm.value!.imageUrl"
+            src="{{ imageForm.value!.imageUrl }}"
+            alt="profile image"
+            class="image"
+            height="400"
+            width="400"
+          />
+          <img
+            *ngIf="!imageForm.value!.imageUrl"
+            src="/assets/homepage/default-profile.png"
+            alt="user"
+            class="image"
+            height="400"
+            width="400"
+          />
+          <div class="middle mt-5">{{ "account.add_photo" | translate }}</div>
+        </button>
+      </div>
 
       <div class="mb-4">
         <div>
-          <label for="imageTitle" class="form-label">Title</label>
+          <label for="imageTitle" class="form-label"
+            >{{ "upload.title" | translate }} ({{
+              language | uppercase
+            }})</label
+          >
           <input
             type="text"
             class="form-control w-75"
             id="imageTitle"
-            placeholder="What would you title this image"
+            placeholder="{{ 'upload.what_tooltip' | translate }}"
             formControlName="imageTitle"
           />
         </div>
 
         <div *ngIf="isAdmin">
-          <label for="otherImageTitle" class="form-label">Chinese Title</label>
+          <label for="otherImageTitle" class="form-label"
+            >{{ "upload.title" | translate }} ({{
+              otherLanguage | uppercase
+            }})</label
+          >
           <input
             type="text"
             class="form-control w-75"
             id="otherImageTitle"
-            placeholder="What would you title this image"
+            placeholder="{{ 'upload.what_tooltip' | translate }}"
             formControlName="otherImageTitle"
           />
         </div>
@@ -46,25 +77,31 @@
 
       <div class="mb-4">
         <div>
-          <label for="imageDetails" class="form-label">Details</label>
+          <label for="imageDetails" class="form-label"
+            >{{ "upload.detail" | translate }} ({{
+              language | uppercase
+            }})</label
+          >
           <textarea
             class="form-control w-75"
             id="imageDetails"
             rows="3"
-            placeholder="Add a description"
+            placeholder="{{ 'upload.add_description' | translate }}"
             formControlName="imageDes"
           ></textarea>
         </div>
 
         <div *ngIf="isAdmin">
           <label for="otherImageDetails" class="form-label"
-            >Chinese Details</label
+            >{{ "upload.detail" | translate }} ({{
+              otherLanguage | uppercase
+            }})</label
           >
           <textarea
             class="form-control w-75"
             id="otherImageDetails"
             rows="3"
-            placeholder="Add a description"
+            placeholder="{{ 'upload.add_description' | translate }}"
             formControlName="otherImageDes"
           ></textarea>
         </div>
@@ -72,7 +109,9 @@
 
       <div class="mb-4">
         <div>
-          <label for="imageSource" class="form-label">Source</label>
+          <label for="imageSource" class="form-label"
+            >Source ({{ language | uppercase }})</label
+          >
           <textarea
             class="form-control w-75"
             id="imageSource"
@@ -84,7 +123,7 @@
 
         <div *ngIf="isAdmin">
           <label for="otherImageSource" class="form-label"
-            >Chinese Source</label
+            >Chinese Source ({{ otherLanguage | uppercase }})</label
           >
           <textarea
             class="form-control w-75"
@@ -98,25 +137,29 @@
 
       <div>
         <div>
-          <label for="categories">Image category</label>
+          <label for="categories"
+            >{{ "upload.image_cat" | translate }} ({{
+              language | uppercase
+            }})</label
+          >
           <select
             formControlName="imageCategory"
             name="imageCategory"
             id="imageCategory"
             class="form-select w-75"
-            (change)="onImageCategoryChange($event, i)"
           >
-            <option *ngFor="let category of imageCategories" [value]="category">
-              {{ category }}
-            </option>
+            <option value="People" selected>{{ "upload.people" | translate }}</option>
+            <option value="Media">{{ "upload.media" | translate }}</option>
+            <option value="Camps">{{ "upload.Camps" | translate }}</option>
+            <option value="Other">{{ "upload.other" | translate }}</option>
           </select>
-          <div *ngIf="isAdmin">
+          <!-- <div *ngIf="isAdmin">
             <input
               readonly
               formControlName="otherImageCategory"
               class="form-control w-75"
             />
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -124,7 +167,7 @@
       <br />
       <div *ngIf="isAdmin" class="my-3">
         <p>
-          Include this image in gallery
+          {{ "upload.include" | translate }}
           <img
             src="assets/upload/icons-question.png"
             tooltip="Choose to include the photo in website gallery"
@@ -143,7 +186,9 @@
             formControlName="imageUpload"
           />
           <!-- yes button -->
-          <label class="form-check-label" for="galleryYes">Yes</label>
+          <label class="form-check-label" for="galleryYes">{{
+            "upload.yes" | translate
+          }}</label>
         </div>
         <div class="form-check form-check-inline">
           <input
@@ -155,7 +200,9 @@
             formControlName="imageUpload"
           />
           <!-- no button -->
-          <label class="form-check-label" for="galleryNo">No</label>
+          <label class="form-check-label" for="galleryNo">{{
+            "upload.no" | translate
+          }}</label>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormArray, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {
@@ -30,6 +30,18 @@ export class UploadComponent implements OnInit, OnDestroy {
   minDate2: Date = new Date('1840-01-01');
   maxDate2: Date = new Date('1950-01-01');
   images = [];
+  eventInfo = [];
+  memoirInfo = [];
+  rightistInfo = {} as any;
+
+  allForms = this.formBuilder.group({
+    event: [],
+    imagesDetails: [],
+    memoir: [],
+    rightist: [],
+    content: ['']
+  });
+
 
   @Input() get contribution() {
     return this._contribution;
@@ -71,7 +83,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   private newImage() {
     return new FormGroup({
-      imageUpload: new FormControl(''),
+      imageUpload: this.formBuilder.array([]),
       image: new FormControl(''),
       imageTitle: new FormControl(''),
       imageDes: new FormControl(''),
@@ -118,7 +130,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     private contributionService: ContributionsService,
     private auth: AuthServiceService,
     private route: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder
   ) {}
 
   clear() {
@@ -127,10 +140,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   clear2() {
     this.url = '';
-    this.form2.reset();
-    this.imageForm.reset();
-    this.eventArray.reset();
-    this.memoirArray.reset();
+    this.allForms.reset();
   }
 
   clearImage() {

@@ -6,6 +6,7 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { FormCustomProvider } from 'src/app/core/utils/helper';
 
 type UploadImagesType = {
+  file: File;
   image: string;
   imageCategory: string;
   imageDes: string;
@@ -28,6 +29,7 @@ type UploadImagesType = {
 @Component({
   selector: 'app-upload-images-form',
   templateUrl: './upload-images-form.component.html',
+  styleUrls: ['./upload-images-form.component.scss'],
   providers: [FormCustomProvider(UploadImagesFormComponent)],
 })
 export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
@@ -35,7 +37,8 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
   private newImage(a = {} as UploadImagesType): FormGroup {
     return this.formBuilder.group({
       image: this.formBuilder.control(a.image),
-      imageCategory: this.formBuilder.control(a.imageCategory),
+      file: this.formBuilder.control(a.file),
+      imageCategory: this.formBuilder.control(a.imageCategory  || 'People'),
       imageDes: this.formBuilder.control(a.imageDes),
       imageDetails: this.formBuilder.control(a.imageDetails),
       imageSource: this.formBuilder.control(a.imageSource),
@@ -104,10 +107,12 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
   onselectFile(e, i) {
     if (e.target.files) {
       var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
+      const file = e.target.files[0];
+      reader.readAsDataURL(file);
       reader.onload = (event: any) => {
         this.imageArray.controls[i].patchValue({
           imageUrl: event.target.result,
+          file,
         });
       };
     }
@@ -125,6 +130,12 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
         this.addImage();
       }
       this.imagesChange();
+    } else {
+      this.imageArray.controls = [];
+      if (this.imageArray.controls.length === 0) {
+        this.addImage();
+        this.imagesChange();
+      }
     }
   }
   registerOnChange(fn: any): void {

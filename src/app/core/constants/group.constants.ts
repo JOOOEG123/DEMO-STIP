@@ -1,3 +1,5 @@
+// https://en.wikipedia.org/wiki/List_of_ethnic_groups_in_China
+
 const ETHNIC_GROUP_CONSTANTS = {
   en: [
     'Zhuang',
@@ -59,6 +61,10 @@ const ETHNIC_GROUP_CONSTANTS = {
     'Undistinguished',
     'Naturalized Citizen',
   ],
+  en_cn: {
+    'Han':'汉族',
+    'Zhuang':'壮族'
+  },
   cn: [
     '未知',
     '未知',
@@ -82,9 +88,33 @@ const LIST_OF_GENDER = {
 };
 
 const LIST_OF_STATUS = {
-  en: ['Alive', 'Deceased'],
-  cn: ['活', '死者'],
+  en: ['Alive', 'Deceased', 'Unknown'],
+  cn: ['活', '死者', '未知'],
 };
+
+const ObJ_OF_STATUS = {
+  en: {
+    'Alive': '活',
+    'Deceased': '死者',
+    'Unknown': '未知',
+  },
+  cn: {
+    '活': 'Alive',
+    '死者': 'Deceased',
+    '未知': 'Unknown',
+  }
+}
+
+const ObJ_OF_GENDERS = {
+  en: {
+    'Male': '男性',
+    'Female': '女性',
+  },
+  cn: {
+    '男性': 'Male',
+    '女性': 'Female'
+  }
+}
 
 const LIST_OF_IMAGE_CATEGORIES = {
   en: ['People', 'Media', 'Camps', 'Other'],
@@ -120,4 +150,6 @@ export {
   LIST_OF_GENDER,
   LIST_OF_STATUS,
   LIST_OF_IMAGE_CATEGORIES,
+  ObJ_OF_STATUS,
+  ObJ_OF_GENDERS
 };
