@@ -31,7 +31,7 @@
         </li>
         <li role="menuitem">
           <a #dd3 class="dropdown-item" (click)="onOpenChange(dd3.text)">{{
-            "archive.archive_searchbar_description" | translate
+            "archive.archive_description" | translate
           }}</a>
         </li>
       </ul>
@@ -92,13 +92,16 @@
 
       <!-- search result -->
       <div class="container-fluid">
-        <div class="d-flex">
-          <h4 class="me-auto p-2 text-light text-nowrap" [value]="db_result">
+        <div class="row row-cols-lg-auto">
+          <h4
+            class="col-12 me-auto p-2 text-light text-nowrap my-2"
+            [value]="db_result"
+          >
             {{ this.db_result_thousands_seperator }}
             {{ "archive.archive_num_result" | translate }}
           </h4>
 
-          <div class="col-auto flex-shrink-0">
+          <div class="col-12 flex-shrink-0 my-2">
             <label for="per_page_result" class="text-white">{{
               "archive.archive_results_per_page" | translate
             }}</label>
@@ -114,7 +117,7 @@
               <option value="90">90</option>
             </select>
           </div>
-          <div class="col-auto flex-shrink-0">
+          <div class="col-12 flex-shrink-0 my-2">
             <label for="viewSelect" class="text-white">{{
               "archive.archive_view" | translate
             }}</label>
@@ -133,7 +136,7 @@
             </select>
           </div>
 
-          <div class="mb-1 text-light text-nowrap">
+          <div class="col-12 mb-1 text-light text-nowrap my-2">
             |&emsp;{{ "archive.archive_order_by" | translate }}: A-Z
           </div>
         </div>
@@ -200,7 +203,7 @@
                   alt="Bootstrap"
                   width="15"
                   height="15"
-                  class="me-5"
+                  class="me-5 pb-1 arrow"
                 />
               </div>
             </a>
