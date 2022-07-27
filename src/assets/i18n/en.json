@@ -346,6 +346,7 @@
 
   }, 
   "upload": {
+    "content":"Contents",
     "upload_photo":"Upload a photo", 
     "clear_photo":"Clear photo", 
     "title":"Title", 

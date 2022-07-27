@@ -350,6 +350,7 @@
     
   }, 
   "upload": {
+    "content":"内容",
     "upload_photo":"上传照片", 
     "clear_photo":"清除照片", 
     "title":"标题", 
