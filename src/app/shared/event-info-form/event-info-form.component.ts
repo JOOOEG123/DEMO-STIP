@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { FormCustomProvider } from 'src/app/core/utils/helper';
 
-
 @Component({
   selector: 'app-event-info-form',
   templateUrl: './event-info-form.component.html',
@@ -15,9 +14,9 @@ export class EventInfoFormComponent implements OnInit, ControlValueAccessor {
   private _disabled: boolean = false;
   private newEvent(a = {} as any): FormGroup {
     return this.formBuilder.group({
-      startYear: this.formBuilder.control(a.startYear),
-      event: this.formBuilder.control(a.event),
-      otherEvent: this.formBuilder.control(a.otherEvent),
+      startYear: this.formBuilder.control(a.startYear || ''),
+      event: this.formBuilder.control(a.event || ''),
+      otherEvent: this.formBuilder.control(a.otherEvent || ''),
     });
   }
   eventArray = this.formBuilder.array([]);
@@ -34,7 +33,6 @@ export class EventInfoFormComponent implements OnInit, ControlValueAccessor {
   get controls(): FormGroup[] {
     return this.eventArray.controls as FormGroup[];
   }
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -69,9 +67,10 @@ export class EventInfoFormComponent implements OnInit, ControlValueAccessor {
   writeValue(obj: any[]): void {
     if (obj) {
       if (obj.length > 0) {
-        this.eventArray.controls = obj.map((item, index) => {
-          return this.newEvent(item);
-        });
+        this.eventArray.setParent(
+          this.formBuilder.array(obj.map((item) => this.newEvent(item)))
+        );
+        this.eventArray.patchValue(obj);
       }
       if (this.eventArray.controls.length === 0) {
         this.addEvent();

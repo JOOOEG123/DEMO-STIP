@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
@@ -16,29 +17,34 @@ export class AccountComponent implements OnInit, OnDestroy {
   isAdmin = false;
   profile: any;
   subscription: Subscription[] = [];
+  subContribution: Subscription[] = [];
   userContribution: any[] = [];
   userId = this.auth.uid;
   isVeryBtnClicked!: boolean;
+  lang =  this.translate.currentLang;
 
   constructor(
     public auth: AuthServiceService,
     private storage: StorageApIService,
     private contributionService: ContributionsService,
     private archiveService: ArchieveApiService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.subContribution.forEach((sub) => sub.unsubscribe());
   }
 
-  ngOnInit(): void {
-    this.subscription.push(
-      this.contributionService.fetchUserContributions().subscribe((x: any) => {
+  fetchContribution() {
+    this.subContribution.forEach((sub) => sub.unsubscribe());
+    this.subContribution.push(
+      this.contributionService.getUserContributionBy(this.lang).subscribe((x: any) => {
         this.userContribution = [];
         for (const contribution of x) {
           if (contribution.publish === 'approved') {
             this.archiveService
-              .getPersonById(contribution.rightistId)
+              .getRightist(this.lang, contribution.rightistId)
               .subscribe((rightist: any) => {
                 contribution.rightist = rightist;
               });
@@ -49,6 +55,15 @@ export class AccountComponent implements OnInit, OnDestroy {
         });
       })
     );
+  }
+
+  ngOnInit(): void {
+    this.fetchContribution();
+    this.translate.onLangChange.subscribe((lang) => {
+      this.lang = lang.lang;
+      this.fetchContribution();
+    });
+
     const h = this.storage.profileImgeUrl();
     if (h) {
       this.subscription.push(

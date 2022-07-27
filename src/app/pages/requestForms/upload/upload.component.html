@@ -4,24 +4,22 @@
   </h2>
   <h3 class="text-center pt-3 pb-5">{{ "upload.upload" | translate }}</h3>
 </div>
-
+<pre> {{allForms.value | json }}</pre>
 <div *ngIf="this.page">
   <h3 class="text-center pb-5 pt-5 mt-5">
     {{ "upload.detail_edit" | translate }}
   </h3>
 </div>
-<pre>{{allForms.value | json}}</pre>
 
 <form class="container-fluid" [formGroup]="allForms">
   <app-rightist-info-form formControlName="rightist"></app-rightist-info-form>
-
   <div class="row">
     <div class="col-md-4 ms-5 ps-5 photo">
       <!-- photo upload section -->
       <!-- <app-upload-image></app-upload-image> -->
       <!-- <pre>{{ images | json }}</pre> -->
       <app-upload-images-form
-      formControlName="imagesDetails"
+        formControlName="imagesDetails"
       ></app-upload-images-form>
     </div>
 
@@ -66,8 +64,8 @@
     <button
       type="button"
       class="btn btn-lg btn-outline-dark me-3 rounded-pill mx-2 px-4"
-      [disabled]="allForms.invalid"
-      (submit)="onSubmit()"
+      [disabled]="allForms.invalid || isLoading"
+      (click)="onSubmit()"
     >
       {{ "upload.submit" | translate }}
     </button>

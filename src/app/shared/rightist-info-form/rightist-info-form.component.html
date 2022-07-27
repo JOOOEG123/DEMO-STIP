@@ -8,7 +8,10 @@
     <div class="col">
       <div>
         <label for="Name" class="form-label"
-          >{{ "upload.name" | translate }} ({{language | uppercase }})<span class="text-danger">*</span></label
+          >{{ "upload.name" | translate }} ({{ language | uppercase }})<span
+            class="text-danger"
+            >*</span
+          ></label
         >
         <input
           type="text"
@@ -20,7 +23,8 @@
       </div>
       <div class="my-2" *ngIf="isAdmin">
         <label for="otherName" class="form-label"
-          >{{ "upload.name" | translate }} ({{otherLanguage | uppercase }}) <span class="text-danger">*</span></label
+          >{{ "upload.name" | translate }} ({{ otherLanguage | uppercase }})
+          <span class="text-danger">*</span></label
         >
         <input
           type="text"
@@ -34,7 +38,8 @@
     <!-- col for birth year -->
     <div class="col">
       <label for="birthYear" class="form-label"
-        >{{ "upload.birth_year" | translate }} <span class="text-danger">*</span></label
+        >{{ "upload.birth_year" | translate }}
+        <span class="text-danger">*</span></label
       >
       <!-- year selector -->
       <input
@@ -55,7 +60,9 @@
     <div class="col">
       <div>
         <label for="occupation" class="form-label"
-          >{{ "upload.occupation" | translate }} ({{language | uppercase }})<span class="text-danger">*</span></label
+          >{{ "upload.occupation" | translate }} ({{
+            language | uppercase
+          }})<span class="text-danger">*</span></label
         >
         <!-- occupation typeahead -->
         <input
@@ -69,7 +76,9 @@
 
       <div class="my-2" *ngIf="isAdmin">
         <label for="otherOccupation" class="form-label"
-          >{{ "upload.occupation" | translate }} ({{otherLanguage | uppercase }})<span class="text-danger">*</span></label
+          >{{ "upload.occupation" | translate }} ({{
+            otherLanguage | uppercase
+          }})<span class="text-danger">*</span></label
         >
         <input
           type="text"
@@ -83,7 +92,8 @@
     <!-- col for year of event -->
     <div class="col">
       <label for="Year" class="form-label"
-        >{{ "upload.rightist_year" | translate }} <span class="text-danger">*</span></label
+        >{{ "upload.rightist_year" | translate }}
+        <span class="text-danger">*</span></label
       >
       <!-- year selector -->
       <input
@@ -110,7 +120,12 @@
         "upload.ethnicity" | translate
       }}</label>
       <!-- ethnic group dropdown -->
-      <select formControlName="ethnic" class="form-select" id="ethnicGroup">
+      <select
+        formControlName="ethnic"
+        class="form-select"
+        id="ethnicGroup"
+        (change)="patchChange('ethnic', 'otherEthnic')"
+      >
         <option disabled selected value>-- select an option --</option>
         <option [value]="ethnic" *ngFor="let ethnic of ethnicGroup">
           {{ ethnic }}
@@ -131,10 +146,7 @@
     <fieldset class="col">
       <legend class="h6 fw-normal">{{ "upload.gender" | translate }}</legend>
 
-      <div
-        class="form-check form-check-inline"
-        *ngFor="let gender of genders;"
-      >
+      <div class="form-check form-check-inline" *ngFor="let gender of genders">
         <input
           class="form-check-input"
           formControlName="gender"
@@ -208,7 +220,7 @@
       (click)="clear()"
       [ngClass]="{ invisible: isAdmin }"
     >
-    {{ "upload.clear" | translate }}
+      {{ "upload.clear" | translate }}
     </button>
   </div>
 </form>

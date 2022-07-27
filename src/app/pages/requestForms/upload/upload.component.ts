@@ -1,15 +1,27 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { FormControl, FormGroup, FormArray, Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import {
-  ETHNIC_GROUP_CONSTANTS,
-  LIST_OF_JOB,
-} from 'src/app/core/constants/group.constants';
+import { TranslateService } from '@ngx-translate/core';
+import { forkJoin, Subscription, zip } from 'rxjs';
+import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
-import { Contribution, Rightist } from 'src/app/core/types/adminpage.types';
+import {
+  Contribution,
+  Rightist,
+  RightistSchema,
+} from 'src/app/core/types/adminpage.types';
 import { UUID } from 'src/app/core/utils/uuid';
+import {
+  mapOtherEvents,
+  mapOtherMemiors,
+  mapOtherRightists,
+} from './upload.helper';
+
+type langType = {
+  en: Contribution;
+  cn: Contribution;
+};
 
 @Component({
   selector: 'app-upload',
@@ -17,162 +29,62 @@ import { UUID } from 'src/app/core/utils/uuid';
   styleUrls: ['./upload.component.scss'],
 })
 export class UploadComponent implements OnInit, OnDestroy {
-  private _contribution!: Contribution;
-  contributionId!: string;
-  ethnicGroup: string[] = ETHNIC_GROUP_CONSTANTS.en;
-  occupation: string[] = LIST_OF_JOB;
-  selected?: string;
-  selected2?: string;
-  sub: Subscription[] = [];
-  url = '';
-  minDate: Date = new Date('1940-01-01');
-  maxDate: Date = new Date('1965-01-01');
-  minDate2: Date = new Date('1840-01-01');
-  maxDate2: Date = new Date('1950-01-01');
-  images = [];
-  eventInfo = [];
-  memoirInfo = [];
-  rightistInfo = {} as any;
+  private _contribution: langType = {} as any;
 
+  isAdmin: boolean = false;
   allForms = this.formBuilder.group({
     event: [],
     imagesDetails: [],
     memoir: [],
     rightist: [],
-    content: ['']
+    content: [''],
   });
-
+  contributionId!: string;
+  maxDate: Date = new Date('1965-01-01');
+  maxDate2: Date = new Date('1950-01-01');
+  minDate: Date = new Date('1940-01-01');
+  minDate2: Date = new Date('1840-01-01');
+  sub: Subscription[] = [];
+  subLang: Subscription[] = [];
+  language = this.translate.currentLang;
+  otherLanguage = this.language === 'en' ? 'cn' : 'en';
+  isLoading: boolean = false;
 
   @Input() get contribution() {
-    return this._contribution;
+    return this._contribution[this.language];
   }
   set contribution(contribution: Contribution) {
-    if (contribution.rightist) {
-      this._contribution = contribution;
+    if (contribution?.rightist) {
+      this._contribution[this.language] = contribution;
     }
   }
   @Input() page?: string;
-
-  form = new FormGroup({
-    name: new FormControl('', Validators.required),
-    gender: new FormControl(''),
-    status: new FormControl(''),
-    ethnic: new FormControl(''),
-    occupation: new FormControl('', Validators.required),
-    rightestYear: new FormControl('', Validators.required),
-    birthYear: new FormControl('', Validators.required),
-  });
-  form2 = new FormGroup({
-    imageUpload: new FormControl(''),
-    image: new FormControl(''),
-    content: new FormControl(''),
-  });
-
-  imageForm = new FormGroup({
-    imageTitle: new FormControl(''),
-    imageDes: new FormControl(''),
-  });
-
-  imageArray = new FormArray([this.newImage()]);
-  eventArray = new FormArray([this.newEvent()]);
-  memoirArray = new FormArray([this.newMemoir()]);
-  imageForm2 = new FormGroup({
-    imageUpload: new FormControl(''),
-    image: new FormControl(''),
-  });
-
-  private newImage() {
-    return new FormGroup({
-      imageUpload: this.formBuilder.array([]),
-      image: new FormControl(''),
-      imageTitle: new FormControl(''),
-      imageDes: new FormControl(''),
-    });
-  }
-
-  private newEvent() {
-    return new FormGroup({
-      startYear: new FormControl(''),
-      endYear: new FormControl(''),
-      event: new FormControl(''),
-    });
-  }
-
-  private newMemoir() {
-    return new FormGroup({
-      memoirTitle: new FormControl(''),
-      memoirContent: new FormControl(''),
-      memoirAuthor: new FormControl(''),
-    });
-  }
-
-  get eventControls() {
-    return this.eventArray.controls as FormGroup[];
-  }
-
-  get imageControls() {
-    return this.imageArray.controls as FormGroup[];
-  }
-
-  get memoirControls() {
-    return this.memoirArray.controls as FormGroup[];
-  }
-
-  removeMemoir(i: number) {
-    this.memoirArray.removeAt(i);
-  }
-
-  removeImageSection(i: number) {
-    this.imageArray.removeAt(i);
-  }
-
   constructor(
     private contributionService: ContributionsService,
     private auth: AuthServiceService,
     private route: Router,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private translate: TranslateService,
+    private archiveAPI: ArchieveApiService
   ) {}
 
-  clear() {
-    this.form.reset();
-  }
-
   clear2() {
-    this.url = '';
     this.allForms.reset();
-  }
-
-  clearImage() {
-    this.imageForm.reset();
-  }
-
-  addImage() {
-    this.imageArray.push(this.newImage());
-  }
-
-  addEvent() {
-    this.eventArray.push(this.newEvent());
-  }
-
-  removeEvent(i: number) {
-    this.eventArray.removeAt(i);
-  }
-
-  addMemoir() {
-    this.memoirArray.push(this.newMemoir());
   }
 
   ngOnDestroy(): void {
     this.sub.forEach((sub) => sub.unsubscribe());
+    this.subLang.forEach((sub) => sub.unsubscribe());
   }
 
-  ngOnInit(): void {
+  onInit() {
     if (this.page === 'contribution') {
       if (this.contribution) {
         if (this.contribution.contributionId && this.contribution.rightist) {
           const rightist: Rightist = this.contribution.rightist;
-          this.mapForm(rightist);
+          // this.mapForm(rightist);
+          this.updateData();
         }
       }
     } else {
@@ -182,14 +94,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           this.page = params['page'];
           if (this.page === 'account') {
             if (this.contributionId) {
-              this.sub.push(
-                this.contributionService
-                  .fetchContributorByContributionId(this.contributionId)
-                  .subscribe((contribution: any) => {
-                    this.contribution = contribution;
-                    this.mapForm(contribution.rightist);
-                  })
-              );
+              this.updateData();
             }
           }
         })
@@ -197,80 +102,271 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
   }
 
-  mapForm(rightist: Rightist) {
-    if (this.form && this.form2 && this.eventArray && this.memoirArray) {
-      this.form.patchValue({
-        name: rightist.lastName + ' ' + rightist.firstName,
-        occupation: rightist.job,
-        ethnic: rightist.ethnicity,
-        rightestYear: rightist.rightistYear,
-        ...rightist,
-      });
-      this.form2.patchValue({
-        content: rightist.description,
-      });
-      this.eventArray.patchValue(rightist.events);
-      this.memoirArray.patchValue(rightist.memoirs);
-    }
+  ngOnInit(): void {
+    this.sub.push(
+      this.auth.isAdmin.subscribe((data) => {
+        this.isAdmin = data;
+      })
+    );
+    this.onInit();
+    this.subLang.push(
+      this.translate.onLangChange.subscribe((data) => {
+        this.language = data.lang;
+        this.otherLanguage = data.lang === 'en' ? 'cn' : 'en';
+        this.onInit();
+      })
+    );
   }
 
-  onselectFile(e) {
-    if (e.target.files) {
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
-      };
+  updateData() {
+    zip(
+      this.contributionService.getUserContributionByAuth(
+        this.language,
+        this.contributionId
+      ),
+      this.contributionService.getUserContributionByAuth(
+        this.otherLanguage,
+        this.contributionId
+      )
+    ).subscribe((data: any) => {
+      this._contribution[this.language] = data[0] || data[1];
+      this._contribution[this.otherLanguage] = data[1] || data[0];
+      const { rightist: r1 } = this._contribution[this.language];
+      const { rightist: r2 } = this._contribution[this.otherLanguage];
+      if (r1 && r2) {
+        this.mapForm(r1, r2);
+      }
+      this.allForms.patchValue({
+        rightist: {
+          ...this._contribution[this.language]?.rightist,
+
+          ...mapOtherRightists(
+            this._contribution[this.otherLanguage]?.rightist
+          ),
+          name: this._contribution[this.language]?.rightist.fullName,
+          occupation:
+            this._contribution[this.language]?.rightist.workplaceCombined,
+          ethnic: this._contribution[this.language]?.rightist.ethnicity,
+        },
+        content: this._contribution[this.language].rightist?.description || '',
+        otherContent:
+          this._contribution[this.otherLanguage].rightist?.description || '',
+      });
+    });
+  }
+  mapForm(r1: Rightist, r2: Rightist) {
+    const length =
+      r1.memoirs?.length > r2.memoirs?.length
+        ? r1.memoirs.length
+        : r2.memoirs.length;
+    const memoirs: any[] = [];
+    for (let i = 0; i < length; i++) {
+      const m1 = r1.memoirs[i];
+      const m2 = r2.memoirs[i];
+      if (m1 && m2) {
+        memoirs.push({
+          memoirTitle: m1.memoirTitle,
+          otherMemoirTitle: m2.memoirTitle || '',
+          memoirContent: m1.memoirContent || '',
+          otherMemoirContent: m2.memoirContent || '',
+          memoirAuthor: m1.memoirAuthor || '',
+          otherMemoirAuthor: m2.memoirAuthor || '',
+        });
+      }
     }
+    const enlen =
+      r1.events?.length > r2.events?.length
+        ? r1.events.length
+        : r2.events.length;
+    const events: any[] = [];
+    for (let i = 0; i < enlen; i++) {
+      const m1 = r1.events[i];
+      const m2 = r2.events[i];
+      if (m1 && m2) {
+        events.push({
+          startYear: m1.startYear || m2.startYear,
+          event: m1.event || '',
+          otherEvent: m2.event || '',
+        });
+      }
+    }
+
+    this.allForms.patchValue({
+      event: events,
+      memoir: memoirs,
+    });
   }
 
   onSubmit() {
+    this.isLoading = true;
+    const rightistId =
+      this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
     const {
       name,
       gender,
       status,
       ethnic,
-      rightestYear,
+      rightistYear,
       occupation,
       birthYear,
-    } = this.form.value;
-    const { content } = this.form2.value;
-    const rightistId =
-      this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
-    this.contributionService
-      .contributionsAddEdit({
-        contributionId: this.contributionId,
-        contributorId: [this.auth.uid],
-        contributedAt: new Date(),
-        rightistId: rightistId,
-        approvedAt: new Date(),
-        lastUpdatedAt: new Date(),
-        publish: 'new',
-        rightist: {
-          rightistId: rightistId,
-          imagePath: [this.url],
-          initial: name.trim().charAt(0).toUpperCase(),
-          firstName: name,
-          lastName: '',
-          gender: gender || '',
-          birthYear: birthYear,
-          deathYear: 0,
-          rightistYear: rightestYear,
-          status: status || 'Unknown',
-          ethnicity: ethnic || '',
-          job: occupation,
-          detailJob: '',
-          workplace: '',
-          events: this.eventArray.value,
-          memoirs: this.memoirArray.value,
-          reference: '',
-          description: content,
-        },
-      })
-      .then(() => {
-        this.clear();
-        this.clear2();
-        this.route.navigateByUrl('/account');
-      });
+    } = this.allForms.value.rightist!;
+
+    // if (!this.contribution) {
+    let rightist: RightistSchema = {
+      rightistId: rightistId,
+      contributorId: this.auth.uid,
+      imageId: [],
+      profileImageId: '',
+      initial: '',
+      firstName: '',
+      lastName: '',
+      fullName: name,
+      gender: gender,
+      birthYear: birthYear,
+      deathYear: 0,
+      rightistYear: rightistYear,
+      status: status || 'Unknown',
+      ethnicity: ethnic || '',
+      job: '',
+      detailJob: '',
+      workplace: '',
+      workplaceCombined: occupation,
+      events: this.allForms.value.event,
+      memoirs: this.allForms.value.memoir,
+      reference: '',
+      description: this.allForms.value.content,
+      lastUpdatedAt: new Date(),
+      source: 'contributed',
+    };
+
+    let otherRightist: RightistSchema = {
+      rightistId: rightistId || '',
+      contributorId: this.auth.uid || '',
+      imageId: [],
+      profileImageId: '',
+      initial: '',
+      firstName: '',
+      lastName: '',
+      fullName: this.allForms.value.rightist.otherName || '',
+      gender: this.allForms.value.rightist.otherGender || '',
+      birthYear: birthYear || '',
+      deathYear: 0,
+      rightistYear: rightistYear || '',
+      status: this.allForms.value.rightist.otherStatus || 'Unknown',
+      ethnicity: this.allForms.value.rightist.otherEthnic || '',
+      job: '',
+      detailJob: '',
+      workplace: '',
+      workplaceCombined: this.allForms.value.rightist?.otherOccupation || '',
+      events: mapOtherEvents(this.allForms.value.event || []),
+      memoirs: (this.allForms.value.memoir || []).map((m) => {
+        return {
+          memoirTitle: m.otherMemoirTitle || '',
+          memoirContent: m.otherMemoirContent || '',
+          memoirAuthor: m.otherMemoirAuthor || '',
+        };
+      }),
+      reference: '',
+      description: this.allForms.value?.otherContent || '',
+      lastUpdatedAt: new Date(),
+      source: 'contributed',
+    };
+
+    if (this.language === 'en') {
+      rightist.initial = rightist.fullName.trim().charAt(0).toUpperCase();
+      otherRightist.initial = rightist.fullName.trim().charAt(0).toUpperCase();
+    }
+    let contributionId = this.contributionId || UUID();
+
+    if (this.isAdmin) {
+      Promise.all([
+        this.contributionService.addOrUpdateUserContribution(
+          this.language,
+          this.auth.uid,
+          contributionId,
+          {
+            contributionId: contributionId,
+            contributorId: this.auth.uid,
+            rightistId: rightistId,
+            contributedAt: new Date(),
+            approvedAt: new Date(),
+            rejectedAt: new Date(),
+            publish: 'approved',
+          }
+        ),
+        this.archiveAPI.addOrUpdateRightist(this.language, rightist),
+        this.contributionService.addOrUpdateUserContribution(
+          this.otherLanguage,
+          this.auth.uid,
+          contributionId,
+          {
+            contributionId: contributionId,
+            contributorId: this.auth.uid,
+            rightistId: rightistId,
+            contributedAt: new Date(),
+            approvedAt: new Date(),
+            rejectedAt: new Date(),
+            publish: 'approved',
+          }
+        ),
+        this.archiveAPI
+          .addOrUpdateRightist(this.otherLanguage, otherRightist)
+          .then(() => {
+            this.route.navigateByUrl('/account');
+          }),
+      ])
+        .then(() => {
+          this.route.navigateByUrl('/account');
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.isLoading = false;
+          // use the alert service to show a message
+        });
+    } else {
+      Promise.all([
+        this.contributionService.addOrUpdateUserContribution(
+          this.language,
+          this.auth.uid,
+          contributionId,
+          {
+            contributionId: contributionId,
+            contributorId: this.auth.uid,
+            rightistId: rightistId,
+            contributedAt: new Date(),
+            approvedAt: new Date(),
+            rejectedAt: new Date(),
+            publish: 'new',
+            rightist: rightist,
+          }
+        ),
+        this.contributionService.addOrUpdateUserContribution(
+          this.otherLanguage,
+          this.auth.uid,
+          contributionId,
+          {
+            contributionId: contributionId,
+            contributorId: this.auth.uid,
+            rightistId: rightistId,
+            contributedAt: new Date(),
+            approvedAt: new Date(),
+            rejectedAt: new Date(),
+            publish: 'new',
+            rightist: otherRightist,
+          }
+        ),
+      ])
+        .then(() => {
+          this.route.navigateByUrl('/account');
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.isLoading = false;
+          // use the alert service to show a message
+        });
+    }
   }
+  // }
 }

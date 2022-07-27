@@ -88,10 +88,13 @@ export class RightistInfoFormComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: any): void {
-    if (!obj) {
-      obj = {} as any;
-    }
-      this.form = this.newForm(obj);
+      if (!obj) {
+        obj = {} as any;
+      }
+      console.log('Rightist: ',obj);
+      this.form = this.newForm(obj?.[0] || obj);
+      this.form.patchValue(obj?.[0] || obj);
+      console.log('Rightist: ',this.form.value);
       this.onFormChange();
   }
   registerOnChange(fn: any): void {
@@ -135,5 +138,8 @@ export class RightistInfoFormComponent implements OnInit, ControlValueAccessor {
   }
   radioChange(key: string, otherKey: string, obj: any) {
     this.form.get(otherKey)!.setValue(obj[this.form.value[key]]);
+  }
+  patchChange(key: string, otherKey: string) {
+    this.form.get(otherKey)!.setValue(this.form.get(key)!.value);
   }
 }

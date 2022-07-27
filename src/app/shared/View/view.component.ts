@@ -14,6 +14,7 @@ export class ViewComponent implements OnInit {
   ngOnInit(): void {}
 
   deleteContribution() {
-    this.contributionService.removeContributionById(this.data.contributionId);
+    console.log(this.data)
+    this.contributionService.removeUserContributionById(this.data.contributionId);
   }
 }

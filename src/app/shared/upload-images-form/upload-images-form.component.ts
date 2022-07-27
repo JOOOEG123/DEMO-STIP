@@ -36,23 +36,23 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
   private _disabled: boolean = false;
   private newImage(a = {} as UploadImagesType): FormGroup {
     return this.formBuilder.group({
-      image: this.formBuilder.control(a.image),
-      file: this.formBuilder.control(a.file),
+      image: this.formBuilder.control(a.image || ''),
+      file: this.formBuilder.control(a.file || ''),
       imageCategory: this.formBuilder.control(a.imageCategory  || 'People'),
-      imageDes: this.formBuilder.control(a.imageDes),
-      imageDetails: this.formBuilder.control(a.imageDetails),
-      imageSource: this.formBuilder.control(a.imageSource),
-      imageTitle: this.formBuilder.control(a.imageTitle),
-      imageUpload: this.formBuilder.control(a.imageUpload),
-      imageUrl: this.formBuilder.control(a.imageUrl),
-      otherImage: this.formBuilder.control(a.otherImage),
-      otherImageCategory: this.formBuilder.control(a.otherImageCategory),
-      otherImageDes: this.formBuilder.control(a.otherImageDes),
-      otherImageDetails: this.formBuilder.control(a.otherImageDetails),
-      otherImageSource: this.formBuilder.control(a.otherImageSource),
-      otherImageTitle: this.formBuilder.control(a.otherImageTitle),
-      otherImageUpload: this.formBuilder.control(a.otherImageUpload),
-      otherImageUrl: this.formBuilder.control(a.otherImageUrl),
+      imageDes: this.formBuilder.control(a.imageDes || ''),
+      imageDetails: this.formBuilder.control(a.imageDetails || ''),
+      imageSource: this.formBuilder.control(a.imageSource || ''),
+      imageTitle: this.formBuilder.control(a.imageTitle || ''),
+      imageUpload: this.formBuilder.control(a.imageUpload || ''),
+      imageUrl: this.formBuilder.control(a.imageUrl || ''),
+      otherImage: this.formBuilder.control(a.otherImage || ''),
+      otherImageCategory: this.formBuilder.control(a.otherImageCategory || ''),
+      otherImageDes: this.formBuilder.control(a.otherImageDes || ''),
+      otherImageDetails: this.formBuilder.control(a.otherImageDetails || ''),
+      otherImageSource: this.formBuilder.control(a.otherImageSource || ''),
+      otherImageTitle: this.formBuilder.control(a.otherImageTitle || ''),
+      otherImageUpload: this.formBuilder.control(a.otherImageUpload || ''),
+      otherImageUrl: this.formBuilder.control(a.otherImageUrl || ''),
     });
   }
   imageArray = this.formBuilder.array([]);
@@ -116,15 +116,14 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
         });
       };
     }
-
-    console.log(this.imageArray.at(i).get('imageUrl'));
   }
   writeValue(obj: UploadImagesType[]): void {
     if (obj) {
       if (obj.length > 0) {
-        this.imageArray.controls = obj.map((item, index) => {
-          return this.newImage(item);
-        });
+        this.imageArray.setParent(
+          this.formBuilder.array(obj.map((item) => this.newImage(item)))
+        );
+        this.imageArray.patchValue(obj);
       }
       if (this.imageArray.controls.length === 0) {
         this.addImage();

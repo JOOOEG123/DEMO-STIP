@@ -14,12 +14,12 @@ export class MemoirInfoFormComponent implements OnInit, ControlValueAccessor {
   private _disabled: boolean = false;
   private newMemior(a = {} as any): FormGroup {
     return this.formBuilder.group({
-      memoirTitle: this.formBuilder.control(a.memoirTitle),
-      otherMemoirTitle: this.formBuilder.control(a.otherMemoirTitle),
-      memoirContent: this.formBuilder.control(a.memoirContent),
-      otherMemoirContent: this.formBuilder.control(a.otherMemoirContent),
-      memoirAuthor: this.formBuilder.control(a.memoirAuthor),
-      otherMemoirAuthor: this.formBuilder.control(a.otherMemoirAuthor),
+      memoirTitle: this.formBuilder.control(a.memoirTitle || ''),
+      otherMemoirTitle: this.formBuilder.control(a.otherMemoirTitle || ''),
+      memoirContent: this.formBuilder.control(a.memoirContent || ''),
+      otherMemoirContent: this.formBuilder.control(a.otherMemoirContent || ''),
+      memoirAuthor: this.formBuilder.control(a.memoirAuthor || ''),
+      otherMemoirAuthor: this.formBuilder.control(a.otherMemoirAuthor || ''),
     });
   }
   memiorArray = this.formBuilder.array([]);
@@ -28,14 +28,12 @@ export class MemoirInfoFormComponent implements OnInit, ControlValueAccessor {
   subImageChange: Subscription[] = [];
   isAdmin: boolean = false;
 
-
   language?: string;
   otherLanguage?: string;
 
   get controls(): FormGroup[] {
     return this.memiorArray.controls as FormGroup[];
   }
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -70,9 +68,10 @@ export class MemoirInfoFormComponent implements OnInit, ControlValueAccessor {
   writeValue(obj: any[]): void {
     if (obj) {
       if (obj.length > 0) {
-        this.memiorArray.controls = obj.map((item, index) => {
-          return this.newMemior(item);
-        });
+        this.memiorArray.setParent(
+          this.formBuilder.array(obj.map((item) => this.newMemior(item)))
+        );
+        this.memiorArray.patchValue(obj);
       }
       if (this.memiorArray.controls.length === 0) {
         this.addMemior();
