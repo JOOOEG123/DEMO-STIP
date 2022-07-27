@@ -20,6 +20,7 @@ import { Image } from 'src/app/core/types/adminpage.types';
 import { ImagesService } from 'src/app/core/services/images.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
 import { UUID } from 'src/app/core/utils/uuid';
+import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 
 @Component({
   selector: 'app-gallery',
@@ -52,71 +53,78 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   modalRef?: BsModalRef;
   selectedImage?: Image;
+  otherImage?: Image;
 
   status: string = 'initial';
+  type?: string 
 
   @ViewChild('image') imageRef?: ElementRef;
   @ViewChild(NgxMasonryComponent) masonry?: NgxMasonryComponent;
+
+  sub: Subscription[] = [];
+  searchTerm?: string;
+
+  language?: string;
+  otherLanguage?: string;
+
+  isAdmin?: boolean;
+  loaded?: boolean;
 
   constructor(
     private translate: TranslateService,
     private storageAPI: StorageApIService,
     private imagesAPI: ImagesService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private auth: AuthServiceService
   ) {}
 
-  language?: string;
-  otherLanguage?: string;
-
-  sub: Subscription[] = [];
-  loaded: boolean = false
-
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!
-    this.otherLanguage = this.language === 'en' ? 'cn' : 'en'
+    this.auth.isAdmin.subscribe((isAdmin: any) => {
+      this.isAdmin = isAdmin;
+    });
 
-    this.sub.push(this.translate.onLangChange.subscribe((data) => {
-      this.language = data.lang
-      this.otherLanguage = this.language === 'en' ? 'cn' : 'en'
+    this.language = localStorage.getItem('lang')!;
+    this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
 
-      console.log(this.language)
-
-      this.sub.push(
-        this.imagesAPI.getGalleryImages(this.language!).subscribe((imageList: any) => {
-          let count = 0
-          let dataLength = imageList.length
-
-          this.loaded = false
-          this.categoryImages.length = 0;
-          this.display.length = 0;
-          this.images.length = 0;
-
-          let images: Image[] = imageList
-          console.log(images)
-          console.log(data)
-          for (const image of images) {
-            this.storageAPI
-              .getImageUrl(`${image.imageId}`)
-              .subscribe((data) => {
-                count += 1
-                image.imagePath = data;
-                if (count == dataLength) {
-                  this.loaded = true
+    this.sub.push(
+      this.translate.onLangChange.subscribe((lang: any) => {
+        this.loaded = false;
+        let count = 0;
+        this.language = lang.lang;
+        this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
+        console.log(this.language);
+        this.sub.push(
+          this.imagesAPI
+            .getGalleryImages(this.language!)
+            .subscribe((imagesList: any) => {
+              this.categoryImages.length = 0;
+              this.display.length = 0;
+              this.images.length = 0;
+              let images: Image[] = imagesList;
+              for (const image of images) {
+                this.storageAPI
+                  .getImageUrl(`${image.imageId}`)
+                  .subscribe((data) => {
+                    count += 1;
+                    image.imagePath = data;
+                    if (count === imagesList.length) {
+                      this.loaded = true;
+                    }
+                  });
+                this.images.push(image);
+                if (this.display.length < this.itemsPerPage) {
+                  this.display.push(image);
                 }
-              });
-            this.images.push(image);
-            if (this.display.length < this.itemsPerPage) {
-              this.display.push(image);
-            }
-          }
-          this.categoryImages = this.images.slice();
-          this.searchImages = this.categoryImages;
-        })
-      );
-  
-      this.selectedCategory = 'All';
-      this.currentImageIndex = -1;
-    }))
+              }
+              this.categoryImages = this.images.slice();
+              this.searchImages = this.categoryImages;
+            })
+        );
+
+        this.selectedCategory = 'All';
+        this.currentImageIndex = -1;
+      })
+    );
 
     // Translation
     this.sub.push(
@@ -135,6 +143,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.translationSubscription?.unsubscribe();
+    this.imageSubscription?.unsubscribe();
     this.sub.forEach((x) => x.unsubscribe());
   }
 
@@ -159,6 +169,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.categoryImages = result;
       this.searchGallery();
+      // this.display = this.searchImages.slice(0, this.itemsPerPage)
     }, 100);
   }
 
@@ -181,8 +192,13 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   onLearnMore(template: TemplateRef<any>, image: Image) {
     this.selectedImage = image;
+    this.type = 'edit'
     this.status = 'initial';
     this.modalService.show(template, { class: 'modal-xl', backdrop: 'static' });
+  }
+
+  onAdd(data: any) {
+    
   }
 
   // functionality in modal
@@ -192,6 +208,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.status = data.status;
       this.selectedImage = data.image;
+      this.otherImage = data.otherImage;
       this.modalService.show(template, {
         class: 'modal-xl',
         backdrop: 'static',
@@ -213,23 +230,34 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   onUpdate(data: any) {
     let image: Image = data.image;
+    let otherImage: Image = data.otherImage;
     if (this.selectedImage) {
       if (data.status == 'update') {
         this.modalService.hide();
         let { opacity, imagePath, ...result } = image;
-        this.imagesAPI.updateImage(this.language!, result);
+        console.log(result);
+        this.imagesAPI.addImage(this.language!, result);
+      }
+    }
+
+    if (this.otherImage) {
+      if (data.status == 'update') {
+        this.modalService.hide();
+        let { opacity, imagePath, ...result } = otherImage;
+        console.log(result);
+        // this.imagesAPI.updateImage(result)
       }
     }
     this.currentPage = 1;
   }
 
-  async onDelete(data: any) {
+  onDelete(data: any) {
     let image = data.image;
     if (data.status == 'delete') {
       this.modalService.hide();
-      await this.imagesAPI.deleteImage(this.language!, image.imageId);
-      await this.imagesAPI.deleteImage(this.otherLanguage!, image.imageId);
-      await this.storageAPI.removeImage(image.imageId);
+      this.imagesAPI.deleteImage(this.language!, image.imageId);
+      this.storageAPI.removeGalleryImage(image.imageId);
+      console.log(image);
     }
     this.currentPage = 1;
   }
@@ -245,7 +273,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       this.modalService.hide();
     }
   }
-  searchTerm?: string;
+
 
   searchGallery() {
     let result: Image[] = [];
@@ -261,6 +289,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         }
       }
       this.searchImages = result;
+      console.log(this.searchImages);
     } else {
       this.searchImages = this.categoryImages;
     }
@@ -273,5 +302,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
       this.masonry?.reloadItems();
       this.masonry?.layout();
     }, 200);
+  }
+
+  addImage(template: TemplateRef<any>) {
+    this.type = 'add'
+    this.selectedImage = undefined
+    this.modalService.show(template, { class: 'modal-xl', backdrop: 'static' });
   }
 }

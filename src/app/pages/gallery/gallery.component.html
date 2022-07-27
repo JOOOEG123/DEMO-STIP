@@ -41,6 +41,9 @@
       </button>
     </div>
   </div>
+  <div class="text-end" *ngIf="isAdmin">
+    <button class="btn btn-primary" (click)="addImage(galleryModal)">Add Image</button>
+  </div>
   <hr class="divider border-orange-red" />
 </div>
 
@@ -110,8 +113,12 @@
 <!--Modal-->
 <ng-template #galleryModal>
   <app-overlay
+    [type]="type"
     [status]="status"
+    [isAdmin]="isAdmin"
     [image]="this.selectedImage"
+    [otherImage]="this.otherImage"
+    (add)="onAdd($event)"
     (close)="onClose($event)"
     (submit)="onSubmit($event, galleryModal)"
     (remove)="onRemove($event, galleryModal)"
