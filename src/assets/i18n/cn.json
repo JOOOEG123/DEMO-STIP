@@ -97,7 +97,7 @@
     "navbar_button_three": "未知",
     "navbar_button_three_subbutton_one": "未知",
     "navbar_button_three_subbutton_two": "未知",
-    "navbar_language_one": "未知",
+    "navbar_language_one": "英文",
     "navbar_language_two": "未知",
     "navbar_auth_button": "未知",
     "navbar_account_button": "未知",
@@ -121,7 +121,7 @@
     "account": "帐户",
     "research": "研究",
     "contact": "联系我们",
-    "address": "4400 大学路, 费尔法克斯, 弗吉尼亚州 22030",
+    "address": "4400 University Dr, Fairfax, VA 22030",
     "email": "stip@gmu.com"
   },
 
