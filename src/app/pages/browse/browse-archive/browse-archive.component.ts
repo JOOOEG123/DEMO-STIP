@@ -19,6 +19,7 @@ export class BrowseArchiveComponent implements OnInit {
   @ViewChild('memContent') memContent!: ElementRef;
   @ViewChild('infoContent') infoContent!: ElementRef;
 
+
   [x: string]: any;
   id = this.route.snapshot.paramMap.get('id') as string;
   profile = {} as any;
