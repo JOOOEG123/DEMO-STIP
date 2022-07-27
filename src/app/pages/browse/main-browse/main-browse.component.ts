@@ -49,26 +49,29 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   archSubAPI: Subscription[] = [];
   isloading!: boolean;
   original: any;
+
   searchSelect: string = 'All Fields';
   db_attr: string[] = [
-    'birthYear',
-    'birthplace',
-    'deathYear',
-    'description',
-    'detailJob',
-    'education',
-    'ethnicity',
-    'events',
+    'initial',
     'firstName',
-    'gender',
-    'job',
     'lastName',
-    'publish',
-    'memoir',
-    'reference',
+    'fullName',
+    'gender',
+    'birthYear',
+    'deathYear',
     'rightistYear',
     'status',
+    'ethnicity',
+    'job',
+    'detailJob',
     'workplace',
+    'workplace',
+    'workplaceCombined',
+    'events',
+    'memoirs',
+    'reference',
+    'description',
+    'source',
   ];
 
   currentLanguage = this.translate.currentLang;
@@ -83,10 +86,17 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {}
 
+  sub: Subscription[] = [];
+
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.searchInput = params['searchTerm'] || '';
-      this.lettersBtnClickOrReset('All');
+    this.sub.push(
+      this.route.queryParams.subscribe((params) => {
+        this.searchInput = params['searchTerm'] || '';
+        this.lettersBtnClickOrReset('All');
+      })
+    );
+    this.translate.onLangChange.subscribe((res) => {
+      this.currentLanguage = res.lang;
     });
   }
   ngOnDestroy(): void {
@@ -96,6 +106,57 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   ngDoCheck() {
     this.thousandsSeperator();
+
+    //fix later: need to mapping eng <-> chinese based on current "state" data. rn, everything is ini state
+    console.log('testing', this.currentLanguage);
+    this.languages();
+  }
+
+  chinese() {
+    if (
+      this.searchSelect == 'Description' ||
+      this.searchSelect == 'Name' ||
+      this.searchSelect == 'All Fields'
+    ) {
+      switch (this.searchSelect) {
+        case 'Description':
+          this.searchSelect = '简介';
+          break;
+        case 'Name':
+          this.searchSelect = '姓名';
+          break;
+        default:
+          this.searchSelect = '所有信息栏';
+      }
+    }
+  }
+  english() {
+    if (
+      this.searchSelect == '简介' ||
+      this.searchSelect == '姓名' ||
+      this.searchSelect == '所有信息栏'
+    ) {
+      switch (this.searchSelect) {
+        case '简介':
+          this.searchSelect = 'Description';
+          break;
+        case '姓名':
+          this.searchSelect = 'Name';
+          break;
+
+        default:
+          this.searchSelect = 'All Fields';
+      }
+    }
+  }
+  languages() {
+    if (this.currentLanguage == 'cn') {
+      console.log('switching to chinese');
+      this.chinese();
+    } else {
+      console.log('switching to english');
+      this.english();
+    }
   }
   itemPerPageChanged() {
     //casting
@@ -143,22 +204,24 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       this.isloading = true;
       if (letter === 'All') {
         // replace api when database change. An we need to add profileId to json data.
-        res = this.archApi.getAllArchieve().subscribe((datas: any) => {
-          this.db_result = Object.entries(datas).map(([key, value]: any) => {
-            return { profileId: key, ...value };
+        res = this.archApi
+          .getAllArchieve(this.currentLanguage)
+          .subscribe((datas: any) => {
+            this.db_result = Object.entries(datas).map(([key, value]: any) => {
+              return { profileId: key, ...value };
+            });
+
+            this.archCacheAPI[archKey] = this.db_result;
+
+            this.setDisplayInfo(this.itemsPerPage);
+            this.setNonFilterData('filterPanel');
+            this.setNonFilterData('searchBar');
+            if (this.searchInput) {
+              this.searchBar();
+            }
+
+            this.isloading = false;
           });
-
-          this.archCacheAPI[archKey] = this.db_result;
-
-          this.setDisplayInfo(this.itemsPerPage);
-          this.setNonFilterData('filterPanel');
-          this.setNonFilterData('searchBar');
-          if (this.searchInput) {
-            this.searchBar();
-          }
-
-          this.isloading = false;
-        });
       } else {
         // replace api when database change. An we need to add profileId to json data.
         // res = this.archApi
@@ -193,7 +256,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       return userValues.every((keyword) => {
         var res: boolean = false;
 
-        if (this.searchSelect == 'All Fields') {
+        if (
+          this.searchSelect == 'All Fields' ||
+          this.searchSelect == '所有信息栏'
+        ) {
           Object.values(record).forEach((element) => {
             res =
               res ||
@@ -240,7 +306,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     //reset db
     this.getNonFilterData('filterPanel');
     if (!empty) {
-      let attr: any[] = ['gender', 'ethnicity', 'job', 'status'];
+      let attr: any[] = ['gender', 'ethnicity', 'workplaceCombined', 'status'];
       let userValues: any[] = [
         this.filterValues.gender,
         this.filterValues.ethnicity,
@@ -304,38 +370,39 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   onOpenChange(display: string) {
+    console.log('onopen change', display);
     this.searchSelect = display;
 
-    switch (this.searchSelect) {
-      case 'Description':
-        this.db_attr = ['description'];
-        break;
-      case 'Name':
-        //An: need to add fullName attribute on db, otherwise this is a bug.
-        this.db_attr = ['firstName', 'lastName', 'fullName'];
-        break;
-      default:
-        this.db_attr = [
-          'birthYear',
-          'birthplace',
-          'deathYear',
-          'description',
-          'detailJob',
-          'education',
-          'ethnicity',
-          'events',
-          'firstName',
-          'gender',
-          'job',
-          'lastName',
-          'publish',
-          'memoir',
-          'reference',
-          'rightistYear',
-          'status',
-          'workplace',
-        ];
+    if (this.searchSelect == 'Description' || this.searchSelect == '简介') {
+      this.db_attr = ['description'];
+    } else if (this.searchSelect == 'Name' || this.searchSelect == '姓名') {
+      //An: need to add fullName attribute on db, otherwise this is a bug.
+      this.db_attr = ['firstName', 'lastName', 'fullName'];
+    } else {
+      this.db_attr = [
+        'initial',
+        'firstName',
+        'lastName',
+        'fullName',
+        'gender',
+        'birthYear',
+        'deathYear',
+        'rightistYear',
+        'status',
+        'ethnicity',
+        'job',
+        'detailJob',
+        'workplace',
+        'workplace',
+        'workplaceCombined',
+        'events',
+        'memoirs',
+        'reference',
+        'description',
+        'source',
+      ];
     }
+
     this.searchBar();
   }
 

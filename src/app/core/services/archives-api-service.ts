@@ -11,7 +11,14 @@ export class ArchieveApiService {
   constructor(private db: AngularFireDatabase) {}
 
   /** New API */
-  getAllArchieve() {
+  getAllArchieve(curLan: string) {
+    if (curLan == 'cn') {
+      return this.db.object('/persons/data/cn/rightists').valueChanges();
+    } else {
+      this.db.object('/persons/data/en/rightists').valueChanges();
+    }
+
+    //to do: remove this later
     return this.db.object('/persons/requestArchieve/persons').valueChanges();
   }
 
