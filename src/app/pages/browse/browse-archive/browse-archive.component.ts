@@ -7,6 +7,8 @@ import { jsPDF } from 'jspdf';
 import { ClipboardService } from 'ngx-clipboard';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ImagesService } from 'src/app/core/services/images.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-browse-archive',
@@ -30,29 +32,43 @@ export class BrowseArchiveComponent implements OnInit {
     private arch: ArchieveApiService,
     private clipboardApi: ClipboardService,
     private auth: AuthServiceService,
-    private images: ImagesService
+    private images: ImagesService,
+    private translate: TranslateService
   ) {}
 
-  ngOnInit(): void {
-    this.arch.getPersonById(this.id).subscribe((res) => {
-      this.profile = res;
+  language?: string
+  sub: Subscription[] = []
 
-      this.drop = new Array(this.profile.memoirs.length).fill(true);
-      //sorting event based on starting year
-      this.profile.events.sort(function (a, b) {
-        return a.start_year - b.start_year;
+  ngOnInit(): void {
+    this.language = localStorage.getItem('lang')!
+
+    this.sub.push(this.translate.onLangChange.subscribe((langChange: any) => {
+      this.language = langChange.lang
+
+      this.arch.getRightistById(this.language!, this.id).subscribe((res) => {
+        this.profile = res;
+
+        console.log(res)
+  
+  
+        //sorting event based on starting year
+        this.profile.events.sort(function (a, b) {
+          return a.start_year - b.start_year;
+        });
+        this.replaceNewline();
       });
-      this.replaceNewline();
-    });
-    this.images.getImage(this.profile.profileImageId).subscribe((res) => {
-      this.profile.profileImageId = res;
-    });
-    this.auth.isAdmin.subscribe((x) => {
-      this.isAdmin = x;
-    });
-    this.auth.isLoggedIn.subscribe((x) => {
-      this.isAdmin = this.isAdmin && x;
-    });
+      // this.images.getImage(this.profile.profileImageId).subscribe((res) => {
+      //   this.profile.profileImageId = res;
+      // });
+      this.auth.isAdmin.subscribe((x) => {
+        this.isAdmin = x;
+      });
+      this.auth.isLoggedIn.subscribe((x) => {
+        this.isAdmin = this.isAdmin && x;
+      });
+    }))
+
+    
   }
   ngDoCheck() {
     this.auth.isAdmin.subscribe((x) => {
@@ -62,14 +78,14 @@ export class BrowseArchiveComponent implements OnInit {
 
   replaceNewline() {
     this.profile.memoirs.forEach((element: any, index: number) => {
-      this.profile.memoirs[index].memoir = element.memoir.split('\\n');
+      this.profile.memoirs[index].memoirContent = element.memoirContent.split('\\n');
     });
   }
   SavePDF(pdfName: string): void {
     let doc = new jsPDF('p', 'pt', 'a4');
     let content;
     if (pdfName === 'memoirContent') {
-      this.addWrappedText(this.profile.memoirs[0].memoir, 540, doc);
+      this.addWrappedText(this.profile.memoirs[0].memoirContent, 540, doc);
       doc.save(pdfName + '.pdf');
     } else {
       content = this.infoContent.nativeElement;

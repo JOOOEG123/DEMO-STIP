@@ -221,8 +221,8 @@
               {{ "archive.profile_biography" | translate }}:
             </h5>
             <div class="col-12 ms-3" *ngFor="let event of profile.events">
-              In {{ event.start_year || "unknown" }} --
-              {{ event.end_year || "unknown" }},
+              In {{ event.startYear || "unknown" }} --
+              {{ event.endYear || "unknown" }},
               {{ event.event[0].toUpperCase() + event.event.substr(1) || "-" }}
             </div>
           </div>
@@ -233,13 +233,9 @@
             <div class="fs-5 fw-bold text-capitalize flex-grow-1">
               {{ "archive.profile_additional_files" | translate }}
             </div>
-            <button
-              type="button"
-              class="btn btn-white ms-auto text-green"
-              (click)="expandAll()"
-            >
+            <!-- <button type="button" class="btn btn-white ms-auto text-green">
               {{ "archive.profile_expand" | translate }}
-            </button>
+            </button> -->
           </div>
 
           <div
@@ -250,9 +246,16 @@
           >
             <div class="d-flex ps-2">
               <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">
-                {{ memoir.memoirTitle }}
+                {{ "archive.additional_title" | translate }}
+                <div ng-if="memoir.memoirTitle">{{ memoir.memoirTitle }}</div>
+                <div ng-if="!memoir.memoirTitle">{{ "common.unknown" | translate }}</div>
               </h6>
-
+              <h6 class="flex-grow-1 bd-highlight pt-2 fw-bold">
+                {{ "archive.additional_author" | translate }}
+                <div ng-if="memoir.memoirAuthor">{{ memoir.memoirAuthor }}</div>
+                <div ng-if="!memoir.memoirAuthor">{{ "common.unknown" | translate }}</div>
+                
+              </h6>
               <button
                 class="btn"
                 type="button"
@@ -277,36 +280,35 @@
               <div class="card scrollable">
                 <div class="card-body">
                   <p>{{ memoir.memoirTitle }}</p>
-                  <div>
-                    {{ "archive.by" | translate }}: {{ memoir.memoirAuthor }}
-                  </div>
-                  <div
+                  <div>by: {{ memoir.memoirAuthor }}</div>
+                  <div>{{ memoir.memoirContent }}</div>
+                  <!-- <div
                     class="card-text limit-content"
                     *ngFor="let d of memoir.memoirContent; let i = index"
                   >
                     <div *ngIf="i < 10">{{ d || "-" }}</div>
-                  </div>
-                  <div
-                    class="card-body my-3 fw-bold border border-dark"
-                    style="background-color: rgba(245, 245, 245, 255)"
-                  >
-                    {{ "archive.profile_pdf_message" | translate }}
-                  </div>
+                  </div> -->
                 </div>
-                <div class="text-green ms-3" style="display: inline-block">
-                  <button
-                    type="button"
-                    (click)="SavePDF('memoirContent')"
-                    class="btn btn-sm"
-                  >
-                    <img
-                      src="/assets/browsepage/pdf-icon.svg"
-                      alt="filter"
-                      width="20"
-                    />
-                  </button>
-                  PDF {{ "archive.profile_full_text" | translate }}
-                </div>
+              </div>
+              <div
+                class="card-body my-3 fw-bold border border-dark"
+                style="background-color: rgba(245, 245, 245, 255)"
+              >
+                {{ "archive.profile_pdf_message" | translate }}
+              </div>
+              <div class="text-green ms-3" style="display: inline-block">
+                <button
+                  type="button"
+                  (click)="SavePDF('memoirContent')"
+                  class="btn btn-sm"
+                >
+                  <img
+                    src="/assets/browsepage/pdf-icon.svg"
+                    alt="filter"
+                    width="20"
+                  />
+                </button>
+                PDF {{ "archive.profile_full_text" | translate }}
               </div>
             </div>
           </div>
@@ -319,3 +321,4 @@
     </div>
   </div>
 </div>
+<!-- {{profile.memoirs[0].memoirContent}} -->

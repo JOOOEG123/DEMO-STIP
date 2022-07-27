@@ -101,7 +101,8 @@
     "yes": "Yes",
     "no": "No",
     "cancel" : "Cancel",
-    "save" : "Save"
+    "save" : "Save",
+    "unknown": "Unknown"
   },
   "log":{
     "log_out" : "Do you want to log out?",
@@ -181,6 +182,10 @@
     "other_resources_title": "Resources"
   },
   "archive": {
+
+    "additional_title": "File Title:",
+    "additional_author": "File Author:",
+
     "gender_title": "Gender",
     "gender_male": "Male",
     "gender_female": "Female",
