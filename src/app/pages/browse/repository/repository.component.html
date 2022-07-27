@@ -112,7 +112,10 @@
             <!-- <div *ngIf="j % 2 == 1" class="bg-color-light-grey-green"></div> -->
             <span class="col-7">{{ filename }}</span>
             <div class="col-5">
-              <button (click)="downloadFromAsset(filename, title[0])">
+              <button
+                class="btn btn-outline-secondary btn-sm"
+                (click)="downloadFromAsset(filename, title[0])"
+              >
                 <img src="/assets/repositoryData/icons/download.svg" />
               </button>
             </div>
