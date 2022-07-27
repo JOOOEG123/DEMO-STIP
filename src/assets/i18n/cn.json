@@ -131,7 +131,8 @@
     "home_searchbar_placeholder": "搜索相关档案",
     "home_featured_title": "“右派”代表",
     "home_history_title": "历史摘要",
-    "home_history_body": "未知"
+    "home_history_body": "未知", 
+    "home_timeline":"时间线"
   },
   "contact_us":{
     "contact_us": "联系我们",

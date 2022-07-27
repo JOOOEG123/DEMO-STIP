@@ -162,7 +162,8 @@
     "home_searchbar_placeholder": "Search for Archives",
     "home_featured_title": "Featured \"Rightists\"",
     "home_history_title": "Brief History",
-    "home_history_body": "Lorem ipsum dolor sit amet..."
+    "home_history_body": "Lorem ipsum dolor sit amet...", 
+    "home_timeline":"Tineline"
   },
   "about_movement": {
     "about_movement_introduction_title": "About the Chinese Anti-Rightists Campaign in the 1950's",

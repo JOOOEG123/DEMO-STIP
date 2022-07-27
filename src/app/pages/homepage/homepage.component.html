@@ -10,7 +10,9 @@
               <input
                 type="search"
                 class="form-control rounded-end rounded-pill"
-                placeholder='{{ "header.component.search_placeholder" | translate }}'
+                placeholder="{{
+                  'header.component.search_placeholder' | translate
+                }}"
                 aria-label="Search for Archives"
                 aria-describedby="scearh_home__btn"
                 [(ngModel)]="searchTerm"
@@ -86,7 +88,7 @@
 
   <div class="container py-4">
     <h2 class="text-right ms-auto col-sm-12 col-md-2 text-orange-red display-6">
-      Timeline
+      {{ "home.home_timeline" | translate }}
     </h2>
     <div>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
