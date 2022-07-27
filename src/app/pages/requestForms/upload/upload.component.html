@@ -184,7 +184,9 @@
   <div class="row">
     <div class="col-md-4 ms-5 ps-5 photo">
       <!-- photo upload section -->
-      <app-upload-image></app-upload-image>
+      <!-- <app-upload-image></app-upload-image> -->
+      <pre>{{ images | json }}</pre>
+      <app-upload-images-form [(ngModel)]="images"></app-upload-images-form>
     </div>
 
     <!-- col for contents input box -->

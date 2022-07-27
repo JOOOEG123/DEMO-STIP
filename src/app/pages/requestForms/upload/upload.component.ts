@@ -19,7 +19,7 @@ import { UUID } from 'src/app/core/utils/uuid';
 export class UploadComponent implements OnInit, OnDestroy {
   private _contribution!: Contribution;
   contributionId!: string;
-  ethnicGroup: string[] = ETHNIC_GROUP_CONSTANTS;
+  ethnicGroup: string[] = ETHNIC_GROUP_CONSTANTS.en;
   occupation: string[] = LIST_OF_JOB;
   selected?: string;
   selected2?: string;
@@ -29,6 +29,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   maxDate: Date = new Date('1965-01-01');
   minDate2: Date = new Date('1840-01-01');
   maxDate2: Date = new Date('1950-01-01');
+  images = [];
 
   @Input() get contribution() {
     return this._contribution;
