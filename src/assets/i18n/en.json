@@ -242,7 +242,9 @@
     "profile_expand":"Expand all",
     "profile_pdf_message":"You reached the max content view. To read more, download the full PDF.",
     "profile_full_text": "Full Text",
-    "profile_last_modify":"File last modified"
+    "profile_last_modify":"File last modified", 
+    "by":"By" 
+
   },
 
   "gallery": {

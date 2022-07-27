@@ -245,7 +245,8 @@
     "profile_expand":"显示所有文件",
     "profile_pdf_message":"您已阅读最大阅读内容， 如要浏览更多， 请下载完整PDF文件.",
     "profile_full_text": "全文",
-    "profile_last_modify":"最近档案修改时间"
+    "profile_last_modify":"最近档案修改时间", 
+    "by":"撰写"
   },
 
   "gallery": {

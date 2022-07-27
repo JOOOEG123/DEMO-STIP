@@ -22,7 +22,8 @@ export class BrowseArchiveComponent implements OnInit {
   profile = {} as any;
   url = location.href;
   isAdmin: boolean = false;
-  drop: boolean = true;
+  // drop: boolean = true;
+  drop: boolean[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +37,7 @@ export class BrowseArchiveComponent implements OnInit {
     this.arch.getPersonById(this.id).subscribe((res) => {
       this.profile = res;
 
+      this.drop = new Array(this.profile.memoirs.length).fill(true);
       //sorting event based on starting year
       this.profile.events.sort(function (a, b) {
         return a.start_year - b.start_year;
@@ -84,8 +86,8 @@ export class BrowseArchiveComponent implements OnInit {
     this.clipboardApi.copyFromContent(this.url);
   }
 
-  updateCollapse() {
-    this.drop = !this.drop;
+  updateCollapse(index: number) {
+    this.drop[index] = !this.drop[index];
   }
 
   addWrappedText(
