@@ -77,8 +77,8 @@
     "Request": "要求",
     "Reason": "原因",
     "Email" : "电子邮件",
-    "request_placeholder" : "您想改变什么",
-    "reason_placeholder" : "您修改的原因",
+    "request_placeholder" : "请输入相应的修改",
+    "reason_placeholder" : "请输入您修改的原因",
     "email_placeholder" : "姓名@例子.com",
     "close" : "关闭",
     "submit" : "提交请求"
