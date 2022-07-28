@@ -182,7 +182,13 @@
     "other_resources_title": "Resources"
   },
   "archive": {
-
+    "GROUPS" :["Han", "Zhuang","Hui","Manchu","Uyghu","Miao","Yi","Tujia" ,"Tibetan" ,"Mongol" ,"Dong",
+    "Bouyei" ,"Yao","Bai","Joseonjok","Hani","Li","Kazakh","Dai","She","Lisu","Dongxiang","Gelao","Lahu",
+  "Wa","Sui","Nakhi","Qiang","Tu","Mulao","Xibe","Kyrgyz","Jingpo","Daur","Salar","Blang","Maonan",
+    "Tajik","Pumi","Achang","Nu","Evenki","Vietnamese","Jino",
+  "De ang","Bonan","Russian","Yugur","Uzbek","Monba","Oroqen","Derung",
+    "Hezhen","Gaoshan","Lhoba","Tatars","Unknown","Naturalized Citizen"
+    ],
     "additional_title": "File Title:",
     "additional_author": "File Author:",
 
