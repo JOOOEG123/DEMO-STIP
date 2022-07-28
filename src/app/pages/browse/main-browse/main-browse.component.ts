@@ -97,6 +97,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     );
     this.translate.onLangChange.subscribe((res) => {
       this.currentLanguage = res.lang;
+
+      this.translate
+        .get(['archive.archive_searchbar_all'])
+        .subscribe((translations) => {
+          this.searchSelect = translations['archive.archive_searchbar_all'];
+        });
     });
   }
   ngOnDestroy(): void {
@@ -106,12 +112,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   ngDoCheck() {
     this.thousandsSeperator();
-
-    //fix later: need to mapping eng <-> chinese based on current "state" data. rn, everything is ini state
-    console.log('testing', this.currentLanguage);
-    this.languages();
   }
 
+  //fix later:remove later
   chinese() {
     if (
       this.searchSelect == 'Description' ||

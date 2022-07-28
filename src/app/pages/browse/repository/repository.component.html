@@ -5,11 +5,13 @@
 
   <div class="d-flex justify-content-center flex-wrap">
     <div
+      class="btn-group"
+      role="group"
+      aria-label="Basic example"
       *ngFor="
         let title of 'repository.repository_tabs' | translate;
         let i = index
       "
-      class="p-2 mx-4"
     >
       <button
         #image
@@ -17,7 +19,7 @@
           'border-3 btn-bg-color-grey-green ': selectedCategory == i,
           btn: selectedCategory != i
         }"
-        class="fw-bold"
+        class="fw-bold btn-lg"
         (click)="setActive(i)"
       >
         <b> {{ title[0] }} </b>
@@ -109,15 +111,19 @@
             class="row justify-content-evenly my-2"
             *ngFor="let filename of title[3]; let j = index"
           >
-            <!-- <div *ngIf="j % 2 == 1" class="bg-color-light-grey-green"></div> -->
-            <span class="col-7">{{ filename }}</span>
-            <div class="col-5">
-              <button
-                class="btn btn-outline-secondary btn-sm"
-                (click)="downloadFromAsset(filename, title[0])"
-              >
-                <img src="/assets/repositoryData/icons/download.svg" />
-              </button>
+            <div
+              class="row"
+              [ngClass]="{ 'bg-color-light-grey-green': j % 2 === 0 }"
+            >
+              <span class="col-7">{{ filename }}</span>
+              <div class="col-5">
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  (click)="downloadFromAsset(filename, title[0])"
+                >
+                  <img src="/assets/repositoryData/icons/download.svg" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
