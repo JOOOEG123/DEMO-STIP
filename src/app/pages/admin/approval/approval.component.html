@@ -68,6 +68,7 @@
   <app-upload
     [contribution]="selectedContribution"
     page="contribution"
+    (formChange)="onFormChange($event)"
     (eventChange)="onEventChange($event)"
     (memoirChange)="onMemoirChange($event)"
     (imageChange)="onImageChange($event)"

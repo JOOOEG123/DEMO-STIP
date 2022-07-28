@@ -7,7 +7,6 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { data } from 'autoprefixer';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
@@ -90,6 +89,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+
     this.contributionSubcription = this.contributionAPI
       .fetchAllContributions()
       .subscribe((data: any) => {
@@ -105,7 +105,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           }
         }
 
-        // make sure the latest contribution is at the top
         this.contributions.sort(function (a, b) {
           return (
             new Date(b.lastUpdatedAt).getTime() -
@@ -113,9 +112,13 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           );
         });
 
+        console.log(this.contributions)
+
+        
         for (let contribution of this.contributions) {
           let data: Contribution = {
             ...contribution,
+            lastUpdatedAt: new Date(contribution.lastUpdatedAt),
             contributedAt: new Date(contribution.contributedAt),
             approvedAt: new Date(contribution.approvedAt),
             state: 'void',
@@ -146,6 +149,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             this.rejectedContributions.push(data);
           }
         }
+
       });
 
     this.selectedContributions = this.newContributions;
@@ -193,6 +197,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   async animationDone(event: AnimationEvent) {
     this.disabled = false;
+    console.log(this.updatedContribution)
 
     if (
       this.selectedContribution &&
@@ -217,6 +222,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                 this.image!.imagePath = imageUrl;
                 this.image!.rightistId = this.updatedContribution.rightistId
                 // update the current timestamp
+                this.updatedContribution.lastUpdatedAt = new Date()
                 this.updatedContribution.rightist!.lastUpdatedAt = new Date();
 
                 if (this.updatedContribution.rightist) {
@@ -257,6 +263,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       // No new Image
       } else {
         this.updatedContribution.rightist!.lastUpdatedAt = new Date();
+        this.updatedContribution.lastUpdatedAt = new Date()
 
         if (this.updatedContribution.rightist) {
           this.updatedContribution.publish = this.publish;
@@ -296,6 +303,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
     this.selectedContribution = contribution;
     this.updatedContribution = { ...contribution };
+    this.imageAPI.getImage(contribution.rightist!.imageId).subscribe((data: any) => {
+      this.image = {...data}
+    })
     this.modalRef = this.modalService.show(template, { class: 'modal-xl' });
   }
 
@@ -305,6 +315,22 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   onMemoirChange(data: any) {
     this.updatedContribution.rightist!.memoirs = data;
+  }
+
+  onFormChange(data: any) {
+    this.updatedContribution = {
+      ...this.updatedContribution,
+      rightist: {
+        ...this.updatedContribution.rightist!,
+        fullName: data.name,
+        gender: data.gender,
+        status: data.status,
+        ethnicity: data.ethnic,
+        workplaceCombined: data.occupation,
+        rightistYear: data.rightestYear,
+        birthYear: data.birthYear
+      }
+    }
   }
 
   onImageChange(data: any) {

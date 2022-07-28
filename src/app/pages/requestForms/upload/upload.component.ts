@@ -59,6 +59,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
   @Input() page: string = '';
 
+  @Output() formChange: EventEmitter<any> = new EventEmitter();
   @Output() eventChange: EventEmitter<any> = new EventEmitter();
   @Output() memoirChange: EventEmitter<any> = new EventEmitter();
   @Output() imageChange: EventEmitter<any> = new EventEmitter();
@@ -205,6 +206,12 @@ export class UploadComponent implements OnInit, OnDestroy {
         if (this.contribution.contributionId && this.contribution.rightist) {
           const rightist: Rightist = this.contribution.rightist;
           this.mapForm(rightist);
+
+          this.sub.push(
+            this.form.valueChanges.subscribe((data: any) => {
+              this.formChange.emit(data)
+            })
+          )
 
           this.sub.push(
             this.eventArray.valueChanges.subscribe((events: any) => {
@@ -383,6 +390,7 @@ export class UploadComponent implements OnInit, OnDestroy {
                     contributionId: this.contributionId,
                     contributorId: this.auth.uid,
                     contributedAt: new Date(),
+                    lastUpdatedAt: new Date(),
                     rightistId: rightistId,
                     approvedAt: new Date(),
                     publish: 'approved',
@@ -401,6 +409,7 @@ export class UploadComponent implements OnInit, OnDestroy {
                     contributorId: this.auth.uid,
                     contributedAt: new Date(),
                     rightistId: rightistId,
+                    lastUpdatedAt: new Date(),
                     approvedAt: new Date(),
                     publish: 'new',
                     rightist: rightist,
@@ -425,6 +434,7 @@ export class UploadComponent implements OnInit, OnDestroy {
             contributorId: this.auth.uid,
             contributedAt: new Date(),
             rightistId: rightistId,
+            lastUpdatedAt: new Date(),
             approvedAt: new Date(),
             publish: 'approved',
           }),
@@ -442,6 +452,7 @@ export class UploadComponent implements OnInit, OnDestroy {
             contributedAt: new Date(),
             rightistId: rightistId,
             approvedAt: new Date(),
+            lastUpdatedAt: new Date(),
             publish: 'new',
             rightist: rightist,
           }),

@@ -122,6 +122,7 @@ export interface ContributionSchema {
   rightist?: Rightist;
   rightistId: string;
   publish: Publish;
+  lastUpdatedAt: Date;
   contributedAt: Date; // set from the service when creating a new contribution
   approvedAt: Date; // set from the service when approving a contribution
   notificationMessage?: string; // set from the service when approving a contribution
