@@ -15,7 +15,7 @@ import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { Subscription } from 'rxjs';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Image } from 'src/app/core/types/adminpage.types';
+import { Image, ImageSchema } from 'src/app/core/types/adminpage.types';
 
 import { ImagesService } from 'src/app/core/services/images.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
@@ -56,7 +56,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   otherImage?: Image;
 
   status: string = 'initial';
-  type?: string 
+  type?: string;
 
   @ViewChild('image') imageRef?: ElementRef;
   @ViewChild(NgxMasonryComponent) masonry?: NgxMasonryComponent;
@@ -64,11 +64,10 @@ export class GalleryComponent implements OnInit, OnDestroy {
   sub: Subscription[] = [];
   searchTerm?: string;
 
-  language?: string;
-  otherLanguage?: string;
+  language: string = '';
+  otherLanguage: string = '';
 
   isAdmin?: boolean;
-  loaded?: boolean;
 
   constructor(
     private translate: TranslateService,
@@ -88,11 +87,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
     this.sub.push(
       this.translate.onLangChange.subscribe((lang: any) => {
-        this.loaded = false;
-        let count = 0;
         this.language = lang.lang;
         this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
-        console.log(this.language);
+
         this.sub.push(
           this.imagesAPI
             .getGalleryImages(this.language!)
@@ -102,20 +99,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
               this.images.length = 0;
               let images: Image[] = imagesList;
               for (const image of images) {
-                this.storageAPI
-                  .getImageUrl(`${image.imageId}`)
-                  .subscribe((data) => {
-                    count += 1;
-                    image.imagePath = data;
-                    if (count === imagesList.length) {
-                      this.loaded = true;
-                    }
-                  });
                 this.images.push(image);
                 if (this.display.length < this.itemsPerPage) {
                   this.display.push(image);
                 }
               }
+              console.log(this.images);
               this.categoryImages = this.images.slice();
               this.searchImages = this.categoryImages;
             })
@@ -153,7 +142,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
     let result: Image[] = [];
 
-    if (gallery == 'All') {
+    if (gallery == 'All' || gallery == '全部') {
       result = this.images.slice();
     } else {
       for (const image of this.images) {
@@ -192,13 +181,45 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   onLearnMore(template: TemplateRef<any>, image: Image) {
     this.selectedImage = image;
-    this.type = 'edit'
+    this.type = 'edit';
     this.status = 'initial';
     this.modalService.show(template, { class: 'modal-xl', backdrop: 'static' });
   }
 
-  onAdd(data: any) {
-    
+  async onAdd(data: any) {
+    let imageId = `Image-${UUID()}`;
+    let image: ImageSchema = data.value;
+    let otherImage: ImageSchema = data.otherValue;
+
+    image.imageId = imageId;
+    otherImage.imageId = imageId;
+
+    console.log(image);
+    console.log(otherImage);
+    await fetch(data.url).then(async (response) => {
+      console.log(image.imageId);
+      const contentType = response.headers.get('content-type');
+      const blob = await response.blob();
+      const file = new File([blob], image.imageId, { type: contentType! });
+      await this.storageAPI.uploadGalleryImage(image.imageId, file).then(() => {
+        this.sub.push(
+          this.storageAPI
+            .getGalleryImageURL(image.imageId)
+            .subscribe((imageUrl: any) => {
+              console.log(imageUrl);
+              image.imagePath = imageUrl;
+              otherImage.imagePath = imageUrl;
+
+              Promise.all([
+                this.imagesAPI.addImage(this.language!, image),
+                this.imagesAPI.addImage(this.otherLanguage!, otherImage),
+              ]).then(() => {
+                this.modalService.hide();
+              });
+            })
+        );
+      });
+    });
   }
 
   // functionality in modal
@@ -274,7 +295,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
     }
   }
 
-
   searchGallery() {
     let result: Image[] = [];
 
@@ -305,8 +325,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   addImage(template: TemplateRef<any>) {
-    this.type = 'add'
-    this.selectedImage = undefined
+    this.type = 'add';
+    this.status = 'initial';
+    this.selectedImage = undefined;
     this.modalService.show(template, { class: 'modal-xl', backdrop: 'static' });
   }
 }

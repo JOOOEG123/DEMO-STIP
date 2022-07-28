@@ -19,7 +19,6 @@
       class="form-control w-50"
       type="file"
       (change)="onselectFile($event)"
-      formControlName="image"
     />
   </div>
 
@@ -46,13 +45,17 @@
               >{{ "gallery.gallery_overlay_category" | translate }}:
             </span>
           </div>
-          <input
+          <select
+            (change)="onCategoryChange($event)"
+            class="form-select"
             [(ngModel)]="category"
-            type="text"
-            class="form-control"
-            aria-label="Small"
-            aria-describedby="category_edit_input"
-          />
+          >
+            <option disabled selected value>-- select an option --</option>
+            <option *ngFor="let category of imageCategories, let i = index" [value]="i">
+              {{ category }}
+            </option>
+          </select>
+          
         </div>
         <div class="input-group my-2">
           <div class="input-group-prepend">
@@ -61,11 +64,12 @@
             </span>
           </div>
           <input
+            readonly
             [(ngModel)]="otherCategory"
             type="text"
             class="form-control"
             aria-label="Small"
-            aria-describedby="category_edit_input_other"
+            aria-describedby="category_edit_input"
           />
         </div>
       </div>
@@ -224,35 +228,35 @@
 
     <div class="container text-center my-4" *ngIf="isAdmin">
       <div *ngIf="status == 'initial'">
-        <button
-          class="btn btn-success mx-2"
-          (click)="onAdd()"
-          *ngIf="type == 'add'"
-        >
-          Add
-        </button>
+        <div *ngIf="type == 'add' && imageAdded">
+          <button class="btn btn-success mx-2" (click)="onAdd()">
+            {{ "share.add_button" | translate }}
+          </button>
+        </div>
 
-        <button
-          class="btn btn-warning mx-2"
-          (click)="onEdit()"
-          *ngIf="!this.isEditMode"
-        >
-          {{ "share.edit_button" | translate }}
-        </button>
-        <button
-          class="btn btn-success mx-2"
-          (click)="onSubmit()"
-          *ngIf="this.isEditMode"
-        >
-          {{ "share.submit_button" | translate }}
-        </button>
-        <button
-          class="btn btn-danger mx-2"
-          (click)="onRemove()"
-          *ngIf="!this.isEditMode"
-        >
-          {{ "share.remove_button" | translate }}
-        </button>
+        <div *ngIf="type == 'edit'">
+          <button
+            class="btn btn-warning mx-2"
+            (click)="onEdit()"
+            *ngIf="!this.isEditMode"
+          >
+            {{ "share.edit_button" | translate }}
+          </button>
+          <button
+            class="btn btn-success mx-2"
+            (click)="onSubmit()"
+            *ngIf="this.isEditMode"
+          >
+            {{ "share.submit_button" | translate }}
+          </button>
+          <button
+            class="btn btn-danger mx-2"
+            (click)="onRemove()"
+            *ngIf="!this.isEditMode"
+          >
+            {{ "share.remove_button" | translate }}
+          </button>
+        </div>
       </div>
 
       <div *ngIf="status == 'submit'">

@@ -264,9 +264,29 @@
     "gallery_top_cat_three_button": "营地",
     "gallery_top_cat_four_button": "人物",
     "gallery_top_cat_five_button": "专辑名称",
-    "gallery_image_button": "学到更多", 
-    "placeholder":"搜索画廊"
+    "gallery_image_button": "学到更多",
+    "placeholder":"搜索画廊",
+    "gallery_empty_message": "没有找到记录",
+    "gallery_overlay_category": "类别",
+    "gallery_overlay_category_other": "英文组",
+    "gallery_overlay_title": "标题",
+    "gallery_overlay_title_other": "英文标题",
+    "gallery_overlay_detail": "细节",
+    "gallery_overlay_detail_other": "英文详情",
+    "gallery_overlay_source": "资源",
+    "gallery_overlay_source_other": "英文来源",
+    "gallery_overlay_add_image_button": "添加图片"
   },
+  "share": {
+    "add_button": "添加",
+    "edit_button": "编辑",
+    "submit_button": "提交",
+    "remove_button": "消除",
+    "update_button": "更新",
+    "cancel_button": "取消",
+    "delete_button": "删除"
+  },
+
   "repository":{
   "repository_top_title": "资源库",
   "repository_tabs": [["序", "序", "下载", ["一九五七年受难者姓名大辞典"]],["出版说明"],["附录","附录",

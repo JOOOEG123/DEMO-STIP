@@ -42,7 +42,9 @@
     </div>
   </div>
   <div class="text-end" *ngIf="isAdmin">
-    <button class="btn btn-primary" (click)="addImage(galleryModal)">Add Image</button>
+    <button class="btn btn-primary" (click)="addImage(galleryModal)">
+      {{ "gallery.gallery_overlay_add_image_button" | translate }}
+    </button>
   </div>
   <hr class="divider border-orange-red" />
 </div>
@@ -53,7 +55,6 @@
     [ordered]="true"
     [options]="masonryOptions"
     [ngStyle]="{ width: '100%' }"
-    *ngIf="loaded"
   >
     <div
       ngxMasonryItem
@@ -107,7 +108,9 @@
   class="container text-center my-4"
   *ngIf="images[0]?.imagePath && searchImages.length == 0"
 >
-  <span class="display-1">No Records Found</span>
+  <span class="display-1">
+    {{ "gallery.gallery_empty_message" | translate }}
+  </span>
 </div>
 
 <!--Modal-->
@@ -118,6 +121,8 @@
     [isAdmin]="isAdmin"
     [image]="this.selectedImage"
     [otherImage]="this.otherImage"
+    [language]="language"
+    [otherLanguage]="otherLanguage"
     (add)="onAdd($event)"
     (close)="onClose($event)"
     (submit)="onSubmit($event, galleryModal)"

@@ -7,10 +7,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
-import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { Image } from 'src/app/core/types/adminpage.types';
-import { UUID } from 'src/app/core/utils/uuid';
 
 @Component({
   selector: 'app-overlay',
@@ -31,8 +28,36 @@ export class OverlayComponent implements OnInit {
   @Output() delete: EventEmitter<any> = new EventEmitter();
   @Output() remove: EventEmitter<any> = new EventEmitter();
 
-  otherLanguage?: string;
+  private _language?: string
+  private _otherLanguage?: string
+
+  @Input() set language(value: string) {
+    this._language = value
+    this.imageCategories = this.LIST_OF_IMAGE_CATEGORIES[this.language!]
+    this.otherImageCategories = this.LIST_OF_IMAGE_CATEGORIES[this.otherLanguage!]
+  } 
+
+  @Input() set otherLanguage(value: string) {
+    this._otherLanguage = value
+  }
+
+  get language(): string {
+    return this._language!
+  }
+
+  get otherLanguage(): string {
+    return this._otherLanguage!
+  }
+
   modalRef?: BsModalRef;
+
+  imageCategories: string[] = []
+  otherImageCategories: string[] = []
+
+  LIST_OF_IMAGE_CATEGORIES = {
+    en: ['People', 'Media', 'Camps', 'Other'],
+    cn: ['人们', '媒体', '营地', '其他'],
+  };
 
   constructor() {}
 
@@ -48,6 +73,9 @@ export class OverlayComponent implements OnInit {
   otherDetail: string = '';
   otherSource: string = '';
 
+  imageAdded: boolean = false
+  url: string = '/assets/account/template-profile.png'
+
   ngOnInit(): void {
     console.log(this.type!)
   }
@@ -56,6 +84,11 @@ export class OverlayComponent implements OnInit {
     this.close.emit({
       status: 'close',
     });
+  }
+
+  onCategoryChange(value: any) {
+    console.log(value)
+    this.otherCategory = this.LIST_OF_IMAGE_CATEGORIES[this.otherLanguage][value.target.value]
   }
 
   onEdit() {
@@ -129,10 +162,9 @@ export class OverlayComponent implements OnInit {
   }
 
   onAdd() {
-    let imageId = UUID()
     
     let image = {
-      imageId: imageId,
+      imageId: '',
       rightistId: '',
       isGallery: true,
       galleryCategory: this.category,
@@ -142,7 +174,7 @@ export class OverlayComponent implements OnInit {
     }
 
     let otherImage = {
-      imageId: imageId,
+      imageId: '',
       rightistId: '',
       isGallery: true,
       galleryCategory: this.otherCategory,
@@ -154,11 +186,12 @@ export class OverlayComponent implements OnInit {
     this.add.emit({
       status: 'add',
       value: image,
-      otherValue: otherImage
+      otherValue: otherImage,
+      url: this.url
     })
   }
 
-  url: string = '/assets/account/template-profile.png'
+
   
   onselectFile(e) {
     if (e.target.files) {
@@ -166,6 +199,7 @@ export class OverlayComponent implements OnInit {
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = (event: any) => {
         this.url = event.target.result;
+        this.imageAdded = true
       };
     }
   }
