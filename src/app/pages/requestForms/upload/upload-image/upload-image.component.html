@@ -1,67 +1,74 @@
 <h4>{{ "upload.upload_photo" | translate }}</h4>
-<section
-  class="my-4"
-  *ngFor="
-    let event of imageControls;
-    let i = index;
-    last as last;
-    first as first
-  "
->
+
   <form [formGroup]="imageForm">
     <img alt="" [src]="url" height="200" width="200" />
     <!-- select photo section -->
     <input
+      *ngIf="!imageDisabled"
       class="form-control w-75"
       type="file"
       (change)="onselectFile($event)"
       formControlName="image"
     />
     <br /><br />
-    <button class="btn btn-dark" (click)="clearImage()">
+    <button *ngIf="!imageDisabled" class="btn btn-dark" (click)="clearImage()">
       {{ "upload.clear_photo" | translate }}
     </button>
     <br /><br />
 
-    <label for="imageTitle" class="form-label">{{
-      "upload.title" | translate
-    }}</label>
-    <input
-      type="text"
-      class="form-control w-75"
-      id="imagTitle"
-      placeholder="{{ 'upload.what_tooltip' | translate }}"
-      formControlName="imageTitle"
-    />
+    <div class="my-2">
+      <label for="imageTitle" class="form-label">{{
+        "upload.title" | translate
+      }}</label>
+      <input
+        type="text"
+        class="form-control w-75"
+        id="imageTitle"
+        placeholder="{{ 'upload.what_tooltip' | translate }}"
+        formControlName="imageTitle"
+      />
+    </div>
+    
+    <div class="my-2">
+      <label for="imageDetails" class="form-label">{{
+        "upload.detail" | translate
+      }}</label>
+      <textarea
+        class="form-control w-75"
+        id="imageDetails"
+        rows="3"
+        placeholder="{{ 'upload.add_description' | translate }}"
+        formControlName="imageDes"
+      ></textarea>
+    </div>
 
-    <label for="imageDetails" class="form-label">{{
-      "upload.detail" | translate
-    }}</label>
-    <textarea
-      class="form-control w-75"
-      id="imageDetails"
-      rows="3"
-      placeholder="{{ 'upload.add_description' | translate }}"
-      formControlName="imageDes"
-    ></textarea>
+    <div class="my-2">
+      <label for="imageSource" class="form-label">{{
+        "upload.source" | translate
+      }}</label>
+      <textarea
+        class="form-control w-75"
+        id="imageSource"
+        rows="3"
+        placeholder="{{ 'upload.add_description' | translate }}"
+        formControlName="imageSource"
+      ></textarea>
+    </div>
 
-    <br />
-
-    <label for="cars">{{ "upload.image_cat" | translate }}</label>
-    <select name="imageCategory" id="imageCategory">
-      <option value="People">{{ "upload.people" | translate }}</option>
-      <option value="Media">{{ "upload.media" | translate }}</option>
-      <option value="Camps">{{ "upload.Camps" | translate }}</option>
-      <option value="Other">{{ "upload.other" | translate }}</option>
-    </select>
-
-    <br /><br />
+    <div class="my-2">
+      <label for="cars">{{ "upload.image_cat" | translate }}</label>
+      <select name="imageCategory" id="imageCategory" formControlName="imageCategory">
+        <option value="People">{{ "upload.people" | translate }}</option>
+        <option value="Media">{{ "upload.media" | translate }}</option>
+        <option value="Camps">{{ "upload.Camps" | translate }}</option>
+        <option value="Other">{{ "upload.other" | translate }}</option>
+      </select>
+    </div>
 
     <!-- radio buttons for choosing if user wants to include photo in gallery -->
     <br />
     <p>
       {{ "upload.include" | translate }}
-
       <img
         src="assets/upload/icons-question.png"
         tooltip="Choose to include the photo in website gallery"
@@ -98,30 +105,4 @@
         "upload.no" | translate
       }}</label>
     </div>
-    <br /><br />
-    <button
-      *ngIf="last"
-      type="button"
-      (click)="addImage()"
-      tooltip="{{ 'upload.add' | translate }}"
-      placement="auto"
-      class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
-    >
-      {{ "upload.add" | translate }}
-
-      <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
-    </button>
-    <button
-      type="button"
-      tooltip="{{ 'upload.remove' | translate }}"
-      placement="auto"
-      *ngIf="!first || !last"
-      class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
-      (click)="removeImageSection(i)"
-    >
-      {{ "upload.remove" | translate }}
-
-      <img src="assets/upload/icons-remove.png" class="mx-2" width="30" />
-    </button>
   </form>
-</section>

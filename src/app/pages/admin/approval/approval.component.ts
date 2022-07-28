@@ -7,20 +7,24 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { data } from 'autoprefixer';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { ObjectUnsubscribedError, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
+import { ImagesService } from 'src/app/core/services/images.service';
+import { StorageApIService } from 'src/app/core/services/storage-api.service';
 import {
   Categories,
   CategoryList,
   Contribution,
   ContributionJson,
   ContributionSchema,
+  ImageSchema,
   Publish,
   Rightist,
 } from 'src/app/core/types/adminpage.types';
-import { ContributionComponent } from '../contribution/contribution.component';
+import { UUID } from 'src/app/core/utils/uuid';
 
 @Component({
   selector: 'app-approval',
@@ -36,6 +40,7 @@ import { ContributionComponent } from '../contribution/contribution.component';
 })
 export class ApprovalComponent implements OnInit, OnDestroy {
   currentState: string = 'void';
+  loaded: boolean = false
 
   newContributions: Contribution[] = [];
   approvedContributions: Contribution[] = [];
@@ -45,6 +50,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   activeCategory!: Categories;
   selectedContribution!: Contribution;
+  updatedContribution!: Contribution;
 
   categoriesList: Categories[] = [
     'New Contributions',
@@ -70,16 +76,24 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   emptyContributionMessage = 'Nothing Here!';
 
+  url?: string;
+  image?: ImageSchema;
+
+  sub: Subscription[] = [];
+
   constructor(
     private modalService: BsModalService,
     private contributionAPI: ContributionsService,
-    private archiveAPI: ArchieveApiService
+    private archiveAPI: ArchieveApiService,
+    private storageAPI: StorageApIService,
+    private imageAPI: ImagesService
   ) {}
 
   ngOnInit(): void {
     this.contributionSubcription = this.contributionAPI
       .fetchAllContributions()
       .subscribe((data: any) => {
+        console.log(data);
         this.contributions.length = 0;
         this.newContributions.length = 0;
         this.approvedContributions.length = 0;
@@ -104,20 +118,26 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             ...contribution,
             contributedAt: new Date(contribution.contributedAt),
             approvedAt: new Date(contribution.approvedAt),
-            lastUpdatedAt: new Date(contribution.lastUpdatedAt),
             state: 'void',
           };
+
+          if (data.rightist) {
+            data.rightist!.lastUpdatedAt = new Date(data.rightist!.lastUpdatedAt)
+          }
 
           if (contribution.publish == 'new') {
             this.newContributions.push(data);
           }
 
           if (contribution.publish == 'approved') {
-            this.archiveAPI
-              .getPersonById(data.rightistId)
-              .subscribe((rightist: any) => {
-                data.rightist = rightist;
-              });
+            this.sub.push(
+              this.archiveAPI
+                .getPersonById(data.rightistId)
+                .subscribe((rightist: any) => {
+                  data.rightist = rightist
+                  this.loaded = true
+                })
+            );
 
             this.approvedContributions.push(data);
           }
@@ -135,36 +155,30 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.contributionSubcription?.unsubscribe();
     this.rightistSubscription?.unsubscribe();
+    this.sub.forEach((x) => x.unsubscribe());
   }
 
-  onApprove(contribution: Contribution) {
+  onApprove() {
     this.modalRef?.hide();
     this.publish = 'approved';
-    const index = this.selectedContributions.findIndex(
-      (c) => c.contributionId == contribution.contributionId
-    );
-    this.selectedContribution = this.newContributions[index];
     this.selectedContribution.state = 'removed';
   }
 
-  onReject(contribution: Contribution) {
+  onReject() {
     this.modalRef?.hide();
     this.publish = 'rejected';
-    const index = this.selectedContributions.findIndex(
-      (c) => c.contributionId == contribution.contributionId
-    );
-
-    this.selectedContribution = this.newContributions[index];
     this.selectedContribution.state = 'removed';
   }
 
-  onReconsider(contribution: Contribution) {
+  onReconsider() {
     this.modalRef?.hide();
     this.publish = 'approved';
-    const index = this.selectedContributions.findIndex(
-      (c) => (c.contributionId = contribution.contributionId)
-    );
-    this.selectedContribution = this.rejectedContributions[index];
+    this.selectedContribution.state = 'removed';
+  }
+
+  onEdit() {
+    this.modalRef?.hide();
+    this.publish = 'approved';
     this.selectedContribution.state = 'removed';
   }
 
@@ -177,52 +191,125 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.disabled = true;
   }
 
-  animationDone(event: AnimationEvent) {
+  async animationDone(event: AnimationEvent) {
     this.disabled = false;
 
     if (
       this.selectedContribution &&
       this.selectedContribution.state === 'removed'
     ) {
-      // update the current timestamp
-      this.selectedContribution.lastUpdatedAt = new Date();
+      // New Image Added
+      if (this.url) {
+        console.log("New Image")
+        let imageId = UUID();
+        this.image!.imageId = imageId
+        await fetch(this.url).then(async (response) => {
+          console.log(imageId);
+          const contentType = response.headers.get('content-type');
+          const blob = await response.blob();
+          const file = new File([blob], imageId, { type: contentType! });
+          await this.storageAPI.uploadGalleryImage(imageId, file);
+          this.sub.push(
+            this.storageAPI
+              .getGalleryImageURL(imageId)
+              .subscribe(async (imageUrl: any) => {
+                console.log(imageUrl);
+                this.image!.imagePath = imageUrl;
+                this.image!.rightistId = this.updatedContribution.rightistId
+                // update the current timestamp
+                this.updatedContribution.rightist!.lastUpdatedAt = new Date();
 
-      if (this.selectedContribution.rightist) {
-        let contributorId =
-          this.selectedContribution.contributorId[
-            this.selectedContribution.contributorId.length - 1
-          ];
-        this.selectedContribution.publish = this.publish;
+                if (this.updatedContribution.rightist) {
+                  this.updatedContribution.publish = this.publish;
 
-        const { state, ...contribution } = this.selectedContribution;
+                  const { state, ...contribution } = this.updatedContribution;
 
-        if (this.publish === 'approved') {
-          let { rightist, ...result } = contribution;
-          result.rightistId = rightist!.rightistId;
-          result.approvedAt = new Date();
-          this.archiveAPI
-            .addNewArchieve(rightist!)
-            .then(() => {});
-          this.contributionAPI.updateUserContribution(
-            contributorId,
-            this.selectedContribution.contributionId,
-            result
+                  if (this.publish === 'approved') {
+                    let { rightist, ...result } = contribution;
+                    result.rightistId = rightist!.rightistId;
+                    result.approvedAt = new Date();
+
+                    rightist!.imageId = imageId
+
+                    Promise.all([
+                      this.contributionAPI.updateUserContribution(
+                        this.updatedContribution.contributorId,
+                        this.updatedContribution.contributionId,
+                        result
+                      ),
+                      this.archiveAPI.addNewArchieve(rightist!),
+                      this.imageAPI.updateImage(this.image!)
+                    ]);
+                  } else {
+                    Promise.all([
+                      this.contributionAPI.updateUserContribution(
+                        this.updatedContribution.contributorId,
+                        this.updatedContribution.contributionId,
+                        contribution
+                      ),
+                      this.imageAPI.updateImage(this.image!)
+                    ])
+                  }
+                }
+              })
           );
-        } else {
-          this.contributionAPI.updateUserContribution(
-            contributorId,
-            this.selectedContribution.contributionId,
-            contribution
-          );
+        });
+      // No new Image
+      } else {
+        this.updatedContribution.rightist!.lastUpdatedAt = new Date();
+
+        if (this.updatedContribution.rightist) {
+          this.updatedContribution.publish = this.publish;
+
+          const { state, ...contribution } = this.updatedContribution;
+
+          if (this.publish === 'approved') {
+            let { rightist, ...result } = contribution;
+            result.rightistId = rightist!.rightistId;
+            result.approvedAt = new Date();
+
+            Promise.all([
+              this.contributionAPI.updateUserContribution(
+                this.updatedContribution.contributorId,
+                this.updatedContribution.contributionId,
+                result
+              ),
+              this.archiveAPI.addNewArchieve(rightist!),
+              this.imageAPI.updateImage(this.image!)
+            ]);
+          } else {
+            Promise.all([
+              await this.contributionAPI.updateUserContribution(
+                this.updatedContribution.contributorId,
+                this.updatedContribution.contributionId,
+                contribution
+              ),
+              this.imageAPI.updateImage(this.image!)
+            ])
+          }
         }
-
-        this.selectedContribution.state = 'void';
       }
+      this.selectedContribution.state = 'void';
     }
   }
 
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
     this.selectedContribution = contribution;
+    this.updatedContribution = { ...contribution };
     this.modalRef = this.modalService.show(template, { class: 'modal-xl' });
+  }
+
+  onEventChange(data: any) {
+    this.updatedContribution.rightist!.events = data;
+  }
+
+  onMemoirChange(data: any) {
+    this.updatedContribution.rightist!.memoirs = data;
+  }
+
+  onImageChange(data: any) {
+    this.url = data.url;
+    console.log(data);
+    this.image = { ...data.image };
   }
 }

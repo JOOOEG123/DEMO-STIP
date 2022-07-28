@@ -1,14 +1,30 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { image } from 'd3';
 import { Subscription } from 'rxjs';
 import {
   ETHNIC_GROUP_CONSTANTS,
   LIST_OF_JOB,
 } from 'src/app/core/constants/group.constants';
+import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
-import { Contribution, Rightist } from 'src/app/core/types/adminpage.types';
+import { ImagesService } from 'src/app/core/services/images.service';
+import { StorageApIService } from 'src/app/core/services/storage-api.service';
+import {
+  Contribution,
+  ImageSchema,
+  Rightist,
+  RightistSchema,
+} from 'src/app/core/types/adminpage.types';
 import { UUID } from 'src/app/core/utils/uuid';
 
 @Component({
@@ -30,6 +46,9 @@ export class UploadComponent implements OnInit, OnDestroy {
   minDate2: Date = new Date('1840-01-01');
   maxDate2: Date = new Date('1950-01-01');
 
+  isAdmin: boolean = false;
+  imageDisabled: boolean = false
+
   @Input() get contribution() {
     return this._contribution;
   }
@@ -38,7 +57,11 @@ export class UploadComponent implements OnInit, OnDestroy {
       this._contribution = contribution;
     }
   }
-  @Input() page?: string;
+  @Input() page: string = '';
+
+  @Output() eventChange: EventEmitter<any> = new EventEmitter();
+  @Output() memoirChange: EventEmitter<any> = new EventEmitter();
+  @Output() imageChange: EventEmitter<any> = new EventEmitter();
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -49,33 +72,27 @@ export class UploadComponent implements OnInit, OnDestroy {
     rightestYear: new FormControl('', Validators.required),
     birthYear: new FormControl('', Validators.required),
   });
-  form2 = new FormGroup({
-    imageUpload: new FormControl(''),
-    image: new FormControl(''),
-    content: new FormControl(''),
-  });
 
-  imageForm = new FormGroup({
-    imageTitle: new FormControl(''),
-    imageDes: new FormControl(''),
-  });
+  description: string = '';
+  cleared: boolean = false;
+  imageLoaded: boolean = false;
 
-  imageArray = new FormArray([this.newImage()]);
-  eventArray = new FormArray([this.newEvent()]);
-  memoirArray = new FormArray([this.newMemoir()]);
+  imageData: ImageSchema = {
+    imageId: '',
+    rightistId: '',
+    isGallery: false,
+    galleryCategory: '',
+    galleryTitle: '',
+    galleryDetail: '',
+    gallerySource: '',
+  };
+
+  eventArray = new FormArray([]);
+  memoirArray = new FormArray([]);
   imageForm2 = new FormGroup({
     imageUpload: new FormControl(''),
     image: new FormControl(''),
   });
-
-  private newImage() {
-    return new FormGroup({
-      imageUpload: new FormControl(''),
-      image: new FormControl(''),
-      imageTitle: new FormControl(''),
-      imageDes: new FormControl(''),
-    });
-  }
 
   private newEvent() {
     return new FormGroup({
@@ -97,10 +114,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     return this.eventArray.controls as FormGroup[];
   }
 
-  get imageControls() {
-    return this.imageArray.controls as FormGroup[];
-  }
-
   get memoirControls() {
     return this.memoirArray.controls as FormGroup[];
   }
@@ -109,15 +122,14 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.memoirArray.removeAt(i);
   }
 
-  removeImageSection(i: number) {
-    this.imageArray.removeAt(i);
-  }
-
   constructor(
     private contributionService: ContributionsService,
     private auth: AuthServiceService,
     private route: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private imageAPI: ImagesService,
+    private archiveAPI: ArchieveApiService,
+    private storageAPI: StorageApIService
   ) {}
 
   clear() {
@@ -126,18 +138,14 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   clear2() {
     this.url = '';
-    this.form2.reset();
-    this.imageForm.reset();
+    this.description = '';
+    this.cleared = true;
     this.eventArray.reset();
     this.memoirArray.reset();
-  }
 
-  clearImage() {
-    this.imageForm.reset();
-  }
-
-  addImage() {
-    this.imageArray.push(this.newImage());
+    setTimeout(() => {
+      this.cleared = false;
+    }, 500);
   }
 
   addEvent() {
@@ -156,12 +164,59 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.sub.forEach((sub) => sub.unsubscribe());
   }
 
+  onImageChange(data: any) {
+    if (data.type == 'image') {
+      this.imageData = {
+        ...this.imageData,
+        isGallery: data.value.imageUpload === 'yes',
+        galleryCategory: data.value.imageCategory || '',
+        galleryTitle: data.value.imageTitle || '',
+        galleryDetail: data.value.imageDes || '',
+        gallerySource: data.value.imageSource || '',
+      };
+    }
+
+    if (data.type == 'url') {
+      this.url = data.value;
+    }
+
+    this.imageChange.emit({
+      image: this.imageData,
+      url: this.url,
+    });
+  }
+
   ngOnInit(): void {
+    console.log(this.page);
+    console.log(this.contribution);
+    this.sub.push(
+      this.auth.isAdmin.subscribe((isAdmin: any) => {
+        this.isAdmin = isAdmin;
+      })
+    );
+
     if (this.page === 'contribution') {
       if (this.contribution) {
+
+        if (this.contribution.rightist!.imageId) {
+          this.imageDisabled = true
+        }
+
         if (this.contribution.contributionId && this.contribution.rightist) {
           const rightist: Rightist = this.contribution.rightist;
           this.mapForm(rightist);
+
+          this.sub.push(
+            this.eventArray.valueChanges.subscribe((events: any) => {
+              this.eventChange.emit(events);
+            })
+          );
+
+          this.sub.push(
+            this.memoirArray.valueChanges.subscribe((memoirs: any) => {
+              this.memoirChange.emit(memoirs);
+            })
+          );
         }
       }
     } else {
@@ -180,6 +235,10 @@ export class UploadComponent implements OnInit, OnDestroy {
                   })
               );
             }
+          } else {
+            this.eventArray.push(this.newEvent());
+            this.memoirArray.push(this.newMemoir());
+            this.imageLoaded = true;
           }
         })
       );
@@ -187,33 +246,70 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   mapForm(rightist: Rightist) {
-    if (this.form && this.form2 && this.eventArray && this.memoirArray) {
-      this.form.patchValue({
-        name: rightist.lastName + ' ' + rightist.firstName,
-        occupation: rightist.job,
-        ethnic: rightist.ethnicity,
-        rightestYear: rightist.rightistYear,
-        ...rightist,
-      });
-      this.form2.patchValue({
-        content: rightist.description,
-      });
-      this.eventArray.patchValue(rightist.events);
-      this.memoirArray.patchValue(rightist.memoirs);
+    this.form.patchValue({
+      name: rightist.fullName,
+      occupation: rightist.workplaceCombined,
+      ethnic: rightist.ethnicity,
+      rightestYear: rightist.rightistYear,
+      ...rightist,
+    });
+
+    console.log(rightist);
+
+    this.description = rightist.description;
+
+    if (rightist.imageId) {
+      this.sub.push(
+        this.imageAPI.getImage(rightist.imageId).subscribe((data: any) => {
+          this.imageData = { ...data };
+          this.imageLoaded = true;
+        })
+      );
+    }
+    else {
+      this.imageLoaded = true;
+    }
+  
+    if (rightist.events) {
+      for (const event of rightist.events) {
+        this.eventArray.push(
+          new FormGroup({
+            startYear: new FormControl(event.startYear),
+            endYear: new FormControl(event.endYear),
+            event: new FormControl(event.event),
+          })
+        );
+      }
+    } else {
+      this.eventArray.push(this.newEvent());
+    }
+
+    if (rightist.memoirs) {
+      for (const memoir of rightist.memoirs) {
+        this.memoirArray.push(
+          new FormGroup({
+            memoirTitle: new FormControl(memoir.memoirTitle),
+            memoirAuthor: new FormControl(memoir.memoirAuthor),
+            memoirContent: new FormControl(memoir.memoirContent),
+          })
+        );
+      }
+    } else {
+      this.memoirArray.push(this.newMemoir());
     }
   }
 
-  onselectFile(e) {
-    if (e.target.files) {
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
-      };
+  async onSubmit() {
+    // remove last event if empty
+    if (!this.eventArray.at(this.eventArray.length - 1).touched) {
+      this.eventArray.removeAt(this.eventArray.length - 1);
     }
-  }
 
-  onSubmit() {
+    // remove last memoir if empty
+    if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
+      this.memoirArray.removeAt(this.memoirArray.length - 1);
+    }
+
     const {
       name,
       gender,
@@ -223,43 +319,138 @@ export class UploadComponent implements OnInit, OnDestroy {
       occupation,
       birthYear,
     } = this.form.value;
-    const { content } = this.form2.value;
+
     const rightistId =
       this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
-    this.contributionService
-      .contributionsAddEdit({
-        contributionId: this.contributionId,
-        contributorId: [this.auth.uid],
-        contributedAt: new Date(),
-        rightistId: rightistId,
-        approvedAt: new Date(),
-        lastUpdatedAt: new Date(),
-        publish: 'new',
-        rightist: {
-          rightistId: rightistId,
-          imagePath: [this.url],
-          initial: name.trim().charAt(0).toUpperCase(),
-          firstName: name,
-          lastName: '',
-          gender: gender || '',
-          birthYear: birthYear,
-          deathYear: 0,
-          rightistYear: rightestYear,
-          status: status || 'Unknown',
-          ethnicity: ethnic || '',
-          job: occupation,
-          detailJob: '',
-          workplace: '',
-          events: this.eventArray.value,
-          memoirs: this.memoirArray.value,
-          reference: '',
-          description: content,
-        },
-      })
-      .then(() => {
-        this.clear();
-        this.clear2();
-        this.route.navigateByUrl('/account');
+    const imageId = `Image-${UUID()}`;
+
+    console.log(this.form.value);
+    console.log(this.imageData);
+    console.log(this.description);
+    console.log(this.eventArray.value);
+    console.log(this.memoirArray.value);
+
+    let image: ImageSchema = {
+      ...this.imageData,
+      imageId: imageId,
+      rightistId: rightistId,
+    };
+
+    let rightist: RightistSchema = {
+      rightistId: rightistId,
+      imageId: imageId,
+      initial: name.trim().charAt(0).toUpperCase(),
+      firstName: '',
+      lastName: '',
+      fullName: name,
+      gender: gender || '',
+      birthYear: birthYear,
+      deathYear: 0,
+      rightistYear: rightestYear,
+      status: status || 'Unknown',
+      ethnicity: ethnic || '',
+      education: '',
+      birthplace: '',
+      job: '',
+      detailJob: '',
+      workplace: '',
+      workplaceCombined: occupation,
+      events: this.eventArray.value,
+      memoirs: this.memoirArray.value,
+      reference: '',
+      description: this.description,
+      lastUpdatedAt: new Date(),
+    };
+
+    // has image
+    if (this.url) {
+      await fetch(this.url).then(async (response) => {
+        console.log(imageId);
+        const contentType = response.headers.get('content-type');
+        const blob = await response.blob();
+        const file = new File([blob], imageId, { type: contentType! });
+        await this.storageAPI.uploadGalleryImage(imageId, file);
+        this.sub.push(
+          this.storageAPI
+            .getGalleryImageURL(imageId)
+            .subscribe((imageUrl: any) => {
+              console.log(imageUrl);
+              image.imagePath = imageUrl;
+
+              if (this.isAdmin) {
+                Promise.all([
+                  this.contributionService.addUserContributions({
+                    contributionId: this.contributionId,
+                    contributorId: this.auth.uid,
+                    contributedAt: new Date(),
+                    rightistId: rightistId,
+                    approvedAt: new Date(),
+                    publish: 'approved',
+                  }),
+                  this.archiveAPI.addNewArchieve(rightist),
+                  this.imageAPI.addImage(image),
+                ]).then(() => {
+                  this.clear();
+                  this.clear2();
+                  this.route.navigateByUrl('/account');
+                });
+              } else {
+                Promise.all([
+                  this.contributionService.contributionsAddEdit({
+                    contributionId: this.contributionId,
+                    contributorId: this.auth.uid,
+                    contributedAt: new Date(),
+                    rightistId: rightistId,
+                    approvedAt: new Date(),
+                    publish: 'new',
+                    rightist: rightist,
+                  }),
+                  this.imageAPI.addImage(image),
+                ]).then(() => {
+                  this.clear();
+                  this.clear2();
+                  this.route.navigateByUrl('/account');
+                });
+              }
+            })
+        );
       });
+    // no image
+    } else {
+      rightist.imageId = ''
+      if (this.isAdmin) {
+        Promise.all([
+          this.contributionService.addUserContributions({
+            contributionId: this.contributionId,
+            contributorId: this.auth.uid,
+            contributedAt: new Date(),
+            rightistId: rightistId,
+            approvedAt: new Date(),
+            publish: 'approved',
+          }),
+          this.archiveAPI.addNewArchieve(rightist),
+        ]).then(() => {
+          this.clear();
+          this.clear2();
+          this.route.navigateByUrl('/account');
+        });
+      } else {
+        Promise.all([
+          this.contributionService.contributionsAddEdit({
+            contributionId: this.contributionId,
+            contributorId: this.auth.uid,
+            contributedAt: new Date(),
+            rightistId: rightistId,
+            approvedAt: new Date(),
+            publish: 'new',
+            rightist: rightist,
+          }),
+        ]).then(() => {
+          this.clear();
+          this.clear2();
+          this.route.navigateByUrl('/account');
+        });
+      }
+    }
   }
 }

@@ -35,27 +35,26 @@ import {
 export class ContributionComponent implements OnInit {
   @Input() contribution!: Contribution;
   @Input() activeCategory?: Categories;
-  @Output() approve: EventEmitter<Contribution> = new EventEmitter();
-  @Output() reject: EventEmitter<Contribution> = new EventEmitter();
-  @Output() reconsider: EventEmitter<Contribution> = new EventEmitter();
+
   @Output() readMore: EventEmitter<Contribution> = new EventEmitter();
 
   limit: number = 3;
 
+  _loaded: boolean = false
+  @Input() set loaded(value: boolean) {
+    this._loaded = value
+    console.log(value)
+  }
+
+  get loaded(): boolean {
+    return this._loaded!
+  }
+
   constructor() {}
 
-  ngOnInit(): void {}
-
-  onApprove() {
-    this.approve.emit(this.contribution);
-  }
-
-  onReject() {
-    this.reject.emit(this.contribution);
-  }
-
-  onReconsider() {
-    this.reconsider.emit(this.contribution);
+  ngOnInit(): void {
+    console.log(this.loaded)
+    console.log(this.contribution)
   }
 
   onReadMore() {

@@ -58,6 +58,7 @@ export class ArchieveApiService {
 
   addNewArchieve(obj: Rightist) {
     // update function with type and required value
+    obj.lastUpdatedAt = new Date()
     return this.db
       .object(`/persons/requestArchieve/persons`)
       .update({ [obj.rightistId]: obj });
