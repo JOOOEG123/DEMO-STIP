@@ -50,7 +50,6 @@ export class BrowseSearchFilterComponent implements OnInit {
     this.translate.onLangChange.subscribe((res) => {
       this.translate.get(['archive.GROUPS']).subscribe((translations) => {
         this.groups = translations['archive.GROUPS'];
-        console.log(this.groups);
       });
     });
   }
@@ -65,6 +64,7 @@ export class BrowseSearchFilterComponent implements OnInit {
         value.date = [new Date(value.date[0]), new Date(value.date[1])];
       }
       this.filterValues = { ...value, date } as any;
+      console.log(this.filterValues);
       this.filterValuesChange.emit(value);
     });
   }

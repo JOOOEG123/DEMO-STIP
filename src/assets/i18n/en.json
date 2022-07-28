@@ -195,6 +195,7 @@
     "gender_title": "Gender",
     "gender_male": "Male",
     "gender_female": "Female",
+    "unknown":"Unknown",
     "status_title": "Status",
     "status_alive": "Alive",
     "status_death": "Deceased",

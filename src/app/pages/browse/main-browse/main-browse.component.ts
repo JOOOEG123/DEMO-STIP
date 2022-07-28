@@ -60,17 +60,19 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     'birthYear',
     'deathYear',
     'rightistYear',
+    'rightistId',
     'status',
     'ethnicity',
     'job',
     'detailJob',
     'workplace',
-    'workplace',
     'workplaceCombined',
     'endYear',
     'event',
     'startYear',
-    'memoirs',
+    'memoirAuthor',
+    'memoirContent',
+    'memoirTitle',
     'reference',
     'description',
     'source',
@@ -352,7 +354,17 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       return containsAll;
     });
   }
+  getYearBecameRightist(record: any) {
+    let res = true;
 
+    if (this.filterValues.date) {
+      var from = this.filterValues.date[0].getFullYear();
+      var to = this.filterValues.date[1].getFullYear();
+
+      res = from <= record.rightistYear && record.rightistYear <= to;
+    }
+    return res;
+  }
   getNonFilterData(dataType: string) {
     if (dataType === 'searchBar') {
       this.db_result = this.original;
@@ -367,18 +379,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     } else {
       this.nonFilterData = this.db_result;
     }
-  }
-
-  getYearBecameRightist(record: any) {
-    let res = true;
-
-    if (this.filterValues.date) {
-      var from = this.filterValues.date[0].getFullYear();
-      var to = this.filterValues.date[1].getFullYear();
-
-      res = from <= record.rightestYear && record.rightestYear <= to;
-    }
-    return res;
   }
 
   onOpenChange(display: string) {
