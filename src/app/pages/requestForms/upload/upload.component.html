@@ -184,14 +184,20 @@
   <div class="row">
     <div class="col-md-4 ms-5 ps-5 photo">
       <!-- photo upload section -->
-      <app-upload-image></app-upload-image>
+      <app-upload-image
+        *ngIf="imageLoaded"
+        [imageDisabled]="imageDisabled"
+        [cleared]="cleared" 
+        [imageData]="imageData"
+        (imageChange)="onImageChange($event)"
+      ></app-upload-image>
     </div>
 
     <!-- col for contents input box -->
     <div class="col-md-6">
       <div class="my-4">
         <h4>{{ "upload.content" | translate }}</h4>
-        <div [formGroup]="form2" class="border p-2 shadow rounded">
+        <div class="border p-2 shadow rounded">
           <label for="add_content" class="form-label h4">{{
             "upload.add_content" | translate
           }}</label>
@@ -200,7 +206,7 @@
             id="add_content"
             rows="5"
             placeholder="{{ 'upload.add_content_placeholder' | translate }}"
-            formControlName="content"
+            [(ngModel)]="description"
           ></textarea>
         </div>
       </div>
@@ -234,8 +240,6 @@
                   placeholder="YYYY"
                   [id]="'event_year' + i"
                   formControlName="startYear"
-                  [minDate]="minDate"
-                  [maxDate]="maxDate"
                 />
                 <label [for]="'event_content' + i"
                   >{{ "upload.event_content_description" | translate }}
@@ -388,7 +392,7 @@
     <button
       type="button"
       class="btn btn-lg btn-outline-dark me-3 rounded-pill mx-2 px-4"
-      [disabled]="form.invalid || form2.invalid"
+    
       (click)="onSubmit()"
     >
       {{ "upload.submit" | translate }}

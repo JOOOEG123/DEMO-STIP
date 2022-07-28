@@ -86,23 +86,28 @@ interface Memoir {
 
 export interface RightistSchema {
   rightistId: string;
-  imagePath: string[];
+  imageId: string;
   initial: string;
   firstName: string;
   lastName: string;
+  fullName: string;
   gender: Gender;
   birthYear: number;
   deathYear: number;
   rightistYear: number;
+  education: string,
+  birthplace: string,
   status: Status;
   ethnicity: Ethnicity;
   job: string;
   detailJob: string;
   workplace: string;
+  workplaceCombined: string;
   events: Event[];
   memoirs: Memoir[];
   reference: string;
   description: string;
+  lastUpdatedAt: Date; // set from the service when updating a contribution
 }
 
 export interface Rightist extends RightistSchema {}
@@ -113,13 +118,13 @@ export interface RightistJson {
 
 export interface ContributionSchema {
   contributionId: string; // set from the service when creating a new contribution
-  contributorId: string[]; // set from the service when creating a new contribution
+  contributorId: string; // set from the service when creating a new contribution
   rightist?: Rightist;
   rightistId: string;
   publish: Publish;
+  lastUpdatedAt: Date;
   contributedAt: Date; // set from the service when creating a new contribution
   approvedAt: Date; // set from the service when approving a contribution
-  lastUpdatedAt: Date; // set from the service when updating a contribution
   notificationMessage?: string; // set from the service when approving a contribution
 }
 

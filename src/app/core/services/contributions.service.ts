@@ -38,7 +38,6 @@ export class ContributionsService {
   }
 
   editUserContributions(contributionId: string, obj: ContributionSchema) {
-    obj.lastUpdatedAt = new Date();
     return this.callAPI().update({ [contributionId]: obj });
   }
 
@@ -47,8 +46,7 @@ export class ContributionsService {
     const contributionId = UUID();
     obj.contributionId = contributionId;
     obj.contributedAt = new Date();
-    obj.contributorId = [this.auth.uid];
-    obj.publish = 'new';
+    obj.contributorId = this.auth.uid;
     return st.update({ [contributionId]: obj }).catch((e) => {
       return st.set({ [contributionId]: obj });
     });
@@ -56,8 +54,10 @@ export class ContributionsService {
 
   contributionsAddEdit(obj: ContributionSchema) {
     if (obj.contributionId) {
+      console.log('edit')
       return this.editUserContributions(obj.contributionId, obj);
     } else {
+      console.log('add')
       return this.addUserContributions(obj);
     }
   }

@@ -170,4 +170,3 @@ export const sendMail = functions.https.onCall(async (_data: ContactUs, _context
     };
   }
 });
-

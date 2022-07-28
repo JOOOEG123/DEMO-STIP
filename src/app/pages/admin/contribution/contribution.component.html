@@ -2,13 +2,12 @@
   <div class="col-4">
     <div class="card-body ms-5">
       <h4 class="card-title fw-bold">
-        {{ contribution.rightist.lastName }}
-        {{ contribution.rightist.firstName }}
+        {{ contribution.rightist.fullName }}
       </h4>
       <p class="card-text m-0">
         Occupation:
         <span class="fw-bold text-capitalize">{{
-          contribution.rightist.job ? contribution.rightist.job : "-"
+          contribution.rightist.workplaceCombined ? contribution.rightist.workplaceCombined : "-"
         }}</span>
       </p>
       <p class="card-text m-0">
@@ -31,7 +30,7 @@
   <div
     class="col-6 d-flex flex-column align-items-start justify-content-center my-4"
   >
-    <div *ngIf="contribution.rightist.events[0].event; else template">
+    <div *ngIf="contribution.rightist.events; else template">
       <div *ngFor="let event of contribution.rightist.events | slice: 0:limit">
         <span
           >In {{ event.startYear | date: "yyyy" }},
@@ -41,55 +40,22 @@
       </div>
       <div *ngIf="contribution.rightist.events.length > limit">...</div>
     </div>
-
-    <div class="align-self-end">
-      <button class="btn btn-transparent" (click)="onReadMore()">
-        <span class="h2">&#8594;</span>
-      </button>
-    </div>
   </div>
 
   <div
     class="col-lg-2 col-12 d-flex align-items-center flex-column justify-content-center"
   >
-    <div class="my-2 text-center">
+    <div class="my-2 text-center" *ngIf="loaded">
       <p>
         <i>
-          {{ contribution.contributedAt | date: "short" }}
+          {{ contribution.rightist.lastUpdatedAt | date : "short" }}
         </i>
       </p>
     </div>
 
     <div class="d-flex justify-content-center my-2">
-      <button
-        (click)="onApprove()"
-        class="btn btn-transparent mx-2"
-        *ngIf="activeCategory == 'New Contributions'"
-      >
-        <span class="check-icon">&checkmark;</span>
-      </button>
-
-      <button
-        (click)="onReject()"
-        class="btn btn-transparent mx-2"
-        *ngIf="activeCategory == 'New Contributions'"
-      >
-        <span class="cross-icon">&cross;</span>
-      </button>
-
-      <button
-        class="btn btn-transparent mx-2"
-        *ngIf="activeCategory == 'Approved Contributions'"
-      >
-        <span class="pencil-icon text-warning">&#9998;</span>
-      </button>
-
-      <button
-        (click)="onReconsider()"
-        class="btn btn-transparent mx-2"
-        *ngIf="activeCategory == 'Rejected Contributions'"
-      >
-        <span class="pencil-icon text-warning">&#8634;</span>
+      <button class="btn btn-transparent" (click)="onReadMore()">
+        <span class="h2">&#8594;</span>
       </button>
     </div>
   </div>
