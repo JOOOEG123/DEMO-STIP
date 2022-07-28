@@ -67,7 +67,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     'workplace',
     'workplace',
     'workplaceCombined',
-    'events',
+    'endYear',
+    'event',
+    'startYear',
     'memoirs',
     'reference',
     'description',
@@ -263,7 +265,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
           this.searchSelect == 'All Fields' ||
           this.searchSelect == '所有信息栏'
         ) {
+          // console.log(Object.values(record));
           Object.values(record).forEach((element) => {
+            console.log(JSON.stringify(element, this.db_attr));
             res =
               res ||
               this.containKeyword(
@@ -292,6 +296,11 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   containKeyword(word: any, keyword: any) {
+    // console.log(word);
+    if (word == 'events') {
+      console.log(word);
+    }
+
     let res;
     if (typeof word === 'string' && typeof keyword === 'string') {
       res = word.toLowerCase().includes(keyword.toLowerCase());

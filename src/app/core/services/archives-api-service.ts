@@ -12,11 +12,12 @@ export class ArchieveApiService {
 
   /** New API */
   getAllArchieve(curLan: string) {
-    if (curLan == 'cn') {
-      return this.db.object('/persons/data/cn/rightists').valueChanges();
-    } else {
-      this.db.object('/persons/data/en/rightists').valueChanges();
-    }
+    //fix later
+    // if (curLan == 'cn') {
+    //   return this.db.object('/persons/data/cn/rightists').valueChanges();
+    // } else {
+    //   this.db.object('/persons/data/en/rightists').valueChanges();
+    // }
 
     //to do: remove this later
     return this.db.object('/persons/requestArchieve/persons').valueChanges();
@@ -178,6 +179,6 @@ export class ArchieveApiService {
   getRightistById(language: string, rightistId: string) {
     return this.db
       .object(`/persons/data/${language}/test/${rightistId}`)
-      .valueChanges()
+      .valueChanges();
   }
 }
