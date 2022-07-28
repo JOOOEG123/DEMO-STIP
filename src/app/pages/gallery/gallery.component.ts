@@ -41,7 +41,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   images: Image[] = [];
   categoryImages: Image[] = [];
-  searchImages: Image[] = [];
   display: Image[] = [];
 
   translationSubscription?: Subscription;
@@ -68,8 +67,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   otherLanguage: string = '';
 
   isAdmin?: boolean;
-  loaded: boolean = false
-  
+  loaded: boolean = false;
+
   constructor(
     private translate: TranslateService,
     private storageAPI: StorageApIService,
@@ -95,7 +94,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
           this.imagesAPI
             .getGalleryImages(this.language!)
             .subscribe((imagesList: any) => {
-              this.loaded = true
+              this.loaded = true;
               this.categoryImages.length = 0;
               this.display.length = 0;
               this.images.length = 0;
@@ -106,10 +105,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
                   this.display.push(image);
                 }
               }
-              this.loaded = true
-              console.log(this.images);
+              this.loaded = true;
               this.categoryImages = this.images.slice();
-              this.searchImages = this.categoryImages;
             })
         );
 
@@ -160,7 +157,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     // issue with ngx pagination (can only update one field at a time)
     setTimeout(() => {
       this.categoryImages = result;
-      this.searchGallery();
+      this.display = this.categoryImages.slice(0, this.itemsPerPage);
       // this.display = this.searchImages.slice(0, this.itemsPerPage)
     }, 100);
   }
@@ -177,7 +174,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.currentPage = event.page;
     var start = (this.currentPage - 1) * this.itemsPerPage;
     var end = start + this.itemsPerPage;
-    this.display = this.searchImages.slice(start, end);
+    this.display = this.categoryImages.slice(start, end);
     window.scroll(0, 0);
     this.imageRef?.nativeElement.focus();
   }
@@ -197,10 +194,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     image.imageId = imageId;
     otherImage.imageId = imageId;
 
-    console.log(image);
-    console.log(otherImage);
     await fetch(data.url).then(async (response) => {
-      console.log(image.imageId);
       const contentType = response.headers.get('content-type');
       const blob = await response.blob();
       const file = new File([blob], image.imageId, { type: contentType! });
@@ -209,7 +203,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
           this.storageAPI
             .getGalleryImageURL(image.imageId)
             .subscribe((imageUrl: any) => {
-              console.log(imageUrl);
               image.imagePath = imageUrl;
               otherImage.imagePath = imageUrl;
 
@@ -252,24 +245,23 @@ export class GalleryComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
-  onUpdate(data: any) {
+  async onUpdate(data: any) {
     let image: Image = data.image;
     let otherImage: Image = data.otherImage;
     if (this.selectedImage) {
       if (data.status == 'update') {
         this.modalService.hide();
-        let { opacity, imagePath, ...result } = image;
-        console.log(result);
-        this.imagesAPI.addImage(this.language!, result);
+        let { opacity, ...result } = image;
+
+        await this.imagesAPI.updateImage(this.language!, result);
       }
     }
 
     if (this.otherImage) {
       if (data.status == 'update') {
         this.modalService.hide();
-        let { opacity, imagePath, ...result } = otherImage;
-        console.log(result);
-        // this.imagesAPI.updateImage(result)
+        let { opacity, ...result } = otherImage;
+        await this.imagesAPI.updateImage(this.otherLanguage!, result);
       }
     }
     this.currentPage = 1;
@@ -279,11 +271,14 @@ export class GalleryComponent implements OnInit, OnDestroy {
     let image = data.image;
     if (data.status == 'delete') {
       this.modalService.hide();
-      this.imagesAPI.deleteImage(this.language!, image.imageId);
-      this.storageAPI.removeGalleryImage(image.imageId);
-      console.log(image);
+      Promise.all([
+        this.imagesAPI.deleteImage(this.language!, image.imageId),
+        this.imagesAPI.deleteImage(this.otherLanguage!, image.imageId),
+        this.storageAPI.removeGalleryImage(image.imageId),
+      ]).then(() => {
+        this.currentPage = 1;
+      });
     }
-    this.currentPage = 1;
   }
 
   onCancel(data: any) {
@@ -296,35 +291,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
     if (data.status === 'close') {
       this.modalService.hide();
     }
-  }
-
-  searchGallery() {
-    let result: Image[] = [];
-
-    if (this.searchTerm) {
-      for (const image of this.categoryImages) {
-        if (
-          image.galleryDetail
-            .toLowerCase()
-            .includes(this.searchTerm.toLowerCase())
-        ) {
-          result.push(image);
-        }
-      }
-      this.searchImages = result;
-      console.log(this.searchImages);
-    } else {
-      this.searchImages = this.categoryImages;
-    }
-
-    this.display = this.searchImages.slice(0, this.itemsPerPage);
-
-    // issue with pagination. Unable to find fix.
-    setTimeout(() => {
-      this.currentPage = 1;
-      this.masonry?.reloadItems();
-      this.masonry?.layout();
-    }, 200);
   }
 
   addImage(template: TemplateRef<any>) {

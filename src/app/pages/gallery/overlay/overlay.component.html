@@ -51,11 +51,13 @@
             [(ngModel)]="category"
           >
             <option disabled selected value>-- select an option --</option>
-            <option *ngFor="let category of imageCategories, let i = index" [value]="i">
+            <option
+              *ngFor="let category of imageCategories; let i = index"
+              [value]="i"
+            >
               {{ category }}
             </option>
           </select>
-          
         </div>
         <div class="input-group my-2">
           <div class="input-group-prepend">
