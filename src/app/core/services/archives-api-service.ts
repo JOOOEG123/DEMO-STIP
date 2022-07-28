@@ -167,4 +167,10 @@ export class ArchieveApiService {
       )
       .valueChanges();
   }
+
+  getRightistById(language: string, rightistId: string) {
+    return this.db
+      .object(`/persons/data/${language}/test/${rightistId}`)
+      .valueChanges()
+  }
 }

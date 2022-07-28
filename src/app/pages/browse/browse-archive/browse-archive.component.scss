@@ -6,8 +6,8 @@
 }
 
 .scrollable {
-  max-height: 25rem;
-  overflow-y: auto;
+  max-height: 20rem;
+  overflow-y: hidden;
 }
 
 
@@ -23,4 +23,7 @@
   white-space: pre-wrap;
 }
 
+.memoir{
+  overflow:hidden
+}
 
