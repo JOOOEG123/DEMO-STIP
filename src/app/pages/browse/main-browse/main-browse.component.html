@@ -344,7 +344,7 @@
               [boundaryLinks]="true"
               [itemsPerPage]="itemsPerPage"
               [(ngModel)]="currentPage"
-              (pageChanged)="pageChanged($event)"
+              (pageChanged)="pageChanged($event, currentLetter)"
               previousText="&lsaquo;"
               nextText="&rsaquo;"
               firstText="&laquo;"
