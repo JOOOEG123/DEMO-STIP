@@ -68,7 +68,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   otherLanguage: string = '';
 
   isAdmin?: boolean;
-
+  loaded: boolean = false
+  
   constructor(
     private translate: TranslateService,
     private storageAPI: StorageApIService,
@@ -94,6 +95,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
           this.imagesAPI
             .getGalleryImages(this.language!)
             .subscribe((imagesList: any) => {
+              this.loaded = true
               this.categoryImages.length = 0;
               this.display.length = 0;
               this.images.length = 0;
@@ -104,6 +106,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
                   this.display.push(image);
                 }
               }
+              this.loaded = true
               console.log(this.images);
               this.categoryImages = this.images.slice();
               this.searchImages = this.categoryImages;
