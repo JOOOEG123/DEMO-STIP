@@ -5,19 +5,21 @@
 
   <div class="d-flex justify-content-center flex-wrap">
     <div
+      class="btn-group"
+      role="group"
+      aria-label="Basic example"
       *ngFor="
         let title of 'repository.repository_tabs' | translate;
         let i = index
       "
-      class="p-2 mx-4"
     >
       <button
         #image
         [ngClass]="{
-          'border-3 btn-underline-orange-red ': selectedCategory == i,
+          'border-3 btn-bg-color-grey-green ': selectedCategory == i,
           btn: selectedCategory != i
         }"
-        class="fw-bold"
+        class="fw-bold btn-lg"
         (click)="setActive(i)"
       >
         <b> {{ title[0] }} </b>
@@ -34,8 +36,8 @@
       "
     >
       <div *ngIf="selectedCategory == i" class="row justify-content-evenly">
-        <b class="col-6">{{ title[1] }}</b>
-        <b class="col-6">{{ title[2] }}</b>
+        <b class="col-7">{{ title[1] }}</b>
+        <b class="col-5">{{ title[2] }}</b>
 
         <div *ngIf="selectedCategory == 1 && currentLanguage == 'en'">
           <h6>Imprint</h6>
@@ -106,14 +108,22 @@
 
         <div *ngIf="selectedCategory != 1">
           <div
-            class="row justify-content-evenly"
+            class="row justify-content-evenly my-2"
             *ngFor="let filename of title[3]; let j = index"
           >
-            <b class="col-6">{{ filename }}</b>
-            <div class="col-6">
-              <button (click)="downloadFromAsset(filename, title[0])">
-                <img src="/assets/repositoryData/icons/download.svg" />
-              </button>
+            <div
+              class="row"
+              [ngClass]="{ 'bg-color-light-grey-green': j % 2 === 0 }"
+            >
+              <span class="col-7">{{ filename }}</span>
+              <div class="col-5">
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  (click)="downloadFromAsset(filename, title[0])"
+                >
+                  <img src="/assets/repositoryData/icons/download.svg" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

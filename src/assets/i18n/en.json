@@ -229,8 +229,9 @@
     "archive_no_result_suggest_three":"Click on the “?” button next to the search bar to view “What to search for?”",
     "archive_no_result_suggest_four":"Your search to a specific field in the All Fields dropdown to the left of the search bar.", 
     "archive_tooltip_year":"“Rightist Year” is when the individual became a “rightist”.",
-    "archive_tooltip_searchbar":"What to search for?\\n - Search for first name and/or last name\\n- Year of birth\\n- Year of death\\n- “Rightist” year\\n- Chinese Ethnic Group\\n- Occupation\\n- Gender",
-    
+    "archive_tooltip_searchbar":"What to search for? \n- Search for first name and/or last name\n- Year of birth\n - Year of death\n - “Rightist” year \n- Chinese Ethnic Group \n- Occupation \n- Gender",
+    "archive_all_button":"All",
+
     "profile_tooltip":"All account users have the ability to send a request form to Admin for modification of any incorrect or updated information about a specific file. A follow-up email will be sent within 3-5 business days to notify the user if the request has been accepted or rejected.", 
     "profile_detail_title":"Details", 
     "profile_detail_name": "Full name",
@@ -265,8 +266,8 @@
   },
   "repository": {
     "repository_top_title": "Archive Repositories",
-    "repository_tabs": [["Forward", "Forward Title", "Document", ["A large dictionary of the names of the victims in 1957"]],["Publication Notes"],["Appendix","Title",
-    "Document",[
+    "repository_tabs": [["Forward", "Forward", "Download", ["A large dictionary of the names of the victims in 1957"]],["Publication Notes"],["Appendix","Appendix",
+    "Download",[
       "0200329References",
       "A Brief History of Yingjing Democratic League",
       "A glimpse of the five major labor camps in China",
@@ -296,7 +297,7 @@
       "Wu Zhongjie's past in Fudan", 
       "Xiaoming Guangxi Province", 
       "Yang Jinguo Qi County, Henan Province"
-    ]],["Preface","Preface Title","Document",       [
+    ]],["Preface","Preface","Download",       [
       "Foreword by Mr. Du Guang",
       "Foreword by Mr. Wan Xueren",
       "Foreword by Mr. Zhao Xu",

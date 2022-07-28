@@ -31,7 +31,7 @@
         </li>
         <li role="menuitem">
           <a #dd3 class="dropdown-item" (click)="onOpenChange(dd3.text)">{{
-            "archive.archive_description" | translate
+            "archive.description" | translate
           }}</a>
         </li>
       </ul>
@@ -57,10 +57,9 @@
 
     <a
       class="align-self-center mx-2"
-      type="button"
       tooltip="{{ 'archive.archive_tooltip_searchbar' | translate }}"
-      data-bs-toggle="tooltip"
-      data-bs-placement="bottom"
+      placement="left"
+      data-bs-title="Tooltip on left"
     >
       <img
         src="assets/browsepage/question-mark-color-brown.svg"
