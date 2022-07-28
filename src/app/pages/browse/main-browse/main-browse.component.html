@@ -307,7 +307,10 @@
             </div>
           </div>
           <ng-template #elseEmptyBlock>
-            <div *ngIf="isloading" class="text-white d-flex flex-column m-2">
+            <div
+              *ngIf="isloading == false"
+              class="text-white d-flex flex-column m-2"
+            >
               <p>{{ "archive.archive_no_result_title" | translate }}</p>
               <h4>
                 {{ "archive.archive_no_result_body" | translate }} "{{
