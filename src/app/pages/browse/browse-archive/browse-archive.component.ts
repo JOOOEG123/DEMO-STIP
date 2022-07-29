@@ -39,7 +39,7 @@ export class BrowseArchiveComponent implements OnInit {
 
   language?: string
   sub: Subscription[] = []
-  src: string = 'assets/browsepage/Logo_Placeholder.svg'
+  src: string = 'assets/browsepage/STIP_Logo_PlaceholderBox.svg'
 
   ngOnInit(): void {
     this.language = localStorage.getItem('lang')!
