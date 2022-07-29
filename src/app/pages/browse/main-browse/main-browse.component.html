@@ -183,7 +183,7 @@
 
               <div class="m-4 col-3 text-capitalize" style="color: #2b5256">
                 <h2 class="text-start fw-bold">
-                  {{ result.firstName + " " + result.lastName }}
+                  {{ result.firstName + " " + result.lastName + " "  + result.fullName }}
                 </h2>
               </div>
               <div
@@ -265,7 +265,7 @@
                     {{ 3 * i + (j + 1) + (currentPage - 1) * itemsPerPage }}
                   </div>
                   <div class="fw-bold ms-4 h4" style="color: #2b5256">
-                    {{ result.firstName + " " + result.lastName }}
+                    {{ result.firstName + " " + result.lastName + " "  + result.fullName }}
                   </div>
                   <div
                     class="grid-searchprofile ms-4 flex-grow-1"

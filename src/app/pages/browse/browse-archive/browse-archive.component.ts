@@ -39,23 +39,32 @@ export class BrowseArchiveComponent implements OnInit {
 
   language?: string
   sub: Subscription[] = []
+  subApi: Subscription[] = []
   src: string = 'assets/browsepage/STIP_Logo_PlaceholderBox.svg'
 
   ngOnInit(): void {
     this.language = localStorage.getItem('lang')!
+    this.subApi.push(this.arch.getPersonById(this.id).subscribe((res) => {
+
+      this.profile = res;
+      //sorting event based on starting year
+      this.profile.events.sort(function (a, b) {
+        return new Date(a.start_year).getTime() - new Date(b.start_year).getTime();
+      });
+      this.replaceNewline();
+    }));
 
     this.sub.push(this.translate.onLangChange.subscribe((langChange: any) => {
-      this.language = langChange.lang
-
-      this.arch.getRightistById(this.language!, this.id).subscribe((res) => {
-
+      this.language = langChange.lang;
+      this.subApi.forEach((sub) => sub.unsubscribe());
+      this.subApi.push(this.arch.getPersonById(this.id).subscribe((res) => {
         this.profile = res;
         //sorting event based on starting year
         this.profile.events.sort(function (a, b) {
-          return a.start_year - b.start_year;
+          return new Date(a.start_year).getTime() - new Date(b.start_year).getTime();
         });
         this.replaceNewline();
-      });
+      }));
       // this.images.getImage(this.profile.profileImageId).subscribe((res) => {
       //   this.profile.profileImageId = res;
       // });
@@ -67,7 +76,7 @@ export class BrowseArchiveComponent implements OnInit {
       });
     }))
 
-    
+
   }
   ngDoCheck() {
     this.auth.isAdmin.subscribe((x) => {
