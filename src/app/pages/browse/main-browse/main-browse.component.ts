@@ -191,13 +191,17 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       Math.ceil(this.db_result.length / this.itemsPerPage),
       1
     );
+    console.log(start, end, this.currentPage, startItemsPerPage);
+    console.log(this.display);
   }
 
   pageChanged(event: any, letter: string) {
     if (!this.letter_changed) {
+      console.log('letter not change');
       this.currentPage = event.page;
       this.setDisplayInfo(this.itemsPerPage);
     } else {
+      console.log('letter change');
       this.currentPage = 1;
       this.currentLetter = letter;
       this.callAPI(letter);
@@ -206,10 +210,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   lettersBtnClickOrReset(letter: string) {
+    console.log('letter button click');
     if (this.currentPage == 1) {
       this.currentPage = 1;
       this.currentLetter = letter;
-      this.letter_changed = true;
       this.setDisplayInfo(this.currentPage);
 
       this.callAPI(letter);
