@@ -126,57 +126,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.thousandsSeperator();
   }
 
-  //fix later:remove later
-  chinese() {
-    if (
-      this.searchSelect == 'Description' ||
-      this.searchSelect == 'Name' ||
-      this.searchSelect == 'All Fields'
-    ) {
-      switch (this.searchSelect) {
-        case 'Description':
-          this.searchSelect = '简介';
-          break;
-        case 'Name':
-          this.searchSelect = '姓名';
-          break;
-        default:
-          this.searchSelect = '所有信息栏';
-      }
-    }
-  }
-  english() {
-    if (
-      this.searchSelect == '简介' ||
-      this.searchSelect == '姓名' ||
-      this.searchSelect == '所有信息栏'
-    ) {
-      switch (this.searchSelect) {
-        case '简介':
-          this.searchSelect = 'Description';
-          break;
-        case '姓名':
-          this.searchSelect = 'Name';
-          break;
-
-        default:
-          this.searchSelect = 'All Fields';
-      }
-    }
-  }
-  languages() {
-    if (this.currentLanguage == 'cn') {
-      console.log('switching to chinese');
-      this.chinese();
-    } else {
-      console.log('switching to english');
-      this.english();
-    }
-  }
-
   itemPerPageChanged() {
-    console.log('items per page change');
-    console.log(this.currentPage, this.itemsPerPage);
+    
     //casting
     this.itemsPerPage = +this.itemsPerPage;
 
@@ -193,17 +144,17 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       Math.ceil(this.db_result.length / this.itemsPerPage),
       1
     );
-    console.log(start, end, this.currentPage, startItemsPerPage);
-    console.log(this.display);
+  
   }
 
   pageChanged(event: any, letter: string) {
+
     if (!this.letter_changed) {
-      console.log('letter not change');
+ 
       this.currentPage = event.page;
       this.setDisplayInfo(this.itemsPerPage);
     } else {
-      console.log('letter change');
+
       this.currentPage = 1;
       this.currentLetter = letter;
       this.callAPI(letter);
@@ -212,23 +163,24 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   lettersBtnClickOrReset(letter: string) {
-    console.log('letter button click');
-    if (this.currentPage == 1) {
-      this.currentPage = 1;
-      this.currentLetter = letter;
-      this.setDisplayInfo(this.currentPage);
+    this.currentLetter = letter;
 
+  
+    if (this.currentPage == 1) {
+      this.setDisplayInfo(this.currentPage);
       this.callAPI(letter);
     } else {
       this.currentPage = 1;
-      this.currentLetter = letter;
-      this.letter_changed = true;
       this.setDisplayInfo(this.currentPage);
+      this.letter_changed = true;
     }
+    
+    this.searchBar();
   }
 
   //for testing data
   callAPI(letter: string) {
+
     //clear up display
     this.display = [];
 
@@ -238,9 +190,14 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     let res;
     //'from cache data'
     if (this.archCacheAPI[archKey]) {
+
       this.db_result = this.archCacheAPI[archKey];
+    
       this.setDisplayInfo(this.itemsPerPage);
+      this.setNonFilterData('filterPanel');
+      this.setNonFilterData('searchBar');
     } else {
+    
       this.isloading = true;
       if (letter === 'All') {
         // replace api when database change. An we need to add profileId to json data.
@@ -252,7 +209,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             });
 
             this.archCacheAPI[archKey] = this.db_result;
-
+     
             this.setDisplayInfo(this.itemsPerPage);
             this.setNonFilterData('filterPanel');
             this.setNonFilterData('searchBar');
@@ -263,6 +220,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             this.isloading = false;
           });
       } else {
+
         // replace api when database change. An we need to add profileId to json data.
         // res = this.archApi
         //   .getAllArchieve()
@@ -285,13 +243,16 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     if (res) {
       this.archSubAPI.push(res);
     }
+
   }
 
   searchBar() {
+  
     this.browseSearchFilterComponent?.clear();
     const userValues = this.searchInput.split(' ');
 
     this.getNonFilterData('searchBar');
+   
 
     this.db_result = this.db_result.filter((record: any): boolean => {
       return userValues.every((keyword) => {
@@ -368,6 +329,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         this.filterValues.job,
         this.filterValues.status,
       ];
+
       this.filterByFilterValues(attr, userValues);
     }
 
@@ -412,6 +374,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     } else {
       this.db_result = this.nonFilterData;
     }
+
+   
   }
 
   setNonFilterData(dataType: string) {
