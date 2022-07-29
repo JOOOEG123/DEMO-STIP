@@ -175,10 +175,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   itemPerPageChanged() {
+    console.log('items per page change');
+    console.log(this.currentPage, this.itemsPerPage);
     //casting
     this.itemsPerPage = +this.itemsPerPage;
 
-    this.setDisplayInfo(this.olditemsPerPage);
+    this.setDisplayInfo(this.itemsPerPage);
     this.olditemsPerPage = this.itemsPerPage;
   }
 
