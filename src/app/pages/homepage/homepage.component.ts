@@ -16,7 +16,7 @@ export class HomepageComponent implements OnInit {
 
   fakeProfile = [
     {
-      name: 'John Doe',
+      name: 'Chu Wenlang',
       email: 'johnDoe@aol.com',
       profile: 'theguy.png',
     },
@@ -24,6 +24,7 @@ export class HomepageComponent implements OnInit {
       name: 'Jane Doe',
       email: 'JaneDoe@aol.com',
       profile: 'default-profile.png',
+      desc: `In 1957, he was accused of “setting fire`
     },
     {
       name: 'John Smith',

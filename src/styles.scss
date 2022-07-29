@@ -15,8 +15,6 @@ $jade: #61af87;
 $grey-green: #e0e2b8;
 $light-grey-green: #e0e2b8;
 
-
-
 .bg-image-blue {
   .bg-colors {
     background-color: $jade;
@@ -55,13 +53,17 @@ $light-grey-green: #e0e2b8;
   background-color: white;
 }
 
-
-
-
 .text-orange-red {
   color: $orange-red;
 }
 
+.text-green {
+  color: $medium-blue;
+}
+
+.text-dark-green {
+  color: $dark-blue;
+}
 
 .display-select {
   padding: 5px;
@@ -71,12 +73,8 @@ $light-grey-green: #e0e2b8;
   background-color: $medium-blue;
 }
 
-
 .border-green {
-  border-color: $jade !important
-}
-.text-green {
-  color : $medium-blue
+  border-color: $jade !important;
 }
 
 dl {
@@ -92,7 +90,7 @@ body {
 }
 .outer-bg {
   position: relative;
-  background-color: $dark-blue!important;
+  background-color: $dark-blue !important;
 }
 
 .inner-bg {
@@ -104,8 +102,6 @@ body {
   position: relative;
   z-index: 2;
 }
-
-
 
 .bg-right-slash {
   background-color: $medium-blue;
@@ -133,7 +129,6 @@ body {
 .btn-bg-color-grey-green {
   @extend .btn;
   background-color: $grey-green;
-
 }
 
 .bg-color-light-grey-green {
