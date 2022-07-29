@@ -77,7 +77,11 @@ export class OverlayComponent implements OnInit, OnDestroy {
 
   sub: Subscription[] = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.image) {
+      
+    }
+  }
 
   ngOnDestroy(): void {
     this.sub.forEach((x) => x.unsubscribe());

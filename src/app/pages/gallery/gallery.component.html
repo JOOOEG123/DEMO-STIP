@@ -8,10 +8,9 @@
       <button
         #image
         [ngClass]="{
-          'border-3 btn-underline-orange-red ': selectedCategory == gallery,
-          btn: selectedCategory != gallery
+          'border-start-0 border-end-0 border-top-0 border-4 border-warning': selectedCategory == gallery
         }"
-        class="fw-bold"
+        class="fw-bold btn btn-transparent"
         (click)="setActive(gallery)"
       >
         <b>{{ gallery }}</b>
@@ -19,9 +18,7 @@
     </div>
   </div>
   <div class="text-end" *ngIf="isAdmin">
-    <button class="btn btn-primary" (click)="addImage(galleryModal)">
-      {{ "gallery.gallery_overlay_add_image_button" | translate }}
-    </button>
+    <button class="btn btn-primary" (click)="addImage(galleryModal)">Add Image</button>
   </div>
   <hr class="divider border-orange-red" />
 </div>
@@ -86,9 +83,7 @@
   class="container text-center my-4"
   *ngIf="categoryImages.length == 0 && loaded"
 >
-  <span class="display-1">
-    {{ "gallery.gallery_empty_message" | translate }}
-  </span>
+  <span class="display-1">No Records Found</span>
 </div>
 
 <!--Modal-->
@@ -97,8 +92,8 @@
     [type]="type"
     [status]="status"
     [isAdmin]="isAdmin"
-    [image]="this.selectedImage"
-    [otherImage]="this.otherImage"
+    [image]="selectedImage"
+    [otherImage]="otherImage"
     [language]="language"
     [otherLanguage]="otherLanguage"
     (add)="onAdd($event)"

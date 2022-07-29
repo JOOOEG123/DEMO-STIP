@@ -9,7 +9,6 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import {
   PageChangedEvent,
-  PaginationComponent,
 } from 'ngx-bootstrap/pagination';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { Subscription } from 'rxjs';
@@ -77,46 +76,27 @@ export class GalleryComponent implements OnInit, OnDestroy {
     private auth: AuthServiceService
   ) {}
 
-  ngOnInit(): void {
-    this.auth.isAdmin.subscribe((isAdmin: any) => {
-      this.isAdmin = isAdmin;
-    });
+  ngAfterViewInit(): void {}
 
+  ngOnInit(): void {
     this.language = localStorage.getItem('lang')!;
     this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
 
     this.sub.push(
-      this.translate.onLangChange.subscribe((lang: any) => {
-        this.language = lang.lang;
+      this.translate.onLangChange.subscribe((data: any) => {
+        this.language = data.lang;
         this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
-
-        this.sub.push(
-          this.imagesAPI
-            .getGalleryImages(this.language!)
-            .subscribe((imagesList: any) => {
-              this.loaded = true;
-              this.categoryImages.length = 0;
-              this.display.length = 0;
-              this.images.length = 0;
-              let images: Image[] = imagesList;
-              for (const image of images) {
-                this.images.push(image);
-                if (this.display.length < this.itemsPerPage) {
-                  this.display.push(image);
-                }
-              }
-              this.loaded = true;
-              this.categoryImages = this.images.slice();
-            })
-        );
-
-        this.selectedCategory = 'All';
-        this.currentImageIndex = -1;
       })
     );
 
-    // Translation
     this.sub.push(
+      this.auth.isAdmin.subscribe((isAdmin: any) => {
+        this.isAdmin = isAdmin;
+      })
+    );
+
+    this.sub.push(
+      // Translation
       this.translate.stream('gallery').subscribe((data) => {
         this.galleries.length = 0;
 
@@ -127,8 +107,45 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.galleries.push(data['gallery_top_cat_five_button']);
         this.title = data['gallery_top_title'];
         this.imageButton = data['gallery_image_button'];
+
+        this.sub.push(
+          this.imagesAPI
+            .getGalleryImages(this.language!)
+            .subscribe((imagesList: any) => {
+              console.log("qwe")
+              this.categoryImages.length = 0;
+              this.display.length = 0;
+              this.images.length = 0;
+              this.images = imagesList;
+
+              for (const image of this.images) {
+                this.categoryImages.push(image);
+                if (this.display.length < this.itemsPerPage) {
+                  this.display.push(image);
+                }
+                
+                if (imagesList.length === this.categoryImages.length) {
+                  this.loaded = true
+                  setTimeout(() => {
+                    this.reloadMasonryLayout()
+                  }, 300)
+                }
+              }
+            })
+        )
+      
+        this.selectedCategory = this.galleries[0];
+        this.currentImageIndex = -1;
       })
-    );
+    )
+  }
+
+
+  reloadMasonryLayout() {
+    if (this.masonry !== undefined) {
+      this.masonry.reloadItems();
+      this.masonry.layout();
+    }
   }
 
   ngOnDestroy(): void {
@@ -158,6 +175,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.categoryImages = result;
       this.display = this.categoryImages.slice(0, this.itemsPerPage);
+      this.reloadMasonryLayout()
       // this.display = this.searchImages.slice(0, this.itemsPerPage)
     }, 100);
   }
