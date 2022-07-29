@@ -99,8 +99,14 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.language = langChange
     }))
 
+    this.language = localStorage.getItem('lang')!
+
+    this.sub.push(this.translate.onLangChange.subscribe((langChange: any) => {
+      this.language = langChange
+    }))
+
     this.contributionSubcription = this.contributionAPI
-      .fetchAllContributions()
+      .fetchAllContributions(this.language)
       .subscribe((data: any) => {
         console.log(data);
         this.contributions.length = 0;
@@ -248,6 +254,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
                     Promise.all([
                       this.contributionAPI.updateUserContribution(
+                        this.language,
                         this.updatedContribution.contributorId,
                         this.updatedContribution.contributionId,
                         result
@@ -258,6 +265,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                   } else {
                     Promise.all([
                       this.contributionAPI.updateUserContribution(
+                        this.language,
                         this.updatedContribution.contributorId,
                         this.updatedContribution.contributionId,
                         contribution
@@ -286,6 +294,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
             Promise.all([
               this.contributionAPI.updateUserContribution(
+                this.language,
                 this.updatedContribution.contributorId,
                 this.updatedContribution.contributionId,
                 result
@@ -296,6 +305,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           } else {
             Promise.all([
               await this.contributionAPI.updateUserContribution(
+                this.language,
                 this.updatedContribution.contributorId,
                 this.updatedContribution.contributionId,
                 contribution

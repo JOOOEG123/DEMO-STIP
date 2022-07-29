@@ -82,6 +82,8 @@ export class UploadComponent implements OnInit, OnDestroy {
   cleared: boolean = false;
   imageLoaded: boolean = false;
 
+  language: string = ''
+
   imageData: ImageSchema = {
     imageId: '',
     rightistId: '',
@@ -194,6 +196,8 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.language = localStorage.getItem('lang')!
+    console.log(this.page);
+    console.log(this.contribution);
 
     this.sub.push(
       this.translate.onLangChange.subscribe((langChange: any) => {
@@ -397,7 +401,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
               if (this.isAdmin) {
                 Promise.all([
-                  this.contributionService.addUserContributions({
+                  this.contributionService.addUserContributions(this.language, {
                     contributionId: this.contributionId,
                     contributorId: this.auth.uid,
                     contributedAt: new Date(),
@@ -415,7 +419,7 @@ export class UploadComponent implements OnInit, OnDestroy {
                 });
               } else {
                 Promise.all([
-                  this.contributionService.contributionsAddEdit({
+                  this.contributionService.contributionsAddEdit(this.language, {
                     contributionId: this.contributionId,
                     contributorId: this.auth.uid,
                     contributedAt: new Date(),
@@ -440,7 +444,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       rightist.imageId = ''
       if (this.isAdmin) {
         Promise.all([
-          this.contributionService.addUserContributions({
+          this.contributionService.addUserContributions(this.language, {
             contributionId: this.contributionId,
             contributorId: this.auth.uid,
             contributedAt: new Date(),
@@ -457,7 +461,7 @@ export class UploadComponent implements OnInit, OnDestroy {
         });
       } else {
         Promise.all([
-          this.contributionService.contributionsAddEdit({
+          this.contributionService.contributionsAddEdit(this.language, {
             contributionId: this.contributionId,
             contributorId: this.auth.uid,
             contributedAt: new Date(),
