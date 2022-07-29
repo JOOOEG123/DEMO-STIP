@@ -282,7 +282,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     if (rightist.imageId) {
       this.sub.push(
-        this.imageAPI.getImage(rightist.imageId).subscribe((data: any) => {
+        this.imageAPI.getImage(this.language, rightist.imageId).subscribe((data: any) => {
           this.imageData = { ...data };
           this.imageLoaded = true;
         })
@@ -410,7 +410,7 @@ export class UploadComponent implements OnInit, OnDestroy {
                     approvedAt: new Date(),
                     publish: 'approved',
                   }),
-                  this.archiveAPI.addNewArchieve(rightist),
+                  this.archiveAPI.addRightist(this.language, rightist),
                   this.imageAPI.addImage(this.language, image),
                 ]).then(() => {
                   this.clear();
@@ -453,7 +453,7 @@ export class UploadComponent implements OnInit, OnDestroy {
             approvedAt: new Date(),
             publish: 'approved',
           }),
-          this.archiveAPI.addNewArchieve(rightist),
+          this.archiveAPI.addRightist(this.language!, rightist),
         ]).then(() => {
           this.clear();
           this.clear2();

@@ -150,7 +150,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           if (contribution.publish == 'approved') {
             this.sub.push(
               this.archiveAPI
-                .getPersonById(data.rightistId)
+                .getRightistById(this.language!, data.rightistId)
                 .subscribe((rightist: any) => {
                   data.rightist = rightist
                   this.loaded = true
@@ -164,6 +164,8 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             this.rejectedContributions.push(data);
           }
         }
+
+        console.log(this.approvedContributions)
 
       });
 
@@ -259,7 +261,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                         this.updatedContribution.contributionId,
                         result
                       ),
-                      this.archiveAPI.addNewArchieve(rightist!),
+                      this.archiveAPI.addRightist(this.language, rightist!),
                       this.imageAPI.updateImage(this.language, this.image!)
                     ]);
                   } else {
@@ -299,7 +301,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                 this.updatedContribution.contributionId,
                 result
               ),
-              this.archiveAPI.addNewArchieve(rightist!),
+              this.archiveAPI.addRightist(this.language, rightist!),
               this.imageAPI.updateImage(this.language, this.image!)
             ]);
           } else {
@@ -322,7 +324,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
     this.selectedContribution = contribution;
     this.updatedContribution = { ...contribution };
-    this.imageAPI.getImage(contribution.rightist!.imageId).subscribe((data: any) => {
+    this.imageAPI.getImage(this.language, contribution.rightist!.imageId).subscribe((data: any) => {
       this.image = {...data}
     })
     this.modalRef = this.modalService.show(template, { class: 'modal-xl' });
