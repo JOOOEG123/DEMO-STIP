@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { image } from 'd3';
 import { Subscription } from 'rxjs';
 import {
@@ -57,12 +58,15 @@ export class UploadComponent implements OnInit, OnDestroy {
       this._contribution = contribution;
     }
   }
+
   @Input() page: string = '';
 
   @Output() formChange: EventEmitter<any> = new EventEmitter();
   @Output() eventChange: EventEmitter<any> = new EventEmitter();
   @Output() memoirChange: EventEmitter<any> = new EventEmitter();
   @Output() imageChange: EventEmitter<any> = new EventEmitter();
+
+  language: string = ''
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -130,7 +134,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private imageAPI: ImagesService,
     private archiveAPI: ArchieveApiService,
-    private storageAPI: StorageApIService
+    private storageAPI: StorageApIService,
+    private translate: TranslateService
   ) {}
 
   clear() {
@@ -188,8 +193,14 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.page);
-    console.log(this.contribution);
+    this.language = localStorage.getItem('lang')!
+
+    this.sub.push(
+      this.translate.onLangChange.subscribe((langChange: any) => {
+        this.language = langChange
+      })
+    )
+
     this.sub.push(
       this.auth.isAdmin.subscribe((isAdmin: any) => {
         this.isAdmin = isAdmin;
@@ -396,7 +407,7 @@ export class UploadComponent implements OnInit, OnDestroy {
                     publish: 'approved',
                   }),
                   this.archiveAPI.addNewArchieve(rightist),
-                  this.imageAPI.addImage(image),
+                  this.imageAPI.addImage(this.language, image),
                 ]).then(() => {
                   this.clear();
                   this.clear2();
@@ -414,7 +425,7 @@ export class UploadComponent implements OnInit, OnDestroy {
                     publish: 'new',
                     rightist: rightist,
                   }),
-                  this.imageAPI.addImage(image),
+                  this.imageAPI.addImage(this.language, image),
                 ]).then(() => {
                   this.clear();
                   this.clear2();

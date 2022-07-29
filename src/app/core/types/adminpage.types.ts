@@ -93,8 +93,6 @@ export interface RightistSchema {
   birthYear: number;
   deathYear: number;
   rightistYear: number;
-  education: string,
-  birthplace: string,
   status: Status;
   ethnicity: Ethnicity;
   birthplace: string,
