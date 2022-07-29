@@ -1,6 +1,6 @@
 {
   "homepage.component": {
-    "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
+    "chinese_anti_rightist_archives": "Chinese Rightist Archives",
     "featured_victims_of_the_anti-rightists_movement": "Featured “Rightists”"
   },
   "header.component": {
@@ -94,7 +94,7 @@
     "submit_message": "Thank you for contacting us. Your response has been submitted. Someone from our admin team will contact you soon."
   },
   "common": {
-    "chinese_anti_rightist_archives": "Chinese Anti-Rightist Archives",
+    "chinese_anti_rightist_archives": "Chinese Rightist Archives",
     "movement_brief": "Brief History",
     "page_title": "Chinese \"Rightist\" Archives",
     "yes": "Yes",
@@ -120,7 +120,7 @@
     "change_account": "Change Account"
   },
   "navbar": {
-    "navbar_top_title": "Chinese Anti-Rightist Archives",
+    "navbar_top_title": "Chinese Rightist Archives",
     "navbar_searchbar_placeholder": "Search for Archives",
     "navbar_button_one": "Home",
     "navbar_button_two": "About",
@@ -158,17 +158,17 @@
     "email": "stip@gmu.com"
   },
   "home": {
-    "home_introduction_title": "Chinese Anti-Rightist Archives",
-    "home_introduction_body": "The Chinese \"Rightist\" Archive is a database that holds historical files, testimonials, and images dated back to the mid 1950's. The Archive allows the public to search, learn, and explore a collection of over 40,000 data points, and growing, of \"Rightist\" victims and history from the 1957-1959 Anti-\"Rightist\" Movement in China.",
+    "home_introduction_title": "Chinese Rightist Archives",
+    "home_introduction_body": "The Chinese \"Rightist\" Archive is a database that holds historical files, testimonials, and images dated back to the mid 1950's. The Archive allows the public to search, learn, and explore a collection of over 40,000 data points, and growing, of \"Rightist\" victims and history from the 1957-1959 \"Rightist\" Movement in China.",
     "home_searchbar_placeholder": "Search for Archives",
     "home_featured_title": "Featured \"Rightists\"",
     "home_history_title": "Brief History",
-    "home_history_body": "The Anti-\"Rightist\" Movement was a two year period in China (1957-1959) where the Chinese Communist Party (CCP) reeducated, humiliated, imprisoned, and executed those who were counter-revolutionaries. Many of the victims of this movement were “early advocates of free-market reforms” and also many were chosen based off of participation during a prior campaign to this movement; the Hundred Flowers Campaign (factsanddetails.com, 2016). During the Hundred Flower Campaign (1956-1957), the Communist Party chairman, Mao Zedong, encouraged the citizens of China to speak up about the CCP in a controversial light and allowed “criticism of the government” (factsanddetails.com, 2016). Mao proposed the “idea o 'letting a hundred flowers bloom' in the arts and 'a hundred schools of thought contend' in the sciences\" (factsanddetails.com, 2016). After receiving an overwhelming amount of criticism towards the CCP, Mao turned to punishing those who spoke out claiming it was due to their disloyalty to the CCP which caused disunity in their country, thus starting the Anti-\"Rightist\" movement. Although the Anti-\"Rightist\" Movement itself only lasted two years, the number of deaths has never been entirely confirmed and many who survived were imprisoned in labor camps years after the movement ended. This database is dedicated to educating the public about this movement and promoting human rights and social justice by showing the \"rightists\" who were victims of it.",
-    "home_timeline": "Timeline of the Chinese Anti-\"Rightist\" Movement",
+    "home_history_body": "The \"Rightist\" Movement was a two year period in China (1957-1959) where the Chinese Communist Party (CCP) reeducated, humiliated, imprisoned, and executed those who were counter-revolutionaries. Many of the victims of this movement were “early advocates of free-market reforms” and also many were chosen based off of participation during a prior campaign to this movement; the Hundred Flowers Campaign (factsanddetails.com, 2016). During the Hundred Flower Campaign (1956-1957), the Communist Party chairman, Mao Zedong, encouraged the citizens of China to speak up about the CCP in a controversial light and allowed “criticism of the government” (factsanddetails.com, 2016). Mao proposed the “idea o 'letting a hundred flowers bloom' in the arts and 'a hundred schools of thought contend' in the sciences\" (factsanddetails.com, 2016). After receiving an overwhelming amount of criticism towards the CCP, Mao turned to punishing those who spoke out claiming it was due to their disloyalty to the CCP which caused disunity in their country, thus starting the \"Rightist\" movement. Although the \"Rightist\" Movement itself only lasted two years, the number of deaths has never been entirely confirmed and many who survived were imprisoned in labor camps years after the movement ended. This database is dedicated to educating the public about this movement and promoting human rights and social justice by showing the \"rightists\" who were victims of it.",
+    "home_timeline": "Timeline of the Chinese \"Rightist\" Movement",
     "home_learn_movement": "Learn More About this Movement"
   },
   "about_movement": {
-    "about_movement_introduction_title": "About the Chinese Anti-Rightists Campaign in the 1950's",
+    "about_movement_introduction_title": "About the Chinese Rightists Campaign in the 1950's",
     "about_movement_introduction_body": "Lorem ipsum dolor sit amet...",
     "about_movement_introduction_button": "View Sources",
     "about_movement_map_title": "Map",
@@ -361,14 +361,14 @@
           "0200329References",
           "A Brief History of Yingjing Democratic League",
           "A glimpse of the five major labor camps in China",
-          "A Summary of the Rectification Movement and Anti-Rightist Struggle in Ningshan County in 1957",
-          "A Summary of the Rectification Movement and Anti-Rightist Struggle in Yunnan Province",
+          "A Summary of the Rectification Movement and Rightist Struggle in Ningshan County in 1957",
+          "A Summary of the Rectification Movement and Rightist Struggle in Yunnan Province",
           "Chen Zongpei unveils the veil of contemporary Qin Shi Huang",
           "Criteria for dividing rightists by the Central Committee of the Communist Party of China",
           "Everyone on the Right This is a culture of destruction",
           "Fan_xing",
           "How much do the rightists know",
-          "Hu Xinmin sees the 1957 anti-revolutionary",
+          "Hu Xinmin sees the 1957 revolutionary",
           "Investigation report of the People's Procuratorate of Xinfeng County, Jiangxi Province on the situation of rightists in Jinpenshan Reclamation Farm",
           "Jiabiangou, Gansu",
           "Li Xin(Renmin University of China)Anti-rightist experience",
@@ -382,7 +382,7 @@
           "Records of discussion and speeches by the key elements of the Anqing business community to study the rectification movement (1957)",
           "Shi Shaoji（Shanghai Jiaotong University",
           "The Black Curtain of Henan Farm Prison",
-          "Wei Junyi, the anti-rightist wind wave I have seen",
+          "Wei Junyi, the rightist wind wave I have seen",
           "Wu Chongnian's Autobiography",
           "Wu Zhongjie's past in Fudan",
           "Xiaoming Guangxi Province",
