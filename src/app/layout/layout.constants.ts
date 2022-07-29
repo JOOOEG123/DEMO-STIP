@@ -15,11 +15,6 @@ export const NavBar = [
         icon: 'info',
       },
       {
-        title: 'meet_the_team',
-        url: '/about/team',
-        icon: 'envelope',
-      },
-      {
         title: 'resources_page',
         url: '/about/resources',
         icon: 'envelope',
