@@ -7,6 +7,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
@@ -80,15 +81,23 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   sub: Subscription[] = [];
 
+  language: string = ''
+
   constructor(
     private modalService: BsModalService,
     private contributionAPI: ContributionsService,
     private archiveAPI: ArchieveApiService,
     private storageAPI: StorageApIService,
-    private imageAPI: ImagesService
+    private imageAPI: ImagesService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
+    this.language = localStorage.getItem('lang')!
+
+    this.sub.push(this.translate.onLangChange.subscribe((langChange: any) => {
+      this.language = langChange
+    }))
 
     this.contributionSubcription = this.contributionAPI
       .fetchAllContributions()
@@ -244,7 +253,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                         result
                       ),
                       this.archiveAPI.addNewArchieve(rightist!),
-                      this.imageAPI.updateImage(this.image!)
+                      this.imageAPI.updateImage(this.language, this.image!)
                     ]);
                   } else {
                     Promise.all([
@@ -253,7 +262,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                         this.updatedContribution.contributionId,
                         contribution
                       ),
-                      this.imageAPI.updateImage(this.image!)
+                      this.imageAPI.updateImage(this.language, this.image!)
                     ])
                   }
                 }
@@ -282,7 +291,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                 result
               ),
               this.archiveAPI.addNewArchieve(rightist!),
-              this.imageAPI.updateImage(this.image!)
+              this.imageAPI.updateImage(this.language, this.image!)
             ]);
           } else {
             Promise.all([
@@ -291,7 +300,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                 this.updatedContribution.contributionId,
                 contribution
               ),
-              this.imageAPI.updateImage(this.image!)
+              this.imageAPI.updateImage(this.language, this.image!)
             ])
           }
         }
