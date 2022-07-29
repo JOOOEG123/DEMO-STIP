@@ -59,6 +59,19 @@
             {{ "archive.gender_female" | translate }}
           </label>
         </div>
+        <div class="form-check ms-3">
+          <input
+            class="form-check-input"
+            formControlName="gender"
+            value="unknown"
+            type="radio"
+            name="gender"
+            id="gender-unknown"
+          />
+          <label class="form-check-label" for="gender-unknown">
+            {{ "archive.unknown" | translate }}
+          </label>
+        </div>
       </fieldset>
 
       <fieldset class="col-12 col-md-2">

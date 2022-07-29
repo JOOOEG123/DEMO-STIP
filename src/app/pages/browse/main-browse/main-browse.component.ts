@@ -44,6 +44,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   @Input() db_result: any[] = [];
 
   db_result_thousands_seperator: string = '0';
+  letter_changed: boolean = false;
   nonFilterData: any[] = [];
   archCacheAPI: any = {};
   archSubAPI: Subscription[] = [];
@@ -60,15 +61,19 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     'birthYear',
     'deathYear',
     'rightistYear',
+    'rightistId',
     'status',
     'ethnicity',
     'job',
     'detailJob',
     'workplace',
-    'workplace',
     'workplaceCombined',
-    'events',
-    'memoirs',
+    'endYear',
+    'event',
+    'startYear',
+    'memoirAuthor',
+    'memoirContent',
+    'memoirTitle',
     'reference',
     'description',
     'source',
@@ -88,11 +93,18 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
   sub: Subscription[] = [];
 
+  initLetter(letter) {
+    this.currentPage = 1;
+    this.currentLetter = letter;
+    this.setDisplayInfo(this.currentPage);
+    this.callAPI(letter);
+  }
+
   ngOnInit(): void {
     this.sub.push(
       this.route.queryParams.subscribe((params) => {
         this.searchInput = params['searchTerm'] || '';
-        this.lettersBtnClickOrReset('All');
+        this.initLetter('All');
       })
     );
     this.translate.onLangChange.subscribe((res) => {
@@ -161,33 +173,58 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       this.english();
     }
   }
+
   itemPerPageChanged() {
+    console.log('items per page change');
+    console.log(this.currentPage, this.itemsPerPage);
     //casting
     this.itemsPerPage = +this.itemsPerPage;
-    this.setDisplayInfo(this.olditemsPerPage);
+
+    this.setDisplayInfo(this.itemsPerPage);
     this.olditemsPerPage = this.itemsPerPage;
   }
 
   setDisplayInfo(startItemsPerPage: number) {
     var start = (this.currentPage - 1) * startItemsPerPage;
     var end = start + this.itemsPerPage;
+
     this.display = this.db_result.slice(start, end);
     this.maxPage = Math.max(
       Math.ceil(this.db_result.length / this.itemsPerPage),
       1
     );
+    console.log(start, end, this.currentPage, startItemsPerPage);
+    console.log(this.display);
   }
 
-  pageChanged(event: any) {
-    this.currentPage = event.page;
-    this.setDisplayInfo(this.itemsPerPage);
+  pageChanged(event: any, letter: string) {
+    if (!this.letter_changed) {
+      console.log('letter not change');
+      this.currentPage = event.page;
+      this.setDisplayInfo(this.itemsPerPage);
+    } else {
+      console.log('letter change');
+      this.currentPage = 1;
+      this.currentLetter = letter;
+      this.callAPI(letter);
+    }
+    this.letter_changed = false;
   }
 
   lettersBtnClickOrReset(letter: string) {
-    this.currentPage = 1;
-    this.currentLetter = letter;
+    console.log('letter button click');
+    if (this.currentPage == 1) {
+      this.currentPage = 1;
+      this.currentLetter = letter;
+      this.setDisplayInfo(this.currentPage);
 
-    this.callAPI(letter);
+      this.callAPI(letter);
+    } else {
+      this.currentPage = 1;
+      this.currentLetter = letter;
+      this.letter_changed = true;
+      this.setDisplayInfo(this.currentPage);
+    }
   }
 
   //for testing data
@@ -230,6 +267,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         // res = this.archApi
         //   .getAllArchieve()
         //   .subscribe((datas: any) => {
+
         this.db_result = this.archCacheAPI['person_arch_All'].filter(
           (r: any) => r.initial == letter
         );
@@ -272,9 +310,23 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
               );
           });
         } else {
-          for (let attribute of this.db_attr) {
-            res = res || this.containKeyword(record[attribute], keyword);
-          }
+          var values: string[] = [];
+          this.db_attr.forEach((attribute) => {
+            if (
+              typeof record[attribute] === 'string' ||
+              record[attribute] instanceof String
+            )
+              values.push(record[attribute]);
+          });
+
+          values.forEach((element) => {
+            res =
+              res ||
+              this.containKeyword(
+                JSON.stringify(element, this.db_attr),
+                keyword
+              );
+          });
         }
 
         return res;
@@ -343,7 +395,17 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       return containsAll;
     });
   }
+  getYearBecameRightist(record: any) {
+    let res = true;
 
+    if (this.filterValues.date) {
+      var from = this.filterValues.date[0].getFullYear();
+      var to = this.filterValues.date[1].getFullYear();
+
+      res = from <= record.rightistYear && record.rightistYear <= to;
+    }
+    return res;
+  }
   getNonFilterData(dataType: string) {
     if (dataType === 'searchBar') {
       this.db_result = this.original;
@@ -360,20 +422,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     }
   }
 
-  getYearBecameRightist(record: any) {
-    let res = true;
-
-    if (this.filterValues.date) {
-      var from = this.filterValues.date[0].getFullYear();
-      var to = this.filterValues.date[1].getFullYear();
-
-      res = from <= record.rightestYear && record.rightestYear <= to;
-    }
-    return res;
-  }
-
   onOpenChange(display: string) {
-    console.log('onopen change', display);
     this.searchSelect = display;
 
     if (this.searchSelect == 'Description' || this.searchSelect == '简介') {
@@ -391,15 +440,19 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         'birthYear',
         'deathYear',
         'rightistYear',
+        'rightistId',
         'status',
         'ethnicity',
         'job',
         'detailJob',
         'workplace',
-        'workplace',
         'workplaceCombined',
-        'events',
-        'memoirs',
+        'endYear',
+        'event',
+        'startYear',
+        'memoirAuthor',
+        'memoirContent',
+        'memoirTitle',
         'reference',
         'description',
         'source',

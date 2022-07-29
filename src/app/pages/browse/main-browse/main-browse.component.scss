@@ -66,23 +66,28 @@
 
 
 
-  .my-pagination::ng-deep a{
+  .my-pagination::ng-deep a.page-link {
     background-color: #266461;
     color: white;
     font-size: 14px;
     border-style: none;
-
-
+  
+  
+  }
+  .my-pagination::ng-deep li.active ::ng-deep a.page-link{
+    background-color:#d5e0df;
+    color:#d0a474;
+    font-size: 14px;
+    border-style: none;
   }
 
 
-
-  .page:ng-deep .active {
-    background-color: white;
-    color: black;
-    font-size: 14px;
-    border-style: none;
-}
+//   .page:ng-deep .active {
+//     background-color: white;
+//     color: black;
+//     font-size: 14px;
+//     border-style: none;
+// }
 
 
 

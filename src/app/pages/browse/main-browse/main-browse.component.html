@@ -307,7 +307,10 @@
             </div>
           </div>
           <ng-template #elseEmptyBlock>
-            <div *ngIf="isloading" class="text-white d-flex flex-column m-2">
+            <div
+              *ngIf="isloading == false"
+              class="text-white d-flex flex-column m-2"
+            >
               <p>{{ "archive.archive_no_result_title" | translate }}</p>
               <h4>
                 {{ "archive.archive_no_result_body" | translate }} "{{
@@ -344,7 +347,7 @@
               [boundaryLinks]="true"
               [itemsPerPage]="itemsPerPage"
               [(ngModel)]="currentPage"
-              (pageChanged)="pageChanged($event)"
+              (pageChanged)="pageChanged($event, currentLetter)"
               previousText="&lsaquo;"
               nextText="&rsaquo;"
               firstText="&laquo;"
@@ -354,8 +357,8 @@
             </pagination>
           </nav>
 
-          <div class="p-2 bd-highlight text-white">
-            page {{ this.currentPage }} of {{ this.maxPage }}
+          <div class="bd-highlight text-white p-1">
+            page {{ this.currentPage }} of &nbsp; {{ this.maxPage }}
           </div>
         </div>
       </div>

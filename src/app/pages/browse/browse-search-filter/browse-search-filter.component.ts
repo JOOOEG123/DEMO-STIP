@@ -5,6 +5,7 @@ import { FilterTypes } from 'src/app/core/types/filters.type';
 import { GROUPS, OCCUPATIONS } from './browse-search-filter.constant';
 import { MainBrowseComponent } from 'src/app/pages/browse/main-browse/main-browse.component';
 import { DatepickerDateCustomClasses } from 'ngx-bootstrap/datepicker';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-browse-search-filter',
@@ -26,7 +27,10 @@ export class BrowseSearchFilterComponent implements OnInit {
   groups = GROUPS;
   occupations = OCCUPATIONS;
 
-  constructor(private formgroup: FormBuilder) {}
+  constructor(
+    private formgroup: FormBuilder,
+    private translate: TranslateService
+  ) {}
 
   formSub!: Subscription;
 
@@ -42,12 +46,16 @@ export class BrowseSearchFilterComponent implements OnInit {
     this.formValues.patchValue(value);
     this.subForm();
   }
-
+  ngOnInit(): void {
+    this.translate.onLangChange.subscribe((res) => {
+      this.translate.get(['archive.GROUPS']).subscribe((translations) => {
+        this.groups = translations['archive.GROUPS'];
+      });
+    });
+  }
   ngOnDestroy(): void {
     this.formSub?.unsubscribe();
   }
-
-  ngOnInit(): void {}
 
   subForm() {
     this.formSub = this.formValues.valueChanges.subscribe((value) => {
@@ -56,6 +64,7 @@ export class BrowseSearchFilterComponent implements OnInit {
         value.date = [new Date(value.date[0]), new Date(value.date[1])];
       }
       this.filterValues = { ...value, date } as any;
+      console.log(this.filterValues);
       this.filterValuesChange.emit(value);
     });
   }
