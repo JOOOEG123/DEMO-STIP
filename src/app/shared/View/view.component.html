@@ -31,15 +31,24 @@
           <dd>
             {{ data?.rightist?.firstName || "" }}
             {{ data?.rightist?.lastName || "" }}
+            {{ data?.rightist?.fullName || "" }}
           </dd>
           <dt>ID</dt>
           <dd class="text-unwrap">
             {{ (data?.rightist?.rightistId || "").substring(0, 15) }}...
           </dd>
           <dt>Occupation</dt>
-          <dd>{{ data?.rightist?.job }}</dd>
+          <dd>
+            {{ data?.rightist?.job || data?.rightist?.workplaceCombined || "" }}
+          </dd>
           <dt>Gender</dt>
           <dd>{{ data?.rightist?.gender || "" }}</dd>
+          <dt>Status</dt>
+          <dd>{{ data?.rightist?.status || "" }}</dd>
+          <dt>Ethnicity</dt>
+          <dd>{{ data?.rightist?.ethnicity || "" }}</dd>
+          <dt>Year of birth</dt>
+          <dd>{{ data?.rightist?.birthYear | date: "YYYY" }}</dd>
         </dl>
       </div>
       <div class="col-12 col-md-5">
