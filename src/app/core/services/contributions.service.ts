@@ -9,6 +9,7 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root',
 })
 export class ContributionsService {
+  
   constructor(
     private store: AngularFirestore,
     private auth: AuthServiceService,
@@ -88,5 +89,10 @@ export class ContributionsService {
     return this.db
       .object(`/persons/requestArchieve/contributions/${contributorId}`)
       .update({ [contributionId]: obj });
+  }
+
+  fetchContributionsList(language: string) {
+    return this.db
+      .object(`/persons/data/${language}`)
   }
 }

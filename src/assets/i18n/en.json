@@ -257,13 +257,34 @@
   "gallery": {
     "gallery_top_title": "Gallery",
     "gallery_top_cat_one_button": "All",
-    "gallery_top_cat_two_button": "Artifacts",
-    "gallery_top_cat_three_button": "Camps",
-    "gallery_top_cat_four_button": "People",
-    "gallery_top_cat_five_button": "Albums",
-    "gallery_image_button": "Learn More", 
-    "placeholder":"Search Gallery"
+    "gallery_top_cat_two_button": "People",
+    "gallery_top_cat_three_button": "Media",
+    "gallery_top_cat_four_button": "Camps",
+    "gallery_top_cat_five_button": "Other",
+    "gallery_image_button": "Learn More",
+    "placeholder":"Search Gallery",
+    "gallery_empty_message": "No Records Found",
+    "gallery_overlay_category": "Category",
+    "gallery_overlay_category_other": "Chinese Category",
+    "gallery_overlay_title": "Title",
+    "gallery_overlay_title_other": "Chinese Title",
+    "gallery_overlay_detail": "Detail",
+    "gallery_overlay_detail_other": "Chinese Detail",
+    "gallery_overlay_source": "Source",
+    "gallery_overlay_source_other": "Chinese Source",
+    "gallery_overlay_add_image_button": "Add Image"
   },
+
+  "share": {
+    "add_button": "Add",
+    "edit_button": "Edit",
+    "submit_button": "Submit",
+    "remove_button": "Remove",
+    "update_button": "Update",
+    "cancel_button": "Cancel",
+    "delete_button": "Delete"
+  },
+
   "repository": {
     "repository_top_title": "Archive Repositories",
     "repository_tabs": [["Forward", "Forward", "Download", ["A large dictionary of the names of the victims in 1957"]],["Publication Notes"],["Appendix","Appendix",

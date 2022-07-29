@@ -71,14 +71,12 @@ export type State = 'void' | 'removed';
 export type Publish = 'original' | 'new' | 'approved' | 'rejected';
 
 interface Event {
-  eventId: string;
   startYear: number;
   endYear: number;
   event: string;
 }
 
 interface Memoir {
-  memoirId: string;
   memoirTitle: string;
   memoirContent: string;
   memoirAuthor: string;
@@ -95,10 +93,10 @@ export interface RightistSchema {
   birthYear: number;
   deathYear: number;
   rightistYear: number;
-  education: string,
-  birthplace: string,
   status: Status;
   ethnicity: Ethnicity;
+  birthplace: string,
+  education: string,
   job: string;
   detailJob: string;
   workplace: string;

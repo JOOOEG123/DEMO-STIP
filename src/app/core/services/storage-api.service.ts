@@ -44,4 +44,16 @@ export class StorageApIService {
     const upload = ref.delete();
     return upload;
   }
+
+  getImageUrl(imageId: string) {
+    return this.afs.ref(`images/${imageId}`).getDownloadURL();
+  }
+
+  uploadImage(imageId: string, file: File) {
+    return this.afs.ref(`images/${imageId}`).put(file)
+  }
+
+  removeImage(imageId: string) {
+    return this.afs.ref(`images/${imageId}`).delete()
+  }
 }

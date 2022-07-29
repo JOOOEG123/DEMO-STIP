@@ -8,27 +8,49 @@ import { ImageSchema } from '../types/adminpage.types';
 export class ImagesService {
   constructor(private db: AngularFireDatabase) {}
 
-  getAllImages() {
-    return this.db.object(`persons/requestArchieve/images`).valueChanges();
+  getAllImages(language: string) {
+    return this.db.object(`persons/data/${language}/images`).valueChanges();
   }
 
-  addImage(image: ImageSchema) {
+  getAllImagesList(language: string) {
+    return this.db.list(`persons/data/${language}/images`).valueChanges();
+  }
+
+  getGalleryImages(language: string) {
     return this.db
-      .object(`persons/requestArchieve/images`)
+      .list(`persons/data/${language}/images`, (ref) =>
+        ref.orderByChild('isGallery').equalTo(true)
+      )
+      .valueChanges();
+  }
+
+  addImage(language: string, image: ImageSchema) {
+    return this.db
+      .object(`persons/data/${language}/images`)
       .update({ [image.imageId]: image });
   }
 
-  updateImage(image: ImageSchema) {
+  updateImage(language: string, image: ImageSchema) {
     return this.db
-      .object(`persons/requestArchieve/images`)
+      .object(`persons/data/${language}/images`)
       .update({ [image.imageId]: image });
   }
 
-  deleteImage(imageId: string) {
-    return this.db.object(`persons/requestArchieve/images/${imageId}`).remove();
+  deleteImage(language: string, imageId: string) {
+    return this.db
+      .object(`persons/data/${language}/images/${imageId}`)
+      .remove();
   }
 
-  getImage(imageId:string) {
-    return this.db.object(`persons/requestArchieve/images/${imageId}`).valueChanges()
+  getImageUpdate(language: string, imageId: string) {
+    return this.db
+      .object(`persons/data/${language}/images/${imageId}`)
+      .valueChanges();
+  }
+
+  getImage(imageId: string) {
+    return this.db
+      .object(`persons/requestArchieve/images/${imageId}`)
+      .valueChanges();
   }
 }

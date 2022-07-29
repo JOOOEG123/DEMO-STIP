@@ -82,4 +82,9 @@ const LIST_OF_JOB = [
   'Deputy Secretary General',
 ];
 
-export { ETHNIC_GROUP_CONSTANTS, LIST_OF_JOB };
+const LIST_OF_IMAGE_CATEGORIES = {
+  en: ['People', 'Media', 'Camps', 'Other'],
+  cn: ['人们', '媒体', '营地', '其他'],
+};
+
+export { ETHNIC_GROUP_CONSTANTS, LIST_OF_JOB, LIST_OF_IMAGE_CATEGORIES };
