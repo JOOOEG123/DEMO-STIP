@@ -304,9 +304,23 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
               );
           });
         } else {
-          for (let attribute of this.db_attr) {
-            res = res || this.containKeyword(record[attribute], keyword);
-          }
+          var values: string[] = [];
+          this.db_attr.forEach((attribute) => {
+            if (
+              typeof record[attribute] === 'string' ||
+              record[attribute] instanceof String
+            )
+              values.push(record[attribute]);
+          });
+
+          values.forEach((element) => {
+            res =
+              res ||
+              this.containKeyword(
+                JSON.stringify(element, this.db_attr),
+                keyword
+              );
+          });
         }
 
         return res;
