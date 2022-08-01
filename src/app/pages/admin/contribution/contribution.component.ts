@@ -37,6 +37,7 @@ export class ContributionComponent implements OnInit {
   @Input() activeCategory?: Categories;
 
   @Output() readMore: EventEmitter<Contribution> = new EventEmitter();
+  @Output() rightistNavigation: EventEmitter<Contribution> = new EventEmitter()
 
   limit: number = 3;
 

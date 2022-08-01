@@ -10,7 +10,7 @@ import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { image } from 'd3';
-import { Subscription } from 'rxjs';
+import { Subscription, zip } from 'rxjs';
 import {
   ETHNIC_GROUP_CONSTANTS,
   LIST_OF_JOB,
@@ -48,7 +48,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   maxDate2: Date = new Date('1950-01-01');
 
   isAdmin: boolean = false;
-  imageDisabled: boolean = false
+  imageDisabled: boolean = false;
 
   @Input() get contribution() {
     return this._contribution;
@@ -66,7 +66,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   @Output() memoirChange: EventEmitter<any> = new EventEmitter();
   @Output() imageChange: EventEmitter<any> = new EventEmitter();
 
-  language: string = ''
+  language: string = '';
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -81,8 +81,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   description: string = '';
   cleared: boolean = false;
   imageLoaded: boolean = false;
-
-  language: string = ''
 
   imageData: ImageSchema = {
     imageId: '',
@@ -151,6 +149,9 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.eventArray.reset();
     this.memoirArray.reset();
 
+    this.imageData.imagePath = this.imageData.imagePath || '';
+    this.url = this.url || '';
+
     setTimeout(() => {
       this.cleared = false;
     }, 500);
@@ -188,22 +189,29 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.url = data.value;
     }
 
+    if (data.type == 'clear') {
+      this.url = '';
+      this.imageData.imagePath = '';
+    }
+
     this.imageChange.emit({
       image: this.imageData,
       url: this.url,
     });
+
+    console.log(this.imageData);
   }
 
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!
+    this.language = localStorage.getItem('lang')!;
     console.log(this.page);
     console.log(this.contribution);
 
     this.sub.push(
       this.translate.onLangChange.subscribe((langChange: any) => {
-        this.language = langChange
+        this.language = langChange;
       })
-    )
+    );
 
     this.sub.push(
       this.auth.isAdmin.subscribe((isAdmin: any) => {
@@ -212,21 +220,26 @@ export class UploadComponent implements OnInit, OnDestroy {
     );
 
     if (this.page === 'contribution') {
+      console.log(this.contribution);
       if (this.contribution) {
-
-        if (this.contribution.rightist!.imageId) {
-          this.imageDisabled = true
+        if (this.contribution.image?.imagePath) {
+          this.imageDisabled = true;
         }
 
         if (this.contribution.contributionId && this.contribution.rightist) {
           const rightist: Rightist = this.contribution.rightist;
           this.mapForm(rightist);
 
+          if (this.contribution.image) {
+            this.imageData = { ...this.contribution.image };
+            this.imageLoaded = true
+          }
+
           this.sub.push(
             this.form.valueChanges.subscribe((data: any) => {
-              this.formChange.emit(data)
+              this.formChange.emit(data);
             })
-          )
+          );
 
           this.sub.push(
             this.eventArray.valueChanges.subscribe((events: any) => {
@@ -250,9 +263,20 @@ export class UploadComponent implements OnInit, OnDestroy {
             if (this.contributionId) {
               this.sub.push(
                 this.contributionService
-                  .fetchContributorByContributionId(this.contributionId)
+                  .getUserContribution(
+                    this.language,
+                    this.auth.uid,
+                    this.contributionId
+                  )
                   .subscribe((contribution: any) => {
                     this.contribution = contribution;
+
+                    if (this.contribution.image) {
+                      this.imageData = { ...this.contribution.image };
+                      this.imageLoaded = true;
+                    }
+
+                    console.log(this.imageData)
                     this.mapForm(contribution.rightist);
                   })
               );
@@ -280,18 +304,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     this.description = rightist.description;
 
-    if (rightist.imageId) {
-      this.sub.push(
-        this.imageAPI.getImage(this.language, rightist.imageId).subscribe((data: any) => {
-          this.imageData = { ...data };
-          this.imageLoaded = true;
-        })
-      );
-    }
-    else {
-      this.imageLoaded = true;
-    }
-  
     if (rightist.events) {
       for (const event of rightist.events) {
         this.eventArray.push(
@@ -322,16 +334,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit() {
-    // remove last event if empty
-    if (!this.eventArray.at(this.eventArray.length - 1).touched) {
-      this.eventArray.removeAt(this.eventArray.length - 1);
-    }
-
-    // remove last memoir if empty
-    if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
-      this.memoirArray.removeAt(this.memoirArray.length - 1);
-    }
-
     const {
       name,
       gender,
@@ -344,7 +346,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     const rightistId =
       this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
-    const imageId = `Image-${UUID()}`;
 
     console.log(this.form.value);
     console.log(this.imageData);
@@ -354,13 +355,13 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     let image: ImageSchema = {
       ...this.imageData,
-      imageId: imageId,
+      imageId: '',
       rightistId: rightistId,
     };
 
     let rightist: RightistSchema = {
       rightistId: rightistId,
-      imageId: imageId,
+      imageId: '',
       initial: name.trim().charAt(0).toUpperCase(),
       firstName: '',
       lastName: '',
@@ -384,98 +385,146 @@ export class UploadComponent implements OnInit, OnDestroy {
       lastUpdatedAt: new Date(),
     };
 
-    // has image
-    if (this.url) {
-      await fetch(this.url).then(async (response) => {
-        console.log(imageId);
-        const contentType = response.headers.get('content-type');
-        const blob = await response.blob();
-        const file = new File([blob], imageId, { type: contentType! });
-        await this.storageAPI.uploadGalleryImage(imageId, file);
-        this.sub.push(
-          this.storageAPI
-            .getGalleryImageURL(imageId)
-            .subscribe((imageUrl: any) => {
-              console.log(imageUrl);
-              image.imagePath = imageUrl;
+    if (this.page === 'account') {
+      if (this.url) {
+        image.imagePath = this.url;
+      }
 
-              if (this.isAdmin) {
-                Promise.all([
-                  this.contributionService.addUserContributions(this.language, {
-                    contributionId: this.contributionId,
-                    contributorId: this.auth.uid,
-                    contributedAt: new Date(),
-                    lastUpdatedAt: new Date(),
-                    rightistId: rightistId,
-                    approvedAt: new Date(),
-                    publish: 'approved',
-                  }),
-                  this.archiveAPI.addRightist(this.language, rightist),
-                  this.imageAPI.addImage(this.language, image),
-                ]).then(() => {
-                  this.clear();
-                  this.clear2();
-                  this.route.navigateByUrl('/account');
-                });
-              } else {
-                Promise.all([
-                  this.contributionService.contributionsAddEdit(this.language, {
-                    contributionId: this.contributionId,
-                    contributorId: this.auth.uid,
-                    contributedAt: new Date(),
-                    rightistId: rightistId,
-                    lastUpdatedAt: new Date(),
-                    approvedAt: new Date(),
-                    publish: 'new',
-                    rightist: rightist,
-                  }),
-                  this.imageAPI.addImage(this.language, image),
-                ]).then(() => {
-                  this.clear();
-                  this.clear2();
-                  this.route.navigateByUrl('/account');
-                });
-              }
-            })
-        );
-      });
-    // no image
+      this.contributionService
+        .addUserContributions(this.language, {
+          contributionId: this.contributionId,
+          contributorId: this.auth.uid,
+          contributedAt: new Date(),
+          rightistId: rightistId,
+          lastUpdatedAt: new Date(),
+          approvedAt: new Date(),
+          publish: 'new',
+          rightist: rightist,
+          image: {
+            ...image,
+          },
+        })
+        .then(() => {
+          this.clear();
+          this.clear2();
+          this.route.navigateByUrl('/account');
+        });
     } else {
-      rightist.imageId = ''
-      if (this.isAdmin) {
-        Promise.all([
-          this.contributionService.addUserContributions(this.language, {
-            contributionId: this.contributionId,
-            contributorId: this.auth.uid,
-            contributedAt: new Date(),
-            rightistId: rightistId,
-            lastUpdatedAt: new Date(),
-            approvedAt: new Date(),
-            publish: 'approved',
-          }),
-          this.archiveAPI.addRightist(this.language!, rightist),
-        ]).then(() => {
-          this.clear();
-          this.clear2();
-          this.route.navigateByUrl('/account');
-        });
+      // remove last event if empty
+      if (!this.eventArray.at(this.eventArray.length - 1).touched) {
+        this.eventArray.removeAt(this.eventArray.length - 1);
+      }
+
+      // remove last memoir if empty
+      if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
+        this.memoirArray.removeAt(this.memoirArray.length - 1);
+      }
+      // has image
+      if (this.url) {
+        // If is admin and has image
+        if (this.isAdmin) {
+          const imageId = `Image-${UUID()}`;
+          await fetch(this.url).then(async (response) => {
+            console.log(imageId);
+            const contentType = response.headers.get('content-type');
+            const blob = await response.blob();
+            const file = new File([blob], imageId, { type: contentType! });
+            await this.storageAPI.uploadGalleryImage(imageId, file);
+            this.sub.push(
+              this.storageAPI
+                .getGalleryImageURL(imageId)
+                .subscribe((imageUrl: any) => {
+                  console.log(imageUrl);
+                  rightist.imageId = imageId;
+                  image.imageId = imageId;
+                  image.imagePath = imageUrl;
+
+                  Promise.all([
+                    this.contributionService.addUserContributions(
+                      this.language,
+                      {
+                        contributionId: this.contributionId,
+                        contributorId: this.auth.uid,
+                        contributedAt: new Date(),
+                        lastUpdatedAt: new Date(),
+                        rightistId: rightistId,
+                        approvedAt: new Date(),
+                        publish: 'approved',
+                      }
+                    ),
+                    this.archiveAPI.addRightist(this.language, rightist),
+                    this.imageAPI.addImage(this.language, image),
+                  ]).then(() => {
+                    this.clear();
+                    this.clear2();
+                    this.route.navigateByUrl('/account');
+                  });
+                })
+            );
+          });
+          // if has image but no admin
+        } else {
+          Promise.all([
+            this.contributionService.contributionsAddEdit(this.language, {
+              contributionId: this.contributionId,
+              contributorId: this.auth.uid,
+              contributedAt: new Date(),
+              rightistId: rightistId,
+              lastUpdatedAt: new Date(),
+              approvedAt: new Date(),
+              publish: 'new',
+              rightist: rightist,
+              image: {
+                ...image,
+                imagePath: this.url,
+              },
+            }),
+          ]).then(() => {
+            this.clear();
+            this.clear2();
+            this.route.navigateByUrl('/account');
+          });
+        }
+        // no image
       } else {
-        Promise.all([
-          this.contributionService.contributionsAddEdit(this.language, {
-            contributionId: this.contributionId,
-            contributorId: this.auth.uid,
-            contributedAt: new Date(),
-            rightistId: rightistId,
-            approvedAt: new Date(),
-            lastUpdatedAt: new Date(),
-            publish: 'new',
-            rightist: rightist,
-          }),
-        ]).then(() => {
-          this.clear();
-          this.clear2();
-          this.route.navigateByUrl('/account');
-        });
+        console.log("No Image")
+        // no image and is admin
+        if (this.isAdmin) {
+          Promise.all([
+            this.contributionService.addUserContributions(this.language, {
+              contributionId: this.contributionId,
+              contributorId: this.auth.uid,
+              contributedAt: new Date(),
+              rightistId: rightistId,
+              lastUpdatedAt: new Date(),
+              approvedAt: new Date(),
+              publish: 'approved',
+            }),
+            this.archiveAPI.addRightist(this.language!, rightist),
+          ]).then(() => {
+            this.clear();
+            this.clear2();
+            this.route.navigateByUrl('/account');
+          });
+          // no image and no admin
+        } else {
+          Promise.all([
+            this.contributionService.contributionsAddEdit(this.language, {
+              contributionId: this.contributionId,
+              contributorId: this.auth.uid,
+              contributedAt: new Date(),
+              rightistId: rightistId,
+              approvedAt: new Date(),
+              lastUpdatedAt: new Date(),
+              publish: 'new',
+              rightist: rightist,
+            }),
+          ]).then(() => {
+            this.clear();
+            this.clear2();
+            this.route.navigateByUrl('/account');
+          });
+        }
       }
     }
   }

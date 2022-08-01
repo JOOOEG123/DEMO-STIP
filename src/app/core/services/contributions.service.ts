@@ -9,7 +9,6 @@ import { AuthServiceService } from './auth-service.service';
   providedIn: 'root',
 })
 export class ContributionsService {
-  
   constructor(
     private store: AngularFirestore,
     private auth: AuthServiceService,
@@ -23,8 +22,11 @@ export class ContributionsService {
   }
 
   private callAPI_List(language: string) {
-    return this.db.list(`/persons/data/${language}/contributions/${this.auth.uid}`, ref => ref.orderByChild('contributedAt'));
-    }
+    return this.db.list(
+      `/persons/data/${language}/contributions/${this.auth.uid}`,
+      (ref) => ref.orderByChild('contributedAt')
+    );
+  }
 
   fetchContributorByContributionId(contId: string) {
     return this.db
@@ -38,7 +40,11 @@ export class ContributionsService {
     return this.callAPI_List(language).valueChanges();
   }
 
-  editUserContributions(language: string, contributionId: string, obj: ContributionSchema) {
+  editUserContributions(
+    language: string,
+    contributionId: string,
+    obj: ContributionSchema
+  ) {
     return this.callAPI(language).update({ [contributionId]: obj });
   }
 
@@ -55,10 +61,10 @@ export class ContributionsService {
 
   contributionsAddEdit(language: string, obj: ContributionSchema) {
     if (obj.contributionId) {
-      console.log('edit')
+      console.log('edit');
       return this.editUserContributions(language, obj.contributionId, obj);
     } else {
-      console.log('add')
+      console.log('add');
       return this.addUserContributions(language, obj);
     }
   }
@@ -92,8 +98,19 @@ export class ContributionsService {
       .update({ [contributionId]: obj });
   }
 
-  fetchContributionsList(language: string) {
+  getUserContribution(
+    language: string,
+    contributorId: string,
+    contributionId: string
+  ) {
     return this.db
-      .object(`/persons/data/${language}`)
+      .object(
+        `/persons/data/${language}/contributions/${contributorId}/${contributionId}`
+      )
+      .valueChanges();
+  }
+
+  fetchContributionsList(language: string) {
+    return this.db.object(`/persons/data/${language}`);
   }
 }

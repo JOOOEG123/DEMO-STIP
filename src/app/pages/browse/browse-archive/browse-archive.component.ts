@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Input, TemplateRef } from '@angular/core';
 
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -9,6 +9,7 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ImagesService } from 'src/app/core/services/images.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { Rightist } from 'src/app/core/types/adminpage.types';
 
 @Component({
   selector: 'app-browse-archive',
@@ -42,9 +43,22 @@ export class BrowseArchiveComponent implements OnInit {
   src: string = 'assets/browsepage/STIP_Logo_PlaceholderBox.svg';
 
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!;
-    this.subApi.push(
-      this.arch.getPersonById(this.id).subscribe((res) => {
+    this.language = localStorage.getItem('lang')!
+    this.subApi.push(this.arch.getRightistById(this.language, this.id).subscribe((res) => {
+
+      this.profile = res;
+      console.log(res)  
+      //sorting event based on starting year
+      this.profile.events.sort(function (a, b) {
+        return new Date(a.start_year).getTime() - new Date(b.start_year).getTime();
+      });
+      this.replaceNewline();
+    }));
+
+    this.sub.push(this.translate.onLangChange.subscribe((langChange: any) => {
+      this.language = langChange.lang;
+      this.subApi.forEach((sub) => sub.unsubscribe());
+      this.subApi.push(this.arch.getPersonById(this.id).subscribe((res) => {
         this.profile = res;
         //sorting event based on starting year
         this.profile.events.sort(function (a, b) {
@@ -53,8 +67,8 @@ export class BrowseArchiveComponent implements OnInit {
           );
         });
         this.replaceNewline();
-      })
-    );
+      }))
+    }))
 
     this.sub.push(
       this.translate.onLangChange.subscribe((langChange: any) => {
@@ -155,5 +169,9 @@ export class BrowseArchiveComponent implements OnInit {
       doc.text(xPosition, cursorY, lineText);
       cursorY += lineSpacing;
     });
+  }
+
+  onDelete(template: TemplateRef<any>, rightist: Rightist) {
+
   }
 }

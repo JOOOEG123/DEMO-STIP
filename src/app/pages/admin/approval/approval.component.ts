@@ -8,8 +8,10 @@ import {
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { RSA_X931_PADDING } from 'constants';
+import { timeThursday } from 'd3';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs';
+import { forkJoin, mergeMap, Subscription, zip } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
 import { ImagesService } from 'src/app/core/services/images.service';
@@ -23,6 +25,7 @@ import {
   ImageSchema,
   Publish,
   Rightist,
+  RightistSchema,
 } from 'src/app/core/types/adminpage.types';
 import { UUID } from 'src/app/core/utils/uuid';
 
@@ -40,7 +43,7 @@ import { UUID } from 'src/app/core/utils/uuid';
 })
 export class ApprovalComponent implements OnInit, OnDestroy {
   currentState: string = 'void';
-  loaded: boolean = false
+  loaded: boolean = false;
 
   newContributions: Contribution[] = [];
   approvedContributions: Contribution[] = [];
@@ -76,12 +79,20 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   emptyContributionMessage = 'Nothing Here!';
 
-  url?: string;
-  image?: ImageSchema;
+  url: string = '';
+  image: ImageSchema = {
+    imageId: '',
+    rightistId: '',
+    isGallery: false,
+    galleryCategory: '',
+    galleryTitle: '',
+    galleryDetail: '',
+    gallerySource: ''
+  };
 
   sub: Subscription[] = [];
 
-  language: string = ''
+  language: string = '';
 
   constructor(
     private modalService: BsModalService,
@@ -93,17 +104,13 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!
+    this.language = localStorage.getItem('lang')!;
 
-    this.sub.push(this.translate.onLangChange.subscribe((langChange: any) => {
-      this.language = langChange
-    }))
-
-    this.language = localStorage.getItem('lang')!
-
-    this.sub.push(this.translate.onLangChange.subscribe((langChange: any) => {
-      this.language = langChange
-    }))
+    this.sub.push(
+      this.translate.onLangChange.subscribe((langChange: any) => {
+        this.language = langChange;
+      })
+    );
 
     this.contributionSubcription = this.contributionAPI
       .fetchAllContributions(this.language)
@@ -127,9 +134,8 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           );
         });
 
-        console.log(this.contributions)
+        console.log(this.contributions);
 
-        
         for (let contribution of this.contributions) {
           let data: Contribution = {
             ...contribution,
@@ -140,7 +146,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           };
 
           if (data.rightist) {
-            data.rightist!.lastUpdatedAt = new Date(data.rightist!.lastUpdatedAt)
+            data.rightist!.lastUpdatedAt = new Date(
+              data.rightist!.lastUpdatedAt
+            );
           }
 
           if (contribution.publish == 'new') {
@@ -148,16 +156,25 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           }
 
           if (contribution.publish == 'approved') {
+        
             this.sub.push(
               this.archiveAPI
-                .getRightistById(this.language!, data.rightistId)
+                .getRightistById(this.language, data.rightistId)
                 .subscribe((rightist: any) => {
-                  data.rightist = rightist
-                  this.loaded = true
+                      console.log(rightist)
+                      this.sub.push(
+                        this.imageAPI
+                          .getImage(this.language, rightist.imageId)
+                          .subscribe((image: any) => {
+                            data.rightist = rightist
+                            data.image = image;
+                            this.loaded = true;
+                            this.approvedContributions.push(data);
+                          })
+                      );
                 })
             );
 
-            this.approvedContributions.push(data);
           }
 
           if (contribution.publish == 'rejected') {
@@ -165,8 +182,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           }
         }
 
-        console.log(this.approvedContributions)
-
+        console.log(this.approvedContributions);
       });
 
     this.selectedContributions = this.newContributions;
@@ -214,18 +230,18 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   async animationDone(event: AnimationEvent) {
     this.disabled = false;
-    console.log(this.updatedContribution)
+    console.log(this.updatedContribution);
 
     if (
       this.selectedContribution &&
       this.selectedContribution.state === 'removed'
     ) {
-      // New Image Added
-      if (this.url) {
-        console.log("New Image")
+      console.log(this.image!);
+      if (this.image!.imagePath?.startsWith('data:image')) {
+        console.log('New Image');
         let imageId = UUID();
-        this.image!.imageId = imageId
-        await fetch(this.url).then(async (response) => {
+        this.image!.imageId = imageId;
+        await fetch(this.image?.imagePath!).then(async (response) => {
           console.log(imageId);
           const contentType = response.headers.get('content-type');
           const blob = await response.blob();
@@ -237,9 +253,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
               .subscribe(async (imageUrl: any) => {
                 console.log(imageUrl);
                 this.image!.imagePath = imageUrl;
-                this.image!.rightistId = this.updatedContribution.rightistId
+                this.image!.rightistId = this.updatedContribution.rightistId;
                 // update the current timestamp
-                this.updatedContribution.lastUpdatedAt = new Date()
+                this.updatedContribution.lastUpdatedAt = new Date();
                 this.updatedContribution.rightist!.lastUpdatedAt = new Date();
 
                 if (this.updatedContribution.rightist) {
@@ -248,11 +264,11 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                   const { state, ...contribution } = this.updatedContribution;
 
                   if (this.publish === 'approved') {
-                    let { rightist, ...result } = contribution;
+                    let { rightist, image, ...result } = contribution;
                     result.rightistId = rightist!.rightistId;
                     result.approvedAt = new Date();
 
-                    rightist!.imageId = imageId
+                    rightist!.imageId = imageId;
 
                     Promise.all([
                       this.contributionAPI.updateUserContribution(
@@ -262,7 +278,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                         result
                       ),
                       this.archiveAPI.addRightist(this.language, rightist!),
-                      this.imageAPI.updateImage(this.language, this.image!)
+                      this.imageAPI.updateImage(this.language, this.image!),
                     ]);
                   } else {
                     Promise.all([
@@ -272,61 +288,74 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                         this.updatedContribution.contributionId,
                         contribution
                       ),
-                      this.imageAPI.updateImage(this.language, this.image!)
-                    ])
+                    ]);
                   }
                 }
               })
           );
         });
-      // No new Image
-      } else {
-        this.updatedContribution.rightist!.lastUpdatedAt = new Date();
-        this.updatedContribution.lastUpdatedAt = new Date()
-
-        if (this.updatedContribution.rightist) {
-          this.updatedContribution.publish = this.publish;
-
-          const { state, ...contribution } = this.updatedContribution;
-
-          if (this.publish === 'approved') {
-            let { rightist, ...result } = contribution;
-            result.rightistId = rightist!.rightistId;
-            result.approvedAt = new Date();
-
-            Promise.all([
-              this.contributionAPI.updateUserContribution(
-                this.language,
-                this.updatedContribution.contributorId,
-                this.updatedContribution.contributionId,
-                result
-              ),
-              this.archiveAPI.addRightist(this.language, rightist!),
-              this.imageAPI.updateImage(this.language, this.image!)
-            ]);
-          } else {
-            Promise.all([
-              await this.contributionAPI.updateUserContribution(
-                this.language,
-                this.updatedContribution.contributorId,
-                this.updatedContribution.contributionId,
-                contribution
-              ),
-              this.imageAPI.updateImage(this.language, this.image!)
-            ])
-          }
-        }
       }
+
+      // else if (this.image!.imagePath?.startsWith('https')) {
+      //   let { rightist, image, ...result} = this.updatedContribution
+      //   Promise.all([
+      //     this.contributionAPI.updateUserContribution(
+      //       this.language,
+      //       this.updatedContribution.contributorId,
+      //       this.updatedContribution.contributionId,
+      //       result
+      //     ),
+      //     this.archiveAPI.addRightist(this.language, rightist!),
+      //     this.imageAPI.updateImage(this.language, this.image!),
+      //   ]);
+      // }
+
+      // No new Image
+      // } else {
+      //   this.updatedContribution.rightist!.lastUpdatedAt = new Date();
+      //   this.updatedContribution.lastUpdatedAt = new Date();
+
+      //   if (this.updatedContribution.rightist) {
+      //     this.updatedContribution.publish = this.publish;
+
+      //     const { state, ...contribution } = this.updatedContribution;
+
+      //     if (this.publish === 'approved') {
+      //       let { rightist, ...result } = contribution;
+      //       result.rightistId = rightist!.rightistId;
+      //       result.approvedAt = new Date();
+
+      //       Promise.all([
+      //         this.contributionAPI.updateUserContribution(
+      //           this.language,
+      //           this.updatedContribution.contributorId,
+      //           this.updatedContribution.contributionId,
+      //           result
+      //         ),
+      //         this.archiveAPI.addNewArchieve(rightist!),
+      //         this.imageAPI.updateImage(this.language, this.image!),
+      //       ]);
+      //     } else {
+      //       Promise.all([
+      //         await this.contributionAPI.updateUserContribution(
+      //           this.language,
+      //           this.updatedContribution.contributorId,
+      //           this.updatedContribution.contributionId,
+      //           contribution
+      //         ),
+      //         this.imageAPI.updateImage(this.language, this.image!),
+      //       ]);
+      //     }
+      //   }
+      // }
       this.selectedContribution.state = 'void';
     }
   }
 
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
     this.selectedContribution = contribution;
-    this.updatedContribution = { ...contribution };
-    this.imageAPI.getImage(this.language, contribution.rightist!.imageId).subscribe((data: any) => {
-      this.image = {...data}
-    })
+    this.updatedContribution = { ...contribution };  
+    this.image = { ...contribution.image! }
     this.modalRef = this.modalService.show(template, { class: 'modal-xl' });
   }
 
@@ -349,9 +378,9 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         ethnicity: data.ethnic,
         workplaceCombined: data.occupation,
         rightistYear: data.rightestYear,
-        birthYear: data.birthYear
-      }
-    }
+        birthYear: data.birthYear,
+      },
+    };
   }
 
   onImageChange(data: any) {

@@ -48,7 +48,7 @@ export class AccountComponent implements OnInit, OnDestroy {
         for (const contribution of x) {
           if (contribution.publish === 'approved') {
             this.archiveService
-              .getPersonById(contribution.rightistId)
+              .getRightistById(this.language, contribution.rightistId)
               .subscribe((rightist: any) => {
                 contribution.rightist = rightist;
               });

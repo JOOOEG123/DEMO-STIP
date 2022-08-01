@@ -117,7 +117,8 @@ export interface RightistJson {
 export interface ContributionSchema {
   contributionId: string; // set from the service when creating a new contribution
   contributorId: string; // set from the service when creating a new contribution
-  rightist?: Rightist;
+  rightist?: RightistSchema;
+  image?: ImageSchema;
   rightistId: string;
   publish: Publish;
   lastUpdatedAt: Date;

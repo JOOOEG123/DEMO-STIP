@@ -3,7 +3,7 @@
     <div class="d-flex profile-bg-image-blue-inner">
       <div class="d-flex flex-column align-items-center flex-shrink-1 my-5">
         <img
-          alt ='Image not Found'
+          alt="Image not Found"
           [src]="src"
           width="200"
           height="200"
@@ -46,6 +46,7 @@
               class="btn rounded-pill shadow border-green m-2"
               style="background-color: white"
               type="button"
+              (click)="onDelete(deleteTemplate, contribution)"
             >
               {{ "archive.profile_admin_delete_button" | translate }}
             </button>
@@ -175,7 +176,7 @@
               </div>
               <div class="col-12 py-2">
                 {{ "archive.gender_title" | translate }}:
-                {{ profile.gender || "-" | titlecase}}
+                {{ profile.gender || "-" | titlecase }}
               </div>
               <div class="col-12 py-2">
                 {{ "archive.ethnic_title" | translate }}:{{
@@ -198,7 +199,7 @@
               </div>
               <div class="col-12 py-2">
                 {{ "archive.status_title" | translate }}:
-                {{ profile.status || "-"  | titlecase }}
+                {{ profile.status || "-" | titlecase }}
               </div>
               <div class="col-12 py-2">
                 {{ "archive.profile_death_year" | translate }}:
@@ -219,9 +220,12 @@
             <h5 class="col-12 py-2 fw-bold ms-3 mt-2">
               {{ "archive.profile_biography" | translate }}:
             </h5>
-            <div class="col-12 ms-3" *ngFor="let event of (profile?.events || [])">
+            <div
+              class="col-12 ms-3"
+              *ngFor="let event of profile?.events || []"
+            >
               In {{ (event.startYear | date: "yyyy") || "unknown" }} --
-              {{ (event.endYear | date: "yyyy")|| "unknown" }},
+              {{ (event.endYear | date: "yyyy") || "unknown" }},
               {{ event.event[0].toUpperCase() + event.event.substr(1) || "-" }}
             </div>
           </div>

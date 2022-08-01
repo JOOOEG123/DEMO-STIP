@@ -176,13 +176,13 @@ export class ArchieveApiService {
 
   getRightistById(language: string, rightistId: string) {
     return this.db
-      .object(`/persons/data/${language}/test/${rightistId}`)
+      .object(`/persons/data/${language}/rightists/${rightistId}`)
       .valueChanges();
   }
 
   addRightist(language: string, rightist: RightistSchema) {
     return this.db
-      .object(`persons/data/${language}/test`)
+      .object(`persons/data/${language}/rightists`)
       .update({[rightist.rightistId]: rightist})
   }
 }
