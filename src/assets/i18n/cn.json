@@ -127,11 +127,12 @@
 
   "home": {
     "home_introduction_title": "中国“右派”档案",
-    "home_introduction_body": "中国“右派”档案馆是一个数据库，其中包含可追溯到 1950 年代中期的历史文献、见证和图像。该档案允许公众搜索、学习和探索越来越多的关于“右”受害者和中国 1957 年至 1959 年反“右”运动历史的 40,000 多个数据点。",
+    "home_introduction_body": "中国“右派”档案馆是一个数据库，其中包含可追溯到 1950 年代中期的历史文献、见证和图像。该档案允许公众搜索、学习和探索关于中国从1957年至1959年“反右派运动”的历史和40,000 多个“右派”的档案"。
     "home_searchbar_placeholder": "搜索相关档案",
     "home_featured_title": "“右派”代表",
     "home_history_title": "历史摘要",
-    "home_history_body": "反“右”运动是中国共产党 (1957-1959) 对反革命分子进行再教育、羞辱、监禁和处决的两年时期。这场运动的许多受害者是“自由市场改革的早期倡导者”, 而且许多人是根据在该运动之前的竞选活动中的参与而被选中的; 百花运动 (factsanddetails.com, 2016 年)。在百花运动 (1956-1957) 期间, 共产党主席毛泽东鼓励中国公民以有争议的方式为中共发声, 并允许“批评政府” (factsanddetails.com, 2016)。毛泽东提出了“艺术'百花盛开', 科学'百家争鸣'”(factsanddetails.com, 2016)。毛泽东在收到对中共的大量批评后, 转身以惩罚那些说是因为他们对中共不忠而在他们的国家造成不团结的人，从而开始了反“右”运动。虽然反“右”运动本身只持续了两年，但人数死亡事件从未完全得到证实，许多幸存者在运动结束后被关进劳改营。该数据库致力于通过展示受害的“右翼分子”来向公众宣传这场运动并促进人权和社会正义.",
+    "home_history_body": "反右运动“是中国共产党 (1957-1959) 对知识分子进行再教育、羞辱、监禁和处决的两年时期。这场运动的许多受害者是“自由市场改革的早期倡导者”, 而且许多人是根据在该运动之前的竞选
+    动中的参与而被选中的; 百花运动 (factsanddetails.com, 2016 年)。在百花运动 (1956-1957) 期间, 共产党主席毛泽东鼓励中国公民以有争议的方式为中共发声, 并允许“批评政府” (factsanddetails.com, 2016)。毛泽东提出了“艺术'百花盛开', 科学'百家争鸣'”(factsanddetails.com, 2016)。毛泽东在收到对中共的大量批评后, 转身以惩罚那些说是因为他们对中共不忠而在他们的国家造成不团结的人，从而开始了反“右”运动。虽然反“右”运动本身只持续了两年，但人数死亡事件从未完全得到证实，许多幸存者在运动结束后被关进劳改营。该数据库致力于通过展示受害的“右翼分子”来向公众宣传这场运动并促进人权和社会正义.",
     "home_timeline": "中国反“右倾”事件的时间轴。",
     "home_learn_movement": "了解有关历史事件的更多信息"
   },
@@ -157,14 +158,14 @@
     "data2_body": "...",
     "summary": "概括",
     "summary_body": "...",
-    "team_button": "我们的幕后研究团队成员"
+    "team_button": "我们的研究团队成员"
   },
   "resources": {
     "resources": "资源"
   },
   "about_movement": {
     "about_movement_introduction_title": "1950年-中国反右运动",
-    "about_movement_introduction_body": "反“右”运动是中国共产党（1957-1959）对反革命分子进行再教育、羞辱、监禁和处决的两年时期。这场运动的许多受害者是“自由市场改革的早期倡导者”，而且许多人是根据在该运动之前的竞选活动中的参与而被选中的；百花运动（factsanddetails.com，2016 年）。在百花运动（1956-1957）期间，共产党主席毛泽东鼓励中国公民以有争议的方式为中共发声，并允许“批评政府”（factsanddetails.com，2016）。毛泽东提出了“艺术‘百花齐放’和科学‘百家争鸣’的理念”（factsanddetails.com，2016）。在受到对中共的大量批评之后，毛泽东转而惩罚那些声称是由于对中共不忠而在国内造成不团结的人，从而开始了反“右”运动。虽然反“右”运动本身只持续了两年，但死亡人数从未完全确定，许多幸存者在运动结束后被关进劳教所。该数据库致力于向公众宣传这场运动，并通过展示成为该运动受害者的“右派”来促进人权和社会正义。",
+    "about_movement_introduction_body": "反右运动“是中国共产党（1957-1959）对知识分子进行再教育、羞辱、监禁和处决的两年时期。这场运动的许多受害者是“自由市场改革的早期倡导者”，而且许多人是因为参与了“双百方针”的政治运动而被划为“右派”的；百花运动（factsanddetails.com，2016 年）。在百花运动（1956-1957）期间，共产党主席毛泽东鼓励中国公民以有争议的方式为中国共产党提意见，并允许“批评政府”（factsanddetails.com，2016）。毛泽东提出了“艺术‘百花齐放’和科学‘百家争鸣’的理念”（factsanddetails.com，2016）。在受到对中共的大量批评之后，毛泽东转而惩罚那些声称是由于对中共不忠，而在国内造成不团结的人，从而开始了反“右”运动。虽然反“右”运动本身只持续了两年，但死亡人数从未完全确定，许多幸存者在运动结束后被关进劳教所。该数据库致力于向公众宣传这场运动，并通过展示成为该运动的受害者 - “右派”来促进人权和社会正义。"
     "about_movement_introduction_button": "查看来源",
     "about_movement_map_title": "地图",
     "about_movement_map_body": "地图",
@@ -317,14 +318,14 @@
   },
 
   "gallery": {
-    "gallery_top_title": "画廊",
+    "gallery_top_title": "图片",
     "gallery_top_cat_one_button": "全部",
-    "gallery_top_cat_two_button": "文物",
-    "gallery_top_cat_three_button": "营地",
+    "gallery_top_cat_two_button": "媒体宣传",
+    "gallery_top_cat_three_button": "劳改营",
     "gallery_top_cat_four_button": "人物",
-    "gallery_top_cat_five_button": "专辑名称",
+    "gallery_top_cat_five_button": "其它",
     "gallery_image_button": "学到更多",
-    "placeholder": "搜索画廊",
+    "placeholder": "搜索图片",
     "gallery_empty_message": "没有找到记录",
     "gallery_overlay_category": "类别",
     "gallery_overlay_category_other": "英文组",
@@ -455,8 +456,8 @@
     "detail": "详细信息",
     "image_cat": "图片种类",
     "people": "人物",
-    "media": "媒体",
-    "camps": "集中营",
+    "media": "媒体宣传",
+    "camps": "劳改营",
     "other": "其他",
     "include": "将这张图片加入图库",
     "add": "上传更多照片",
