@@ -122,7 +122,9 @@
     "research": "研究",
     "contact": "联系我们",
     "address": "4400 University Dr, Fairfax, VA 22030",
-    "email": "stip@gmu.com"
+    "email": "stip@gmu.com",
+    "repository": "知识库",
+    "upload": "上载"
   },
 
   "home": {
