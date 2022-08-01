@@ -170,8 +170,9 @@
     "about_movement_timeline_body": "历史时期",
     "about_movement_learn_more_button": "了解更多此研究项目"
   },
-  "projects_overview": {
-    "projects_overview_meet_the_team_title": "认识研究背后的团队"
+  "project_overview": {
+    "first_title": "存档项目概述",
+    "project_overview_meet_the_team_title": "认识研究背后的团队"
   },
   "other_resources": {
     "other_resources_title": "未知"
