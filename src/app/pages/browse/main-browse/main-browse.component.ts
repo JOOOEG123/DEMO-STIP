@@ -127,7 +127,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   itemPerPageChanged() {
-    
     //casting
     this.itemsPerPage = +this.itemsPerPage;
 
@@ -144,17 +143,13 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       Math.ceil(this.db_result.length / this.itemsPerPage),
       1
     );
-  
   }
 
   pageChanged(event: any, letter: string) {
-
     if (!this.letter_changed) {
- 
       this.currentPage = event.page;
       this.setDisplayInfo(this.itemsPerPage);
     } else {
-
       this.currentPage = 1;
       this.currentLetter = letter;
       this.callAPI(letter);
@@ -165,7 +160,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   lettersBtnClickOrReset(letter: string) {
     this.currentLetter = letter;
 
-  
     if (this.currentPage == 1) {
       this.setDisplayInfo(this.currentPage);
       this.callAPI(letter);
@@ -174,13 +168,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       this.setDisplayInfo(this.currentPage);
       this.letter_changed = true;
     }
-    
+
     this.searchBar();
   }
 
   //for testing data
   callAPI(letter: string) {
-
     //clear up display
     this.display = [];
 
@@ -190,14 +183,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     let res;
     //'from cache data'
     if (this.archCacheAPI[archKey]) {
-
       this.db_result = this.archCacheAPI[archKey];
-    
+
       this.setDisplayInfo(this.itemsPerPage);
       this.setNonFilterData('filterPanel');
       this.setNonFilterData('searchBar');
     } else {
-    
       this.isloading = true;
       if (letter === 'All') {
         // replace api when database change. An we need to add profileId to json data.
@@ -209,7 +200,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             });
 
             this.archCacheAPI[archKey] = this.db_result;
-     
+
             this.setDisplayInfo(this.itemsPerPage);
             this.setNonFilterData('filterPanel');
             this.setNonFilterData('searchBar');
@@ -220,7 +211,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             this.isloading = false;
           });
       } else {
-
         // replace api when database change. An we need to add profileId to json data.
         // res = this.archApi
         //   .getAllArchieve()
@@ -243,16 +233,13 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     if (res) {
       this.archSubAPI.push(res);
     }
-
   }
 
   searchBar() {
-  
     this.browseSearchFilterComponent?.clear();
     const userValues = this.searchInput.split(' ');
 
     this.getNonFilterData('searchBar');
-   
 
     this.db_result = this.db_result.filter((record: any): boolean => {
       return userValues.every((keyword) => {
@@ -304,21 +291,13 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.setDisplayInfo(this.itemsPerPage);
   }
 
-  containKeyword(word: any, keyword: any) {
-    let res;
-    if (typeof word === 'string' && typeof keyword === 'string') {
-      res = word.toLowerCase().includes(keyword.toLowerCase());
-    } else {
-      res = word.includes(keyword);
-    }
-
-    return res;
-  }
   filterValueschanges(valueEmitted: any) {
+    console.log('testinggggggggggggggggg', this.filterValues);
     const empty = Object.values(this.filterValues).every((element) => {
       return element === '';
     });
 
+    console.log(empty);
     //reset db
     this.getNonFilterData('filterPanel');
     if (!empty) {
@@ -339,23 +318,58 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   filterByFilterValues(valuesAttr: any[], userValues: any[]) {
+    console.log('----------', valuesAttr);
+    console.log(userValues);
     this.db_result = this.db_result.filter((record): boolean => {
       var values: any = [];
       valuesAttr.forEach((value, index) => {
         values[index] = record[value];
       });
 
+      // console.log('this is value', values);
       userValues = userValues.filter((element) => {
         return element !== '';
       });
 
+      // //handle "Unknown" checkbox for gender
+      // if (userValues[0] === 'Unknown' && values[0] == '') {
+      //   values[0] = 'Unknown';
+      // }
+      // //handle "Unknown" checkbox for status
+      // if (userValues[3] === 'Unknown' && values[3] == '') {
+      //   values[3] = 'Unknown';
+      // }
+      // console.log('testing2', userValues);
+      let res = true;
       var containsAll =
-        userValues.every((keyword) => {
-          return this.containKeyword(values, keyword);
+        userValues.every((keyword, index) => {
+          if (index == 0 && keyword == 'Unknown') {
+            res = values[0] === '';
+          } else if (index == 3 && keyword == 'Unknown') {
+            res = res && values[0] === '';
+          }
+          return res && this.containKeyword(values, keyword);
         }) && this.getYearBecameRightist(record);
 
       return containsAll;
     });
+  }
+
+  containKeyword(word: any, keyword: any) {
+    // console.log('wordddddddddd', word);
+    // console.log(keyword);
+    let res;
+
+    word = word.map(function (value) {
+      if (value != undefined) {
+        return value.toLowerCase();
+      }
+      return value;
+    });
+    res = word.includes(keyword.toLowerCase());
+
+    console.log(word, keyword.toLowerCase(), res);
+    return res;
   }
   getYearBecameRightist(record: any) {
     let res = true;
@@ -374,8 +388,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     } else {
       this.db_result = this.nonFilterData;
     }
-
-   
   }
 
   setNonFilterData(dataType: string) {
