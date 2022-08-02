@@ -61,10 +61,8 @@ export class ContributionsService {
 
   contributionsAddEdit(language: string, obj: ContributionSchema) {
     if (obj.contributionId) {
-      console.log('edit');
       return this.editUserContributions(language, obj.contributionId, obj);
     } else {
-      console.log('add');
       return this.addUserContributions(language, obj);
     }
   }

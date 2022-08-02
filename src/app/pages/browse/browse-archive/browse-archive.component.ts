@@ -21,6 +21,7 @@ import { Rightist } from 'src/app/core/types/adminpage.types';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
 import { TypeaheadOptions } from 'ngx-bootstrap/typeahead';
+import { StorageApIService } from 'src/app/core/services/storage-api.service';
 
 @Component({
   selector: 'app-browse-archive',
@@ -50,7 +51,8 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
     private images: ImagesService,
     private translate: TranslateService,
     private modalService: BsModalService,
-    private contributionAPI: ContributionsService
+    private contributionAPI: ContributionsService,
+    private storageAPI: StorageApIService
   ) {}
 
   language?: string;
@@ -216,6 +218,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
                     this.profile.rightistId
                   ),
                   this.images.deleteImage(this.language!, this.profile.imageId),
+                  this.storageAPI.removeGalleryImage(this.profile.imageId)
                 ]).then(() => {
                   this.router.navigateByUrl('/account');
                 });

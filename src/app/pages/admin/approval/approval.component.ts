@@ -168,11 +168,11 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                         data.rightist = rightist;
                         data.image = image;
                         this.loaded = true;
-                        this.approvedContributions.push(data);
                       })
                   );
                 })
             );
+            this.approvedContributions.push(data);
           }
 
           if (contribution.publish == 'rejected') {
@@ -181,6 +181,13 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         }
 
         console.log(this.approvedContributions);
+
+        this.approvedContributions.sort(function (a, b) {
+          return (
+            new Date(b.lastUpdatedAt).getTime() -
+            new Date(a.lastUpdatedAt).getTime()
+          );
+        });
       });
 
     this.selectedContributions = this.newContributions;
@@ -234,39 +241,36 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.selectedContribution &&
       this.selectedContribution.state === 'removed'
     ) {
-      console.log(this.image!);
-      if (this.image!.imagePath!) {
-        let imageId = UUID();
-        this.image!.imageId = imageId;
-        await fetch(this.image?.imagePath!).then(async (response) => {
-          console.log(imageId);
-          const contentType = response.headers.get('content-type');
-          const blob = await response.blob();
-          const file = new File([blob], imageId, { type: contentType! });
-          await this.storageAPI.uploadGalleryImage(imageId, file);
-          this.sub.push(
-            this.storageAPI
-              .getGalleryImageURL(imageId)
-              .subscribe(async (imageUrl: any) => {
-                console.log(imageUrl);
-                this.image!.imagePath = imageUrl;
-                this.image!.rightistId = this.updatedContribution.rightistId;
-                // update the current timestamp
-                this.updatedContribution.lastUpdatedAt = new Date();
-                this.updatedContribution.rightist!.lastUpdatedAt = new Date();
+      if (this.publish === 'approved') {
+        if (this.image!.imagePath!) {
+          let imageId = UUID();
+          this.image!.imageId = imageId;
+          await fetch(this.image?.imagePath!).then(async (response) => {
+            console.log(imageId);
+            const contentType = response.headers.get('content-type');
+            const blob = await response.blob();
+            const file = new File([blob], imageId, { type: contentType! });
+            await this.storageAPI.uploadGalleryImage(imageId, file);
+            this.sub.push(
+              this.storageAPI
+                .getGalleryImageURL(imageId)
+                .subscribe(async (imageUrl: any) => {
+                  console.log(imageUrl);
+                  this.image!.imagePath = imageUrl;
+                  this.image!.rightistId = this.updatedContribution.rightistId;
+                  // update the current timestamp
+                  this.updatedContribution.lastUpdatedAt = new Date();
+                  this.updatedContribution.rightist!.lastUpdatedAt = new Date();
 
-                if (this.updatedContribution.rightist) {
-                  this.updatedContribution.publish = this.publish;
+                  if (this.updatedContribution.rightist) {
+                    this.updatedContribution.publish = this.publish;
 
-                  const { state, ...contribution } = this.updatedContribution;
-
-                  if (this.publish === 'approved') {
+                    const { state, ...contribution } = this.updatedContribution;
                     let { rightist, image, ...result } = contribution;
                     result.rightistId = rightist!.rightistId;
                     result.approvedAt = new Date();
 
                     rightist!.imageId = imageId;
-
                     Promise.all([
                       this.contributionAPI.updateUserContribution(
                         this.language,
@@ -277,34 +281,21 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                       this.archiveAPI.addRightist(this.language, rightist!),
                       this.imageAPI.updateImage(this.language, this.image!),
                     ]);
-                  } else {
-                    Promise.all([
-                      this.contributionAPI.updateUserContribution(
-                        this.language,
-                        this.updatedContribution.contributorId,
-                        this.updatedContribution.contributionId,
-                        contribution
-                      ),
-                    ]);
                   }
-                }
-              })
-          );
-        });
-      } else {
-        this.updatedContribution.lastUpdatedAt = new Date();
-        this.updatedContribution.rightist!.lastUpdatedAt = new Date();
+                })
+            );
+          });
+        } else {
+          this.updatedContribution.lastUpdatedAt = new Date();
+          this.updatedContribution.rightist!.lastUpdatedAt = new Date();
 
-        if (this.updatedContribution.rightist) {
-          this.updatedContribution.publish = this.publish;
+          if (this.updatedContribution.rightist) {
+            this.updatedContribution.publish = this.publish;
 
-          const { state, ...contribution } = this.updatedContribution;
-
-          if (this.publish === 'approved') {
-            let { rightist, ...result } = contribution;
+            const { state, ...contribution } = this.updatedContribution;
+            let { rightist, image, ...result } = contribution;
             result.rightistId = rightist!.rightistId;
             result.approvedAt = new Date();
-
             Promise.all([
               this.contributionAPI.updateUserContribution(
                 this.language,
@@ -315,16 +306,111 @@ export class ApprovalComponent implements OnInit, OnDestroy {
               this.archiveAPI.addRightist(this.language, rightist!),
             ]);
           }
-          else {
-            this.contributionAPI.updateUserContribution(
-              this.language,
-              this.updatedContribution.contributorId,
-              this.updatedContribution.contributionId,
-              contribution
-            )
-          }
         }
+      } else {
+        this.updatedContribution.publish = this.publish;
+        const { state, ...contribution } = this.updatedContribution;
+        Promise.all([
+          this.contributionAPI.updateUserContribution(
+            this.language,
+            this.updatedContribution.contributorId,
+            this.updatedContribution.contributionId,
+            contribution
+          ),
+        ]);
       }
+
+      // console.log(this.image!);
+      // if (this.image!.imagePath!) {
+      //   let imageId = UUID();
+      //   this.image!.imageId = imageId;
+      //   await fetch(this.image?.imagePath!).then(async (response) => {
+      //     console.log(imageId);
+      //     const contentType = response.headers.get('content-type');
+      //     const blob = await response.blob();
+      //     const file = new File([blob], imageId, { type: contentType! });
+      //     await this.storageAPI.uploadGalleryImage(imageId, file);
+      //     this.sub.push(
+      //       this.storageAPI
+      //         .getGalleryImageURL(imageId)
+      //         .subscribe(async (imageUrl: any) => {
+      //           console.log(imageUrl);
+      //           this.image!.imagePath = imageUrl;
+      //           this.image!.rightistId = this.updatedContribution.rightistId;
+      //           // update the current timestamp
+      //           this.updatedContribution.lastUpdatedAt = new Date();
+      //           this.updatedContribution.rightist!.lastUpdatedAt = new Date();
+
+      //           if (this.updatedContribution.rightist) {
+      //             this.updatedContribution.publish = this.publish;
+
+      //             const { state, ...contribution } = this.updatedContribution;
+
+      //             if (this.publish === 'approved') {
+      //               let { rightist, image, ...result } = contribution;
+      //               result.rightistId = rightist!.rightistId;
+      //               result.approvedAt = new Date();
+
+      //               rightist!.imageId = imageId;
+
+      //               Promise.all([
+      //                 this.contributionAPI.updateUserContribution(
+      //                   this.language,
+      //                   this.updatedContribution.contributorId,
+      //                   this.updatedContribution.contributionId,
+      //                   result
+      //                 ),
+      //                 this.archiveAPI.addRightist(this.language, rightist!),
+      //                 this.imageAPI.updateImage(this.language, this.image!),
+      //               ]);
+      //             } else {
+      //               Promise.all([
+      //                 this.contributionAPI.updateUserContribution(
+      //                   this.language,
+      //                   this.updatedContribution.contributorId,
+      //                   this.updatedContribution.contributionId,
+      //                   contribution
+      //                 ),
+      //               ]);
+      //             }
+      //           }
+      //         })
+      //     );
+      //   });
+      // } else {
+      //   this.updatedContribution.lastUpdatedAt = new Date();
+      //   this.updatedContribution.rightist!.lastUpdatedAt = new Date();
+
+      //   if (this.updatedContribution.rightist) {
+      //     this.updatedContribution.publish = this.publish;
+
+      //     const { state, ...contribution } = this.updatedContribution;
+
+      //     if (this.publish === 'approved') {
+      //       let { rightist, ...result } = contribution;
+      //       result.rightistId = rightist!.rightistId;
+      //       result.approvedAt = new Date();
+
+      //       Promise.all([
+      //         this.contributionAPI.updateUserContribution(
+      //           this.language,
+      //           this.updatedContribution.contributorId,
+      //           this.updatedContribution.contributionId,
+      //           result
+      //         ),
+      //         this.archiveAPI.addRightist(this.language, rightist!),
+      //       ]);
+      //     }
+      //     else {
+      //       this.contributionAPI.updateUserContribution(
+      //         this.language,
+      //         this.updatedContribution.contributorId,
+      //         this.updatedContribution.contributionId,
+      //         contribution
+      //       )
+      //     }
+      //   }
+      // }
 
       // else if (this.image!.imagePath?.startsWith('https')) {
       //   let { rightist, image, ...result} = this.updatedContribution

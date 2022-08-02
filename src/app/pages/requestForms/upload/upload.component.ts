@@ -35,6 +35,7 @@ import { UUID } from 'src/app/core/utils/uuid';
 export class UploadComponent implements OnInit, OnDestroy {
   private _contribution!: Contribution;
   contributionId!: string;
+  rightist?: Rightist;
   ethnicGroup: string[] = ETHNIC_GROUP_CONSTANTS;
   occupation: string[] = LIST_OF_JOB;
   selected?: string;
@@ -232,9 +233,8 @@ export class UploadComponent implements OnInit, OnDestroy {
           if (this.contribution.image) {
             this.imageData = { ...this.contribution.image };
             this.imageLoaded = true;
-          }
-          else {
-            this.imageLoaded = true
+          } else {
+            this.imageLoaded = true;
           }
 
           this.sub.push(
@@ -277,10 +277,9 @@ export class UploadComponent implements OnInit, OnDestroy {
                     if (this.contribution.image) {
                       this.imageData = { ...this.contribution.image };
                       this.imageLoaded = true;
-                      this.imageDisabled = true
-                    }
-                    else {
-                      this.imageLoaded = true
+                      this.imageDisabled = true;
+                    } else {
+                      this.imageLoaded = true;
                     }
 
                     console.log(this.imageData);
@@ -294,6 +293,7 @@ export class UploadComponent implements OnInit, OnDestroy {
               this.archiveAPI
                 .getRightistById(this.language!, rightistId)
                 .subscribe((rightist: any) => {
+                  this.rightist = rightist;
                   this.mapForm(rightist);
                   if (rightist.imageId) {
                     this.imageDisabled = true;
@@ -336,6 +336,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     if (rightist.events) {
       for (const event of rightist.events) {
+        this.eventArray.markAllAsTouched();
         this.eventArray.push(
           new FormGroup({
             startYear: new FormControl(event.startYear),
@@ -350,6 +351,7 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     if (rightist.memoirs) {
       for (const memoir of rightist.memoirs) {
+        this.memoirArray.markAllAsTouched();
         this.memoirArray.push(
           new FormGroup({
             memoirTitle: new FormControl(memoir.memoirTitle),
@@ -374,23 +376,16 @@ export class UploadComponent implements OnInit, OnDestroy {
       birthYear,
     } = this.form.value;
 
+    console.log(this.contribution?.rightist?.rightistId)
+
     const rightistId =
-      this.contribution?.rightist?.rightistId || `Rightist-${UUID()}`;
+      this.contribution?.rightist?.rightistId || this.rightist?.rightistId || `Rightist-${UUID()}`;
 
     console.log(this.form.value);
     console.log(this.imageData);
     console.log(this.description);
     console.log(this.eventArray.value);
     console.log(this.memoirArray.value);
-
-    if (this.eventArray.at(this.eventArray.length - 1).get('event')!.value == '') {
-      this.eventArray.removeAt(this.eventArray.length - 1);
-    }
-
-    // remove last memoir if empty
-    if (this.memoirArray.at(this.memoirArray.length - 1).get('memoirContent')!.value == '') {
-      this.memoirArray.removeAt(this.memoirArray.length - 1);
-    }
 
     let image: ImageSchema = {
       ...this.imageData,
@@ -426,7 +421,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     };
 
     if (this.page === 'account') {
-    
       if (this.url) {
         image.imagePath = this.url;
       }
@@ -451,32 +445,56 @@ export class UploadComponent implements OnInit, OnDestroy {
           this.route.navigateByUrl('/account');
         });
     } else if (this.page == 'profile') {
-      rightist.imageId = this.imageData.imageId;
-
-      console.log(rightist);
-      console.log(this.imageData);
-      Promise.all([
-        this.archiveAPI.addRightist(this.language!, rightist),
-        this.imageAPI.updateImage(this.language!, this.imageData),
-      ]).then(() => {
-        const url = `browse/main/memoir/${rightist.rightistId}`;
-        this.clear();
-        this.clear2();
-        this.route.navigateByUrl(url);
-      });
+      if (this.url) {
+        const imageId = `Image-${UUID()}`;
+        await fetch(this.url).then(async (response) => {
+          console.log(imageId);
+          const contentType = response.headers.get('content-type');
+          const blob = await response.blob();
+          const file = new File([blob], imageId, { type: contentType! });
+          await this.storageAPI.uploadGalleryImage(imageId, file);
+          this.sub.push(
+            this.storageAPI
+              .getGalleryImageURL(imageId)
+              .subscribe((imageUrl: any) => {
+                console.log(imageUrl);
+                rightist.imageId = imageId;
+                image.imageId = imageId;
+                image.imagePath = imageUrl;
+                Promise.all([
+                  this.archiveAPI.addRightist(this.language, rightist),
+                  this.imageAPI.addImage(this.language, image),
+                ]).then(() => {
+                  const url = `browse/main/memoir/${rightist.rightistId}`;
+                  this.clear();
+                  this.clear2();
+                  this.route.navigateByUrl(url);
+                });
+              })
+          );
+        });
+      } else {
+        Promise.all([
+          this.archiveAPI.addRightist(this.language!, rightist),
+        ]).then(() => {
+          const url = `browse/main/memoir/${rightist.rightistId}`;
+          this.clear();
+          this.clear2();
+          this.route.navigateByUrl(url);
+        });
+      }
     } else {
-      // // remove last event if empty
-      // if (!this.eventArray.at(this.eventArray.length - 1).touched) {
-      //   this.eventArray.removeAt(this.eventArray.length - 1);
-      //   rightist.events = this.eventArray.value;
-      // }
+      // remove last event if empty
+      if (!this.eventArray.at(this.eventArray.length - 1).touched) {
+        this.eventArray.removeAt(this.eventArray.length - 1);
+        rightist.events = this.eventArray.value
+      }
 
-      // // remove last memoir if empty
-      // if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
-      //   this.memoirArray.removeAt(this.memoirArray.length - 1);
-      //   rightist.memoirs = this.memoirArray.value;
-      // }
- 
+      // remove last memoir if empty
+      if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
+        this.memoirArray.removeAt(this.memoirArray.length - 1);
+        rightist.memoirs = this.memoirArray.value
+      }
       // has image
       if (this.url) {
         // If is admin and has image

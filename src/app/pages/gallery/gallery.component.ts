@@ -18,6 +18,7 @@ import { ImagesService } from 'src/app/core/services/images.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
 import { UUID } from 'src/app/core/utils/uuid';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 
 @Component({
   selector: 'app-gallery',
@@ -71,7 +72,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
     private storageAPI: StorageApIService,
     private imagesAPI: ImagesService,
     private modalService: BsModalService,
-    private auth: AuthServiceService
+    private auth: AuthServiceService,
+    private archiveAPI: ArchieveApiService
   ) {}
 
   ngAfterViewInit(): void {}
@@ -115,17 +117,21 @@ export class GalleryComponent implements OnInit, OnDestroy {
               this.images.length = 0;
               this.images = imagesList;
 
-              for (const image of this.images) {
-                this.categoryImages.push(image);
-                if (this.display.length < this.itemsPerPage) {
-                  this.display.push(image);
-                }
+              if (this.images.length == 0) {
+                this.loaded = true;
+              } else {
+                for (const image of this.images) {
+                  this.categoryImages.push(image);
+                  if (this.display.length < this.itemsPerPage) {
+                    this.display.push(image);
+                  }
 
-                if (imagesList.length === this.categoryImages.length) {
-                  this.loaded = true;
-                  setTimeout(() => {
-                    this.reloadMasonryLayout();
-                  }, 300);
+                  if (imagesList.length === this.categoryImages.length) {
+                    this.loaded = true;
+                    setTimeout(() => {
+                      this.reloadMasonryLayout();
+                    }, 300);
+                  }
                 }
               }
             })
@@ -286,6 +292,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     if (data.status == 'delete') {
       this.modalService.hide();
       Promise.all([
+        this.archiveAPI.updateRightistImageId(this.language!, image.rightistId, ''),
         this.imagesAPI.deleteImage(this.language!, image.imageId),
         this.imagesAPI.deleteImage(this.otherLanguage!, image.imageId),
         this.storageAPI.removeGalleryImage(image.imageId),
