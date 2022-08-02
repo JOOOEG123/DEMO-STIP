@@ -87,7 +87,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     galleryCategory: '',
     galleryTitle: '',
     galleryDetail: '',
-    gallerySource: ''
+    gallerySource: '',
   };
 
   sub: Subscription[] = [];
@@ -156,25 +156,23 @@ export class ApprovalComponent implements OnInit, OnDestroy {
           }
 
           if (contribution.publish == 'approved') {
-        
             this.sub.push(
               this.archiveAPI
                 .getRightistById(this.language, data.rightistId)
                 .subscribe((rightist: any) => {
-                      console.log(rightist)
-                      this.sub.push(
-                        this.imageAPI
-                          .getImage(this.language, rightist.imageId)
-                          .subscribe((image: any) => {
-                            data.rightist = rightist
-                            data.image = image;
-                            this.loaded = true;
-                            this.approvedContributions.push(data);
-                          })
-                      );
+                  console.log(rightist);
+                  this.sub.push(
+                    this.imageAPI
+                      .getImage(this.language, rightist.imageId)
+                      .subscribe((image: any) => {
+                        data.rightist = rightist;
+                        data.image = image;
+                        this.loaded = true;
+                        this.approvedContributions.push(data);
+                      })
+                  );
                 })
             );
-
           }
 
           if (contribution.publish == 'rejected') {
@@ -237,8 +235,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.selectedContribution.state === 'removed'
     ) {
       console.log(this.image!);
-      if (this.image!.imagePath?.startsWith('data:image')) {
-        console.log('New Image');
+      if (this.image!.imagePath!) {
         let imageId = UUID();
         this.image!.imageId = imageId;
         await fetch(this.image?.imagePath!).then(async (response) => {
@@ -294,6 +291,39 @@ export class ApprovalComponent implements OnInit, OnDestroy {
               })
           );
         });
+      } else {
+        this.updatedContribution.lastUpdatedAt = new Date();
+        this.updatedContribution.rightist!.lastUpdatedAt = new Date();
+
+        if (this.updatedContribution.rightist) {
+          this.updatedContribution.publish = this.publish;
+
+          const { state, ...contribution } = this.updatedContribution;
+
+          if (this.publish === 'approved') {
+            let { rightist, ...result } = contribution;
+            result.rightistId = rightist!.rightistId;
+            result.approvedAt = new Date();
+
+            Promise.all([
+              this.contributionAPI.updateUserContribution(
+                this.language,
+                this.updatedContribution.contributorId,
+                this.updatedContribution.contributionId,
+                result
+              ),
+              this.archiveAPI.addRightist(this.language, rightist!),
+            ]);
+          }
+          else {
+            this.contributionAPI.updateUserContribution(
+              this.language,
+              this.updatedContribution.contributorId,
+              this.updatedContribution.contributionId,
+              contribution
+            )
+          }
+        }
       }
 
       // else if (this.image!.imagePath?.startsWith('https')) {
@@ -354,8 +384,8 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
     this.selectedContribution = contribution;
-    this.updatedContribution = { ...contribution };  
-    this.image = { ...contribution.image! }
+    this.updatedContribution = { ...contribution };
+    this.image = { ...contribution.image! };
     this.modalRef = this.modalService.show(template, { class: 'modal-xl' });
   }
 

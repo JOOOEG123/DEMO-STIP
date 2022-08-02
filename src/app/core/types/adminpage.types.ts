@@ -84,6 +84,7 @@ interface Memoir {
 
 export interface RightistSchema {
   rightistId: string;
+  contributorId: string;
   imageId: string;
   initial: string;
   firstName: string;

@@ -1,4 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild, Input, TemplateRef } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  Input,
+  TemplateRef,
+  OnDestroy,
+} from '@angular/core';
 
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -10,13 +18,16 @@ import { ImagesService } from 'src/app/core/services/images.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Rightist } from 'src/app/core/types/adminpage.types';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ContributionsService } from 'src/app/core/services/contributions.service';
+import { TypeaheadOptions } from 'ngx-bootstrap/typeahead';
 
 @Component({
   selector: 'app-browse-archive',
   templateUrl: './browse-archive.component.html',
   styleUrls: ['./browse-archive.component.scss'],
 })
-export class BrowseArchiveComponent implements OnInit {
+export class BrowseArchiveComponent implements OnInit, OnDestroy {
   @ViewChild('memContent') memContent!: ElementRef;
   @ViewChild('infoContent') infoContent!: ElementRef;
 
@@ -28,13 +39,18 @@ export class BrowseArchiveComponent implements OnInit {
   // drop: boolean = true;
   drop: boolean[] = [];
 
+  modalRef?: BsModalRef;
+
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private arch: ArchieveApiService,
     private clipboardApi: ClipboardService,
     private auth: AuthServiceService,
     private images: ImagesService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modalService: BsModalService,
+    private contributionAPI: ContributionsService
   ) {}
 
   language?: string;
@@ -42,65 +58,65 @@ export class BrowseArchiveComponent implements OnInit {
   subApi: Subscription[] = [];
   src: string = 'assets/browsepage/STIP_Logo_PlaceholderBox.svg';
 
+  loaded: boolean = false;
+
+  initialize() {
+    this.subApi.push(
+      this.arch
+        .getRightistById(this.language!, this.id)
+        .subscribe((res: any) => {
+          this.profile = res;
+          console.log(res);
+
+          if (res.imageId) {
+            this.sub.push(
+              this.images
+                .getImage(this.language!, this.profile.imageId)
+                .subscribe((image: any) => {
+                  this.src = image.imagePath;
+                  this.loaded = true;
+                })
+            );
+          }
+          else {
+            this.loaded = true
+          }
+       
+          //sorting event based on starting year
+          if (this.profile.events) {
+            this.profile.events.sort(function (a, b) {
+              return (
+                new Date(a.start_year).getTime() -
+                new Date(b.start_year).getTime()
+              );
+            });
+          }
+
+          this.replaceNewline();
+        })
+    );
+  }
+
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!
-    this.subApi.push(this.arch.getRightistById(this.language, this.id).subscribe((res) => {
+    this.loaded = false;
+    this.language = localStorage.getItem('lang')!;
 
-      this.profile = res;
-      console.log(res)  
-      //sorting event based on starting year
-      this.profile.events.sort(function (a, b) {
-        return new Date(a.start_year).getTime() - new Date(b.start_year).getTime();
-      });
-      this.replaceNewline();
-    }));
-
-    this.sub.push(this.translate.onLangChange.subscribe((langChange: any) => {
-      this.language = langChange.lang;
-      this.subApi.forEach((sub) => sub.unsubscribe());
-      this.subApi.push(this.arch.getPersonById(this.id).subscribe((res) => {
-        this.profile = res;
-        //sorting event based on starting year
-        this.profile.events.sort(function (a, b) {
-          return (
-            new Date(a.start_year).getTime() - new Date(b.start_year).getTime()
-          );
-        });
-        this.replaceNewline();
-      }))
-    }))
+    this.initialize();
 
     this.sub.push(
       this.translate.onLangChange.subscribe((langChange: any) => {
         this.language = langChange.lang;
-        this.subApi.forEach((sub) => sub.unsubscribe());
-        this.subApi.push(
-          this.arch.getPersonById(this.id).subscribe((res) => {
-            this.profile = res;
-            //sorting event based on starting year
-            if (this.profile) {
-              this.profile.events.sort(function (a, b) {
-                return (
-                  new Date(a.start_year).getTime() -
-                  new Date(b.start_year).getTime()
-                );
-              });
-            }
-            this.replaceNewline();
-          })
-        );
-        // this.images.getImage(this.profile.profileImageId).subscribe((res) => {
-        //   this.profile.profileImageId = res;
-        // });
-        this.auth.isAdmin.subscribe((x) => {
-          this.isAdmin = x;
-        });
-        this.auth.isLoggedIn.subscribe((x) => {
-          this.isAdmin = this.isAdmin && x;
-        });
+        console.log('asd');
+        this.initialize();
       })
     );
   }
+
+  ngOnDestroy(): void {
+    this.sub.forEach((x) => x.unsubscribe());
+    this.subApi.forEach((x) => x.unsubscribe());
+  }
+
   ngDoCheck() {
     this.auth.isAdmin.subscribe((x) => {
       this.isAdmin = x;
@@ -108,7 +124,7 @@ export class BrowseArchiveComponent implements OnInit {
   }
 
   replaceNewline() {
-    if (this.profile) {
+    if (this.profile.memoirs) {
       this.profile.memoirs.forEach((element: any, index: number) => {
         this.profile.memoirs[index].memoirContent =
           element.memoirContent.split('\\n');
@@ -171,7 +187,60 @@ export class BrowseArchiveComponent implements OnInit {
     });
   }
 
-  onDelete(template: TemplateRef<any>, rightist: Rightist) {
+  onDelete(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, { backdrop: 'static' });
+  }
 
+  onYes() {
+    console.log(this.profile);
+    this.modalService.hide();
+    this.sub.push(
+      this.contributionAPI
+        .getUserContributionsList(this.language!, this.profile.contributorId)
+        .subscribe((data: any) => {
+          let contributions = [...data];
+          console.log(contributions);
+
+          for (let contribution of contributions) {
+            if (this.profile.rightistId === contribution.rightistId) {
+              console.log(contribution);
+              if (this.profile.imageId) {
+                Promise.all([
+                  this.contributionAPI.deleteUserContribution(
+                    this.language!,
+                    this.profile.contributorId,
+                    contribution.contributionId
+                  ),
+                  this.arch.removeRightistById(
+                    this.language!,
+                    this.profile.rightistId
+                  ),
+                  this.images.deleteImage(this.language!, this.profile.imageId),
+                ]).then(() => {
+                  this.router.navigateByUrl('/account');
+                });
+              } else {
+                Promise.all([
+                  this.contributionAPI.deleteUserContribution(
+                    this.language!,
+                    this.profile.contributorId,
+                    contribution.contributionId
+                  ),
+                  this.arch.removeRightistById(
+                    this.language!,
+                    this.profile.rightistId
+                  ),
+                ]).then(() => {
+                  this.router.navigateByUrl('/account');
+                });
+              }
+            }
+          }
+        })
+    );
+  }
+
+  onNo() {
+    this.modalService.hide();
   }
 }

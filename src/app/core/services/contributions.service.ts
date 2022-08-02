@@ -110,7 +110,21 @@ export class ContributionsService {
       .valueChanges();
   }
 
+  getUserContributionsList(language: string, contributorId: string) {
+    return this.db
+      .list(`/persons/data/${language}/contributions/${contributorId}`)
+      .valueChanges();
+  }
+
   fetchContributionsList(language: string) {
     return this.db.object(`/persons/data/${language}`);
+  }
+
+  deleteUserContribution(language: string, contributorId: string, contributionId: string) {
+    this.db
+      .object(
+        `/persons/data/${language}/contributions/${contributorId}/${contributionId}`
+      )
+      .remove();
   }
 }

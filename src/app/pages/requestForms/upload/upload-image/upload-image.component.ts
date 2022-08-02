@@ -41,8 +41,7 @@ export class UploadImageComponent implements OnInit {
 
   constructor() {}
   ngOnInit(): void {
-    console.log(this.imageData)
-    console.log(this.imageDisabled)
+
     if (this.imageData) {
       this.url = this.imageData.imagePath!
 

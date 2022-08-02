@@ -9,7 +9,6 @@ import {
 import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { image } from 'd3';
 import { Subscription, zip } from 'rxjs';
 import {
   ETHNIC_GROUP_CONSTANTS,
@@ -232,6 +231,9 @@ export class UploadComponent implements OnInit, OnDestroy {
 
           if (this.contribution.image) {
             this.imageData = { ...this.contribution.image };
+            this.imageLoaded = true;
+          }
+          else {
             this.imageLoaded = true
           }
 
@@ -257,9 +259,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     } else {
       this.sub.push(
         this.activatedRoute.queryParams.subscribe((params) => {
-          this.contributionId = params['contributionId'];
+          let value = params['value'];
           this.page = params['page'];
           if (this.page === 'account') {
+            this.contributionId = value;
             if (this.contributionId) {
               this.sub.push(
                 this.contributionService
@@ -274,13 +277,40 @@ export class UploadComponent implements OnInit, OnDestroy {
                     if (this.contribution.image) {
                       this.imageData = { ...this.contribution.image };
                       this.imageLoaded = true;
+                      this.imageDisabled = true
+                    }
+                    else {
+                      this.imageLoaded = true
                     }
 
-                    console.log(this.imageData)
+                    console.log(this.imageData);
                     this.mapForm(contribution.rightist);
                   })
               );
             }
+          } else if (this.page == 'profile') {
+            let rightistId = value;
+            this.sub.push(
+              this.archiveAPI
+                .getRightistById(this.language!, rightistId)
+                .subscribe((rightist: any) => {
+                  this.mapForm(rightist);
+                  if (rightist.imageId) {
+                    this.imageDisabled = true;
+                    this.sub.push(
+                      this.imageAPI
+                        .getImage(this.language!, rightist.imageId)
+                        .subscribe((image: any) => {
+                          this.imageData = image;
+                          this.imageLoaded = true;
+                        })
+                    );
+                    // Call Image API
+                  } else {
+                    this.imageLoaded = true;
+                  }
+                })
+            );
           } else {
             this.eventArray.push(this.newEvent());
             this.memoirArray.push(this.newMemoir());
@@ -353,6 +383,15 @@ export class UploadComponent implements OnInit, OnDestroy {
     console.log(this.eventArray.value);
     console.log(this.memoirArray.value);
 
+    if (this.eventArray.at(this.eventArray.length - 1).get('event')!.value == '') {
+      this.eventArray.removeAt(this.eventArray.length - 1);
+    }
+
+    // remove last memoir if empty
+    if (this.memoirArray.at(this.memoirArray.length - 1).get('memoirContent')!.value == '') {
+      this.memoirArray.removeAt(this.memoirArray.length - 1);
+    }
+
     let image: ImageSchema = {
       ...this.imageData,
       imageId: '',
@@ -362,6 +401,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     let rightist: RightistSchema = {
       rightistId: rightistId,
       imageId: '',
+      contributorId: this.auth.uid,
       initial: name.trim().charAt(0).toUpperCase(),
       firstName: '',
       lastName: '',
@@ -386,12 +426,13 @@ export class UploadComponent implements OnInit, OnDestroy {
     };
 
     if (this.page === 'account') {
+    
       if (this.url) {
         image.imagePath = this.url;
       }
 
       this.contributionService
-        .addUserContributions(this.language, {
+        .contributionsAddEdit(this.language, {
           contributionId: this.contributionId,
           contributorId: this.auth.uid,
           contributedAt: new Date(),
@@ -409,16 +450,33 @@ export class UploadComponent implements OnInit, OnDestroy {
           this.clear2();
           this.route.navigateByUrl('/account');
         });
-    } else {
-      // remove last event if empty
-      if (!this.eventArray.at(this.eventArray.length - 1).touched) {
-        this.eventArray.removeAt(this.eventArray.length - 1);
-      }
+    } else if (this.page == 'profile') {
+      rightist.imageId = this.imageData.imageId;
 
-      // remove last memoir if empty
-      if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
-        this.memoirArray.removeAt(this.memoirArray.length - 1);
-      }
+      console.log(rightist);
+      console.log(this.imageData);
+      Promise.all([
+        this.archiveAPI.addRightist(this.language!, rightist),
+        this.imageAPI.updateImage(this.language!, this.imageData),
+      ]).then(() => {
+        const url = `browse/main/memoir/${rightist.rightistId}`;
+        this.clear();
+        this.clear2();
+        this.route.navigateByUrl(url);
+      });
+    } else {
+      // // remove last event if empty
+      // if (!this.eventArray.at(this.eventArray.length - 1).touched) {
+      //   this.eventArray.removeAt(this.eventArray.length - 1);
+      //   rightist.events = this.eventArray.value;
+      // }
+
+      // // remove last memoir if empty
+      // if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
+      //   this.memoirArray.removeAt(this.memoirArray.length - 1);
+      //   rightist.memoirs = this.memoirArray.value;
+      // }
+ 
       // has image
       if (this.url) {
         // If is admin and has image
@@ -440,7 +498,7 @@ export class UploadComponent implements OnInit, OnDestroy {
                   image.imagePath = imageUrl;
 
                   Promise.all([
-                    this.contributionService.addUserContributions(
+                    this.contributionService.contributionsAddEdit(
                       this.language,
                       {
                         contributionId: this.contributionId,
@@ -487,11 +545,11 @@ export class UploadComponent implements OnInit, OnDestroy {
         }
         // no image
       } else {
-        console.log("No Image")
+        console.log('No Image');
         // no image and is admin
         if (this.isAdmin) {
           Promise.all([
-            this.contributionService.addUserContributions(this.language, {
+            this.contributionService.contributionsAddEdit(this.language, {
               contributionId: this.contributionId,
               contributorId: this.auth.uid,
               contributedAt: new Date(),

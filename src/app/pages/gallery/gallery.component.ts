@@ -7,9 +7,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  PageChangedEvent,
-} from 'ngx-bootstrap/pagination';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { Subscription } from 'rxjs';
 
@@ -112,7 +110,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
           this.imagesAPI
             .getGalleryImages(this.language!)
             .subscribe((imagesList: any) => {
-              console.log("qwe")
               this.categoryImages.length = 0;
               this.display.length = 0;
               this.images.length = 0;
@@ -123,23 +120,22 @@ export class GalleryComponent implements OnInit, OnDestroy {
                 if (this.display.length < this.itemsPerPage) {
                   this.display.push(image);
                 }
-                
+
                 if (imagesList.length === this.categoryImages.length) {
-                  this.loaded = true
+                  this.loaded = true;
                   setTimeout(() => {
-                    this.reloadMasonryLayout()
-                  }, 300)
+                    this.reloadMasonryLayout();
+                  }, 300);
                 }
               }
             })
-        )
-      
+        );
+
         this.selectedCategory = this.galleries[0];
         this.currentImageIndex = -1;
       })
-    )
+    );
   }
-
 
   reloadMasonryLayout() {
     if (this.masonry !== undefined) {
@@ -175,7 +171,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.categoryImages = result;
       this.display = this.categoryImages.slice(0, this.itemsPerPage);
-      this.reloadMasonryLayout()
+      this.reloadMasonryLayout();
       // this.display = this.searchImages.slice(0, this.itemsPerPage)
     }, 100);
   }

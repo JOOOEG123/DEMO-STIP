@@ -180,9 +180,15 @@ export class ArchieveApiService {
       .valueChanges();
   }
 
+  removeRightistById(language: string, rightistId: string) {
+    return this.db
+      .object(`/persons/data/${language}/rightists/${rightistId}`)
+      .remove();
+  }
+
   addRightist(language: string, rightist: RightistSchema) {
     return this.db
       .object(`persons/data/${language}/rightists`)
-      .update({[rightist.rightistId]: rightist})
+      .update({ [rightist.rightistId]: rightist });
   }
 }
