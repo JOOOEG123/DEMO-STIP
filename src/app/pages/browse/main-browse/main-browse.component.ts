@@ -98,6 +98,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.currentLetter = letter;
     this.setDisplayInfo(this.currentPage);
     this.callAPI(letter);
+    this.searchSelect =
+      this.currentLanguage == 'en' ? 'All Fields' : '所有信息栏';
   }
 
   ngOnInit(): void {
@@ -292,7 +294,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   filterValueschanges(valueEmitted: any) {
-    console.log('testinggggggggggggggggg', this.filterValues);
     const empty = Object.values(this.filterValues).every((element) => {
       return element === '';
     });
@@ -326,20 +327,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         values[index] = record[value];
       });
 
-      // console.log('this is value', values);
       userValues = userValues.filter((element) => {
         return element !== '';
       });
 
-      // //handle "Unknown" checkbox for gender
-      // if (userValues[0] === 'Unknown' && values[0] == '') {
-      //   values[0] = 'Unknown';
-      // }
-      // //handle "Unknown" checkbox for status
-      // if (userValues[3] === 'Unknown' && values[3] == '') {
-      //   values[3] = 'Unknown';
-      // }
-      // console.log('testing2', userValues);
       let res = true;
       var containsAll =
         userValues.every((keyword, index) => {
@@ -356,19 +347,20 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   containKeyword(word: any, keyword: any) {
-    // console.log('wordddddddddd', word);
-    // console.log(keyword);
     let res;
 
-    word = word.map(function (value) {
-      if (value != undefined) {
-        return value.toLowerCase();
-      }
-      return value;
-    });
-    res = word.includes(keyword.toLowerCase());
+    if (this.currentLanguage == 'en') {
+      word = word.map(function (value) {
+        if (value != undefined) {
+          return value.toLowerCase();
+        }
+        return value;
+      });
+      res = word.includes(keyword.toLowerCase());
 
-    console.log(word, keyword.toLowerCase(), res);
+      console.log(word, keyword.toLowerCase(), res);
+    }
+
     return res;
   }
   getYearBecameRightist(record: any) {
@@ -404,7 +396,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     if (this.searchSelect == 'Description' || this.searchSelect == '简介') {
       this.db_attr = ['description'];
     } else if (this.searchSelect == 'Name' || this.searchSelect == '姓名') {
-      //An: need to add fullName attribute on db, otherwise this is a bug.
       this.db_attr = ['firstName', 'lastName', 'fullName'];
     } else {
       this.db_attr = [
