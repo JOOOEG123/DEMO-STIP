@@ -27,7 +27,7 @@ export const NavBar = [
     ],
   },
   {
-    title: 'broswer_page',
+    title: 'browser_page',
     url: '/browse',
     icon: 'home',
     dropdown: [
