@@ -117,6 +117,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         .subscribe((translations) => {
           this.searchSelect = translations['archive.archive_searchbar_all'];
         });
+      this.ngOnDestroy();
+      this.initLetter('All');
     });
   }
   ngOnDestroy(): void {
