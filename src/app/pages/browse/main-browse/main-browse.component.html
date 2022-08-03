@@ -1,79 +1,86 @@
-<div class="bg-khaki bg-opacity-25 row">
+<div class="bg-khaki bg-opacity-25">
   <!-- search bar -->
-  <div class="input-group m-5 col">
-    <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="true">
-      <button
-        id="button-basic"
-        dropdownToggle
-        type="button"
-        class="btn border border-start-0 bg-white rounded-end rounded-pill dropdown-toggle text-muted"
-        [value]="searchSelect"
+  <div class="col-10 m-auto py-5">
+    <div class="input-group">
+      <div
+        class="btn-group"
+        dropdown
+        #dropdown="bs-dropdown"
+        [autoClose]="true"
+      >
+        <button
+          id="button-basic"
+          dropdownToggle
+          type="button"
+          class="btn border border-start-0 bg-white rounded-end rounded-pill dropdown-toggle text-muted"
+          [value]="searchSelect"
+          (search)="searchBar()"
+        >
+          {{ searchSelect }}
+        </button>
+        <ul
+          id="dropdown-basic"
+          *dropdownMenu
+          class="dropdown-menu"
+          role="menu"
+          aria-labelledby="button-basic"
+        >
+          <li role="menuitem">
+            <a #dd1 class="dropdown-item" (click)="onOpenChange(dd1.text)">{{
+              "archive.archive_searchbar_all" | translate
+            }}</a>
+          </li>
+          <li role="menuitem">
+            <a #dd2 class="dropdown-item" (click)="onOpenChange(dd2.text)">{{
+              "archive.archive_searchbar_name" | translate
+            }}</a>
+          </li>
+          <li role="menuitem">
+            <a #dd3 class="dropdown-item" (click)="onOpenChange(dd3.text)">{{
+              "archive.description" | translate
+            }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <input
+        type="search"
+        class="form-control"
+        placeholder="{{ 'archive.archive_searchbar_placeholder' | translate }}"
+        translate
+        [(ngModel)]="searchInput"
         (search)="searchBar()"
-      >
-        {{ searchSelect }}
-      </button>
-      <ul
-        id="dropdown-basic"
-        *dropdownMenu
-        class="dropdown-menu"
-        role="menu"
-        aria-labelledby="button-basic"
-      >
-        <li role="menuitem">
-          <a #dd1 class="dropdown-item" (click)="onOpenChange(dd1.text)">{{
-            "archive.archive_searchbar_all" | translate
-          }}</a>
-        </li>
-        <li role="menuitem">
-          <a #dd2 class="dropdown-item" (click)="onOpenChange(dd2.text)">{{
-            "archive.archive_searchbar_name" | translate
-          }}</a>
-        </li>
-        <li role="menuitem">
-          <a #dd3 class="dropdown-item" (click)="onOpenChange(dd3.text)">{{
-            "archive.description" | translate
-          }}</a>
-        </li>
-      </ul>
-    </div>
-
-    <input
-      type="search"
-      class="form-control"
-      placeholder="{{ 'archive.archive_searchbar_placeholder' | translate }}"
-      translate
-      [(ngModel)]="searchInput"
-      (search)="searchBar()"
-      aria-label="Search for ... "
-      aria-describedby="button-addon2"
-    />
-    <button
-      class="btn border border-start-0 bg-white rounded-start rounded-pill"
-      type="button"
-      (click)="searchBar()"
-    >
-      <img src="assets/global/search.svg" alt="" width="20" />
-    </button>
-
-    <a
-      class="align-self-center mx-2"
-      tooltip="{{ 'archive.archive_tooltip_searchbar' | translate }}"
-      placement="left"
-      data-bs-title="Tooltip on left"
-    >
-      <img
-        src="assets/browsepage/question-mark-color-brown.svg"
-        fill="#cca474"
-        alt=""
-        width="20"
+        aria-label="Search for ... "
+        aria-describedby="button-addon2"
       />
-    </a>
+      <button
+        class="btn border border-start-0 bg-white rounded-start rounded-pill"
+        type="button"
+        (click)="searchBar()"
+      >
+        <img src="assets/global/search.svg" alt="" width="20" />
+      </button>
+
+      <a
+        class="align-self-center mx-2"
+        tooltip="{{ 'archive.archive_tooltip_searchbar' | translate }}"
+        placement="left"
+        data-bs-title="Tooltip on left"
+      >
+        <img
+          src="assets/browsepage/question-mark-color-brown.svg"
+          fill="#cca474"
+          alt=""
+          width="20"
+        />
+      </a>
+    </div>
   </div>
 </div>
 
-<div class="row outer-bg justify-content-center text-dark position-relative">
+<div class="outer-bg justify-content-center text-dark position-relative">
   <div class="image"></div>
-  <div class="col-10 border text-dark inner-bg">
+  <div class="col-10 border text-dark inner-bg mx-auto">
     <div class="filter">
       <h3
         class="border-bottom fw-bold text-light my-3"
