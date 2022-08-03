@@ -376,10 +376,12 @@ export class UploadComponent implements OnInit, OnDestroy {
       birthYear,
     } = this.form.value;
 
-    console.log(this.contribution?.rightist?.rightistId)
+    console.log(this.contribution?.rightist?.rightistId);
 
     const rightistId =
-      this.contribution?.rightist?.rightistId || this.rightist?.rightistId || `Rightist-${UUID()}`;
+      this.contribution?.rightist?.rightistId ||
+      this.rightist?.rightistId ||
+      `Rightist-${UUID()}`;
 
     console.log(this.form.value);
     console.log(this.imageData);
@@ -487,120 +489,119 @@ export class UploadComponent implements OnInit, OnDestroy {
       // remove last event if empty
       if (!this.eventArray.at(this.eventArray.length - 1).touched) {
         this.eventArray.removeAt(this.eventArray.length - 1);
-        rightist.events = this.eventArray.value
+        rightist.events = this.eventArray.value;
       }
 
       // remove last memoir if empty
       if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
         this.memoirArray.removeAt(this.memoirArray.length - 1);
-        rightist.memoirs = this.memoirArray.value
+        rightist.memoirs = this.memoirArray.value;
       }
       // has image
       if (this.url) {
         // If is admin and has image
-        if (this.isAdmin) {
-          const imageId = `Image-${UUID()}`;
-          await fetch(this.url).then(async (response) => {
-            console.log(imageId);
-            const contentType = response.headers.get('content-type');
-            const blob = await response.blob();
-            const file = new File([blob], imageId, { type: contentType! });
-            await this.storageAPI.uploadGalleryImage(imageId, file);
-            this.sub.push(
-              this.storageAPI
-                .getGalleryImageURL(imageId)
-                .subscribe((imageUrl: any) => {
-                  console.log(imageUrl);
-                  rightist.imageId = imageId;
-                  image.imageId = imageId;
-                  image.imagePath = imageUrl;
+        // if (this.isAdmin) {
+        //   const imageId = `Image-${UUID()}`;
+        //   await fetch(this.url).then(async (response) => {
+        //     console.log(imageId);
+        //     const contentType = response.headers.get('content-type');
+        //     const blob = await response.blob();
+        //     const file = new File([blob], imageId, { type: contentType! });
+        //     await this.storageAPI.uploadGalleryImage(imageId, file);
+        //     this.sub.push(
+        //       this.storageAPI
+        //         .getGalleryImageURL(imageId)
+        //         .subscribe((imageUrl: any) => {
+        //           console.log(imageUrl);
+        //           rightist.imageId = imageId;
+        //           image.imageId = imageId;
+        //           image.imagePath = imageUrl;
 
-                  Promise.all([
-                    this.contributionService.contributionsAddEdit(
-                      this.language,
-                      {
-                        contributionId: this.contributionId,
-                        contributorId: this.auth.uid,
-                        contributedAt: new Date(),
-                        lastUpdatedAt: new Date(),
-                        rightistId: rightistId,
-                        approvedAt: new Date(),
-                        publish: 'approved',
-                      }
-                    ),
-                    this.archiveAPI.addRightist(this.language, rightist),
-                    this.imageAPI.addImage(this.language, image),
-                  ]).then(() => {
-                    this.clear();
-                    this.clear2();
-                    this.route.navigateByUrl('/account');
-                  });
-                })
-            );
-          });
-          // if has image but no admin
-        } else {
-          Promise.all([
-            this.contributionService.contributionsAddEdit(this.language, {
-              contributionId: this.contributionId,
-              contributorId: this.auth.uid,
-              contributedAt: new Date(),
-              rightistId: rightistId,
-              lastUpdatedAt: new Date(),
-              approvedAt: new Date(),
-              publish: 'new',
-              rightist: rightist,
-              image: {
-                ...image,
-                imagePath: this.url,
-              },
-            }),
-          ]).then(() => {
-            this.clear();
-            this.clear2();
-            this.route.navigateByUrl('/account');
-          });
-        }
+        //           Promise.all([
+        //             this.contributionService.contributionsAddEdit(
+        //               this.language,
+        //               {
+        //                 contributionId: this.contributionId,
+        //                 contributorId: this.auth.uid,
+        //                 contributedAt: new Date(),
+        //                 lastUpdatedAt: new Date(),
+        //                 rightistId: rightistId,
+        //                 approvedAt: new Date(),
+        //                 publish: 'approved',
+        //               }
+        //             ),
+        //             this.archiveAPI.addRightist(this.language, rightist),
+        //             this.imageAPI.addImage(this.language, image),
+        //           ]).then(() => {
+        //             this.clear();
+        //             this.clear2();
+        //             this.route.navigateByUrl('/account');
+        //           });
+        //         })
+        //     );
+        //   });
+        //   // if has image but no admin
+        // } else {
+        Promise.all([
+          this.contributionService.contributionsAddEdit(this.language, {
+            contributionId: this.contributionId,
+            contributorId: this.auth.uid,
+            contributedAt: new Date(),
+            rightistId: rightistId,
+            lastUpdatedAt: new Date(),
+            approvedAt: new Date(),
+            publish: 'new',
+            rightist: rightist,
+            image: {
+              ...image,
+              imagePath: this.url,
+            },
+          }),
+        ]).then(() => {
+          this.clear();
+          this.clear2();
+          this.route.navigateByUrl('/account');
+        });
+
         // no image
       } else {
         console.log('No Image');
         // no image and is admin
-        if (this.isAdmin) {
-          Promise.all([
-            this.contributionService.contributionsAddEdit(this.language, {
-              contributionId: this.contributionId,
-              contributorId: this.auth.uid,
-              contributedAt: new Date(),
-              rightistId: rightistId,
-              lastUpdatedAt: new Date(),
-              approvedAt: new Date(),
-              publish: 'approved',
-            }),
-            this.archiveAPI.addRightist(this.language!, rightist),
-          ]).then(() => {
-            this.clear();
-            this.clear2();
-            this.route.navigateByUrl('/account');
-          });
-          // no image and no admin
-        } else {
-          Promise.all([
-            this.contributionService.contributionsAddEdit(this.language, {
-              contributionId: this.contributionId,
-              contributorId: this.auth.uid,
-              contributedAt: new Date(),
-              rightistId: rightistId,
-              approvedAt: new Date(),
-              lastUpdatedAt: new Date(),
-              publish: 'new',
-              rightist: rightist,
-            }),
-          ]).then(() => {
-            this.clear();
-            this.clear2();
-            this.route.navigateByUrl('/account');
-          });
-        }
+        // if (this.isAdmin) {
+        //   Promise.all([
+        //     this.contributionService.contributionsAddEdit(this.language, {
+        //       contributionId: this.contributionId,
+        //       contributorId: this.auth.uid,
+        //       contributedAt: new Date(),
+        //       rightistId: rightistId,
+        //       lastUpdatedAt: new Date(),
+        //       approvedAt: new Date(),
+        //       publish: 'approved',
+        //     }),
+        //     this.archiveAPI.addRightist(this.language!, rightist),
+        //   ]).then(() => {
+        //     this.clear();
+        //     this.clear2();
+        //     this.route.navigateByUrl('/account');
+        //   });
+        //   // no image and no admin
+        // } else {
+        Promise.all([
+          this.contributionService.contributionsAddEdit(this.language, {
+            contributionId: this.contributionId,
+            contributorId: this.auth.uid,
+            contributedAt: new Date(),
+            rightistId: rightistId,
+            approvedAt: new Date(),
+            lastUpdatedAt: new Date(),
+            publish: 'new',
+            rightist: rightist,
+          }),
+        ]).then(() => {
+          this.clear();
+          this.clear2();
+          this.route.navigateByUrl('/account');
+        });
       }
     }
   }
