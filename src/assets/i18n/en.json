@@ -277,7 +277,8 @@
 
     "archive_filter_cat_two_checkbox_three": "Unknown",
 
-    "archive_filter_cat_three_textbox_placeholder": "Type to search ethnic groups..",
+    "archive_filter_cat_three_textbox_placeholder": "Type to search ethnic groups...",
+    "archive_filter_profession":"Type to search profession...",
     "archive_filter_cat_four_title": "Occupation",
 
     "archive_filter_reset_button": "Clear Filters", 

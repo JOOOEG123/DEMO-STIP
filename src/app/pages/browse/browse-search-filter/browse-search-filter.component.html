@@ -141,21 +141,19 @@
         </div>
       </div>
       <div class="col-12 col-md-3">
-        <label
-          for="chinese-ethic-group fw-bold"
-          class="form-label col fw-bold"
-          >{{ "archive.profession" | translate }}</label
-        >
+        <label for="profession" class="form-label col fw-bold">{{
+          "archive.profession" | translate
+        }}</label>
         <div class="col-auto">
-          <select
-            class="form-select form-select-sm mb-3"
+          <input
+            class="form-control form-control-sm"
             formControlName="job"
-            aria-label=".form-select-lg example"
-          >
-            <option *ngFor="let job of occupations" [value]="job.viewValue">
-              {{ job.viewValue }}
-            </option>
-          </select>
+            id="profession"
+            [typeahead]="occupations"
+            typeaheadOptionField="viewValue"
+            [typeaheadOptionsLimit]="10"
+            placeholder="{{ 'archive.archive_filter_profession' | translate }}"
+          />
         </div>
       </div>
       <div class="col-12 col-md-3">

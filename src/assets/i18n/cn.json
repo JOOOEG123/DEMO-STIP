@@ -273,7 +273,8 @@
     "archive_filter_title": "高级检索",
     "archive_filter_cat_two_checkbox_three": "未知",
 
-    "archive_filter_cat_three_textbox_placeholder": "搜索少数民族",
+    "archive_filter_cat_three_textbox_placeholder": "输入搜索少数民族",
+    "archive_filter_profession":"输入搜索职业",
     "archive_filter_cat_four_title": "未知",
 
     "archive_filter_reset_button": "清除高级检索",
