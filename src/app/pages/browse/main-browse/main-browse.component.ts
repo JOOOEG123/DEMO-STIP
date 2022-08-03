@@ -333,15 +333,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         return element !== '';
       });
 
-      let res = true;
       var containsAll =
-        userValues.every((keyword, index) => {
-          if (index == 0 && keyword == 'Unknown') {
-            res = values[0] === '';
-          } else if (index == 3 && keyword == 'Unknown') {
-            res = res && values[0] === '';
-          }
-          return res && this.containKeyword(values, keyword);
+        userValues.every((keyword) => {
+          this.containKeyword(values, keyword);
         }) && this.getYearBecameRightist(record);
 
       return containsAll;
