@@ -99,6 +99,13 @@ export const pagesRoutes = [
     },
   },
   {
+    path: 'repository',
+    component: RepositoryComponent,
+    data: {
+      title: 'repository',
+    },
+  },
+  {
     path: 'browse/repository',
     component: RepositoryComponent,
     data: {

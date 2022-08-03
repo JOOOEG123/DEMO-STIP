@@ -1,14 +1,11 @@
 <div class="container-fluid">
-  <!-- this div creates the gold outline at the bottom of triangle -->
+  <!-- this div creates the light-green outline at the bottom of triangle -->
   <div class="outerdiv">
     <!-- this div contains the title, main paragraph box, and the triangle shape -->
     <div
       class="container-fluid position-relative bg-dark-blue"
       id="firstbg"
-      style="
-        padding-top: 6.25rem;
-        padding-bottom: 17.5rem;
-      "
+      style="padding-top: 6.25rem; padding-bottom: 17.5rem"
     >
       <!-- head title of the page -->
       <h2 class="text-center text-light">
@@ -48,7 +45,7 @@
           style="width: 6.25rem; height: 6.25rem"
         />
       </div>
-      <!-- image of the gold lines -->
+      <!-- image of the light-green lines -->
       <div
         class="position-absolute"
         style="width: 100%; height: 15.938rem; top: 20%; z-index: -1"
@@ -59,7 +56,7 @@
           style="width: 100%; height: 9.688rem"
         />
       </div>
-      <!-- image of the gold lines -->
+      <!-- image of the light-green lines -->
       <div
         class="position-absolute"
         style="width: 100%; height: 15.938rem; top: 50%; z-index: -1"
@@ -74,10 +71,10 @@
       <p
         class="mt-4 text-left text-light mx-auto"
         style="
-          background-color: #09363C;
+          background-color: #09363c;
           width: 50%;
           border-style: solid;
-          border-color: #CEA374;
+          border-color: #cea374;
           padding-left: 6%;
           padding-right: 6%;
           font-size: 1.3rem;
@@ -103,14 +100,17 @@
     </div>
   </div>
 
-  <!-- div for the map section -->
-  <div class="map" style="padding-top: 6.25rem">
-    <h3 class="text-center">
-      {{ "about_movement.about_movement_map_title" | translate }}
+  <!-- div for the timeline section -->
+  <div class="timeline" style="background-color: #266461">
+    <h3 class="text-center text-light">
+      {{ "about_movement.about_movement_timeline_title" | translate }}
     </h3>
-    <p class="lh-lg text-center">
-      {{ "about_movement.about_movement_map_body" | translate }}
+    <p class="lh-lg text-center text-light">
+      {{ "about_movement.about_movement_timeline_body" | translate }}
+      <img class="img-fluid" src="assets/homepage/timeline.png" />
     </p>
+    <br />
+    <br />
     <div class="text-center" style="padding-bottom: 5%">
       <button
         type="button"
