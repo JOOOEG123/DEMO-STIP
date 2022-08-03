@@ -19,7 +19,6 @@ export class BrowseArchiveComponent implements OnInit {
   @ViewChild('memContent') memContent!: ElementRef;
   @ViewChild('infoContent') infoContent!: ElementRef;
 
-
   [x: string]: any;
   id = this.route.snapshot.paramMap.get('id') as string;
   profile = {} as any;
@@ -37,46 +36,56 @@ export class BrowseArchiveComponent implements OnInit {
     private translate: TranslateService
   ) {}
 
-  language?: string
-  sub: Subscription[] = []
-  subApi: Subscription[] = []
-  src: string = 'assets/browsepage/STIP_Logo_PlaceholderBox.svg'
+  language?: string;
+  sub: Subscription[] = [];
+  subApi: Subscription[] = [];
+  src: string = 'assets/browsepage/STIP_Logo_PlaceholderBox.svg';
 
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!
-    this.subApi.push(this.arch.getPersonById(this.id).subscribe((res) => {
-
-      this.profile = res;
-      //sorting event based on starting year
-      this.profile.events.sort(function (a, b) {
-        return new Date(a.start_year).getTime() - new Date(b.start_year).getTime();
-      });
-      this.replaceNewline();
-    }));
-
-    this.sub.push(this.translate.onLangChange.subscribe((langChange: any) => {
-      this.language = langChange.lang;
-      this.subApi.forEach((sub) => sub.unsubscribe());
-      this.subApi.push(this.arch.getPersonById(this.id).subscribe((res) => {
+    this.language = localStorage.getItem('lang')!;
+    this.subApi.push(
+      this.arch.getPersonById(this.id).subscribe((res) => {
         this.profile = res;
         //sorting event based on starting year
         this.profile.events.sort(function (a, b) {
-          return new Date(a.start_year).getTime() - new Date(b.start_year).getTime();
+          return (
+            new Date(a.start_year).getTime() - new Date(b.start_year).getTime()
+          );
         });
         this.replaceNewline();
-      }));
-      // this.images.getImage(this.profile.profileImageId).subscribe((res) => {
-      //   this.profile.profileImageId = res;
-      // });
-      this.auth.isAdmin.subscribe((x) => {
-        this.isAdmin = x;
-      });
-      this.auth.isLoggedIn.subscribe((x) => {
-        this.isAdmin = this.isAdmin && x;
-      });
-    }))
+      })
+    );
 
-
+    this.sub.push(
+      this.translate.onLangChange.subscribe((langChange: any) => {
+        this.language = langChange.lang;
+        this.subApi.forEach((sub) => sub.unsubscribe());
+        this.subApi.push(
+          this.arch.getPersonById(this.id).subscribe((res) => {
+            this.profile = res;
+            //sorting event based on starting year
+            if (this.profile) {
+              this.profile.events.sort(function (a, b) {
+                return (
+                  new Date(a.start_year).getTime() -
+                  new Date(b.start_year).getTime()
+                );
+              });
+            }
+            this.replaceNewline();
+          })
+        );
+        // this.images.getImage(this.profile.profileImageId).subscribe((res) => {
+        //   this.profile.profileImageId = res;
+        // });
+        this.auth.isAdmin.subscribe((x) => {
+          this.isAdmin = x;
+        });
+        this.auth.isLoggedIn.subscribe((x) => {
+          this.isAdmin = this.isAdmin && x;
+        });
+      })
+    );
   }
   ngDoCheck() {
     this.auth.isAdmin.subscribe((x) => {
@@ -85,9 +94,12 @@ export class BrowseArchiveComponent implements OnInit {
   }
 
   replaceNewline() {
-    this.profile.memoirs.forEach((element: any, index: number) => {
-      this.profile.memoirs[index].memoirContent = element.memoirContent.split('\\n');
-    });
+    if (this.profile) {
+      this.profile.memoirs.forEach((element: any, index: number) => {
+        this.profile.memoirs[index].memoirContent =
+          element.memoirContent.split('\\n');
+      });
+    }
   }
   SavePDF(pdfName: string): void {
     let doc = new jsPDF('p', 'pt', 'a4');

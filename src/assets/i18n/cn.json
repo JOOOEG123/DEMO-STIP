@@ -17,7 +17,7 @@
     "login_signup": "登录或注册",
     "account": "帐户",
     "upload": "上载",
-    "log_out": "登出",
+    "log_out": "退出",
     "account2": "帐户",
     "search_placeholder": "搜索档案"
   },
@@ -129,7 +129,7 @@
 
   "home": {
     "home_introduction_title": "中国“右派”档案",
-    "home_introduction_body": "中国“右派”档案馆是一个包含可追溯到 1950 年代中期的历史文献、见证和图像的档案数据库。用户可搜索相关兴趣文档， 从而学习和探索中国1957年至1959年“反右派运动”的历史和40,000 多个“右派”的档案",
+    "home_introduction_body": "中国“右派”档案馆收藏了关于中国1957年至1959年“反右派运动”的历史文献和图像。用户可搜索相关兴趣文档， 从而学习和探索其中历史和40,000 多个“右派”的档案",
     "home_searchbar_placeholder": "搜索相关档案",
     "home_featured_title": "“右派”代表",
     "home_history_title": "历史摘要",
@@ -299,7 +299,7 @@
     "archive_tooltip_searchbar": "如何搜索?\n - 以名和/或者姓氏 \n- 出生年份 \n- 亡故年份 \n- \"右派\" 年份 \n- 中华少数名族 \n- 职业 \n- 性别",
     "archive_all_button": "所有",
 
-    "profile_tooltip": "用户可以向管理者申请修改更新任何不正确的档案。在3-5个工作日内, 您将会收到关于此修改是否通过的后续邮件。",
+    "profile_tooltip": "用户可以向管理者申请修改任何不正确的档案。在3-5个工作日内, 您将会收到该申请是否通过的后续邮件。",
     "profile_detail_title": "详情",
     "profile_detail_name": "姓名",
     "profile_birth_year": "出生年份",
