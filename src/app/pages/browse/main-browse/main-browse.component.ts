@@ -321,8 +321,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   filterByFilterValues(valuesAttr: any[], userValues: any[]) {
-    console.log('----------', valuesAttr);
-    console.log(userValues);
     this.db_result = this.db_result.filter((record): boolean => {
       var values: any = [];
       valuesAttr.forEach((value, index) => {
@@ -335,7 +333,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
       var containsAll =
         userValues.every((keyword) => {
-          this.containKeyword(values, keyword);
+          return this.containKeyword(values, keyword);
         }) && this.getYearBecameRightist(record);
 
       return containsAll;
@@ -352,9 +350,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         }
         return value;
       });
-      res = word.includes(keyword.toLowerCase());
 
-      console.log(word, keyword.toLowerCase(), res);
+      res = word.includes(keyword.toLowerCase());
+    } else {
+      res = word.includes(keyword);
     }
 
     return res;
@@ -368,6 +367,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
       res = from <= record.rightistYear && record.rightistYear <= to;
     }
+
     return res;
   }
   getNonFilterData(dataType: string) {
