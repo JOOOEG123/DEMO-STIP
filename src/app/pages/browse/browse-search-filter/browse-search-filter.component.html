@@ -29,93 +29,45 @@
       <fieldset class="col-12 col-md-2">
         <legend class="h6 fw-bold">
           {{ "archive.gender_title" | translate }}
+          <span class="text-danger">*</span>
         </legend>
-        <div class="form-check ms-3">
+
+        <div
+          class="form-check form-check-inline ms-3 col-12"
+          *ngFor="let gender of genders"
+        >
           <input
             class="form-check-input"
             formControlName="gender"
-            value="{{ 'archive.gender_male' | translate }}"
+            [value]="gender"
             type="radio"
             name="gender"
-            id="gender-male"
+            [id]="gender"
           />
-          <label class="form-check-label" for="gender-male">
-            {{ "archive.gender_male" | translate }}
-          </label>
-        </div>
-        <div class="form-check ms-3">
-          <input
-            class="form-check-input"
-            value="{{ 'archive.gender_female' | translate }}"
-            type="radio"
-            formControlName="gender"
-            name="gender"
-            id="gender-female"
-          />
-          <label class="form-check-label" for="gender-female">
-            {{ "archive.gender_female" | translate }}
-          </label>
-        </div>
-        <div class="form-check ms-3">
-          <input
-            class="form-check-input"
-            formControlName="gender"
-            value="{{ 'archive.unknown' | translate }}"
-            type="radio"
-            name="gender"
-            id="gender-unknown"
-          />
-          <label class="form-check-label" for="gender-unknown">
-            {{ "archive.unknown" | translate }}
-          </label>
+          <label class="form-check-label" [for]="gender">{{ gender }}</label>
         </div>
       </fieldset>
 
-      <fieldset class="col-12 col-md-2">
+      <!-- Status -->
+      <fieldset class="col">
         <legend class="h6 fw-bold">
           {{ "archive.status_title" | translate }}
+          <span class="text-danger">*</span>
         </legend>
 
-        <div class="form-check ms-3">
+        <div
+          class="form-check form-check-inline col-12"
+          *ngFor="let status of statuses; let i = index"
+        >
           <input
             class="form-check-input"
-            value="{{ 'archive.status_alive' | translate }}"
-            type="radio"
             formControlName="status"
-            name="status"
-            id="alive"
-          />
-          <label class="form-check-label" for="alive">
-            {{ "archive.status_alive" | translate }}
-          </label>
-        </div>
-
-        <div class="form-check ms-3">
-          <input
-            class="form-check-input"
+            [value]="status"
             type="radio"
-            value="{{ 'archive.status_death' | translate }}"
-            formControlName="status"
             name="status"
-            id="deceased"
+            [id]="status"
           />
-          <label class="form-check-label" for="deceased">
-            {{ "archive.status_death" | translate }}
-          </label>
-        </div>
-
-        <div class="form-check ms-3">
-          <input
-            class="form-check-input"
-            value="{{ 'archive.unknown' | translate }}"
-            type="radio"
-            formControlName="status"
-            name="status"
-            id="unknown"
-          />
-          <label class="form-check-label" for="unknown">
-            {{ "archive.archive_filter_cat_two_checkbox_three" | translate }}
-          </label>
+          <label class="form-check-label" [for]="status">{{ status }}</label>
         </div>
       </fieldset>
 
