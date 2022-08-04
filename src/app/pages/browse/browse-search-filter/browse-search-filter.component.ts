@@ -99,13 +99,4 @@ export class BrowseSearchFilterComponent implements OnInit {
       date: '',
     });
   }
-
-  uncheck() {
-    console.log('uncheckingggggggg');
-    var inputs = document.getElementsByTagName('input');
-
-    for (var i = 0; i < inputs.length; i++) {
-      inputs[i].checked = false;
-    }
-  }
 }
