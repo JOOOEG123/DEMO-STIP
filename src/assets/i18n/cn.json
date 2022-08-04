@@ -11,13 +11,13 @@
     "resources_page": "更多资源",
     "research_page": "研究",
     "browser_page": "浏览",
-    "archive_page": "“案卷集",
+    "archive_page": "案卷集",
     "gallery_page": "图片",
     "repository_page": "资源库",
     "login_signup": "登录或注册",
     "account": "帐户",
     "upload": "上载",
-    "log_out": "登出",
+    "log_out": "退出",
     "account2": "帐户",
     "search_placeholder": "搜索档案"
   },
@@ -129,13 +129,13 @@
 
   "home": {
     "home_introduction_title": "中国“右派”档案",
-    "home_introduction_body": "中国“右派”档案馆是一个数据库，其中包含可追溯到 1950 年代中期的历史文献、见证和图像。该档案允许公众搜索、学习和探索关于中国从1957年至1959年“反右派运动”的历史和40,000 多个“右派”的档案",
+    "home_introduction_body": "中国“右派”档案馆收藏了关于中国1957年至1959年“反右派运动”的历史文献和图像。用户可搜索相关兴趣文档， 从而学习和探索其中历史和40,000 多个“右派”的档案。",
     "home_searchbar_placeholder": "搜索相关档案",
     "home_featured_title": "“右派”代表",
     "home_history_title": "历史摘要",
     "home_history_body": "反右运动“是中国共产党 (1957-1959) 对知识分子进行再教育、羞辱、监禁和处决的两年时期。这场运动的许多受害者是“自由市场改革的早期倡导者”, 而且许多人是根据在该运动之前的竞选 动中的参与而被选中的; 百花运动 (factsanddetails.com, 2016 年)。在百花运动 (1956-1957) 期间, 共产党主席毛泽东鼓励中国公民以有争议的方式为中共发声, 并允许“批评政府” (factsanddetails.com, 2016)。毛泽东提出了“艺术'百花盛开', 科学'百家争鸣'”(factsanddetails.com, 2016)。毛泽东在收到对中共的大量批评后, 转身以惩罚那些说是因为他们对中共不忠而在他们的国家造成不团结的人，从而开始了反“右”运动。虽然反“右”运动本身只持续了两年，但人数死亡事件从未完全得到证实，许多幸存者在运动结束后被关进劳改营。该数据库致力于通过展示受害的“右翼分子”来向公众宣传这场运动并促进人权和社会正义.",
-    "home_timeline": "中国反“右倾”事件的时间轴。",
-    "home_learn_movement": "了解有关历史事件的更多信息"
+    "home_timeline": "中国“反右”运动时间轴。",
+    "home_learn_movement": "了解更多“反右”运动信息"
   },
   "contact_us": {
     "contact_us": "联系我们",
@@ -273,7 +273,8 @@
     "archive_filter_title": "高级检索",
     "archive_filter_cat_two_checkbox_three": "未知",
 
-    "archive_filter_cat_three_textbox_placeholder": "搜索少数民族",
+    "archive_filter_cat_three_textbox_placeholder": "输入搜索少数民族",
+    "archive_filter_profession":"输入搜索职业",
     "archive_filter_cat_four_title": "未知",
 
     "archive_filter_reset_button": "清除高级检索",
@@ -298,7 +299,7 @@
     "archive_tooltip_searchbar": "如何搜索?\n - 以名和/或者姓氏 \n- 出生年份 \n- 亡故年份 \n- \"右派\" 年份 \n- 中华少数名族 \n- 职业 \n- 性别",
     "archive_all_button": "所有",
 
-    "profile_tooltip": "用户可以向管理者申请修改更新任何不正确的档案。在3-5个工作日内, 您将会收到关于此修改是否通过的后续邮件。",
+    "profile_tooltip": "用户可以向管理者申请修改任何不正确的档案。在3-5个工作日内, 您将会收到该申请是否通过的后续邮件。",
     "profile_detail_title": "详情",
     "profile_detail_name": "姓名",
     "profile_birth_year": "出生年份",

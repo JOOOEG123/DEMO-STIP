@@ -181,6 +181,7 @@
     "about_movement_learn_more_button": "Learn More About the Research on this Project"
   },
   "project_overview": {
+    "first_title": "Archive Project Overview",
     "project_overview_top_title": "Archive Project Overview",
     "project_overview_Research_We_Found": "Research and What We Found",
     "project_overview_Gender": "Gender",
@@ -277,7 +278,8 @@
 
     "archive_filter_cat_two_checkbox_three": "Unknown",
 
-    "archive_filter_cat_three_textbox_placeholder": "Type to search ethnic groups..",
+    "archive_filter_cat_three_textbox_placeholder": "Type to search ethnic groups...",
+    "archive_filter_profession":"Type to search profession...",
     "archive_filter_cat_four_title": "Occupation",
 
     "archive_filter_reset_button": "Clear Filters", 

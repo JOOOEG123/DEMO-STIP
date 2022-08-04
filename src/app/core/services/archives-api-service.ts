@@ -12,12 +12,13 @@ export class ArchieveApiService {
 
   /** New API */
   getAllArchieve(curLan: string) {
-    //fix later
-    // if (curLan == 'cn') {
-    //   return this.db.object('/persons/data/cn/rightists').valueChanges();
-    // } else {
-    //   this.db.object('/persons/data/en/rightists').valueChanges();
-    // }
+    if (curLan == 'cn') {
+      console.log('get chinese dat');
+      return this.db.object('/persons/data/cn/rightists').valueChanges();
+    } else {
+      return this.db.object('/persons/requestArchieve/persons').valueChanges();
+      // this.db.object('/persons/data/en/rightists').valueChanges();
+    }
 
     //to do: remove this later
     return this.db.object('/persons/requestArchieve/persons').valueChanges();
@@ -66,7 +67,7 @@ export class ArchieveApiService {
 
   addNewArchieve(obj: Rightist) {
     // update function with type and required value
-    obj.lastUpdatedAt = new Date()
+    obj.lastUpdatedAt = new Date();
     return this.db
       .object(`/persons/requestArchieve/persons`)
       .update({ [obj.rightistId]: obj });
