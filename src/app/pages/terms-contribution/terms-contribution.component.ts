@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 type Views = 'T' | 'P' | 'F';
 
 const HeadTitles = {
-  T: 'Terms of Contribution',
+  T: 'Terms & Conditions',
   P: 'Privacy Policy',
   F: 'Frequently Asked Questions',
 };
