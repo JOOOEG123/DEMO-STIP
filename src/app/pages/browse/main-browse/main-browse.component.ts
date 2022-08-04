@@ -100,6 +100,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.callAPI(letter);
     this.searchSelect =
       this.currentLanguage == 'en' ? 'All Fields' : '所有信息栏';
+    this.db_result = [];
   }
 
   ngOnInit(): void {
@@ -254,6 +255,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
           this.searchSelect == '所有信息栏'
         ) {
           Object.values(record).forEach((element) => {
+            // console.log('testing', element);
             res =
               res ||
               this.containKeyword(
@@ -284,6 +286,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         return res;
       });
     });
+
+    this.sortByNameAlphabet();
 
     if (!userValues.length) {
       this.getNonFilterData('searchBar');
@@ -341,17 +345,22 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   containKeyword(word: any, keyword: any) {
+    // console.log('---------------------', word, keyword);
     let res;
 
     if (this.currentLanguage == 'en') {
-      word = word.map(function (value) {
-        if (value != undefined) {
-          return value.toLowerCase();
-        }
-        return value;
-      });
+      if (typeof word === 'string' && typeof keyword === 'string') {
+        res = word.toLowerCase().includes(keyword.toLowerCase());
+      } else {
+        word = word.map(function (value) {
+          if (value != undefined) {
+            return value.toLowerCase();
+          }
+          return value;
+        });
 
-      res = word.includes(keyword.toLowerCase());
+        res = word.includes(keyword.toLowerCase());
+      }
     } else {
       res = word.includes(keyword);
     }
@@ -430,5 +439,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.db_result_thousands_seperator = this.db_result.length
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  //sort filtered searching documents base on 'Name' only.
+  sortByNameAlphabet() {
+    this.db_result = this.db_result.sort(function (a, b) {
+      return a.lastName.localeCompare(b.lastName);
+    });
   }
 }
