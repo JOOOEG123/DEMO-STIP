@@ -13,7 +13,7 @@ const LIST_OF_GENDER = {
 };
 const LIST_OF_STATUS = {
   en: ['Alive', 'Deceased', 'Unknown'],
-  cn: ['在世', '去世', '未知'],
+  cn: ['在世', '亡故', '未知'],
 };
 @Component({
   selector: 'app-browse-search-filter',
