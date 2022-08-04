@@ -21,6 +21,7 @@ import { EditAccountComponent } from './account/edit-account/edit-account.compon
 import { AuthGuard } from '../core/services/auth-guard.service';
 import { RepositoryComponent } from './browse/repository/repository.component';
 import { RequestModifyComponent } from './requestForms/upload/request-modify/request-modify.component';
+import { TermsContributionComponent } from './terms-contribution/terms-contribution.component';
 
 // AuthGuard pipe for admin pages
 const adminOnly = () =>
@@ -59,6 +60,7 @@ export const pagesComponents = [
   UploadComponent,
   RepositoryComponent,
   RequestModifyComponent,
+  TermsContributionComponent
 ];
 
 // Page routes
@@ -188,6 +190,13 @@ export const pagesRoutes = [
     data: {
       title: 'request-modify',
 
+    },
+  },
+  {
+    path: 'terms-contribution',
+    component: TermsContributionComponent,
+    data: {
+      title: 'Terms and Conditions of Contribution',
     },
   },
 ];

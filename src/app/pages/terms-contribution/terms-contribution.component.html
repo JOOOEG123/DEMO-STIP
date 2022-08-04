@@ -1,0 +1,183 @@
+<div class="container-fluid px-0 text-center bg-image-blue bg-white">
+  <div class="bg-colors">
+    <div class="bg-image-blue-inner bg-image-blue-inner-pb-10">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 py-3 m-auto text-white">
+        <h2 class="pt-5">{{ curHeaderTitle }}</h2>
+        <div class="py-5 text-center">
+          <div
+            class="btn-group w-100"
+            role="group"
+            aria-label="Basic radio toggle button group"
+          >
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="terms"
+              autocomplete="off"
+              value="T"
+              [(ngModel)]="curView"
+              checked
+            />
+            <label class="btn btn-jade w-100 border-0 fw-bold" for="terms"
+              >Terms & Conditions</label
+            >
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="privacy"
+              autocomplete="off"
+              value="P"
+              [(ngModel)]="curView"
+            />
+            <label
+              class="btn btn-jade w-100 fw-bold border-end border-start"
+              for="privacy"
+              >Privacy Policy</label
+            >
+
+            <input
+              type="radio"
+              class="btn-check"
+              name="btnradio"
+              id="faq"
+              autocomplete="off"
+              value="F"
+              [(ngModel)]="curView"
+            />
+            <label class="btn btn-jade w-100 border-0 fw-bold" for="faq"
+              >Frequently Asked Questions</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mb-5 border shadow p-4 rounded border-success">
+  <div [ngSwitch]="curView">
+    <div *ngSwitchCase="'P'">Coming Soon...</div>
+    <div *ngSwitchCase="'F'">
+      <h5 class="py-2">
+        Frequently Asked Questions (FAQs) About “Collections” Use
+      </h5>
+      <ol class="pb-4">
+        <li>
+          <h6 class="fw-bold">
+            May I share any of the “Rightist” files on my website, blog, or
+            social media?
+          </h6>
+          <p>Yes, as long as you comply with these Terms of Use.</p>
+        </li>
+        <li>
+          <h6 class="fw-bold">
+            May I use the Chinese Rightist Archive's logo on my website?
+          </h6>
+          <p>
+            No, you may not use our website's logo or other trademarks without
+            written permission from the head Admin of the Chinese Rightist
+            Archive website. Exceptions may apply if the logo is already
+            integrated into the documents and other content within the Chinese
+            Rightist Archive website which is made available for sharing through
+            embedded links.
+          </p>
+        </li>
+        <li>
+          <h6 class="fw-bold">
+            May I use the “Rightist” documents in a research paper,
+            lesson/lecture plans, or other class work?
+          </h6>
+          <p>
+            Yes, we encourage you to quote, describe, and share the “Rightist”
+            file in your research or other class project as long as you comply
+            with these Terms of Use. Please note that some uses of our documents
+            in class work may be considered fair use under copyright law, and it
+            is your responsibility to determine if your use constitutes fair
+            use. The Chinese Rightist Archive cannot assist you in this
+            determination.
+          </p>
+        </li>
+        <li>
+          <h6 class="fw-bold">
+            Can I contribute information about a Chinese Rightist to the Chinese
+            Rightist Archive?
+          </h6>
+          <p>
+            The Chinese Rightist Archive allows all account users to contribute
+            content through our “New Rightist Contribution” upload page under
+            Account home. You must create an account first before you upload.
+          </p>
+        </li>
+      </ol>
+
+      <h6 class="fw-bold">Have any questions?</h6>
+      <p>
+        If you have questions about the Terms & Conditions or the website,
+        please contact stip@gmu.com
+      </p>
+    </div>
+    <div *ngSwitchDefault>
+      <p class="pb-3">
+        The Chinese Rightist Archive created its website to promote awareness of
+        human rights and social justice for the individuals that were involved
+        in the Anti-Rightist Campaign. Our archival collection contains
+        documentation and historic materials that were given by the victims and
+        their descendants affected by this campaign. Visitors are encouraged to
+        use this website for educational and research purposes as well as
+        sharing contributions to the field of digital curation in accordance
+        with these Terms
+      </p>
+      <h5>COPYRIGHT AND PERMISSIONS</h5>
+      <p class="pb-3">
+        This site currently contains over 40,000 documents which are owned by
+        the Chinese Rightist Archive. The documents provided are for
+        noncommercial teaching and research use. You may not copy, publish,
+        post, distribute, or otherwise make or sell the document available to
+        others. If you wish to make any such use of the documents provided, you
+        must obtain permission from the copyright holder, which may be the
+        Chinese Rightist Archive.
+      </p>
+      <p class="pb-3">
+        Some of the text, images, and other content (mainly in the “About
+        Movement” and "Gallery” page) contains copyrighted material of which has
+        not always been authorized by the copyright owner. Such material is made
+        available in an effort to advance understanding of the country or topic
+        discussed in the article. This constitutes 'fair use' of any such
+        copyrighted material as provided for in section 107 of the US Copyright
+        Law. In accordance with Title 17 U.S.C. Section 107, the material on
+        this site is distributed without profit. If you wish to use copyrighted
+        material from this site for purposes of your own that go beyond 'fair
+        use', you must obtain permission from the copyright owner. If you are
+        the copyright owner and would like this content removed from
+        https://stip-demo.web.app/home, please contact stip@gmu.edu
+      </p>
+      <h5>TERMS OF USE</h5>
+      <div class="pb-3">
+        <p>When using documents from the “Collections” page, you agree to:</p>
+        <ol>
+          <li>
+            Cite the “Chinese Rightist Archive' as the source of all the
+            documents, as well as any contributors that may be listed with the
+            document.
+          </li>
+          <li>
+            Link to the “Chinese Rightist Archive” website as the source of the
+            “Rightist” documents.
+          </li>
+          <li>
+            Ensure that you do not state or imply that the Chinese Rightist
+            Archive endorses you, any third party, or any products, services, or
+            opinions.
+          </li>
+        </ol>
+      </div>
+      <p>
+        <small class="text-muted"
+          >Effective date for these legal terms: August 1, 2022</small
+        >
+      </p>
+    </div>
+  </div>
+</div>
