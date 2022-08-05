@@ -38,7 +38,7 @@ Missing/Needed improvde features/functions.
 Here are some functions/features that future developers can be improvded and worked on. 
 
 Browse Page: related files are under /pages/browse/.
-1. Currently, the searching functions in Chinese are not fully implemented. More debugging and testing are needed. (Related files: main-browse)
+1. Currently, the searching functions in Chinese are not fully implemented as the Chinese data is not available. More debugging and testing are needed. (Related files: main-browse)
 2. Data Standerdanization for the "Occupations" for both Chinese and English is needed, and ngx-translation for both languages is not implemented. Suggested tool: OpenRefine. (Related files: main-browse and cn.json)
 3. "Sorted by relevance" is not implemented. This should happends after each search. Currently, the search results are sorted based on the order of the last name. (Related files: main-browse)
 4. The searching speed/performance can be improved. (Related files: main-browse)
