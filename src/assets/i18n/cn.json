@@ -74,15 +74,15 @@
   },
 
   "request-modify": {
-    "request_to_modify": "请求修改",
-    "Request": "要求",
+    "request_to_modify": "申请修改",
+    "Request": "申请要求",
     "Reason": "原因",
     "Email": "电子邮件",
-    "request_placeholder": "请输入相应的修改",
+    "request_placeholder": "请输入相应修改要求",
     "reason_placeholder": "请输入您修改的原因",
     "email_placeholder": "姓名@例子.com",
     "close": "关闭",
-    "submit": "提交请求"
+    "submit": "提交申请"
   },
 
   "navbar": {
@@ -324,9 +324,9 @@
   "gallery": {
     "gallery_top_title": "图片",
     "gallery_top_cat_one_button": "全部",
-    "gallery_top_cat_two_button": "媒体宣传",
-    "gallery_top_cat_three_button": "劳改营",
-    "gallery_top_cat_four_button": "人物",
+    "gallery_top_cat_two_button": "人物",
+    "gallery_top_cat_three_button": "媒体宣传",
+    "gallery_top_cat_four_button": "劳改营",
     "gallery_top_cat_five_button": "其它",
     "gallery_image_button": "学到更多",
     "placeholder": "搜索图片",
