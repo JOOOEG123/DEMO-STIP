@@ -34,8 +34,8 @@ npm i firebase@latest
 firebase functions:config:set someservice.key="THE API KEY" someservice.id="THE CLIENT ID"
 
 ## Notes
------------Missing/Needed improvde features/functions-------------
-here are some functions/features that future developers can be improvded and worked on. 
+-Missing/Needed improvde features/functions
+Here are some functions/features that future developers can be improvded and worked on. 
 
 Browse Page: related files are under /pages/browse/.
 1. Currently, the searching functions in Chinese are not fully implemented. More debugging and testing are needed. 
