@@ -32,3 +32,15 @@ npm i firebase@latest
 
 # set environment variable
 firebase functions:config:set someservice.key="THE API KEY" someservice.id="THE CLIENT ID"
+
+## Notes
+-----------Missing/Needed improvde features/functions-------------
+here are some functions/features that future developers can be improvded and worked on. 
+
+Browse Page: related files are under /pages/browse/.
+1. Currently, the searching functions in Chinese are not fully implemented. More debugging and testing are needed. 
+2. Data Standerdanization for the "Occupations" for both Chinese and English is needed, and ngx-translation for both languages is not implemented. Suggested tool: OpenRefine. 
+3. "Sorted by relevance" is not implemented. This should happends after each search. Currently, the search results are sorted based on the order of the last name. 
+4. The searching speed/performance can be improved. 
+
+  
