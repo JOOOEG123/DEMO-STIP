@@ -34,7 +34,7 @@ npm i firebase@latest
 firebase functions:config:set someservice.key="THE API KEY" someservice.id="THE CLIENT ID"
 
 ## Notes
--Missing/Needed improvde features/functions
+Missing/Needed improvde features/functions.
 Here are some functions/features that future developers can be improvded and worked on. 
 
 Browse Page: related files are under /pages/browse/.
