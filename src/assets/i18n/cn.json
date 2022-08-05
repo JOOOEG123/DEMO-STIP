@@ -458,7 +458,7 @@
     "clear_photo": "清除照片",
     "choose_file": "选择文件",
     "no_file_chosen": "没有选中任何文件",
-    "ethnic_default": "-- 选择一个选项 --",
+    "dropdown_default": "-- 选择一个选项 --",
     "title": "标题",
     "detail": "详细信息",
     "source": "资源",
@@ -476,7 +476,7 @@
 
     "request_form": "申请表",
     "upload": "上传",
-    "detail_edit": "Detailed/Edit Contribution",
+    "detail_edit": "编辑贡献",
     "name": "姓名",
     "occupation": "职业",
     "workplace": "工作场所",
@@ -485,12 +485,8 @@
     "rightist_year": "\"右派党与\" 年份",
     "ethnicity": "少数民族",
     "gender": "性别",
+    "status": "地位",
 
-    "gender_male": "男性",
-    "gender_female": "女性",
-    "status": "现状",
-    "status_alive": "在世",
-    "status_death": "亡故",
     "clear": "清除",
     "add_content": "添加内容",
     "event_content": "重要事件年份和其内容",
@@ -503,12 +499,38 @@
     "content_description": "内容/详情",
     "add_memoir": "添加个人自传",
 
-    "name_placeholder": "姓名",
-    "add_content_placeholder": "请添加内容、详细简介...",
-    "event_content_description_placeholder": "请添加重要事件的详细信息...",
-    "title_placeholder": "请添加标题...",
-    "author_placeholder": "请添加作者..",
-    "content_description_placeholder": "请添加个人自传..."
+    "placeholder": {
+      "name_placeholder": "姓名",
+      "other_name_placeholder": "英文全名",
+      "profession_placeholder": "职业",
+      "other_profession_placeholder": "英语专业",
+      "workplace_placeholder": "工作场所",
+      "other_workplace_placeholder": "英语工作场所",
+
+      "add_content_placeholder": "请添加内容、详细简介...",
+      "other_add_content_placeholder": "英文内容",
+
+      "event_content_description_placeholder": "请添加重要事件的详细信息...",
+      "other_event_content_description_placeholder": "英文活动详情",
+
+      "memoir_title_placeholder": "请添加标题...",
+      "other_memoir_title_placeholder": "英文回忆录标题",
+
+      "memoir_author_placeholder": "请添加作者...",
+      "other_memoir_author_placeholder": "英文回忆录作者",
+
+      "memoir_content_placeholder": "请添加个人自传...",
+      "other_memoir_content_placeholder": "英文回忆录内容",
+
+      "image_title_placeholder": "图片标题",
+      "other_image_title_placeholder": "中文图片标题",
+
+      "image_detail_placeholder": "图像细节",
+      "other_image_detail_placeholder": "英文图像细节",
+
+      "image_source_placeholder": "图片来源",
+      "other_image_source_placeholder": "英文图片来源"
+    }
   }, 
   "terms":{
     "privacy":"隐私政策",

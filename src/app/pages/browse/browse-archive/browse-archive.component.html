@@ -200,7 +200,7 @@
               </div>
               <div class="col-12 py-2">
                 {{ "archive.profile_birth_year" | translate }}:
-                {{ profile.birthYear }}
+                {{ profile.birthYear | date: "yyyy" }}
               </div>
               <div class="col-12 py-2">
                 {{ "archive.status_title" | translate }}:

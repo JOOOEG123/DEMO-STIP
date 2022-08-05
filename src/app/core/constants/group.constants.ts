@@ -130,7 +130,7 @@ const LIST_OF_GENDER = {
   en: ['male', 'female', 'unknown'],
   cn: ['男性', '女性', '未知'],
 };
-
+  
 const LIST_OF_STATUS = {
   en: ['alive', 'deceased', 'unknown'],
   cn: ['活', '死者', '未知'],

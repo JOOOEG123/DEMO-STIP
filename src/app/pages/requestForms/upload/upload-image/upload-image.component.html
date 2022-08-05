@@ -26,7 +26,7 @@
       type="text"
       class="form-control w-75 my-1"
       id="imageTitle"
-      placeholder="{{ 'upload.what_tooltip' | translate }}"
+      placeholder="{{ 'upload.placeholder.image_title_placeholder' | translate }}"
       formControlName="imageTitle"
     />
     <input
@@ -34,7 +34,7 @@
       type="text"
       class="form-control w-75 my-1"
       id="otherImageTitle"
-      placeholder="{{ 'upload.what_tooltip' | translate }}"
+      placeholder="{{ 'upload.placeholder.other_image_title_placeholder' | translate }}"
       formControlName="otherImageTitle"
     />
   </div>
@@ -47,7 +47,7 @@
       class="form-control w-75 my-1"
       id="imageDetails"
       rows="3"
-      placeholder="{{ 'upload.add_description' | translate }}"
+      placeholder="{{ 'upload.placeholder.image_detail_placeholder' | translate }}"
       formControlName="imageDes"
     ></textarea>
     <textarea
@@ -55,7 +55,7 @@
       class="form-control w-75 my-1"
       id="otherImageDes"
       rows="3"
-      placeholder="{{ 'upload.add_description' | translate }}"
+      placeholder="{{ 'upload.placeholder.other_image_detail_placeholder' | translate }}"
       formControlName="otherImageDes"
     ></textarea>
   </div>
@@ -68,7 +68,7 @@
       class="form-control w-75 my-1"
       id="imageSource"
       rows="3"
-      placeholder="{{ 'upload.add_description' | translate }}"
+      placeholder="{{ 'upload.placeholder.image_source_placeholder' | translate }}"
       formControlName="imageSource"
     ></textarea>
     <textarea
@@ -76,7 +76,7 @@
       class="form-control w-75 my-1"
       id="otherImageSource"
       rows="3"
-      placeholder="{{ 'upload.add_description' | translate }}"
+      placeholder="{{ 'upload.placeholder.other_image_source_placeholder' | translate }}"
       formControlName="otherImageSource"
     ></textarea>
   </div>
@@ -92,7 +92,7 @@
       id="imageCategory"
       formControlName="imageCategory"
     >
-      <option disabled selected value>-- select an option --</option>
+      <option disabled selected value>{{ "upload.dropdown_default" | translate }}</option>
       <option [value]="category" *ngFor="let category of imageCategories">
         {{ category }}
       </option>

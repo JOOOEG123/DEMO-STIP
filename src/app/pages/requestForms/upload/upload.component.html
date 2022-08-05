@@ -10,7 +10,7 @@
     {{ "upload.detail_edit" | translate }}
   </h3>
   <div class="text-center my-4" *ngIf="page == 'contribution'">
-    <button (click)="onSave()" class="btn btn-primary">Save</button>
+    <button (click)="onSave()" class="btn btn-primary">{{ 'common.save' | translate }}</button>
   </div>
 </div>
 
@@ -32,7 +32,7 @@
           class="form-control"
           id="Name"
           formControlName="name"
-          placeholder="{{ 'upload.name_placeholder' | translate }}"
+          placeholder="{{ 'upload.placeholder.name_placeholder' | translate }}"
         />
 
         <input
@@ -41,7 +41,9 @@
           class="form-control"
           id="Name"
           formControlName="otherName"
-          placeholder="{{ 'upload.name_placeholder' | translate }}"
+          placeholder="{{
+            'upload.placeholder.other_name_placeholder' | translate
+          }}"
         />
       </div>
 
@@ -94,10 +96,19 @@
           <span class="text-danger">*</span></label
         >
         <!-- occupation typeahead -->
-        <input class="form-control my-1" formControlName="occupation" />
+        <input
+          placeholder="{{
+            'upload.placeholder.profession_placeholder' | translate
+          }}"
+          class="form-control my-1"
+          formControlName="occupation"
+        />
 
         <!-- occupation typeahead -->
         <input
+          placeholder="{{
+            'upload.placeholder.other_profession_placeholder' | translate
+          }}"
           *ngIf="page == 'contribution'"
           class="form-control my-1"
           formControlName="otherOccupation"
@@ -110,12 +121,21 @@
           <span class="text-danger">*</span></label
         >
         <!-- occupation typeahead -->
-        <input class="form-control my-1" formControlName="workplace" />
+        <input
+          placeholder="{{
+            'upload.placeholder.workplace_placeholder' | translate
+          }}"
+          class="form-control my-1"
+          formControlName="workplace"
+        />
         <!-- occupation typeahead -->
         <input
           *ngIf="page == 'contribution'"
           class="form-control my-1"
           formControlName="otherWorkplace"
+          placeholder="{{
+            'upload.placeholder.other_workplace_placeholder' | translate
+          }}"
         />
       </div>
     </div>
@@ -127,7 +147,9 @@
           <span class="text-danger">*</span></label
         >
         <select formControlName="ethnic" class="form-select">
-          <option disabled selected value>{{ "upload.ethnic_default" | translate }}</option>
+          <option disabled selected value>
+            {{ "upload.dropdown_default" | translate }}
+          </option>
           <option *ngFor="let ethnic of ethnicGroup">
             {{ ethnic }}
           </option>
@@ -284,7 +306,7 @@
             class="form-control"
             id="add_content"
             rows="5"
-            placeholder="{{ 'upload.add_content_placeholder' | translate }}"
+            placeholder="{{ 'upload.placeholder.add_content_placeholder' | translate }}"
             [(ngModel)]="description"
             (ngModelChange)="descriptionChanged($event)"
           ></textarea>
@@ -293,7 +315,7 @@
             class="form-control"
             id="other_add_content"
             rows="5"
-            placeholder="{{ 'upload.add_content_placeholder' | translate }}"
+            placeholder="{{ 'upload.placeholder.other_add_content_placeholder' | translate }}"
             [(ngModel)]="otherDescription"
             (ngModelChange)="otherDescriptionChanged($event)"
           ></textarea>
@@ -338,7 +360,7 @@
                   [id]="'event_content' + i"
                   rows="5"
                   placeholder="{{
-                    'upload.event_content_description_placeholder' | translate
+                    'upload.placeholder.event_content_description_placeholder' | translate
                   }}"
                   formControlName="event"
                 ></textarea>
@@ -347,10 +369,10 @@
                   class="form-control"
                   [id]="'event_content' + i"
                   rows="5"
-                  placeholder="{{
-                    'upload.event_content_description_placeholder' | translate
-                  }}"
                   formControlName="otherEvent"
+                  placeholder="{{
+                    'upload.placeholder.other_event_content_description_placeholder' | translate
+                  }}"
                 ></textarea>
               </div>
 
@@ -416,7 +438,7 @@
             <input
               type="text"
               class="form-control my-1"
-              placeholder="{{ 'upload.title_placeholder' | translate }}"
+              placeholder="{{ 'upload.placeholder.memoir_title_placeholder' | translate }}"
               [id]="'memoir_title' + i"
               formControlName="memoirTitle"
             />
@@ -424,7 +446,7 @@
               *ngIf="page == 'contribution'"
               type="text"
               class="form-control my-1"
-              placeholder="{{ 'upload.title_placeholder' | translate }}"
+              placeholder="{{ 'upload.placeholder.other_memoir_title_placeholder' | translate }}"
               [id]="'other_memoir_title' + i"
               formControlName="otherMemoirTitle"
             />
@@ -436,7 +458,7 @@
             <input
               type="text"
               class="form-control my-1"
-              placeholder="{{ 'upload.author_placeholder' | translate }}"
+              placeholder="{{ 'upload.placeholder.memoir_author_placeholder' | translate }}"
               [id]="'memoir_author' + i"
               aria-describedby="basic-addon1"
               formControlName="memoirAuthor"
@@ -445,7 +467,7 @@
               *ngIf="page == 'contribution'"
               type="text"
               class="form-control my-1"
-              placeholder="{{ 'upload.author_placeholder' | translate }}"
+              placeholder="{{ 'upload.placeholder.other_memoir_author_placeholder' | translate }}"
               [id]="'other_memoir_author' + i"
               aria-describedby="basic-addon1"
               formControlName="otherMemoirAuthor"
@@ -460,7 +482,7 @@
               class="form-control my-1"
               [id]="'memoir_content' + i"
               placeholder="{{
-                'upload.content_description_placeholder' | translate
+                'upload.placeholder.memoir_content_placeholder' | translate
               }}"
               rows="5"
               formControlName="memoirContent"
@@ -471,7 +493,7 @@
               class="form-control my-1"
               [id]="'other_memoir_content' + i"
               placeholder="{{
-                'upload.content_description_placeholder' | translate
+                'upload.placeholder.other_memoir_content_placeholder' | translate
               }}"
               rows="5"
               formControlName="otherMemoirContent"
