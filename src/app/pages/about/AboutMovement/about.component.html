@@ -14,73 +14,56 @@
 
       <!-- image of the red flower -->
       <div
-        class="position-absolute"
-        style="width: 6.25rem; height: 6.25rem; left: 8%"
+        class="position-absolute flower_div"
       >
         <img
-          class="img-fluid"
+          class="img-fluid flower"
           src="/assets/aboutpage/Group 66.png"
-          style="width: 6.25rem; height: 6.25rem"
         />
       </div>
       <!-- image of the red flower -->
       <div
-        class="position-absolute"
-        style="width: 6.25rem; height: 6.25rem; top: 40%; left: 82%"
+        class="position-absolute red_flower_div"
       >
         <img
-          class="img-fluid"
+          class="img-fluid red_flower"
           src="/assets/aboutpage/Group 66.png"
-          style="width: 6.25rem; height: 6.25rem"
+          
         />
       </div>
       <!-- image of the red flower -->
       <div
-        class="position-absolute"
-        style="width: 6.25rem; height: 6.25rem; top: 60%; left: 4%"
+        class="position-absolute red_flower_div_2"
       >
         <img
-          class="img-fluid"
+          class="img-fluid red_flower_2"
           src="/assets/aboutpage/Group 66.png"
-          style="width: 6.25rem; height: 6.25rem"
         />
       </div>
       <!-- image of the light-green lines -->
       <div
-        class="position-absolute"
-        style="width: 100%; height: 15.938rem; top: 20%; z-index: -1"
+        class="position-absolute line_div"
       >
         <img
-          class="img-fluid"
+          class="img-fluid line_img"
           src="/assets/aboutpage/Group 71.png"
-          style="width: 100%; height: 9.688rem"
         />
       </div>
       <!-- image of the light-green lines -->
       <div
-        class="position-absolute"
-        style="width: 100%; height: 15.938rem; top: 50%; z-index: -1"
+        class="position-absolute line_div2"
       >
         <img
-          class="img-fluid"
+          class="img-fluid line2"
           src="/assets/aboutpage/Group 62.png"
-          style="width: 100%; height: 9.688rem"
         />
       </div>
       <!-- the paragraph box with border and background color -->
       <p
-        class="mt-4 text-left text-light mx-auto"
-        style="
-          background-color: #09363c;
-          width: 50%;
-          border-style: solid;
-          border-color: #cea374;
-          padding-left: 6%;
-          padding-right: 6%;
-          font-size: 1.3rem;
-        "
+        class="mt-4 text-left text-light mx-auto pbox"
       >
         {{ "about_movement.about_movement_introduction_body" | translate }}
+        {{ "about_movement.about_movement_introduction_body2" | translate }}
       </p>
 
       <!-- view source button -->
@@ -88,7 +71,6 @@
         <button
           type="button"
           class="btn btn-lg btn-primary rounded-pill responsive-width view_source"
-          style="width: 20%"
           routerLink="/resources"
         >
           <i class="fa fa-plus"></i
@@ -101,12 +83,11 @@
   </div>
 
   <!-- div for the timeline section -->
-  <div class="timeline" style="background-color: #266461">
+  <div class="timeline">
     <h3 class="text-center text-light">
       {{ "about_movement.about_movement_timeline_title" | translate }}
     </h3>
     <p class="lh-lg text-center text-light">
-      {{ "about_movement.about_movement_timeline_body" | translate }}
       <img class="img-fluid" src="assets/homepage/timeline.png" />
     </p>
     <br />
