@@ -22,7 +22,9 @@ import {
   Contribution,
   ContributionJson,
   ContributionSchema,
+  Event,
   ImageSchema,
+  Memoir,
   Publish,
   Rightist,
   RightistSchema,
@@ -54,6 +56,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   activeCategory!: Categories;
   selectedContribution!: Contribution;
   updatedContribution!: Contribution;
+  otherUpdatedContribution!: Contribution;
 
   categoriesList: Categories[] = [
     'New Contributions',
@@ -90,9 +93,21 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     gallerySource: '',
   };
 
+  otherImage: ImageSchema = {
+    imageId: '',
+    rightistId: '',
+    isGallery: false,
+    galleryCategory: '',
+    galleryTitle: '',
+    galleryDetail: '',
+    gallerySource: '',
+  };
+
+  languageSubscription?: Subscription;
   sub: Subscription[] = [];
 
   language: string = '';
+  otherLanguage: string = '';
 
   constructor(
     private modalService: BsModalService,
@@ -104,14 +119,24 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!;
+    this.language = localStorage.getItem('lang')!
+    this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
 
-    this.sub.push(
-      this.translate.onLangChange.subscribe((langChange: any) => {
-        this.language = langChange;
-      })
+    this.languageSubscription = this.translate.onLangChange.subscribe(
+      (langChange: any) => {
+        this.language = langChange.lang;
+        this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
+
+        this.sub.forEach(x => x.unsubscribe())
+        this.sub.length = 0
+        this.initialize()
+      }
     );
 
+    this.initialize()
+  }
+
+  initialize() {
     this.contributionSubcription = this.contributionAPI
       .fetchAllContributions(this.language)
       .subscribe((data: any) => {
@@ -198,12 +223,36 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.contributionSubcription?.unsubscribe();
     this.rightistSubscription?.unsubscribe();
     this.sub.forEach((x) => x.unsubscribe());
+    this.languageSubscription?.unsubscribe();
   }
 
   onApprove() {
     this.modalRef?.hide();
     this.publish = 'approved';
     this.selectedContribution.state = 'removed';
+  }
+
+  onSave(data: any) {
+    console.log(this.updatedContribution);
+    console.log(this.otherUpdatedContribution);
+
+    this.updatedContribution.image = this.image;
+    this.otherUpdatedContribution.image = this.otherImage;
+
+    if (data.type == 'save') {
+      Promise.all([
+        this.contributionAPI.updateUserContribution(
+          this.language,
+          this.updatedContribution
+        ),
+        this.contributionAPI.updateUserContribution(
+          this.otherLanguage,
+          this.otherUpdatedContribution
+        ),
+      ]).then(() => {
+        this.modalRef?.hide();
+      });
+    }
   }
 
   onReject() {
@@ -242,9 +291,17 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.selectedContribution.state === 'removed'
     ) {
       if (this.publish === 'approved') {
+        this.updatedContribution.publish = this.publish;
+        this.otherUpdatedContribution.publish = this.publish;
+
+        if (this.url) {
+          this.image!.imagePath = this.url;
+        }
+
         if (this.image!.imagePath!) {
-          let imageId = UUID();
+          let imageId = `Image-${UUID()}`;
           this.image!.imageId = imageId;
+          this.otherImage!.imageId = imageId;
           await fetch(this.image?.imagePath!).then(async (response) => {
             console.log(imageId);
             const contentType = response.headers.get('content-type');
@@ -257,7 +314,10 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                 .subscribe(async (imageUrl: any) => {
                   console.log(imageUrl);
                   this.image!.imagePath = imageUrl;
+                  this.otherImage!.imagePath = imageUrl;
                   this.image!.rightistId = this.updatedContribution.rightistId;
+                  this.otherImage!.rightistId =
+                    this.updatedContribution.rightistId;
                   // update the current timestamp
                   this.updatedContribution.lastUpdatedAt = new Date();
                   this.updatedContribution.rightist!.lastUpdatedAt = new Date();
@@ -266,20 +326,44 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                     this.updatedContribution.publish = this.publish;
 
                     const { state, ...contribution } = this.updatedContribution;
+                    const { state: otherState, ...otherContribution } =
+                      this.otherUpdatedContribution;
+
                     let { rightist, image, ...result } = contribution;
+                    let {
+                      rightist: otherRightist,
+                      image: otherImage,
+                      ...otherResult
+                    } = otherContribution;
+
                     result.rightistId = rightist!.rightistId;
                     result.approvedAt = new Date();
 
+                    otherResult.rightistId = otherRightist!.rightistId;
+                    otherResult.approvedAt = new Date();
+
                     rightist!.imageId = imageId;
+                    otherRightist!.imageId = imageId;
+
                     Promise.all([
                       this.contributionAPI.updateUserContribution(
                         this.language,
-                        this.updatedContribution.contributorId,
-                        this.updatedContribution.contributionId,
                         result
                       ),
+                      this.contributionAPI.updateUserContribution(
+                        this.otherLanguage,
+                        otherResult
+                      ),
                       this.archiveAPI.addRightist(this.language, rightist!),
+                      this.archiveAPI.addRightist(
+                        this.otherLanguage,
+                        otherRightist!
+                      ),
                       this.imageAPI.updateImage(this.language, this.image!),
+                      this.imageAPI.updateImage(
+                        this.otherLanguage,
+                        this.otherImage!
+                      ),
                     ]);
                   }
                 })
@@ -293,29 +377,56 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             this.updatedContribution.publish = this.publish;
 
             const { state, ...contribution } = this.updatedContribution;
+            const { state: otherState, ...otherContribution } =
+              this.otherUpdatedContribution;
+
             let { rightist, image, ...result } = contribution;
+            let {
+              rightist: otherRightist,
+              image: otherImage,
+              ...otherResult
+            } = otherContribution;
+
             result.rightistId = rightist!.rightistId;
             result.approvedAt = new Date();
+
+            otherResult.rightistId = otherRightist!.rightistId;
+            otherResult.approvedAt = new Date();
+
             Promise.all([
               this.contributionAPI.updateUserContribution(
                 this.language,
-                this.updatedContribution.contributorId,
-                this.updatedContribution.contributionId,
                 result
               ),
+              this.contributionAPI.updateUserContribution(
+                this.otherLanguage,
+                otherResult
+              ),
               this.archiveAPI.addRightist(this.language, rightist!),
+              this.archiveAPI.addRightist(this.otherLanguage, otherRightist!),
             ]);
           }
         }
       } else {
         this.updatedContribution.publish = this.publish;
+        this.otherUpdatedContribution.publish = this.publish;
+
         const { state, ...contribution } = this.updatedContribution;
+        const { state: otherState, ...otherContribution } =
+          this.otherUpdatedContribution;
+        if (this.url) {
+          this.updatedContribution!.image!.imagePath = this.url;
+          this.otherUpdatedContribution!.image!.imagePath = this.url;
+        }
+
         Promise.all([
           this.contributionAPI.updateUserContribution(
             this.language,
-            this.updatedContribution.contributorId,
-            this.updatedContribution.contributionId,
             contribution
+          ),
+          this.contributionAPI.updateUserContribution(
+            this.otherLanguage,
+            otherContribution
           ),
         ]);
       }
@@ -471,19 +582,63 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   onReadMore(template: TemplateRef<any>, contribution: Contribution) {
     this.selectedContribution = contribution;
     this.updatedContribution = { ...contribution };
+    this.otherUpdatedContribution = { ...contribution };
     this.image = { ...contribution.image! };
     this.modalRef = this.modalService.show(template, { class: 'modal-xl' });
   }
 
-  onEventChange(data: any) {
-    this.updatedContribution.rightist!.events = data;
+  onEventChange(source: any) {
+    let events: Event[] = [];
+    let otherEvents: Event[] = [];
+
+    for (let data of source) {
+      let event: Event = {
+        startYear: data.startYear,
+        endYear: data.endYear,
+        event: data.event,
+      };
+
+      let otherEvent: Event = {
+        startYear: data.startYear,
+        endYear: data.endYear,
+        event: data.otherEvent,
+      };
+
+      events.push(event);
+      otherEvents.push(otherEvent);
+    }
+
+    this.updatedContribution.rightist!.events = events;
+    this.otherUpdatedContribution.rightist!.events = otherEvents;
   }
 
-  onMemoirChange(data: any) {
-    this.updatedContribution.rightist!.memoirs = data;
+  onMemoirChange(source: any) {
+    let memoirs: Memoir[] = [];
+    let otherMemoirs: Memoir[] = [];
+
+    for (let data of source) {
+      let memoir: Memoir = {
+        memoirTitle: data.memoirTitle,
+        memoirAuthor: data.memoirAuthor,
+        memoirContent: data.memoirContent,
+      };
+
+      let otherMemoir: Memoir = {
+        memoirTitle: data.otherMemoirTitle,
+        memoirAuthor: data.otherMemoirAuthor,
+        memoirContent: data.otherMemoirContent,
+      };
+
+      memoirs.push(memoir);
+      otherMemoirs.push(otherMemoir);
+    }
+
+    this.updatedContribution.rightist!.memoirs = memoirs;
+    this.otherUpdatedContribution.rightist!.memoirs = otherMemoirs;
   }
 
   onFormChange(data: any) {
+    console.log(data);
     this.updatedContribution = {
       ...this.updatedContribution,
       rightist: {
@@ -492,8 +647,24 @@ export class ApprovalComponent implements OnInit, OnDestroy {
         gender: data.gender,
         status: data.status,
         ethnicity: data.ethnic,
-        workplaceCombined: data.occupation,
-        rightistYear: data.rightestYear,
+        job: data.occupation,
+        workplace: data.workplace,
+        rightistYear: data.rightistYear,
+        birthYear: data.birthYear,
+      },
+    };
+
+    this.otherUpdatedContribution = {
+      ...this.otherUpdatedContribution,
+      rightist: {
+        ...this.otherUpdatedContribution.rightist!,
+        fullName: data.otherName,
+        gender: data.otherGender,
+        status: data.otherStatus,
+        ethnicity: data.otherEthnic,
+        job: data.otherOccupation,
+        workplace: data.otherWorkplace,
+        rightistYear: data.rightistYear,
         birthYear: data.birthYear,
       },
     };
@@ -503,5 +674,28 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.url = data.url;
     console.log(data);
     this.image = { ...data.image };
+    this.otherImage = { ...data.otherImage };
+  }
+
+  onDescriptionChange(data: any) {
+    if (data.type == 'original') {
+      this.updatedContribution = {
+        ...this.updatedContribution,
+        rightist: {
+          ...this.updatedContribution.rightist!,
+          description: data.value,
+        },
+      };
+    }
+
+    if (data.type == 'other') {
+      this.otherUpdatedContribution = {
+        ...this.otherUpdatedContribution,
+        rightist: {
+          ...this.otherUpdatedContribution.rightist!,
+          description: data.value,
+        },
+      };
+    }
   }
 }

@@ -12,7 +12,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subscription, zip } from 'rxjs';
 import {
   ETHNIC_GROUP_CONSTANTS,
-  LIST_OF_JOB,
+  LIST_OF_GENDER,
+  LIST_OF_STATUS,
 } from 'src/app/core/constants/group.constants';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
@@ -21,7 +22,10 @@ import { ImagesService } from 'src/app/core/services/images.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
 import {
   Contribution,
+  ContributionSchema,
+  Event,
   ImageSchema,
+  Memoir,
   Rightist,
   RightistSchema,
 } from 'src/app/core/types/adminpage.types';
@@ -36,8 +40,16 @@ export class UploadComponent implements OnInit, OnDestroy {
   private _contribution!: Contribution;
   contributionId!: string;
   rightist?: Rightist;
-  ethnicGroup: string[] = ETHNIC_GROUP_CONSTANTS;
-  occupation: string[] = LIST_OF_JOB;
+
+  ethnicGroup: string[] = [];
+  genders: string[] = [];
+  statuses: string[] = [];
+
+  otherGenders: string[] = [];
+  otherStatuses: string[] = [];
+
+  occupation: string[] = [];
+
   selected?: string;
   selected2?: string;
   sub: Subscription[] = [];
@@ -65,20 +77,36 @@ export class UploadComponent implements OnInit, OnDestroy {
   @Output() eventChange: EventEmitter<any> = new EventEmitter();
   @Output() memoirChange: EventEmitter<any> = new EventEmitter();
   @Output() imageChange: EventEmitter<any> = new EventEmitter();
+  @Output() descriptionChange: EventEmitter<any> = new EventEmitter();
+  @Output() save: EventEmitter<any> = new EventEmitter();
 
   language: string = '';
+  otherLanguage: string = '';
+
+  languageSubscription?: Subscription;
+  authSubscription?: Subscription;
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
+    otherName: new FormControl('', Validators.required),
     gender: new FormControl(''),
+    otherGender: new FormControl(''),
     status: new FormControl(''),
+    otherStatus: new FormControl(''),
     ethnic: new FormControl(''),
+    otherEthnic: new FormControl(''),
     occupation: new FormControl('', Validators.required),
-    rightestYear: new FormControl('', Validators.required),
+    otherOccupation: new FormControl('', Validators.required),
+    workplace: new FormControl(''),
+    otherWorkplace: new FormControl(''),
     birthYear: new FormControl('', Validators.required),
+    deathYear: new FormControl('', Validators.required),
+    rightistYear: new FormControl('', Validators.required),
   });
 
   description: string = '';
+  otherDescription: string = '';
+
   cleared: boolean = false;
   imageLoaded: boolean = false;
 
@@ -92,18 +120,25 @@ export class UploadComponent implements OnInit, OnDestroy {
     gallerySource: '',
   };
 
+  otherImageData: ImageSchema = {
+    imageId: '',
+    rightistId: '',
+    isGallery: false,
+    galleryCategory: '',
+    galleryTitle: '',
+    galleryDetail: '',
+    gallerySource: '',
+  };
+
   eventArray = new FormArray([]);
   memoirArray = new FormArray([]);
-  imageForm2 = new FormGroup({
-    imageUpload: new FormControl(''),
-    image: new FormControl(''),
-  });
 
   private newEvent() {
     return new FormGroup({
       startYear: new FormControl(''),
       endYear: new FormControl(''),
       event: new FormControl(''),
+      otherEvent: new FormControl(''),
     });
   }
 
@@ -112,6 +147,9 @@ export class UploadComponent implements OnInit, OnDestroy {
       memoirTitle: new FormControl(''),
       memoirContent: new FormControl(''),
       memoirAuthor: new FormControl(''),
+      otherMemoirTitle: new FormControl(''),
+      otherMemoirAuthor: new FormControl(''),
+      otherMemoirContent: new FormControl(''),
     });
   }
 
@@ -135,7 +173,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     private imageAPI: ImagesService,
     private archiveAPI: ArchieveApiService,
     private storageAPI: StorageApIService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private contributionAPI: ContributionsService
   ) {}
 
   clear() {
@@ -171,9 +210,26 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.forEach((sub) => sub.unsubscribe());
+    this.languageSubscription?.unsubscribe();
+    this.authSubscription?.unsubscribe();
+  }
+
+  descriptionChanged(data: any) {
+    this.descriptionChange.emit({
+      type: 'original',
+      value: data,
+    });
+  }
+
+  otherDescriptionChanged(data: any) {
+    this.descriptionChange.emit({
+      type: 'other',
+      value: data,
+    });
   }
 
   onImageChange(data: any) {
+    console.log(data);
     if (data.type == 'image') {
       this.imageData = {
         ...this.imageData,
@@ -182,6 +238,15 @@ export class UploadComponent implements OnInit, OnDestroy {
         galleryTitle: data.value.imageTitle || '',
         galleryDetail: data.value.imageDes || '',
         gallerySource: data.value.imageSource || '',
+      };
+
+      this.otherImageData = {
+        ...this.otherImageData,
+        isGallery: data.value.imageUpload === 'yes',
+        galleryCategory: data.value.otherImageCategory || '',
+        galleryTitle: data.value.otherImageTitle || '',
+        galleryDetail: data.value.otherImageDes || '',
+        gallerySource: data.value.otherImageSource || '',
       };
     }
 
@@ -196,31 +261,57 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     this.imageChange.emit({
       image: this.imageData,
+      otherImage: this.otherImageData,
       url: this.url,
     });
 
     console.log(this.imageData);
+    console.log(this.otherImageData);
   }
 
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!;
-    console.log(this.page);
-    console.log(this.contribution);
+    this.language = localStorage.getItem('lang')!
+    this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
 
-    this.sub.push(
-      this.translate.onLangChange.subscribe((langChange: any) => {
-        this.language = langChange;
-      })
+    this.ethnicGroup = ETHNIC_GROUP_CONSTANTS[this.language];
+    this.genders = LIST_OF_GENDER[this.language];
+    this.statuses = LIST_OF_STATUS[this.language];
+
+    this.languageSubscription = this.translate.onLangChange.subscribe(
+      (langChange: any) => {
+        console.log('inside language');
+        this.language = langChange.lang;
+        this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
+
+        this.ethnicGroup = ETHNIC_GROUP_CONSTANTS[this.language];
+        this.genders = LIST_OF_GENDER[this.language];
+        this.statuses = LIST_OF_STATUS[this.language];
+
+        this.eventArray = new FormArray([]);
+        this.memoirArray = new FormArray([]);
+
+        this.sub.forEach((x) => x.unsubscribe());
+        this.sub.length = 0;
+        this.initialize();
+      }
     );
 
-    this.sub.push(
-      this.auth.isAdmin.subscribe((isAdmin: any) => {
-        this.isAdmin = isAdmin;
-      })
-    );
+    this.authSubscription = this.auth.isAdmin.subscribe((isAdmin: any) => {
+      this.isAdmin = isAdmin;
+    });
 
+    this.initialize();
+  }
+
+  initialize() {
     if (this.page === 'contribution') {
-      console.log(this.contribution);
+      this.ethnicGroup = ETHNIC_GROUP_CONSTANTS[this.language];
+      this.genders = LIST_OF_GENDER[this.language];
+      this.statuses = LIST_OF_STATUS[this.language];
+
+      this.otherGenders = LIST_OF_GENDER[this.otherLanguage!];
+      this.otherStatuses = LIST_OF_STATUS[this.otherLanguage!];
+
       if (this.contribution) {
         if (this.contribution.image?.imagePath) {
           this.imageDisabled = true;
@@ -228,14 +319,97 @@ export class UploadComponent implements OnInit, OnDestroy {
 
         if (this.contribution.contributionId && this.contribution.rightist) {
           const rightist: Rightist = this.contribution.rightist;
+
           this.mapForm(rightist);
 
-          if (this.contribution.image) {
-            this.imageData = { ...this.contribution.image };
-            this.imageLoaded = true;
-          } else {
-            this.imageLoaded = true;
-          }
+          this.sub.push(
+            this.contributionAPI
+              .getUserContribution(
+                this.otherLanguage,
+                this.contribution.contributorId,
+                this.contribution.contributionId
+              )
+              .subscribe((otherContribution: any) => {
+                console.log(otherContribution);
+
+                if (otherContribution.rightist) {
+                  this.otherDescription =
+                    otherContribution.rightist.description;
+
+                  this.form.patchValue({
+                    otherName: otherContribution.rightist.fullName,
+                    otherGender: otherContribution.rightist.gender,
+                    otherStatus: otherContribution.rightist.status,
+                    otherEthnic: otherContribution.rightist.ethnicity,
+                    otherOccupation: otherContribution.rightist.job,
+                    otherWorkplace: otherContribution.rightist.workplace,
+                  });
+
+                  if (otherContribution.rightist.events) {
+                    for (let [
+                      index,
+                      event,
+                    ] of otherContribution.rightist.events.entries()) {
+                      this.eventArray.at(index).patchValue({
+                        otherEvent: event.event,
+                      });
+                    }
+                  }
+
+                  if (otherContribution.rightist.memoirs) {
+                    for (let [
+                      index,
+                      memoir,
+                    ] of otherContribution.rightist.memoirs.entries()) {
+                      this.memoirArray.at(index).patchValue({
+                        otherMemoirTitle: memoir.memoirTitle,
+                        otherMemoirAuthor: memoir.memoirAuthor,
+                        otherMemoirContent: memoir.memoirContent,
+                      });
+                    }
+                  }
+                }
+
+                if (otherContribution.image) {
+                  this.otherImageData = { ...otherContribution.image };
+                }
+
+                if (this.contribution.image) {
+                  this.url = this.imageData!.imagePath!;
+                  this.imageData = { ...this.contribution.image };
+                  this.imageLoaded = true;
+                } else {
+                  this.imageLoaded = true;
+                }
+              })
+          );
+
+          this.sub.push(
+            this.form.controls['gender'].valueChanges.subscribe((value) => {
+              let index = this.genders.indexOf(value);
+              this.form.patchValue({
+                otherGender: LIST_OF_GENDER[this.otherLanguage][index],
+              });
+            })
+          );
+
+          this.sub.push(
+            this.form.controls['status'].valueChanges.subscribe((value) => {
+              let index = this.statuses.indexOf(value);
+              this.form.patchValue({
+                otherStatus: LIST_OF_STATUS[this.otherLanguage][index],
+              });
+            })
+          );
+
+          this.sub.push(
+            this.form.controls['ethnic'].valueChanges.subscribe((value) => {
+              let index = this.ethnicGroup.indexOf(value);
+              this.form.patchValue({
+                otherEthnic: ETHNIC_GROUP_CONSTANTS[this.otherLanguage][index],
+              });
+            })
+          );
 
           this.sub.push(
             this.form.valueChanges.subscribe((data: any) => {
@@ -312,6 +486,33 @@ export class UploadComponent implements OnInit, OnDestroy {
                 })
             );
           } else {
+            this.sub.push(
+              this.form.controls['gender'].valueChanges.subscribe((value) => {
+                let index = this.genders.indexOf(value);
+                this.form.patchValue({
+                  otherGender: LIST_OF_GENDER[this.otherLanguage][index],
+                });
+              })
+            );
+
+            this.sub.push(
+              this.form.controls['status'].valueChanges.subscribe((value) => {
+                let index = this.statuses.indexOf(value);
+                this.form.patchValue({
+                  otherStatus: LIST_OF_STATUS[this.otherLanguage][index],
+                });
+              })
+            );
+
+            this.sub.push(
+              this.form.controls['ethnic'].valueChanges.subscribe((value) => {
+                let index = this.ethnicGroup.indexOf(value);
+                this.form.patchValue({
+                  otherEthnic:
+                    ETHNIC_GROUP_CONSTANTS[this.otherLanguage][index],
+                });
+              })
+            );
             this.eventArray.push(this.newEvent());
             this.memoirArray.push(this.newMemoir());
             this.imageLoaded = true;
@@ -324,9 +525,9 @@ export class UploadComponent implements OnInit, OnDestroy {
   mapForm(rightist: Rightist) {
     this.form.patchValue({
       name: rightist.fullName,
-      occupation: rightist.workplaceCombined,
+      occupation: rightist.job,
       ethnic: rightist.ethnicity,
-      rightestYear: rightist.rightistYear,
+      righistYear: rightist.rightistYear,
       ...rightist,
     });
 
@@ -342,6 +543,7 @@ export class UploadComponent implements OnInit, OnDestroy {
             startYear: new FormControl(event.startYear),
             endYear: new FormControl(event.endYear),
             event: new FormControl(event.event),
+            otherEvent: new FormControl(''),
           })
         );
       }
@@ -357,6 +559,9 @@ export class UploadComponent implements OnInit, OnDestroy {
             memoirTitle: new FormControl(memoir.memoirTitle),
             memoirAuthor: new FormControl(memoir.memoirAuthor),
             memoirContent: new FormControl(memoir.memoirContent),
+            otherMemoirTitle: new FormControl(''),
+            otherMemoirAuthor: new FormControl(''),
+            otherMemoirContent: new FormControl(''),
           })
         );
       }
@@ -365,32 +570,102 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
   }
 
+  onSave() {
+    this.save.emit({
+      type: 'save',
+    });
+  }
+
   async onSubmit() {
     const {
       name,
       gender,
       status,
       ethnic,
-      rightestYear,
       occupation,
+      workplace,
+      otherName,
+      otherGender,
+      otherStatus,
+      otherEthnic,
+      otherOccupation,
+      otherWorkplace,
+      rightistYear,
+      deathYear,
       birthYear,
     } = this.form.value;
 
     console.log(this.contribution?.rightist?.rightistId);
+
+    // remove last event if untouched
+    if (!this.eventArray.at(this.eventArray.length - 1).touched) {
+      this.eventArray.removeAt(this.eventArray.length - 1);
+    }
+
+    // remove last memoir if untouched
+    if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
+      this.memoirArray.removeAt(this.memoirArray.length - 1);
+    }
 
     const rightistId =
       this.contribution?.rightist?.rightistId ||
       this.rightist?.rightistId ||
       `Rightist-${UUID()}`;
 
-    console.log(this.form.value);
-    console.log(this.imageData);
-    console.log(this.description);
-    console.log(this.eventArray.value);
-    console.log(this.memoirArray.value);
+    let events: Event[] = [];
+    let otherEvents: Event[] = [];
+
+    let memoirs: Memoir[] = [];
+    let otherMemoirs: Memoir[] = [];
+
+    for (let data of this.eventArray.value) {
+      let event: Event = {
+        startYear: data.startYear,
+        endYear: data.endYear,
+        event: data.event,
+      };
+
+      let otherEvent: Event = {
+        startYear: data.startYear,
+        endYear: data.endYear,
+        event: data.otherEvent,
+      };
+
+      events.push(event);
+      otherEvents.push(otherEvent);
+    }
+
+    for (let data of this.memoirArray.value) {
+      let memoir: Memoir = {
+        memoirTitle: data.memoirTitle,
+        memoirAuthor: data.memoirAuthor,
+        memoirContent: data.memoirContent,
+      };
+
+      let otherMemoir: Memoir = {
+        memoirTitle: data.otherMemoirTitle,
+        memoirAuthor: data.otherMemoirAuthor,
+        memoirContent: data.otherMemoirContent,
+      };
+
+      memoirs.push(memoir);
+      otherMemoirs.push(otherMemoir);
+    }
+
+    // console.log(this.form.value);
+    // console.log(this.imageData);
+    // console.log(this.description);
+    // console.log(this.eventArray.value);
+    // console.log(this.memoirArray.value);
 
     let image: ImageSchema = {
       ...this.imageData,
+      imageId: '',
+      rightistId: rightistId,
+    };
+
+    let otherImage: ImageSchema = {
+      ...this.otherImageData,
       imageId: '',
       rightistId: rightistId,
     };
@@ -399,36 +674,82 @@ export class UploadComponent implements OnInit, OnDestroy {
       rightistId: rightistId,
       imageId: '',
       contributorId: this.auth.uid,
-      initial: name.trim().charAt(0).toUpperCase(),
+      initial: '',
       firstName: '',
       lastName: '',
       fullName: name,
-      gender: gender || '',
+      gender: gender || 'unknown',
       birthYear: birthYear,
-      deathYear: 0,
-      rightistYear: rightestYear,
-      status: status || 'Unknown',
+      deathYear: deathYear,
+      rightistYear: rightistYear,
+      status: status || 'unknown',
       ethnicity: ethnic || '',
       education: '',
       birthplace: '',
-      job: '',
+      job: occupation,
       detailJob: '',
-      workplace: '',
-      workplaceCombined: occupation,
-      events: this.eventArray.value,
-      memoirs: this.memoirArray.value,
+      workplace: workplace,
+      workplaceCombined: '',
+      events: events,
+      memoirs: memoirs,
       reference: '',
       description: this.description,
+      source: 'contributed',
       lastUpdatedAt: new Date(),
     };
 
+    let otherRightist: RightistSchema = {
+      rightistId: rightistId,
+      imageId: '',
+      contributorId: this.auth.uid,
+      initial: '',
+      firstName: '',
+      lastName: '',
+      fullName: otherName,
+      gender: otherGender || '',
+      birthYear: birthYear,
+      deathYear: 0,
+      rightistYear: rightistYear,
+      status: otherStatus || 'Unknown',
+      ethnicity: otherEthnic || '',
+      education: '',
+      birthplace: '',
+      job: otherOccupation,
+      detailJob: '',
+      workplace: otherWorkplace,
+      workplaceCombined: '',
+      events: otherEvents,
+      memoirs: otherMemoirs,
+      reference: '',
+      description: this.otherDescription,
+      source: 'contributed',
+      lastUpdatedAt: new Date(),
+    };
+
+    if (this.language === 'en') {
+      rightist.initial = name.trim().charAt(0).toUpperCase();
+      otherRightist.initial = name.trim().charAt(0).toUpperCase();
+    }
+
+    if (this.language === 'cn') {
+      rightist.initial = otherName.trim().charAt(0).toUpperCase();
+      otherRightist.initial = otherName.trim().charAt(0).toUpperCase();
+    }
+
+    console.log(rightist);
+    console.log(otherRightist);
+    console.log(image);
+    console.log(otherImage);
+
     if (this.page === 'account') {
+      rightist.initial = this.rightist!.initial;
+
       if (this.url) {
         image.imagePath = this.url;
       }
 
       this.contributionService
-        .contributionsAddEdit(this.language, {
+        .updateUserContribution(this.language, {
           contributionId: this.contributionId,
           contributorId: this.auth.uid,
           contributedAt: new Date(),
@@ -461,11 +782,21 @@ export class UploadComponent implements OnInit, OnDestroy {
               .subscribe((imageUrl: any) => {
                 console.log(imageUrl);
                 rightist.imageId = imageId;
+                otherRightist.imageId = imageId;
+
                 image.imageId = imageId;
+                otherImage.imageId = imageId;
+
                 image.imagePath = imageUrl;
+                otherImage.imagePath = imageUrl;
                 Promise.all([
                   this.archiveAPI.addRightist(this.language, rightist),
+                  this.archiveAPI.addRightist(
+                    this.otherLanguage,
+                    otherRightist
+                  ),
                   this.imageAPI.addImage(this.language, image),
+                  this.imageAPI.addImage(this.otherLanguage, otherImage),
                 ]).then(() => {
                   const url = `browse/main/memoir/${rightist.rightistId}`;
                   this.clear();
@@ -486,65 +817,13 @@ export class UploadComponent implements OnInit, OnDestroy {
         });
       }
     } else {
-      // remove last event if empty
-      if (!this.eventArray.at(this.eventArray.length - 1).touched) {
-        this.eventArray.removeAt(this.eventArray.length - 1);
-        rightist.events = this.eventArray.value;
-      }
-
-      // remove last memoir if empty
-      if (!this.memoirArray.at(this.memoirArray.length - 1).touched) {
-        this.memoirArray.removeAt(this.memoirArray.length - 1);
-        rightist.memoirs = this.memoirArray.value;
-      }
+      // in upload component
+      let contributionId = `Contribution-${UUID()}`;
       // has image
       if (this.url) {
-        // If is admin and has image
-        // if (this.isAdmin) {
-        //   const imageId = `Image-${UUID()}`;
-        //   await fetch(this.url).then(async (response) => {
-        //     console.log(imageId);
-        //     const contentType = response.headers.get('content-type');
-        //     const blob = await response.blob();
-        //     const file = new File([blob], imageId, { type: contentType! });
-        //     await this.storageAPI.uploadGalleryImage(imageId, file);
-        //     this.sub.push(
-        //       this.storageAPI
-        //         .getGalleryImageURL(imageId)
-        //         .subscribe((imageUrl: any) => {
-        //           console.log(imageUrl);
-        //           rightist.imageId = imageId;
-        //           image.imageId = imageId;
-        //           image.imagePath = imageUrl;
-
-        //           Promise.all([
-        //             this.contributionService.contributionsAddEdit(
-        //               this.language,
-        //               {
-        //                 contributionId: this.contributionId,
-        //                 contributorId: this.auth.uid,
-        //                 contributedAt: new Date(),
-        //                 lastUpdatedAt: new Date(),
-        //                 rightistId: rightistId,
-        //                 approvedAt: new Date(),
-        //                 publish: 'approved',
-        //               }
-        //             ),
-        //             this.archiveAPI.addRightist(this.language, rightist),
-        //             this.imageAPI.addImage(this.language, image),
-        //           ]).then(() => {
-        //             this.clear();
-        //             this.clear2();
-        //             this.route.navigateByUrl('/account');
-        //           });
-        //         })
-        //     );
-        //   });
-        //   // if has image but no admin
-        // } else {
         Promise.all([
-          this.contributionService.contributionsAddEdit(this.language, {
-            contributionId: this.contributionId,
+          this.contributionService.updateUserContribution(this.language, {
+            contributionId: contributionId,
             contributorId: this.auth.uid,
             contributedAt: new Date(),
             rightistId: rightistId,
@@ -557,6 +836,20 @@ export class UploadComponent implements OnInit, OnDestroy {
               imagePath: this.url,
             },
           }),
+          this.contributionService.updateUserContribution(this.otherLanguage, {
+            contributionId: contributionId,
+            contributorId: this.auth.uid,
+            contributedAt: new Date(),
+            rightistId: rightistId,
+            lastUpdatedAt: new Date(),
+            approvedAt: new Date(),
+            publish: 'new',
+            rightist: otherRightist,
+            image: {
+              ...otherImage,
+              imagePath: this.url,
+            },
+          }),
         ]).then(() => {
           this.clear();
           this.clear2();
@@ -566,29 +859,10 @@ export class UploadComponent implements OnInit, OnDestroy {
         // no image
       } else {
         console.log('No Image');
-        // no image and is admin
-        // if (this.isAdmin) {
-        //   Promise.all([
-        //     this.contributionService.contributionsAddEdit(this.language, {
-        //       contributionId: this.contributionId,
-        //       contributorId: this.auth.uid,
-        //       contributedAt: new Date(),
-        //       rightistId: rightistId,
-        //       lastUpdatedAt: new Date(),
-        //       approvedAt: new Date(),
-        //       publish: 'approved',
-        //     }),
-        //     this.archiveAPI.addRightist(this.language!, rightist),
-        //   ]).then(() => {
-        //     this.clear();
-        //     this.clear2();
-        //     this.route.navigateByUrl('/account');
-        //   });
-        //   // no image and no admin
-        // } else {
+        let contributionId = `Contribution-${UUID()}`;
         Promise.all([
-          this.contributionService.contributionsAddEdit(this.language, {
-            contributionId: this.contributionId,
+          this.contributionService.updateUserContribution(this.language, {
+            contributionId: contributionId,
             contributorId: this.auth.uid,
             contributedAt: new Date(),
             rightistId: rightistId,
@@ -596,6 +870,16 @@ export class UploadComponent implements OnInit, OnDestroy {
             lastUpdatedAt: new Date(),
             publish: 'new',
             rightist: rightist,
+          }),
+          this.contributionService.updateUserContribution(this.otherLanguage, {
+            contributionId: contributionId,
+            contributorId: this.auth.uid,
+            contributedAt: new Date(),
+            rightistId: rightistId,
+            approvedAt: new Date(),
+            lastUpdatedAt: new Date(),
+            publish: 'new',
+            rightist: otherRightist,
           }),
         ]).then(() => {
           this.clear();

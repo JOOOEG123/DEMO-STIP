@@ -7,8 +7,8 @@
       <p class="card-text m-0">
         Occupation:
         <span class="fw-bold text-capitalize">{{
-          contribution.rightist.workplaceCombined
-            ? contribution.rightist.workplaceCombined
+          contribution.rightist.job
+            ? contribution.rightist.job
             : "-"
         }}</span>
       </p>
@@ -47,7 +47,7 @@
   <div
     class="col-lg-2 col-12 d-flex align-items-center flex-column justify-content-center"
   >
-    <div class="my-2 text-center" *ngIf="loaded">
+    <div class="my-2 text-center">
       <p>
         <i>
           {{ contribution.rightist.lastUpdatedAt | date: "short" }}

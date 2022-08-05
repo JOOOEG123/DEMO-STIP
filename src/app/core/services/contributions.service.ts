@@ -87,13 +87,11 @@ export class ContributionsService {
 
   updateUserContribution(
     language: string,
-    contributorId: string,
-    contributionId: string,
     obj: ContributionSchema
   ) {
     return this.db
-      .object(`/persons/data/${language}/contributions/${contributorId}`)
-      .update({ [contributionId]: obj });
+      .object(`/persons/data/${language}/contributions/${obj.contributorId}`)
+      .update({ [obj.contributionId]: obj });
   }
 
   getUserContribution(

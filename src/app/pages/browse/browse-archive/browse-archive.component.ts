@@ -55,15 +55,18 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
     private storageAPI: StorageApIService
   ) {}
 
-  language?: string;
+  language: string = '';
+  otherLanguage: string = '';
+
+  languageSubscription?: Subscription;
+
   sub: Subscription[] = [];
-  subApi: Subscription[] = [];
   src: string = 'assets/browsepage/STIP_Logo_PlaceholderBox.svg';
 
   loaded: boolean = false;
 
   initialize() {
-    this.subApi.push(
+    this.sub.push(
       this.arch
         .getRightistById(this.language!, this.id)
         .subscribe((res: any) => {
@@ -79,11 +82,10 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
                   this.loaded = true;
                 })
             );
+          } else {
+            this.loaded = true;
           }
-          else {
-            this.loaded = true
-          }
-       
+
           //sorting event based on starting year
           if (this.profile.events) {
             this.profile.events.sort(function (a, b) {
@@ -101,22 +103,25 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loaded = false;
-    this.language = localStorage.getItem('lang')!;
+    this.language = localStorage.getItem('lang')!
+    this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
+
+    this.languageSubscription = this.translate.onLangChange.subscribe(
+      (langChange: any) => {
+        console.log(langChange.lang);
+        this.language = langChange.lang;
+        this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
+        this.sub.forEach((x) => x.unsubscribe());
+        this.initialize();
+      }
+    );
 
     this.initialize();
-
-    this.sub.push(
-      this.translate.onLangChange.subscribe((langChange: any) => {
-        this.language = langChange.lang;
-        console.log('asd');
-        this.initialize();
-      })
-    );
   }
 
   ngOnDestroy(): void {
     this.sub.forEach((x) => x.unsubscribe());
-    this.subApi.forEach((x) => x.unsubscribe());
+    this.languageSubscription?.unsubscribe();
   }
 
   ngDoCheck() {
@@ -194,6 +199,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
   }
 
   onYes() {
+    this.loaded = false;
     console.log(this.profile);
     this.modalService.hide();
     this.sub.push(
@@ -206,10 +212,17 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
           for (let contribution of contributions) {
             if (this.profile.rightistId === contribution.rightistId) {
               console.log(contribution);
+              console.log(this.profile);
               if (this.profile.imageId) {
+                console.log('Has Image');
                 Promise.all([
                   this.contributionAPI.deleteUserContribution(
                     this.language!,
+                    this.profile.contributorId,
+                    contribution.contributionId
+                  ),
+                  this.contributionAPI.deleteUserContribution(
+                    this.otherLanguage!,
                     this.profile.contributorId,
                     contribution.contributionId
                   ),
@@ -217,8 +230,16 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
                     this.language!,
                     this.profile.rightistId
                   ),
+                  this.arch.removeRightistById(
+                    this.otherLanguage!,
+                    this.profile.rightistId
+                  ),
                   this.images.deleteImage(this.language!, this.profile.imageId),
-                  this.storageAPI.removeGalleryImage(this.profile.imageId)
+                  this.images.deleteImage(
+                    this.otherLanguage!,
+                    this.profile.imageId
+                  ),
+                  this.storageAPI.removeGalleryImage(this.profile.imageId),
                 ]).then(() => {
                   this.router.navigateByUrl('/account');
                 });
