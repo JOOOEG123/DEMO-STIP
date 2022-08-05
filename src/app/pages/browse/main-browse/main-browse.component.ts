@@ -80,6 +80,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   ];
 
   currentLanguage = this.translate.currentLang;
+  sub: Subscription[] = [];
 
   @ViewChild(BrowseSearchFilterComponent)
   private browseSearchFilterComponent!: BrowseSearchFilterComponent;
@@ -91,8 +92,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {}
 
-  sub: Subscription[] = [];
-
+  /**
+   * An initilizer to reset varaiables to initial states. 
+   * @param letter letters from A to Z and "All" 
+   */
   initLetter(letter) {
     this.currentPage = 1;
     this.currentLetter = letter;
@@ -118,6 +121,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         .subscribe((translations) => {
           this.searchSelect = translations['archive.archive_searchbar_all'];
         });
+      // clean up cache, so different languages can use the cache. 
       this.ngOnDestroy();
       this.initLetter('All');
     });
@@ -131,6 +135,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.thousandsSeperator();
   }
 
+  /**
+   * This method reacts to changes of different items per page changes, 
+   * re-display the number of items on the front-screen.
+   */
   itemPerPageChanged() {
     //casting
     this.itemsPerPage = +this.itemsPerPage;
@@ -139,6 +147,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.olditemsPerPage = this.itemsPerPage;
   }
 
+  /**
+   * This methods calculates persons'documents to display on the screen. 
+   * @param startItemsPerPage 
+   */
   setDisplayInfo(startItemsPerPage: number) {
     var start = (this.currentPage - 1) * startItemsPerPage;
     var end = start + this.itemsPerPage;
@@ -177,7 +189,19 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.searchBar();
   }
 
-  //for testing data
+  /**
+   * This method helps to remove the initial letter of each original source documents' desciption.
+   * This is just a temp fix.
+   * If possible, the Database needs to clean up the data.
+   */
+  removeInitialForDesciption() {
+    this.db_result.forEach((document) => {
+      if (document.source == 'original') {
+        document.description = document.description.slice(1);
+      }
+    });
+  }
+
   callAPI(letter: string) {
     //clear up display
     this.display = [];
@@ -203,7 +227,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             this.db_result = Object.entries(datas).map(([key, value]: any) => {
               return { profileId: key, ...value };
             });
-
+            this.removeInitialForDesciption();
             this.archCacheAPI[archKey] = this.db_result;
 
             this.setDisplayInfo(this.itemsPerPage);
@@ -216,7 +240,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             this.isloading = false;
           });
       } else {
-        // replace api when database change. An we need to add profileId to json data.
         // res = this.archApi
         //   .getAllArchieve()
         //   .subscribe((datas: any) => {
@@ -304,7 +327,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       return element === '';
     });
 
-    console.log(empty);
     //reset db
     this.getNonFilterData('filterPanel');
     if (!empty) {
@@ -434,7 +456,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.searchBar();
   }
 
-  //to-do: might need to test when more data is avalible
+  /**
+   * This method adds comma seperators for each thousand numbers.
+   * Used for displaying the total number of search results.
+   */
   thousandsSeperator() {
     this.db_result_thousands_seperator = this.db_result.length
       .toString()
