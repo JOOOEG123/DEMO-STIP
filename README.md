@@ -44,6 +44,6 @@ Browse Page: related files are under /pages/browse/.
 4. The searching speed/performance can be improved. (Related files: main-browse)
 
 
-6. Import Chinese json data into Google Firebase database with API calls, the json files are in another repository: summer-team-impact-2022/python/cn_json/
+6. Import Chinese json data into Google Firebase database with Firebase API calls, please ask professor Shanshan Cui for the json data. Firebase is giving 'invalid json file' error when trying to upload the json file to Firebase, the one way to import the data is to use the Firebase API to import json data programmically. 
 
   
