@@ -93,8 +93,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   ) {}
 
   /**
-   * An initilizer to reset varaiables to initial states. 
-   * @param letter letters from A to Z and "All" 
+   * An initilizer to reset varaiables to initial states.
+   * @param letter letters from A to Z and "All"
    */
   initLetter(letter) {
     this.currentPage = 1;
@@ -121,7 +121,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
         .subscribe((translations) => {
           this.searchSelect = translations['archive.archive_searchbar_all'];
         });
-      // clean up cache, so different languages can use the cache. 
+      // clean up cache, so different languages can use the cache.
       this.ngOnDestroy();
       this.initLetter('All');
     });
@@ -136,7 +136,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * This method reacts to changes of different items per page changes, 
+   * This method reacts to changes of different items per page changes,
    * re-display the number of items on the front-screen.
    */
   itemPerPageChanged() {
@@ -148,8 +148,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * This methods calculates persons'documents to display on the screen. 
-   * @param startItemsPerPage 
+   * This methods calculates the start and the end of which persons'documents to display on the screen.
+   * @param startItemsPerPage
    */
   setDisplayInfo(startItemsPerPage: number) {
     var start = (this.currentPage - 1) * startItemsPerPage;
@@ -162,6 +162,11 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * This method works with the pagination changes.
+   * @param event
+   * @param letter
+   */
   pageChanged(event: any, letter: string) {
     if (!this.letter_changed) {
       this.currentPage = event.page;
@@ -174,6 +179,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.letter_changed = false;
   }
 
+  /**
+   * This methods reacts to the change of different "letter" buttons click
+   * @param letter Letters from A to Z, and "All"
+   */
   lettersBtnClickOrReset(letter: string) {
     this.currentLetter = letter;
 
@@ -202,6 +211,11 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * This methods helps to fetch data using API calls from Firebase.
+   * For efficiency, fetched data would get placed into "cache"
+   * @param letter Letters from A to Z, and "All"
+   */
   callAPI(letter: string) {
     //clear up display
     this.display = [];
@@ -263,6 +277,9 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * This method is responsible for the searching trigged by search bar.
+   */
   searchBar() {
     this.browseSearchFilterComponent?.clear();
     const userValues = this.searchInput.split(' ');
@@ -278,7 +295,6 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
           this.searchSelect == '所有信息栏'
         ) {
           Object.values(record).forEach((element) => {
-            // console.log('testing', element);
             res =
               res ||
               this.containKeyword(
@@ -322,6 +338,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.setDisplayInfo(this.itemsPerPage);
   }
 
+  /**
+   * This method is responsible for the searching triggered by the filter panel under search browse page.
+   * @param valueEmitted
+   */
   filterValueschanges(valueEmitted: any) {
     const empty = Object.values(this.filterValues).every((element) => {
       return element === '';
@@ -346,6 +366,11 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     this.setDisplayInfo(this.itemsPerPage);
   }
 
+  /**
+   * This is a helper function used by filterValueschanges()
+   * @param valuesAttr
+   * @param userValues
+   */
   filterByFilterValues(valuesAttr: any[], userValues: any[]) {
     this.db_result = this.db_result.filter((record): boolean => {
       var values: any = [];
@@ -366,8 +391,13 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * This is a helper function used to check whether a person's document contain certain keywords.
+   * @param word
+   * @param keyword
+   * @returns
+   */
   containKeyword(word: any, keyword: any) {
-    // console.log('---------------------', word, keyword);
     let res;
 
     if (this.currentLanguage == 'en') {
@@ -389,6 +419,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
     return res;
   }
+  /**
+   * Used to check whether a year fall in a date range.
+   * Used for the filter panel for checking beacoming righist year.
+   * @param record
+   * @returns
+   */
   getYearBecameRightist(record: any) {
     let res = true;
 
@@ -401,6 +437,12 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
     return res;
   }
+  /**
+   * restore Non-filtered data. There are two types of search-search bar and the filter panel.
+   * The search bar takes the more priorities than the filter panel, so the old search reuslts would
+   * get restored if the user click "Clear" button on search panel.
+   * @param dataType
+   */
   getNonFilterData(dataType: string) {
     if (dataType === 'searchBar') {
       this.db_result = this.original;
@@ -409,6 +451,10 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Used as a pair with getNonFilterData(). Just like normal get and set methods.
+   * @param dataType
+   */
   setNonFilterData(dataType: string) {
     if (dataType === 'searchBar') {
       this.original = JSON.parse(JSON.stringify(this.db_result));
@@ -417,6 +463,11 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * This methods is responsible for the changes of the dropdown on the right os the search bar.
+   * It allows to reassign the searching attributes for a person's document.
+   * @param display
+   */
   onOpenChange(display: string) {
     this.searchSelect = display;
 
