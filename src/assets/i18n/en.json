@@ -464,13 +464,13 @@
     "content": "Contents",
     "upload_photo": "Upload a photo",
     "clear_photo": "Clear photo",
+    "choose_file": "Choose file",
+    "no_file_chosen": "No file chosen",
+    "dropdown_default": "-- Select an option --",
     "title": "Title",
-    "detail": "Details",
+    "detail": "Detail",
+    "source": "Source",
     "image_cat": "Image category",
-    "people": "People",
-    "media": "Media",
-    "camps": "Camps",
-    "other": "Other",
     "include": "Include this image in gallery",
     "add": "Add Another Image",
     "remove": "Remove",
@@ -486,18 +486,50 @@
     "upload": "Upload",
     "detail_edit": "Detailed/Edit Contribution",
     "name": "Name",
-    "occupation": "Occupation",
-    "birth_year": "Birth of Year",
+    "occupation": "Profession",
+    "workplace": "Workplace",
+    "birth_year": "Year Of Birth",
+    "death_year": "Year of Death",
     "rightist_year": "\"Rightist\" Year",
     "ethnicity": "Chinese Ethnic Group",
     "gender": "Gender",
-
-    "gender_male": "Male",
-    "gender_female": "Female",
     "status": "Status",
-    "status_alive": "Alive",
-    "status_death": "Deceased",
+
     "clear": "Clear",
+
+    "placeholder": {
+      "name_placeholder": "Full Name",
+      "other_name_placeholder": "Full Name in Chinese",
+      "profession_placeholder": "Profession",
+      "other_profession_placeholder": "Profession in Chinese",
+      "workplace_placeholder": "Workplace",
+      "other_workplace_placeholder": "Workplace in Chinese",
+
+      "add_content_placeholder": "Add content/description here...",
+      "other_add_content_placeholder": "Content/Description in Chinese",
+
+      "event_content_description_placeholder": "Add Event Details here...",
+      "other_event_content_description_placeholder": "Event Details in Chinese",
+
+      "memoir_title_placeholder": "Add Memoir Title here...",
+      "other_memoir_title_placeholder": "Memoir Title in Chinese",
+
+      "memoir_author_placeholder": "Add author here..",
+      "other_memoir_author_placeholder": "Memoir Author in Chinese",
+
+      "memoir_content_placeholder": "Add Memoir Content here...",
+      "other_memoir_content_placeholder": "Memoir Content in Chinese",
+
+      "image_title_placeholder": "Image Title",
+      "other_image_title_placeholder": "Image Title in Chinese",
+
+      "image_detail_placeholder": "Image Detail",
+      "other_image_detail_placeholder": "Image Detail in Chinese",
+
+      "image_source_placeholder": "Image Source",
+      "other_image_source_placeholder": "Image Source in Chinese"
+    },
+
     "add_content": "Add Content",
     "event_content": "Event year and event content",
     "event_year": " Year of event",
@@ -507,14 +539,8 @@
     "author": "Author",
     "submit": "Submit",
     "content_description": "Content/Discription",
-    "add_memoir": "Add Memoir",
+    "add_memoir": "Add Memoir"
 
-    "name_placeholder": "Full Name",
-    "add_content_placeholder": "Add content/description here...",
-    "event_content_description_placeholder": "Add event details here...",
-    "title_placeholder": "Add title here...",
-    "author_placeholder": "Add author here..",
-    "content_description_placeholder": "Add memoir here..."
   }, 
   "terms":{
       "privacy":"PRIVACY POLICY",
