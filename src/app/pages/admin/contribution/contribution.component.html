@@ -7,9 +7,7 @@
       <p class="card-text m-0">
         Occupation:
         <span class="fw-bold text-capitalize">{{
-          contribution.rightist.job
-            ? contribution.rightist.job
-            : "-"
+          contribution.rightist.job ? contribution.rightist.job : "-"
         }}</span>
       </p>
       <p class="card-text m-0">
@@ -32,15 +30,21 @@
   <div
     class="col-6 d-flex flex-column align-items-start justify-content-center my-4"
   >
-    <div *ngIf="contribution.rightist.events; else template">
-      <div *ngFor="let event of contribution.rightist.events | slice: 0:limit">
+    <div *ngIf="contribution.rightist.description; else template">
+      <div>
+        {{ contribution.rightist.description | slice: 0:limit
+        }}<span *ngIf="contribution.rightist.description.length > limit"
+          >...</span
+        >
+      </div>
+      <!-- <div *ngFor="let event of contribution.rightist.events | slice: 0:limit">
         <span
           >In {{ event.startYear | date: "yyyy" }},
           {{ event.event.substring(0, 49)
           }}<span *ngIf="event.event.length > 50">...</span></span
         >
       </div>
-      <div *ngIf="contribution.rightist.events.length > limit">...</div>
+      <div *ngIf="contribution.rightist.events.length > limit">...</div> -->
     </div>
   </div>
 
@@ -69,8 +73,7 @@
       *ngIf="contribution.publish === 'approved'"
     >
       <button class="btn btn-transparent">
-        <a
-          routerLink="/browse/main/memoir/{{ contribution.rightistId }}"
+        <a routerLink="/browse/main/memoir/{{ contribution.rightistId }}"
           >>> Profile
         </a>
       </button>

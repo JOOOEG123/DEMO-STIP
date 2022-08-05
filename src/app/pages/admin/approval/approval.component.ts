@@ -8,8 +8,6 @@ import {
 } from '@angular/animations';
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { RSA_X931_PADDING } from 'constants';
-import { timeThursday } from 'd3';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { forkJoin, mergeMap, Subscription, zip } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
@@ -72,9 +70,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   disabled: boolean = false;
   modalRef?: BsModalRef;
 
-  contributionSubcription?: Subscription;
-  rightistSubscription?: Subscription;
-
   contributions: any[] = [];
   publish: Publish = 'new';
   isLoaded: boolean = false;
@@ -119,109 +114,109 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!
+    this.language = localStorage.getItem('lang')!;
     this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
 
     this.languageSubscription = this.translate.onLangChange.subscribe(
       (langChange: any) => {
+        this.sub.forEach((x) => x.unsubscribe());
+        this.sub.length = 0;
         this.language = langChange.lang;
         this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
-
-        this.sub.forEach(x => x.unsubscribe())
-        this.sub.length = 0
-        this.initialize()
+        this.initialize();
       }
     );
 
-    this.initialize()
+    this.initialize();
   }
 
   initialize() {
-    this.contributionSubcription = this.contributionAPI
-      .fetchAllContributions(this.language)
-      .subscribe((data: any) => {
-        console.log(data);
-        this.contributions.length = 0;
-        this.newContributions.length = 0;
-        this.approvedContributions.length = 0;
-        this.rejectedContributions.length = 0;
-        const test: ContributionJson[] = Object.values(data);
-        for (let lol of test) {
-          for (const contribution of Object.values(lol)) {
-            this.contributions.push(contribution);
+    this.sub.push(
+      this.contributionAPI
+        .fetchAllContributions(this.language)
+        .subscribe((data: any) => {
+          console.log(data);
+          this.contributions.length = 0;
+          this.newContributions.length = 0;
+          this.approvedContributions.length = 0;
+          this.rejectedContributions.length = 0;
+          const test: ContributionJson[] = Object.values(data);
+          for (let lol of test) {
+            for (const contribution of Object.values(lol)) {
+              this.contributions.push(contribution);
+            }
           }
-        }
 
-        this.contributions.sort(function (a, b) {
-          return (
-            new Date(b.lastUpdatedAt).getTime() -
-            new Date(a.lastUpdatedAt).getTime()
-          );
-        });
-
-        console.log(this.contributions);
-
-        for (let contribution of this.contributions) {
-          let data: Contribution = {
-            ...contribution,
-            lastUpdatedAt: new Date(contribution.lastUpdatedAt),
-            contributedAt: new Date(contribution.contributedAt),
-            approvedAt: new Date(contribution.approvedAt),
-            state: 'void',
-          };
-
-          if (data.rightist) {
-            data.rightist!.lastUpdatedAt = new Date(
-              data.rightist!.lastUpdatedAt
+          this.contributions.sort(function (a, b) {
+            return (
+              new Date(b.lastUpdatedAt).getTime() -
+              new Date(a.lastUpdatedAt).getTime()
             );
+          });
+
+          console.log(this.contributions);
+
+          for (let contribution of this.contributions) {
+            let data: Contribution = {
+              ...contribution,
+              lastUpdatedAt: new Date(contribution.lastUpdatedAt),
+              contributedAt: new Date(contribution.contributedAt),
+              approvedAt: new Date(contribution.approvedAt),
+              state: 'void',
+            };
+
+            if (data.rightist) {
+              data.rightist!.lastUpdatedAt = new Date(
+                data.rightist!.lastUpdatedAt
+              );
+            }
+
+            if (contribution.publish == 'new') {
+              console.log(data);
+              this.newContributions.push(data);
+            }
+
+            if (contribution.publish == 'approved') {
+              this.sub.push(
+                this.archiveAPI
+                  .getRightistById(this.language, data.rightistId)
+                  .subscribe((rightist: any) => {
+                    // console.log(rightist);
+                    this.sub.push(
+                      this.imageAPI
+                        .getImage(this.language, rightist.imageId)
+                        .subscribe((image: any) => {
+                          data.rightist = rightist;
+                          data.image = image;
+                          this.loaded = true;
+                        })
+                    );
+                  })
+              );
+              this.approvedContributions.push(data);
+            }
+
+            if (contribution.publish == 'rejected') {
+              this.rejectedContributions.push(data);
+            }
           }
 
-          if (contribution.publish == 'new') {
-            this.newContributions.push(data);
-          }
+          console.log(this.approvedContributions);
 
-          if (contribution.publish == 'approved') {
-            this.sub.push(
-              this.archiveAPI
-                .getRightistById(this.language, data.rightistId)
-                .subscribe((rightist: any) => {
-                  console.log(rightist);
-                  this.sub.push(
-                    this.imageAPI
-                      .getImage(this.language, rightist.imageId)
-                      .subscribe((image: any) => {
-                        data.rightist = rightist;
-                        data.image = image;
-                        this.loaded = true;
-                      })
-                  );
-                })
+          this.approvedContributions.sort(function (a, b) {
+            return (
+              new Date(b.lastUpdatedAt).getTime() -
+              new Date(a.lastUpdatedAt).getTime()
             );
-            this.approvedContributions.push(data);
-          }
-
-          if (contribution.publish == 'rejected') {
-            this.rejectedContributions.push(data);
-          }
-        }
-
-        console.log(this.approvedContributions);
-
-        this.approvedContributions.sort(function (a, b) {
-          return (
-            new Date(b.lastUpdatedAt).getTime() -
-            new Date(a.lastUpdatedAt).getTime()
-          );
-        });
-      });
+          });
+        })
+    );
 
     this.selectedContributions = this.newContributions;
     this.activeCategory = 'New Contributions';
   }
 
   ngOnDestroy(): void {
-    this.contributionSubcription?.unsubscribe();
-    this.rightistSubscription?.unsubscribe();
     this.sub.forEach((x) => x.unsubscribe());
     this.languageSubscription?.unsubscribe();
   }
@@ -689,6 +684,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     }
 
     if (data.type == 'other') {
+      console.log(data)
       this.otherUpdatedContribution = {
         ...this.otherUpdatedContribution,
         rightist: {

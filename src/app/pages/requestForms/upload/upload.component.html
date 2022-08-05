@@ -127,7 +127,7 @@
           <span class="text-danger">*</span></label
         >
         <select formControlName="ethnic" class="form-select">
-          <option disabled selected value>-- select an option --</option>
+          <option disabled selected value>{{ "upload.ethnic_default" | translate }}</option>
           <option *ngFor="let ethnic of ethnicGroup">
             {{ ethnic }}
           </option>

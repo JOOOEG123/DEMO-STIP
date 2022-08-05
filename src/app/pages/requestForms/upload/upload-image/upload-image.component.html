@@ -4,12 +4,14 @@
   <img alt="" [src]="url" height="200" width="200" />
   <!-- select photo section -->
   <input
+    id="files"
     *ngIf="!imageDisabled"
     class="form-control w-75"
     type="file"
     (change)="onselectFile($event)"
     formControlName="image"
   />
+  
   <br /><br />
   <button *ngIf="!imageDisabled" class="btn btn-dark" (click)="clearImage()">
     {{ "upload.clear_photo" | translate }}

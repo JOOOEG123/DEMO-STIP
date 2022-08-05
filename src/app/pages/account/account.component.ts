@@ -23,6 +23,8 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   language: string = ''
 
+  languageSubscription?: Subscription
+
   constructor(
     public auth: AuthServiceService,
     private storage: StorageApIService,
@@ -33,15 +35,23 @@ export class AccountComponent implements OnInit, OnDestroy {
   ) {}
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.languageSubscription?.unsubscribe()
   }
 
   ngOnInit(): void {
     this.language = localStorage.getItem('lang')!
 
-    this.subscription.push(this.translate.onLangChange.subscribe((langChange: any) => {
-      this.language = langChange
-    }))
+    this.languageSubscription = this.translate.onLangChange.subscribe((langChange: any) => {
+      this.language = langChange.lang
+      this.subscription.forEach(x => x.unsubscribe())
+      this.subscription.length = 0
+      this.initialize()
+    })
 
+    this.initialize()
+  }
+
+  initialize() {
     this.subscription.push(
       this.contributionService.fetchUserContributions(this.language).subscribe((x: any) => {
         this.userContribution = [];

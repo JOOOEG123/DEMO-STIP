@@ -184,19 +184,19 @@
                 {{ profile.gender || "-" | titlecase }}
               </div>
               <div class="col-12 py-2">
-                {{ "archive.ethnic_title" | translate }}:{{
+                {{ "archive.ethnic_title" | translate }}: {{
                   profile.ethnicity || "-"
                 }}
               </div>
               <div class="col-12 py-2">
                 {{ "archive.profession" | translate }}:
-                {{ profile.workplaceCombined || "-" | titlecase }}
+                {{ profile.job || "-" | titlecase }}
               </div>
             </div>
             <div class="col-12 col-md-6 row mt-2">
               <div class="col-12 py-2">
                 {{ "archive.rightist_year_title" | translate }}:
-                {{ profile.righttistYear | date: "yyyy" }}
+                {{ profile.rightistYear | date: "yyyy" }}
               </div>
               <div class="col-12 py-2">
                 {{ "archive.profile_birth_year" | translate }}:
@@ -208,7 +208,7 @@
               </div>
               <div class="col-12 py-2">
                 {{ "archive.profile_death_year" | translate }}:
-                {{ profile.deathYear || "-" }}
+                {{ profile.deathYear | date: "yyyy" || "-" }}
               </div>
             </div>
           </div>
@@ -217,8 +217,11 @@
             <h5 class="col-12 py-2 fw-bold ms-3 mt-2">
               {{ "archive.description" | translate }}:
             </h5>
-            <div class="col-12 py-2 ms-3">
-              {{ profile.description || "-" }}
+            <div *ngIf="profile.source == 'original'" class="col-12 py-2 ms-3">
+              {{ profile.description | slice:1 || "-"  }}
+            </div>
+            <div *ngIf="profile.source == 'contributed'" class="col-12 py-2 ms-3">
+              {{ profile.description || "-"  }}
             </div>
           </div>
           <div class="row border-bottom">
@@ -229,9 +232,15 @@
               class="col-12 ms-3"
               *ngFor="let event of profile?.events || []"
             >
-              In {{ (event.startYear | date: "yyyy") || "unknown" }} --
-              {{ (event.endYear | date: "yyyy") || "unknown" }},
-              {{ event.event[0].toUpperCase() + event.event.substr(1) || "-" }}
+              {{ (event.startYear | date: "yyyy") || "common.unknown" | translate }} --
+              {{ (event.endYear | date: "yyyy") || "common.unknown" | translate }},
+              {{ (event.event | titlecase) || "-" }}
+              <!-- <span *ngIf="language == 'en'">
+                {{ event.event[0] || u }} {{ event.event.substr(1) || "-" }}
+              </span>
+              <span *ngIf="language == 'cn'">
+                {{ event.event || "-" }}
+              </span> -->
             </div>
           </div>
         </div>

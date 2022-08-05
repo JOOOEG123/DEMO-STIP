@@ -56,8 +56,8 @@ export class UploadComponent implements OnInit, OnDestroy {
   url = '';
   minDate: Date = new Date('1940-01-01');
   maxDate: Date = new Date('1965-01-01');
-  minDate2: Date = new Date('1840-01-01');
-  maxDate2: Date = new Date('1950-01-01');
+  minDate2: Date = new Date('1850-01-01');
+  maxDate2: Date = new Date('2050-01-01');
 
   isAdmin: boolean = false;
   imageDisabled: boolean = false;
@@ -217,7 +217,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   descriptionChanged(data: any) {
     this.descriptionChange.emit({
       type: 'original',
-      value: data,
+      value: data
     });
   }
 
@@ -277,9 +277,10 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.genders = LIST_OF_GENDER[this.language];
     this.statuses = LIST_OF_STATUS[this.language];
 
+    this.initialize();
+
     this.languageSubscription = this.translate.onLangChange.subscribe(
       (langChange: any) => {
-        console.log('inside language');
         this.language = langChange.lang;
         this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
 
@@ -299,8 +300,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.authSubscription = this.auth.isAdmin.subscribe((isAdmin: any) => {
       this.isAdmin = isAdmin;
     });
-
-    this.initialize();
   }
 
   initialize() {
@@ -335,6 +334,11 @@ export class UploadComponent implements OnInit, OnDestroy {
                 if (otherContribution.rightist) {
                   this.otherDescription =
                     otherContribution.rightist.description;
+
+                    this.descriptionChange.emit({
+                      type: 'other',
+                      value: this.otherDescription,
+                    });
 
                   this.form.patchValue({
                     otherName: otherContribution.rightist.fullName,
@@ -486,6 +490,11 @@ export class UploadComponent implements OnInit, OnDestroy {
                 })
             );
           } else {
+            this.form.patchValue({
+              gender: 'unknown',
+              status: 'unknown'
+            })
+
             this.sub.push(
               this.form.controls['gender'].valueChanges.subscribe((value) => {
                 let index = this.genders.indexOf(value);
@@ -537,7 +546,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     if (rightist.events) {
       for (const event of rightist.events) {
-        this.eventArray.markAllAsTouched();
         this.eventArray.push(
           new FormGroup({
             startYear: new FormControl(event.startYear),
@@ -547,13 +555,13 @@ export class UploadComponent implements OnInit, OnDestroy {
           })
         );
       }
+      this.eventArray.markAllAsTouched();
     } else {
       this.eventArray.push(this.newEvent());
     }
 
     if (rightist.memoirs) {
       for (const memoir of rightist.memoirs) {
-        this.memoirArray.markAllAsTouched();
         this.memoirArray.push(
           new FormGroup({
             memoirTitle: new FormControl(memoir.memoirTitle),
@@ -565,6 +573,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           })
         );
       }
+      this.memoirArray.markAllAsTouched();
     } else {
       this.memoirArray.push(this.newMemoir());
     }
@@ -731,18 +740,12 @@ export class UploadComponent implements OnInit, OnDestroy {
       otherRightist.initial = name.trim().charAt(0).toUpperCase();
     }
 
-    if (this.language === 'cn') {
-      rightist.initial = otherName.trim().charAt(0).toUpperCase();
-      otherRightist.initial = otherName.trim().charAt(0).toUpperCase();
-    }
-
     console.log(rightist);
     console.log(otherRightist);
     console.log(image);
     console.log(otherImage);
 
     if (this.page === 'account') {
-      rightist.initial = this.rightist!.initial;
 
       if (this.url) {
         image.imagePath = this.url;
@@ -782,7 +785,6 @@ export class UploadComponent implements OnInit, OnDestroy {
               .subscribe((imageUrl: any) => {
                 console.log(imageUrl);
                 rightist.imageId = imageId;
-                otherRightist.imageId = imageId;
 
                 image.imageId = imageId;
                 otherImage.imageId = imageId;
@@ -791,9 +793,10 @@ export class UploadComponent implements OnInit, OnDestroy {
                 otherImage.imagePath = imageUrl;
                 Promise.all([
                   this.archiveAPI.addRightist(this.language, rightist),
-                  this.archiveAPI.addRightist(
+                  this.archiveAPI.updateRightistImageId(
                     this.otherLanguage,
-                    otherRightist
+                    rightist.rightistId,
+                    imageId
                   ),
                   this.imageAPI.addImage(this.language, image),
                   this.imageAPI.addImage(this.otherLanguage, otherImage),
