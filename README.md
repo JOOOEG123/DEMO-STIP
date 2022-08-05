@@ -42,5 +42,6 @@ Browse Page: related files are under /pages/browse/.
 2. Data Standerdanization for the "Occupations" for both Chinese and English is needed, and ngx-translation for both languages is not implemented. Suggested tool: OpenRefine. 
 3. "Sorted by relevance" is not implemented. This should happends after each search. Currently, the search results are sorted based on the order of the last name. 
 4. The searching speed/performance can be improved. 
+5. Import Chinese json data into Google Firebase database, the json files are in another repository: summer-team-impact-2022/python/cn_json/
 
   
