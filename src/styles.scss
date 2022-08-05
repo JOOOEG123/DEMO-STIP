@@ -3,6 +3,26 @@
 @import "./styles/btnImage.scss";
 @import "./styles/colors.scss";
 
+/* You can add global styles to this file, and also import other style files */
+
+
+.browse-list-box {
+  height: 150px;
+  border-radius: 28px;
+  color: black;
+  text-decoration: none;
+  background-color: #d4e0df;
+}
+.browse-text-color {
+  color: $dark-green
+}
+.browse-text-color-two {
+  color: grey
+}
+.bg-light-white{
+  background-color:$light-white
+}
+
 .bg-image-blue {
   .bg-colors {
     background-color: $jade;

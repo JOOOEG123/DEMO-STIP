@@ -74,15 +74,15 @@
   },
 
   "request-modify": {
-    "request_to_modify": "请求修改",
-    "Request": "要求",
+    "request_to_modify": "申请修改",
+    "Request": "申请要求",
     "Reason": "原因",
     "Email": "电子邮件",
-    "request_placeholder": "请输入相应的修改",
+    "request_placeholder": "请输入相应修改要求",
     "reason_placeholder": "请输入您修改的原因",
     "email_placeholder": "姓名@例子.com",
     "close": "关闭",
-    "submit": "提交请求"
+    "submit": "提交申请"
   },
 
   "navbar": {
@@ -133,7 +133,8 @@
     "home_searchbar_placeholder": "搜索相关档案",
     "home_featured_title": "“右派”代表",
     "home_history_title": "历史摘要",
-    "home_history_body": "反右运动“是中国共产党 (1957-1959) 对知识分子进行再教育、羞辱、监禁和处决的两年时期。这场运动的许多受害者是“自由市场改革的早期倡导者”, 而且许多人是根据在该运动之前的竞选 动中的参与而被选中的; 百花运动 (factsanddetails.com, 2016 年)。在百花运动 (1956-1957) 期间, 共产党主席毛泽东鼓励中国公民以有争议的方式为中共发声, 并允许“批评政府” (factsanddetails.com, 2016)。毛泽东提出了“艺术'百花盛开', 科学'百家争鸣'”(factsanddetails.com, 2016)。毛泽东在收到对中共的大量批评后, 转身以惩罚那些说是因为他们对中共不忠而在他们的国家造成不团结的人，从而开始了反“右”运动。虽然反“右”运动本身只持续了两年，但人数死亡事件从未完全得到证实，许多幸存者在运动结束后被关进劳改营。该数据库致力于通过展示受害的“右翼分子”来向公众宣传这场运动并促进人权和社会正义.",
+    "home_history_body": "中国\"反右\"运动发生在1957到1959年之间，中国共产党对反革命分子进行再教育、侮辱、监禁和处决。这场运动中的许多 \"右派\"人员是 \"自由主义改革的早期倡导者\"。其中，有许多人因为参与百花运动而被判作“右派分子”（factanddetails.com, 2016）。在百花运动（1956-1957年）期间，共产党主席毛泽东提倡中国人民在中国共产党的工作中，“有独立思考的自由，有辩论的自由，有创作和批评的自由，有发表自己的意见、坚持自己的意见和保留自己的意见的自由“，并允许 \"批评政府\"（factanddetails.com，2016）。毛泽东提出 \"对艺术工作主张百花齐放，对学术工作主张百家争鸣\"（factanddetails.com, 2016）。在收到对中国共产党的大量批评后，对于政权不稳固的担忧，毛泽东转而惩罚那些发表意见的人，声称这是由于他们对中国共产党的不忠诚造成了国家的不团结，从而开始了“反右 \"运动。尽管“反右\"运动本身只持续了两年，但死亡人数从未得到完全证实，许多幸存的人在该运动结束多年后被关押在劳改营。我们的档案馆致力于教育公众了解该运动和参与该运动的 \"右派 \"来促进人权和社会公义。参考资料：（2016) 百花运动和反右派运动，收录于2022年，https://factsanddetails.com/china/cat2/sub6/item1153.html。",
+
     "home_timeline": "中国“反右”运动时间轴。",
     "home_learn_movement": "了解更多“反右”运动信息"
   },
@@ -166,11 +167,11 @@
   },
   "about_movement": {
     "about_movement_introduction_title": "1950年-中国反右运动",
-    "about_movement_introduction_body": "反右运动“是中国共产党 (1957-1959) 对知识分子进行再教育、羞辱、监禁和处决的两年时期。这场运动的许多受害者是“自由市场改革的早期倡导者”，而且许多人是因为参与了“双百方针”的政治运动而被划为“右派”的; 百花运动 (factsanddetails.com, 2016 年) 。在百花运动 (1956-1957) 期间, 共产党主席毛泽东鼓励中国公民以有争议的方式为中国共产党提意见, 并允许“批评政府” (factsanddetails.com, 2016) 。毛泽东提出了“艺术'百花齐放'和科学'百家争鸣'的理念” (factsanddetails.com, 2016) 。在受到对中共的大量批评之后，毛泽东转而惩罚那些声称是由于对中共不忠，而在国内造成不团结的人，从而开始了反“右”运动。虽然反“右”运动本身只持续了两年，但死亡人数从未完全确定，许多幸存者在运动结束后被关进劳教所。该数据库致力于向公众宣传这场运动，并通过展示成为该运动的受害者 - “右派”来促进人权和社会正义。",
+    "about_movement_introduction_body": "中国\"反右\"运动发生在1957到1959年之间，中国共产党对反革命分子进行再教育、侮辱、监禁和处决。这场运动中的许多 \"右派\"人员是 \"自由主义改革的早期倡导者\"。其中，有许多人因为参与百花运动而被判作“右派分子”（factanddetails.com, 2016）。在百花运动（1956-1957年）期间，共产党主席毛泽东提倡中国人民在中国共产党的工作中，“有独立思考的自由，有辩论的自由，有创作和批评的自由，有发表自己的意见、坚持自己的意见和保留自己的意见的自由“，并允许 \"批评政府\"（factanddetails.com，2016）。毛泽东提出 \"对艺术工作主张百花齐放，对学术工作主张百家争鸣\"（factanddetails.com, 2016）。在收到对中国共产党的大量批评后，对于政权不稳固的担忧，毛泽东转而惩罚那些发表意见的人，声称这是由于他们对中国共产党的不忠诚造成了国家的不团结，从而开始了“反右 \"运动。尽管“反右\"运动本身只持续了两年，但死亡人数从未得到完全证实，许多幸存的人在该运动结束多年后被关押在劳改营。我们的档案馆致力于教育公众了解该运动和参与该运动的 \"右派 \"来促进人权和社会公义。",
     "about_movement_introduction_button": "查看来源",
     "about_movement_timeline_title": "历史时期",
     "about_movement_timeline_body": "历史时期",
-    "about_movement_learn_more_button": "了解更多此研究项目"
+    "about_movement_learn_more_button": "了解更多该研究项目"
   },
   "project_overview": {
     "first_title": "存档项目概述",
@@ -323,9 +324,9 @@
   "gallery": {
     "gallery_top_title": "图片",
     "gallery_top_cat_one_button": "全部",
-    "gallery_top_cat_two_button": "媒体宣传",
-    "gallery_top_cat_three_button": "劳改营",
-    "gallery_top_cat_four_button": "人物",
+    "gallery_top_cat_two_button": "人物",
+    "gallery_top_cat_three_button": "媒体宣传",
+    "gallery_top_cat_four_button": "劳改营",
     "gallery_top_cat_five_button": "其它",
     "gallery_image_button": "学到更多",
     "placeholder": "搜索图片",
@@ -506,5 +507,29 @@
     "title_placeholder": "请添加标题...",
     "author_placeholder": "请添加作者..",
     "content_description_placeholder": "请添加个人自传..."
-  }
+  }, 
+  "terms":{
+    "privacy":"隐私政策",
+    "terms":"使用条款",
+    "questions":"常见问题解答", 
+    "overview":"概览", 
+    "privacy_para_one":"本隐私政策适用于该中国“反右”运动档案库网站 - https://stip-demo.web.app/home.我们深知个人信息对您的重要性，您的信赖对我们非常重要，我们将严格遵守法律法规要求采取相应的安全保护措施，致力于保护您的个人信息安全可控。 该政策我们会如何收集、使用、共享、存储和保护您的个人信息以及您可以如何管理您的个人信息，以便您更好地作出适当的选择。通过使用我们的网站， 代表您同意隐私政策表示您已了解应用提供的功能，以及功能运行所需的必要个人信息，并给予相应的收集使用授权。在您使用我们的网站时，我们需要/可能需要通过第三方，例如 Facebook 或者其他社交媒体， 收集和使用的您的个人信息。", 
+    "privacy_para_two":"我们的信息收集及使用", 
+    "privacy_para_three":"We collect certain information regarding your use of https://stip-demo.web.app/home, such as your IP address and browser. Your session and the pages you visit on https://stip-demo.web.app/home will be tracked including the name of the domain from which the site was accessed, but you will remain anonymous. We may use your IP address to identify the general geographic area from which you are accessing https://stip-demo.web.app/home. We connect data from different systems but do not link IP addresses to any personal information.",
+    "privacy_para_four":"We collect personal information when you voluntarily provide it to us through account creation. Such information includes your full name, username, birth date, and email address. We use the information we gather from you for systems administration purposes, abuse prevention, and to track user trends. If you send us an email, the email address you provide may be used to send you information, respond to inquiries, and/or other requests or questions. We will not share, sell, or authorize any third party to use your email address for commercial purposes without your permission. In addition, we may also use third-party vendors (such as Google Analytics) to evaluate user information to improve web services or other communications to users.",
+    "privacy_para_five":"Have any questions?", 
+    "privacy_para_six":"",
+    "privacy_note":"NOTE: ", 
+    "privacy_note_para":"This Privacy Policy is subject to changes and alterations at any time.", 
+    "questions_one":"Frequently Asked Questions (FAQs) About “Collections” Use", 
+    "questions_two":"May I share any of the “Rightist” files on my website, blog, or social media?",
+    "questions_three":"Yes, as long as you comply with these Terms of Use.", 
+    "questions_four":"May I use the Chinese Rightist Archive's logo on my website?", 
+    "questions_five":"No, you may not use our website's logo or other trademarks without written permission from the head Admin of the Chinese Rightist Archive website. Exceptions may apply if the logo is already integrated into the documents and other content within the Chinese Rightist Archive website which is made available for sharing through embedded links.", 
+    "questions_six":"May I use the “Rightist” documents in a research paper, lesson/lecture plans, or other class work?", 
+    "questions_seven":"Yes, we encourage you to quote, describe, and share the “Rightist” file in your research or other class project as long as you comply with these Terms of Use. Please note that some uses of our documents in class work may be considered fair use under copyright law, and it is your responsibility to determine if your use constitutes fair use. The Chinese Rightist Archive cannot assist you in this determination.", 
+    "questions_eight":"Can I contribute information about a Chinese Rightist to the Chinese Rightist Archive?", 
+    "questions_nine":"The Chinese Rightist Archive allows all account users to contribute content through our “New Rightist Contribution” upload page under Account home. You must create an account first before you upload.", 
+    "questions_ten":" Have any questions?"
+}
 }
