@@ -71,15 +71,15 @@
   },
   "research": {
     "overview": "Archive Project Overview",
-    "overview_body": "...",
+    "overview_body": "The purpose of this project was to build a web-based digital archive based on the collection of documents, testimonials, biography, and images of Chinese intellectuals who were accused of being against the government during the Chinese Anti-Rightist Movement from 1957 to 1959. While our research project contains over 40,000 files of structured and unstructured Chinese data, it’s only a small portion of the millions of lives that were affected by this campaign. Furthermore, this archival collection focuses on making the “Rightist” collection accessible and searchable to the public by utilizing computational archival science (CAS) methods and design methodology from the field of Human-Computer Interaction (HCI).",
     "research_found": "Research and what we found",
-    "research_body": "...",
-    "data1": "Data",
-    "data2": "Data",
-    "data1_body": "...",
-    "data2_body": "...",
+    "research_body": "After the development team translated and data fetch the Chinese data of more than 40,000 “Rightist” documents, our team found that the data focuses on the demographics of the people that were labeled as Rightists. Although the documents collectively reveal “unknown” fields, the notable variables that contain the most information are under the 'Gender' and 'Year of becoming a Rightist' attributes with 39,949 records generated.",
+    "data1": "Year someone became a “Rightist”",
+    "data2": "Gender",
+    "data1_body": "Based on the data extracted, this bar graph illustrates the number of labeled “Rightists” during the Anti-Rightist Movement between the years 1957 and 1959. There is also an additional field for those with no information labeled as unknown. While there are 27.84% of unknown values of 1,121 individuals, most Chinese intellectuals were labeled as “Rightists” at the start of the movement in 1957 with 67.14% of 26,823 individuals. In comparison to1959, only 0.19% of 76 individuals were marked as Rightists. This data will be combined with real-time updates of new contributed files made by account users in the indefinite future.",
+    "data2_body": "According to the 39,949 records we have data fetched for the Gender attribute, 29.02% of 11,595 individuals were male while 3.33% of 1,329 individuals were female. There are 67.65% unknown values for the 27,025 individuals that were left undetermined. From the pie chart, it is likely that many of the 'unknown' Rightists could potentially be male due to the high value of males compared to females. This data will be combined with real-time updates of new contributed files made by account users in the indefinite future.",
     "summary": "Summary",
-    "summary_body": "...",
+    "summary_body": "Overall, the data from the large-scale curation and archival collection is still a work in progress. The current completed data, however, demonstrates that there are more males documented during the movement than females who were identified as “Rightists” by the Chinese Communist Party. Moreover, our dataset contains more output information about Chinese intellectuals at the start of the movement than at the end.",
     "team_button": "Meet the team behind the research"
   },
   "resources": {
