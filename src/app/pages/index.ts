@@ -60,7 +60,7 @@ export const pagesComponents = [
   UploadComponent,
   RepositoryComponent,
   RequestModifyComponent,
-  TermsContributionComponent
+  TermsContributionComponent,
 ];
 
 // Page routes
@@ -160,7 +160,6 @@ export const pagesRoutes = [
     },
   },
   {
-
     path: 'meetTeam',
     component: AboutTeamComponent,
     canActivate: [AngularFireAuthGuard],
@@ -182,14 +181,13 @@ export const pagesRoutes = [
     canActivate: [AngularFireAuthGuard],
     data: {
       title: 'research',
-      },
+    },
   },
   {
     path: 'request-modify',
     component: RequestModifyComponent,
     data: {
       title: 'request-modify',
-
     },
   },
   {
