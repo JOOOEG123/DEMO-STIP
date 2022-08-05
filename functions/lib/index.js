@@ -15,7 +15,6 @@ const app = express();
 app.use(cors({ origin: true }));
 app.post('/', (_req, res) => res.status(200).send('Hello World!'));
 app.post('/allArchies', archiveController_1.allArchies);
-// exports.sendMail = sendMail;
 exports.modifyRightistRequest = emailController_1.modifyRightistRequest;
 exports.sendMailApprovedRejectNotificationContribution = emailController_1.sendMailApprovedRejectNotificationContribution;
 exports.contactUs = emailController_1.contactUs;

@@ -16,7 +16,6 @@ app.use(cors({origin: true}));
 app.post('/', (_req, res) => res.status(200).send('Hello World!'));
 app.post('/allArchies', allArchies);
 
-// exports.sendMail = sendMail;
 exports.modifyRightistRequest = modifyRightistRequest;
 exports.sendMailApprovedRejectNotificationContribution = sendMailApprovedRejectNotificationContribution;
 exports.contactUs = contactUs;
