@@ -16,7 +16,6 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { FilterTypes } from 'src/app/core/types/filters.type';
 import { LETTERS } from './main-browse.constant';
 import { BrowseSearchFilterComponent } from 'src/app/pages/browse/browse-search-filter/browse-search-filter.component';
-import { BsDropdownModule, BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -39,6 +38,8 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
   letters = LETTERS;
   maxPage = 1;
   olditemsPerPage = 30;
+
+  loadPerClick = 10;
 
   //variables for search functionalities
   @Input() db_result: any[] = [];
@@ -97,7 +98,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
    * @param letter letters from A to Z and "All"
    */
   initLetter(letter) {
-    this.currentPage = 1;
+    // this.currentPage = 1;
     this.currentLetter = letter;
     this.setDisplayInfo(this.currentPage);
     this.callAPI(letter);
@@ -172,7 +173,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       this.currentPage = event.page;
       this.setDisplayInfo(this.itemsPerPage);
     } else {
-      this.currentPage = 1;
+      // this.currentPage = 1;
       this.currentLetter = letter;
       this.callAPI(letter);
     }
@@ -184,6 +185,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
    * @param letter Letters from A to Z, and "All"
    */
   lettersBtnClickOrReset(letter: string) {
+    this.loadPerClick = 10;
     this.currentLetter = letter;
 
     if (this.currentPage == 1) {
@@ -216,12 +218,15 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
    * For efficiency, fetched data would get placed into "cache"
    * @param letter Letters from A to Z, and "All"
    */
-  callAPI(letter: string) {
+  callAPI(
+    letter: string = this.currentLetter,
+    loadPerClick = this.loadPerClick
+  ) {
     //clear up display
     this.display = [];
 
     const alpha = letter === 'All' ? '' : letter;
-    const archKey = `person_arch_${letter}`;
+    const archKey = `person_arch_${letter}_${loadPerClick}`;
 
     let res;
     //'from cache data'
@@ -233,14 +238,45 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
       this.setNonFilterData('searchBar');
     } else {
       this.isloading = true;
-      if (letter === 'All') {
+      if (
+        letter === 'All' ||
+        !this.archCacheAPI[`person_arch_All__${loadPerClick}`]
+      ) {
         // replace api when database change. An we need to add profileId to json data.
         res = this.archApi
-          .getAllArchieve(this.currentLanguage)
+          .getAllArchieve(this.currentLanguage, letter, loadPerClick)
           .subscribe((datas: any) => {
-            this.db_result = Object.entries(datas).map(([key, value]: any) => {
-              return { profileId: key, ...value };
+            this.db_result = datas;
+            console.log(datas);
+            datas.forEach((element) => {
+              element.profileId = element.id;
             });
+
+            this.isloading = false;
+
+            if (this.loadPerClick < loadPerClick) {
+              this.loadPerClick = loadPerClick;
+              // document.getElementById('loadMore')!.style.display = 'block';
+
+              setTimeout(() => {
+                // document.getElementById('loadMore')!.style.display = 'none';
+                const page = Math.trunc(
+                  this.db_result.length / this.itemsPerPage
+                );
+                this.currentPage = Math.abs(
+                  this.db_result.length % this.itemsPerPage == 0
+                    ? page
+                    : page + 1
+                );
+                console.log(
+                  this.currentPage,
+                  this.db_result.length,
+                  this.itemsPerPage
+                );
+                document.getElementById('loadMore')!.focus();
+              }, 50);
+            }
+
             this.removeInitialForDesciption();
             this.archCacheAPI[archKey] = this.db_result;
 
@@ -250,17 +286,15 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
             if (this.searchInput) {
               this.searchBar();
             }
-
-            this.isloading = false;
           });
       } else {
         // res = this.archApi
         //   .getAllArchieve()
         //   .subscribe((datas: any) => {
 
-        this.db_result = this.archCacheAPI['person_arch_All'].filter(
-          (r: any) => r.initial == letter
-        );
+        this.db_result = this.archCacheAPI[
+          `person_arch_All__${loadPerClick}`
+        ].filter((r: any) => r.initial == letter);
         this.archCacheAPI[archKey] = this.db_result;
         this.setDisplayInfo(this.itemsPerPage);
         this.setNonFilterData('filterPanel');
@@ -334,7 +368,7 @@ export class MainBrowseComponent implements OnInit, OnDestroy {
 
     //save search bar filtered values
     this.setNonFilterData('filterPanel');
-    this.currentPage = 1;
+    // this.currentPage = 1;
     this.setDisplayInfo(this.itemsPerPage);
   }
 

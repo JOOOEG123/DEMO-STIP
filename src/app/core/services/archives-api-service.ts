@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { TranslateService } from '@ngx-translate/core';
 import { Rightist, RightistSchema } from '../types/adminpage.types';
 
 @Injectable({
@@ -8,20 +9,41 @@ import { Rightist, RightistSchema } from '../types/adminpage.types';
 export class ArchieveApiService {
   user: any;
   cache: any = {};
-  constructor(private db: AngularFireDatabase) {}
+  constructor(
+    private db: AngularFireDatabase,
+    private curr: TranslateService
+  ) {}
 
   /** New API */
-  getAllArchieve(curLan: string) {
-    if (curLan == 'cn') {
-      return this.db.object('/persons/data/cn/rightists').valueChanges();
-    } else {
-      // return this.db.object('/persons/requestArchieve/persons').valueChanges();
-      return this.db.object('/persons/data/en/rightists').valueChanges();
-    }
+  getAllArchieve(curLan: string, initial: string, limit: number = 10) {
+    console.log('getAllArchieve', curLan, initial, limit);
+    return this.db
+      .list(`/persons/data/${this.curr.currentLang}/rightists`, (ref) => {
+        if (initial != 'All') {
+          return ref
+            .limitToFirst(limit)
+            .orderByChild('initial')
+            .equalTo(initial);
+        } else {
+          return ref.limitToFirst(limit);
+        }
+      })
+      .valueChanges();
   }
 
   getArchiveList() {
     return this.db.list('/persons/requestArchieve/persons').valueChanges();
+  }
+
+  SearchKeyByValue(query: string) {
+    return this.db
+      .list(`/persons/data/${this.curr.currentLang}/rightists`, (ref) =>
+        ref
+          .limitToFirst(10)
+          .startAt(`%${query}%`)
+          .endAt(query + '\uf8ff')
+      )
+      .valueChanges();
   }
 
   getPersonById(id: string) {
@@ -192,9 +214,13 @@ export class ArchieveApiService {
       .update({ [rightist.rightistId]: rightist });
   }
 
-  updateRightistImageId(language: string, rightistId: string, newImageId: string) {
+  updateRightistImageId(
+    language: string,
+    rightistId: string,
+    newImageId: string
+  ) {
     return this.db
-    .object(`persons/data/${language}/rightists/${rightistId}`)
-    .update({ imageId: newImageId });
+      .object(`persons/data/${language}/rightists/${rightistId}`)
+      .update({ imageId: newImageId });
   }
 }
