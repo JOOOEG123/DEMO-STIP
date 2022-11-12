@@ -73,7 +73,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
           this.profile = res;
           console.log(res);
 
-          if (res.imageId) {
+          if (res?.imageId) {
             this.sub.push(
               this.images
                 .getImage(this.language!, this.profile.imageId)
@@ -87,7 +87,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
           }
 
           //sorting event based on starting year
-          if (this.profile.events) {
+          if (this.profile?.events) {
             this.profile.events.sort(function (a, b) {
               return (
                 new Date(a.start_year).getTime() -
@@ -131,7 +131,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
   }
 
   replaceNewline() {
-    if (this.profile.memoirs) {
+    if (this.profile?.memoirs) {
       this.profile.memoirs.forEach((element: any, index: number) => {
         this.profile.memoirs[index].memoirContent =
           element.memoirContent.split('\\n');
@@ -218,7 +218,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
                 Promise.all([
                   this.contributionAPI.deleteUserContribution(
                     this.language!,
-                    this.profile.contributorId,
+                    this.profile?.contributorId,
                     contribution.contributionId
                   ),
                   this.contributionAPI.deleteUserContribution(
