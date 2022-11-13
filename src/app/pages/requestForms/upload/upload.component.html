@@ -1,4 +1,3 @@
-<pre>{{ allForms.value | json }}</pre>
 <div *ngIf="!page">
   <h2 class="text-center pb-5 pt-5 mt-5">
     {{ "upload.request_form" | translate }}
@@ -11,7 +10,9 @@
     {{ "upload.detail_edit" | translate }}
   </h3>
   <div class="text-center my-4" *ngIf="page == 'contribution'">
-    <button (click)="onSave()" class="btn btn-primary">{{ 'common.save' | translate }}</button>
+    <button (click)="onSave()" class="btn btn-primary">
+      {{ "common.save" | translate }}
+    </button>
   </div>
 </div>
 
@@ -20,18 +21,9 @@
   <div class="row">
     <div class="col-md-4 ms-5 ps-5">
       <!-- photo upload section -->
-      <!-- <app-upload-image
-        *ngIf="imageLoaded"
-        [page]="page"
-        [imageDisabled]="imageDisabled"
-        [cleared]="cleared"
-        [imageData]="imageData"
-        [otherImageData]="otherImageData"
-        (imageChange)="onImageChange($event)"
-      ></app-upload-image> -->
       <app-upload-images-form
-      formControlName="imagesDetails"
-    ></app-upload-images-form>
+        formControlName="imagesDetails"
+      ></app-upload-images-form>
     </div>
 
     <!-- col for contents input box -->
@@ -46,7 +38,9 @@
             class="form-control"
             id="add_content"
             rows="5"
-            placeholder="{{ 'upload.placeholder.add_content_placeholder' | translate }}"
+            placeholder="{{
+              'upload.placeholder.add_content_placeholder' | translate
+            }}"
             formControlName="content"
             (input)="descriptionChanged($event.target?.['value'])"
           ></textarea>
@@ -55,7 +49,9 @@
             class="form-control"
             id="other_add_content"
             rows="5"
-            placeholder="{{ 'upload.placeholder.other_add_content_placeholder' | translate }}"
+            placeholder="{{
+              'upload.placeholder.other_add_content_placeholder' | translate
+            }}"
             formControlName="otherContent"
             (input)="otherDescriptionChanged($event.target?.['value'])"
           ></textarea>
