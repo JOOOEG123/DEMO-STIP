@@ -14,7 +14,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="{{ 'upload.title_placeholder' | translate }}"
+          placeholder="{{ 'upload.placeholder.memoir_title_placeholder' | translate }}"
           [id]="'memoir_title' + i"
           formControlName="memoirTitle"
         />
@@ -29,7 +29,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="{{ 'upload.title_placeholder' | translate }}"
+          placeholder="{{ 'upload.placeholder.other_memoir_title_placeholder' | translate }}"
           [id]="'other_memoir_title' + i"
           formControlName="otherMemoirTitle"
         />
@@ -43,7 +43,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="{{ 'upload.author_placeholder' | translate }}"
+          placeholder="{{ 'upload.placeholder.memoir_author_placeholder' | translate }}"
           [id]="'memoir_author' + i"
           aria-describedby="basic-addon1"
           formControlName="memoirAuthor"
@@ -59,7 +59,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="{{ 'upload.author_placeholder' | translate }}"
+          placeholder="{{ 'upload.placeholder.other_memoir_author_placeholder' | translate }}"
           [id]="'other_memoir_author' + i"
           aria-describedby="basic-addon1"
           formControlName="otherMemoirAuthor"
@@ -77,7 +77,7 @@
           class="form-control"
           [id]="'memoir_content' + i"
           placeholder="{{
-            'upload.content_description_placeholder' | translate
+            'upload.placeholder.memoir_content_placeholder' | translate
           }}"
           rows="5"
           formControlName="memoirContent"
@@ -96,7 +96,7 @@
           class="form-control"
           [id]="'other_memoir_content' + i"
           placeholder="{{
-            'upload.content_description_placeholder' | translate
+            'upload.placeholder.other_memoir_content_placeholder' | translate
           }}"
           rows="5"
           formControlName="otherMemoirContent"
@@ -130,7 +130,7 @@
       placement="auto"
       class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
     >
-      {{ "upload.add_event" | translate }}
+      {{ "upload.add_memoir" | translate }}
 
       <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
     </button>
