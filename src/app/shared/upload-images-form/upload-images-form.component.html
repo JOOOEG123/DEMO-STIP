@@ -54,7 +54,9 @@
             type="text"
             class="form-control w-75"
             id="imageTitle"
-            placeholder="{{ 'upload.what_tooltip' | translate }}"
+            placeholder="{{
+              'upload.placeholder.image_title_placeholder' | translate
+            }}"
             formControlName="imageTitle"
           />
         </div>
@@ -69,7 +71,9 @@
             type="text"
             class="form-control w-75"
             id="otherImageTitle"
-            placeholder="{{ 'upload.what_tooltip' | translate }}"
+            placeholder="{{
+              'upload.placeholder.other_image_title_placeholder' | translate
+            }}"
             formControlName="otherImageTitle"
           />
         </div>
@@ -86,7 +90,9 @@
             class="form-control w-75"
             id="imageDetails"
             rows="3"
-            placeholder="{{ 'upload.add_description' | translate }}"
+            placeholder="{{
+              'upload.placeholder.image_detail_placeholder' | translate
+            }}"
             formControlName="imageDes"
           ></textarea>
         </div>
@@ -101,7 +107,9 @@
             class="form-control w-75"
             id="otherImageDetails"
             rows="3"
-            placeholder="{{ 'upload.add_description' | translate }}"
+            placeholder="{{
+              'upload.placeholder.other_image_detail_placeholder' | translate
+            }}"
             formControlName="otherImageDes"
           ></textarea>
         </div>
@@ -110,26 +118,34 @@
       <div class="mb-4">
         <div>
           <label for="imageSource" class="form-label"
-            >Source ({{ language | uppercase }})</label
+            >{{
+              "upload.source" | translate
+            }} ({{ language | uppercase }})</label
           >
           <textarea
             class="form-control w-75"
             id="imageSource"
             rows="3"
-            placeholder="Image Source"
+            placeholder="{{
+              'upload.placeholder.image_source_placeholder' | translate
+            }}"
             formControlName="imageSource"
           ></textarea>
         </div>
 
         <div *ngIf="isAdmin">
           <label for="otherImageSource" class="form-label"
-            >Chinese Source ({{ otherLanguage | uppercase }})</label
+            >{{
+              "upload.source" | translate
+            }} ({{ otherLanguage | uppercase }})</label
           >
           <textarea
             class="form-control w-75"
             id="otherImageSource"
             rows="3"
-            placeholder="Image Source"
+            placeholder="{{
+              'upload.placeholder.other_image_source_placeholder' | translate
+            }}"
             formControlName="otherImageSource"
           ></textarea>
         </div>

@@ -56,6 +56,7 @@ export class RightistInfoFormComponent
       otherOccupation: [a.otherOccupation || ''],
       rightistYear: [a.rightistYear || '', Validators.required],
       birthYear: [a.birthYear || '', Validators.required],
+      deathYear: [a.deathYear || '', Validators.required],
     });
   }
   form = this.newForm();
