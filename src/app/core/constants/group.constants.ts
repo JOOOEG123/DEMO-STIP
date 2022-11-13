@@ -3,6 +3,31 @@ const LIST_OF_IMAGE_CATEGORIES = {
   cn: ['人们', '媒体', '营地', '其他'],
 };
 
+const ObJ_OF_STATUS = {
+  en: {
+    'Alive': '活',
+    'Deceased': '死者',
+    'Unknown': '未知',
+  },
+  cn: {
+    '活': 'Alive',
+    '死者': 'Deceased',
+    '未知': 'Unknown',
+  }
+}
+
+const ObJ_OF_GENDERS = {
+  en: {
+    'Male': '男性',
+    'Female': '女性',
+  },
+  cn: {
+    '男性': 'Male',
+    '女性': 'Female'
+  }
+}
+
+
 const ETHNIC_GROUP_CONSTANTS = {
   en: [
     'Han',
@@ -130,7 +155,7 @@ const LIST_OF_GENDER = {
   en: ['male', 'female', 'unknown'],
   cn: ['男性', '女性', '未知'],
 };
-  
+
 const LIST_OF_STATUS = {
   en: ['alive', 'deceased', 'unknown'],
   cn: ['活', '死者', '未知'],
@@ -141,4 +166,6 @@ export {
   LIST_OF_GENDER,
   LIST_OF_STATUS,
   LIST_OF_IMAGE_CATEGORIES,
+  ObJ_OF_GENDERS,
+  ObJ_OF_STATUS
 };
