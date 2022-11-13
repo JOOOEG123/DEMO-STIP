@@ -20,10 +20,12 @@ const ObJ_OF_GENDERS = {
   en: {
     'Male': '男性',
     'Female': '女性',
+    'Unknown': '未知',
   },
   cn: {
     '男性': 'Male',
-    '女性': 'Female'
+    '女性': 'Female',
+    '未知': 'Unknown',
   }
 }
 
@@ -89,6 +91,11 @@ const ETHNIC_GROUP_CONSTANTS = {
     'Unknown',
     'Naturalized Citizen',
   ],
+  en_cn: {
+    'Han':'汉族',
+    'Zhuang':'壮族',
+    'Hui': '回族'
+  },
   cn: [
     '汉族',
     '壮族',
@@ -152,12 +159,12 @@ const ETHNIC_GROUP_CONSTANTS = {
 };
 
 const LIST_OF_GENDER = {
-  en: ['male', 'female', 'unknown'],
+  en: ['Male', 'Female', 'Unknown'],
   cn: ['男性', '女性', '未知'],
 };
 
 const LIST_OF_STATUS = {
-  en: ['alive', 'deceased', 'unknown'],
+  en: ['Alive', 'Deceased', 'Unknown'],
   cn: ['活', '死者', '未知'],
 };
 

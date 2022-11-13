@@ -158,7 +158,9 @@ export class RightistInfoFormComponent
     this.otherStatuses = LIST_OF_STATUS[this.otherLanguage];
   }
   radioChange(key: string, otherKey: string, obj: any) {
+    console.log(key, otherKey, obj);
     this.form.get(otherKey)!.setValue(obj[this.form.value[key]]);
+    console.log(this.form.value)
   }
   patchChange(key: string, otherKey: string) {
     this.form.get(otherKey)!.setValue(this.form.get(key)!.value);

@@ -31,6 +31,11 @@ import {
 } from 'src/app/core/types/adminpage.types';
 import { UUID } from 'src/app/core/utils/uuid';
 
+type langType = {
+  en: Contribution;
+  cn: Contribution;
+};
+
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -40,6 +45,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   private _contribution!: Contribution;
   contributionId!: string;
   rightist?: Rightist;
+
 
   ethnicGroup: string[] = [];
   genders: string[] = [];
@@ -70,12 +76,24 @@ export class UploadComponent implements OnInit, OnDestroy {
     content: [''],
   });
 
+  language = this.translate.currentLang;
+  otherLanguage = this.language === 'en' ? 'cn' : 'en';
+
+  // @Input() get contribution() {
+  //   return this._contribution;
+  // }
+  // set contribution(contribution: Contribution) {
+  //   if (contribution.rightist) {
+  //     this._contribution = contribution;
+  //   }
+  // }
+
   @Input() get contribution() {
-    return this._contribution;
+    return this._contribution[this.language];
   }
   set contribution(contribution: Contribution) {
-    if (contribution.rightist) {
-      this._contribution = contribution;
+    if (contribution?.rightist) {
+      this._contribution[this.language] = contribution;
     }
   }
 
@@ -88,8 +106,8 @@ export class UploadComponent implements OnInit, OnDestroy {
   @Output() descriptionChange: EventEmitter<any> = new EventEmitter();
   @Output() save: EventEmitter<any> = new EventEmitter();
 
-  language: string = '';
-  otherLanguage: string = '';
+  // language: string = '';
+  // otherLanguage: string = '';
 
   languageSubscription?: Subscription;
   authSubscription?: Subscription;
