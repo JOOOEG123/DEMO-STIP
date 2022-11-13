@@ -6,7 +6,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormArray, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription, zip } from 'rxjs';
@@ -61,6 +61,14 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   isAdmin: boolean = false;
   imageDisabled: boolean = false;
+
+  allForms = this.formBuilder.group({
+    event: [],
+    imagesDetails: [],
+    memoir: [],
+    rightist: [],
+    content: [''],
+  });
 
   @Input() get contribution() {
     return this._contribution;
@@ -174,7 +182,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     private archiveAPI: ArchieveApiService,
     private storageAPI: StorageApIService,
     private translate: TranslateService,
-    private contributionAPI: ContributionsService
+    private contributionAPI: ContributionsService,
+    private formBuilder: FormBuilder
   ) {}
 
   clear() {

@@ -18,7 +18,7 @@
           class="form-control"
           id="Name"
           formControlName="name"
-          placeholder="{{ 'upload.name_placeholder' | translate }}"
+          placeholder="{{ 'upload.placeholder.name_placeholder' | translate }}"
         />
       </div>
       <div class="my-2" *ngIf="isAdmin">
@@ -31,7 +31,9 @@
           class="form-control"
           id="otherName"
           formControlName="otherName"
-          placeholder="{{ 'upload.name_placeholder' | translate }}"
+          placeholder="{{
+            'upload.placeholder.other_name_placeholder' | translate
+          }}"
         />
       </div>
     </div>
@@ -54,6 +56,31 @@
         placeholder="YYYY"
         autocomplete="off"
         formControlName="birthYear"
+        [minDate]="minDate2"
+        [maxDate]="maxDate2"
+      />
+    </div>
+    <!-- col for death year -->
+    <div class="col">
+      <label for="deathYear" class="form-label"
+        >{{ "upload.death_year" | translate }}
+        <span class="text-danger">*</span></label
+      >
+      <!-- year selector -->
+      <input
+        [bsConfig]="{
+          startView: 'year',
+          minMode: 'year',
+          dateInputFormat: 'YYYY',
+          showClearButton: true
+        }"
+        bsDatepicker
+        class="form-control"
+        placeholder="YYYY"
+        autocomplete="off"
+        formControlName="deathYear"
+        [minDate]="minDate2"
+        [maxDate]="maxDate2"
       />
     </div>
     <!-- col for occupation -->
@@ -70,7 +97,9 @@
           class="form-control"
           id="occupation"
           formControlName="occupation"
-          placeholder="Occupation"
+          placeholder="{{
+            'upload.placeholder.profession_placeholder' | translate
+          }}"
         />
       </div>
 
@@ -85,7 +114,9 @@
           class="form-control"
           id="otherOccupation"
           formControlName="otherOccupation"
-          placeholder="Other Occupation"
+          placeholder="{{
+            'upload.placeholder.other_profession_placeholder' | translate
+          }}"
         />
       </div>
     </div>
@@ -108,6 +139,8 @@
         placeholder="YYYY"
         autocomplete="off"
         formControlName="rightistYear"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
       />
     </div>
   </div>
@@ -127,7 +160,7 @@
         id="ethnicGroup"
         (change)="patchChange('ethnic', 'otherEthnic')"
       >
-        <option disabled selected value>-- select an option --</option>
+        <option disabled selected value>{{ "upload.dropdown_default" | translate }}</option>
         <option [value]="ethnic" *ngFor="let ethnic of ethnicGroup">
           {{ ethnic }}
         </option>
@@ -159,7 +192,7 @@
           name="gender"
           [id]="gender"
         />
-        <label class="form-check-label" [for]="gender">{{ gender }}</label>
+        <label class="form-check-label" [for]="gender">{{ gender | titlecase }}</label>
       </div>
       <fieldset *ngIf="isAdmin" disabled class="col">
         <div
@@ -174,7 +207,7 @@
             name="otherGender"
             [id]="gender"
           />
-          <label class="form-check-label" [for]="gender">{{ gender }}</label>
+          <label class="form-check-label" [for]="gender">{{ gender | titlecase }}</label>
         </div>
       </fieldset>
     </fieldset>
@@ -198,7 +231,7 @@
           name="status"
           [id]="status"
         />
-        <label class="form-check-label" [for]="status">{{ status }}</label>
+        <label class="form-check-label" [for]="status">{{ status | titlecase }}</label>
       </div>
       <fieldset *ngIf="isAdmin" disabled class="col">
         <div
@@ -213,7 +246,7 @@
             name="otherStatus"
             [id]="status"
           />
-          <label class="form-check-label" [for]="status">{{ status }}</label>
+          <label class="form-check-label" [for]="status">{{ status | titlecase }}</label>
         </div>
       </fieldset>
     </fieldset>

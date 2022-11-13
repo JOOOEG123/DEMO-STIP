@@ -34,6 +34,11 @@ export class RightistInfoFormComponent
   implements OnInit, ControlValueAccessor, Validator
 {
   private _disabled: boolean = false;
+  minDate: Date = new Date('1940-01-01');
+  maxDate: Date = new Date('1965-01-01');
+  minDate2: Date = new Date('1850-01-01');
+  maxDate2: Date = new Date('2050-01-01');
+
   otherEthnicGroup: any;
   Obj_Genders: any;
   Obj_Status: any;
