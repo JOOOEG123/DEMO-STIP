@@ -39,7 +39,9 @@
         class="form-control"
         [id]="'event_content' + i"
         rows="5"
-        placeholder="Add event details here..."
+        placeholder="{{
+          'upload.placeholder.event_content_description_placeholder' | translate
+        }}"
         formControlName="event"
       ></textarea>
 
@@ -49,7 +51,9 @@
           class="form-control"
           [id]="'other_event_content' + i"
           rows="5"
-          placeholder="Add event details here..."
+          placeholder="{{
+            'upload.placeholder.other_event_content_description_placeholder' | translate
+          }}"
           formControlName="otherEvent"
         ></textarea>
       </div>
