@@ -283,13 +283,14 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.isAdmin = data;
         console.log(this.isAdmin);
         this.onInit();
-        this.subLang.push(
-          this.translate.onLangChange.subscribe((data) => {
-            this.language = data.lang;
-            this.otherLanguage = data.lang === 'en' ? 'cn' : 'en';
-            this.onInit();
-          })
-        );
+
+      })
+    );
+    this.subLang.push(
+      this.translate.onLangChange.subscribe((data) => {
+        this.language = data.lang;
+        this.otherLanguage = data.lang === 'en' ? 'cn' : 'en';
+        this.onInit();
       })
     );
 
@@ -333,8 +334,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       console.log(r1, r2);
       if (r1 && r2) {
         this.mapForm(r1, r2);
-      }
-      if (curr && other) {
+      } else if (curr && other) {
         this.mapForm(curr, other);
       }
       this.allForms.patchValue({
@@ -501,7 +501,12 @@ export class UploadComponent implements OnInit, OnDestroy {
       detailJob: '',
       workplace: '',
       workplaceCombined: otherOccupation || '',
-      events: mapOtherEvents(this.allForms.value.event || []),
+      events: (this.allForms.value.event || []).map((e) => {
+        return {
+          startYear: e.startYear || '',
+          event: e.otherEvent || '',
+        };
+      }),
       memoirs: (this.allForms.value.memoir || []).map((m) => {
         return {
           memoirTitle: m.otherMemoirTitle || '',
