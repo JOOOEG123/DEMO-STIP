@@ -1,3 +1,4 @@
+<pre>{{ allForms.value | json }}</pre>
 <div *ngIf="!page">
   <h2 class="text-center pb-5 pt-5 mt-5">
     {{ "upload.request_form" | translate }}
@@ -46,8 +47,8 @@
             id="add_content"
             rows="5"
             placeholder="{{ 'upload.placeholder.add_content_placeholder' | translate }}"
-            [(ngModel)]="description"
-            (ngModelChange)="descriptionChanged($event)"
+            formControlName="content"
+            (input)="descriptionChanged($event.target?.['value'])"
           ></textarea>
           <textarea
             *ngIf="page == 'contribution'"
@@ -55,8 +56,8 @@
             id="other_add_content"
             rows="5"
             placeholder="{{ 'upload.placeholder.other_add_content_placeholder' | translate }}"
-            [(ngModel)]="otherDescription"
-            (ngModelChange)="otherDescriptionChanged($event)"
+            formControlName="otherContent"
+            (input)="otherDescriptionChanged($event.target?.['value'])"
           ></textarea>
         </div>
       </div>
@@ -84,6 +85,7 @@
     <button
       type="button"
       class="btn btn-lg btn-outline-dark me-3 rounded-pill mx-2 px-4"
+      [disabled]="allForms.invalid || isLoading"
       (click)="onSubmit()"
     >
       {{ "upload.submit" | translate }}

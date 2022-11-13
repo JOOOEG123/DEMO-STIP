@@ -36,7 +36,7 @@ export class ContributionComponent implements OnInit {
   @Input() contribution!: Contribution;
   @Input() activeCategory?: Categories;
 
-  @Output() readMore: EventEmitter<Contribution> = new EventEmitter();
+  @Output() readMore: EventEmitter<Contribution | any> = new EventEmitter();
   @Output() rightistNavigation: EventEmitter<Contribution> = new EventEmitter()
 
   // character limit

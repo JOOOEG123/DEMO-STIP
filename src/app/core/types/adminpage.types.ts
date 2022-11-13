@@ -114,6 +114,13 @@ export interface RightistSchema {
 
 export interface Rightist extends RightistSchema {}
 
+export type langType = {
+  en: Contribution;
+  cn: Contribution;
+};
+
+export type ContributionDetails = Contribution & RightistSchema;
+
 export interface RightistJson {
   [rightistId: string]: RightistSchema;
 }
@@ -128,6 +135,7 @@ export interface ContributionSchema {
   lastUpdatedAt: Date;
   contributedAt: Date; // set from the service when creating a new contribution
   approvedAt: Date; // set from the service when approving a contribution
+  rejectedAt?: Date; // set from the service when rejecting a contribution
   notificationMessage?: string; // set from the service when approving a contribution
 }
 

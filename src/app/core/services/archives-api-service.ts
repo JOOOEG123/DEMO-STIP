@@ -6,6 +6,9 @@ import { Rightist, RightistSchema } from '../types/adminpage.types';
   providedIn: 'root',
 })
 export class ArchieveApiService {
+  addOrUpdateRightist(language: string, rightist: RightistSchema): any {
+    throw new Error('Method not implemented.');
+  }
   user: any;
   cache: any = {};
   constructor(private db: AngularFireDatabase) {}
