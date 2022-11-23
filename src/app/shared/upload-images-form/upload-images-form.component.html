@@ -1,0 +1,275 @@
+<div class="form-group rounded shadow p-3 overflow-auto">
+  <h4>{{ "upload.upload_photo" | translate }}</h4>
+  <section
+    class="my-4"
+    *ngFor="
+      let imageForm of controls;
+      let i = index;
+      last as last;
+      first as first
+    "
+  >
+    <form [formGroup]="imageForm">
+      <!-- select photo section -->
+      <div class="d-flex">
+        <button class="main-canvas" (click)="uploadFile.click()">
+          <input
+            type="file"
+            #uploadFile
+            id="profile-image"
+            class="visually-hidden"
+            accept="image/*"
+            formControlName="image"
+            (change)="onselectFile($event, i)"
+          />
+
+          <img
+            *ngIf="imageForm.value!.imageUrl"
+            src="{{ imageForm.value!.imageUrl }}"
+            alt="profile image"
+            class="image"
+            height="400"
+            width="400"
+          />
+          <img
+            *ngIf="!imageForm.value!.imageUrl"
+            src="/assets/homepage/default-profile.png"
+            alt="user"
+            class="image"
+            height="400"
+            width="400"
+          />
+          <div class="middle mt-5">{{ "account.add_photo" | translate }}</div>
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <div>
+          <label for="imageTitle" class="form-label"
+            >{{ "upload.title" | translate }} ({{
+              language | uppercase
+            }})</label
+          >
+          <input
+            type="text"
+            class="form-control w-75"
+            id="imageTitle"
+            placeholder="{{
+              'upload.placeholder.image_title_placeholder' | translate
+            }}"
+            formControlName="imageTitle"
+          />
+        </div>
+
+        <div *ngIf="isAdmin">
+          <label for="otherImageTitle" class="form-label"
+            >{{ "upload.title" | translate }} ({{
+              otherLanguage | uppercase
+            }})</label
+          >
+          <input
+            type="text"
+            class="form-control w-75"
+            id="otherImageTitle"
+            placeholder="{{
+              'upload.placeholder.other_image_title_placeholder' | translate
+            }}"
+            formControlName="otherImageTitle"
+          />
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div>
+          <label for="imageDetails" class="form-label"
+            >{{ "upload.detail" | translate }} ({{
+              language | uppercase
+            }})</label
+          >
+          <textarea
+            class="form-control w-75"
+            id="imageDetails"
+            rows="3"
+            placeholder="{{
+              'upload.placeholder.image_detail_placeholder' | translate
+            }}"
+            formControlName="imageDes"
+          ></textarea>
+        </div>
+
+        <div *ngIf="isAdmin">
+          <label for="otherImageDetails" class="form-label"
+            >{{ "upload.detail" | translate }} ({{
+              otherLanguage | uppercase
+            }})</label
+          >
+          <textarea
+            class="form-control w-75"
+            id="otherImageDetails"
+            rows="3"
+            placeholder="{{
+              'upload.placeholder.other_image_detail_placeholder' | translate
+            }}"
+            formControlName="otherImageDes"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <div>
+          <label for="imageSource" class="form-label"
+            >{{
+              "upload.source" | translate
+            }} ({{ language | uppercase }})</label
+          >
+          <textarea
+            class="form-control w-75"
+            id="imageSource"
+            rows="3"
+            placeholder="{{
+              'upload.placeholder.image_source_placeholder' | translate
+            }}"
+            formControlName="imageSource"
+          ></textarea>
+        </div>
+
+        <div *ngIf="isAdmin">
+          <label for="otherImageSource" class="form-label"
+            >{{
+              "upload.source" | translate
+            }} ({{ otherLanguage | uppercase }})</label
+          >
+          <textarea
+            class="form-control w-75"
+            id="otherImageSource"
+            rows="3"
+            placeholder="{{
+              'upload.placeholder.other_image_source_placeholder' | translate
+            }}"
+            formControlName="otherImageSource"
+          ></textarea>
+        </div>
+      </div>
+
+      <div>
+        <div>
+          <label for="categories"
+            >{{ "upload.image_cat" | translate }} ({{
+              language | uppercase
+            }})</label
+          >
+          <select
+            formControlName="imageCategory"
+            name="imageCategory"
+            id="imageCategory"
+            class="form-select w-75"
+          >
+            <option value="People" selected>{{ "upload.people" | translate }}</option>
+            <option value="Media">{{ "upload.media" | translate }}</option>
+            <option value="Camps">{{ "upload.Camps" | translate }}</option>
+            <option value="Other">{{ "upload.other" | translate }}</option>
+          </select>
+          <!-- <div *ngIf="isAdmin">
+            <input
+              readonly
+              formControlName="otherImageCategory"
+              class="form-control w-75"
+            />
+          </div> -->
+        </div>
+      </div>
+
+      <!-- radio buttons for choosing if user wants to include photo in gallery -->
+      <br />
+      <div *ngIf="isAdmin" class="my-3">
+        <p>
+          {{ "upload.include" | translate }}
+          <img
+            src="assets/upload/icons-question.png"
+            tooltip="Choose to include the photo in website gallery"
+            placement="auto"
+            class="mx-2 shadow rounded-circle p-1"
+            width="30"
+          />
+        </p>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="galleryOptions"
+            id="galleryYes"
+            value="yes"
+            formControlName="imageUpload"
+          />
+          <!-- yes button -->
+          <label class="form-check-label" for="galleryYes">{{
+            "upload.yes" | translate
+          }}</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="galleryOptions"
+            id="galleryNo"
+            value="no"
+            formControlName="imageUpload"
+          />
+          <!-- no button -->
+          <label class="form-check-label" for="galleryNo">{{
+            "upload.no" | translate
+          }}</label>
+        </div>
+      </div>
+
+      <!-- Is Profile-->
+      <div *ngIf="isAdmin">
+        <!-- <pre>{{ imageForm.get('isProfile')!.value }}</pre> -->
+        <div class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="radio"
+            [id]="'imageProfile' + i"
+            name="isProfile"
+            [formControl]="profileControl"
+            [value]="i"
+          />
+          <label class="form-check-label" [for]="'imageProfile' + i"
+            >Select this image as profile</label
+          >
+        </div>
+      </div>
+
+      <br /><br />
+      <!-- <div *ngIf="isWarning && last && page != 'contribution'" class="text-danger h3">
+        Please add {{ title }}
+      </div> -->
+
+      <button
+        type="button"
+        tooltip="Remove this event"
+        placement="auto"
+        *ngIf="!first || !last"
+        class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
+        (click)="remove(i)"
+      >
+        {{ "upload.remove" | translate }}
+
+        <img src="assets/upload/icons-remove.png" class="mx-2" width="30" />
+      </button>
+      <!-- add event button -->
+      <button
+        *ngIf="last"
+        type="button"
+        (click)="addImage()"
+        tooltip="Add another event"
+        placement="auto"
+        class="btn btn-lg btn-outline-dark rounded-pill bg-white text-dark mx-3"
+      >
+        {{ "upload.add_event" | translate }}
+
+        <img src="assets/upload/icons-plus.svg" class="mx-2" width="30" />
+      </button>
+    </form>
+  </section>
+</div>

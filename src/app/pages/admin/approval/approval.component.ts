@@ -18,6 +18,7 @@ import {
   Categories,
   CategoryList,
   Contribution,
+  ContributionDetails,
   ContributionJson,
   ContributionSchema,
   Event,
@@ -52,7 +53,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   selectedContributions: Contribution[] = [];
 
   activeCategory!: Categories;
-  selectedContribution!: Contribution;
+  selectedContribution!: ContributionDetails;
   updatedContribution!: Contribution;
   otherUpdatedContribution!: Contribution;
 
@@ -429,7 +430,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     }
   }
 
-  onReadMore(template: TemplateRef<any>, contribution: Contribution) {
+  onReadMore(template: TemplateRef<any>, contribution: ContributionDetails) {
     this.selectedContribution = contribution;
     this.updatedContribution = { ...contribution };
     this.otherUpdatedContribution = { ...contribution };
