@@ -224,8 +224,8 @@ export class UploadComponent implements OnInit, OnDestroy {
   mapForm(r1: Rightist, r2: Rightist) {
     const length =
       r1.memoirs?.length > r2.memoirs?.length
-        ? r1.memoirs.length
-        : r2.memoirs.length;
+        ? (r1?.memoirs?.length || 0)
+        : (r2?.memoirs?.length || 0);
     const memoirs: any[] = [];
     for (let i = 0; i < length; i++) {
       const m1 = r1.memoirs[i];
