@@ -52,6 +52,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   language = this.translate.currentLang;
   otherLanguage = this.language === 'en' ? 'cn' : 'en';
   subLang: Subscription[] = [];
+  allData: any;
 
   @Input() get contribution() {
     return this._contribution[this.language];
@@ -196,6 +197,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
     zipObj$?.subscribe((data: any) => {
       console.log(data);
+      this.allData = data;
       this._contribution[this.language] = data[0] || data[1];
       this._contribution[this.otherLanguage] = data[1] || data[0];
       const curr = this._contribution[this.language];
@@ -211,7 +213,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.allForms.patchValue({
         rightist: {
           ...(curr?.rightist || curr),
-
           ...mapOtherRightists(other?.rightist || other),
           name: curr?.rightist?.fullName || curr?.fullName || '',
           occupation:
@@ -234,6 +235,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       const m1 = r1.memoirs[i];
       const m2 = r2.memoirs[i];
       if (m1 && m2) {
+        console.log('Memior: ', m1, m2);
         memoirs.push({
           memoirTitle: m1.memoirTitle,
           otherMemoirTitle: m2.memoirTitle || '',
@@ -260,7 +262,7 @@ export class UploadComponent implements OnInit, OnDestroy {
         });
       }
     }
-
+    console.log('Memoirs: ', memoirs);
     this.allForms.patchValue({
       event: events,
       memoir: memoirs,

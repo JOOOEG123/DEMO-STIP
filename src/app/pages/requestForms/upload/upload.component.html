@@ -45,7 +45,7 @@
             (input)="descriptionChanged($event.target?.['value'])"
           ></textarea>
           <textarea
-            *ngIf="page == 'contribution'"
+            *ngIf="page == 'contribution' || isAdmin"
             class="form-control"
             id="other_add_content"
             rows="5"

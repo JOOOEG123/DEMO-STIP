@@ -66,12 +66,11 @@ export class MemoirInfoFormComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: any[]): void {
+    console.log({obj});
     if (obj) {
       if (obj.length > 0) {
-        this.memiorArray.setParent(
-          this.formBuilder.array(obj.map((item) => this.newMemior(item)))
-        );
-        this.memiorArray.patchValue(obj);
+        this.memiorArray.clear();
+        obj.map((item) => this.memiorArray.push(this.newMemior(item)));
       }
       if (this.memiorArray.controls.length === 0) {
         this.addMemior();
