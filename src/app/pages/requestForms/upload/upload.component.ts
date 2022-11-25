@@ -159,7 +159,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.sub.push(
       this.auth.isAdmin.subscribe((data) => {
         this.isAdmin = data;
-        console.log(this.isAdmin);
         this.onInit();
       })
     );
@@ -174,7 +173,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   updateData() {
     let zipObj$;
-    console.log('admin', this.page, this.isAdmin);
     if (this.page === 'profile' && this.isAdmin) {
       // getRightistById
       zipObj$ = zip(
@@ -196,7 +194,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       );
     }
     zipObj$?.subscribe((data: any) => {
-      console.log(data);
       this.allData = data;
       this._contribution[this.language] = data[0] || data[1];
       this._contribution[this.otherLanguage] = data[1] || data[0];
@@ -204,7 +201,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       const other = this._contribution[this.otherLanguage];
       const { rightist: r1 } = this._contribution[this.language];
       const { rightist: r2 } = this._contribution[this.otherLanguage];
-      console.log(r1, r2);
       if (r1 && r2) {
         this.mapForm(r1, r2);
       } else if (curr && other) {
@@ -235,7 +231,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       const m1 = r1.memoirs[i];
       const m2 = r2.memoirs[i];
       if (m1 && m2) {
-        console.log('Memior: ', m1, m2);
         memoirs.push({
           memoirTitle: m1.memoirTitle,
           otherMemoirTitle: m2.memoirTitle || '',
@@ -262,7 +257,6 @@ export class UploadComponent implements OnInit, OnDestroy {
         });
       }
     }
-    console.log('Memoirs: ', memoirs);
     this.allForms.patchValue({
       event: events,
       memoir: memoirs,
@@ -282,7 +276,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.sub.push(
         this.activatedRoute.queryParams.subscribe((params) => {
           this.contributionId = params['value'];
-          console.log(this.contributionId);
           // if (!this.contributionId) {
           //   this.contributionId = params['value'];
           // }
