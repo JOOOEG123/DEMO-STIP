@@ -52,6 +52,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   language = this.translate.currentLang;
   otherLanguage = this.language === 'en' ? 'cn' : 'en';
   subLang: Subscription[] = [];
+  allData: any;
 
   @Input() get contribution() {
     return this._contribution[this.language];
@@ -158,7 +159,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     this.sub.push(
       this.auth.isAdmin.subscribe((data) => {
         this.isAdmin = data;
-        console.log(this.isAdmin);
         this.onInit();
       })
     );
@@ -173,7 +173,6 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   updateData() {
     let zipObj$;
-    console.log('admin', this.page, this.isAdmin);
     if (this.page === 'profile' && this.isAdmin) {
       // getRightistById
       zipObj$ = zip(
@@ -195,14 +194,13 @@ export class UploadComponent implements OnInit, OnDestroy {
       );
     }
     zipObj$?.subscribe((data: any) => {
-      console.log(data);
+      this.allData = data;
       this._contribution[this.language] = data[0] || data[1];
       this._contribution[this.otherLanguage] = data[1] || data[0];
       const curr = this._contribution[this.language];
       const other = this._contribution[this.otherLanguage];
       const { rightist: r1 } = this._contribution[this.language];
       const { rightist: r2 } = this._contribution[this.otherLanguage];
-      console.log(r1, r2);
       if (r1 && r2) {
         this.mapForm(r1, r2);
       } else if (curr && other) {
@@ -211,7 +209,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.allForms.patchValue({
         rightist: {
           ...(curr?.rightist || curr),
-
           ...mapOtherRightists(other?.rightist || other),
           name: curr?.rightist?.fullName || curr?.fullName || '',
           occupation:
@@ -227,8 +224,8 @@ export class UploadComponent implements OnInit, OnDestroy {
   mapForm(r1: Rightist, r2: Rightist) {
     const length =
       r1.memoirs?.length > r2.memoirs?.length
-        ? r1.memoirs.length
-        : r2.memoirs.length;
+        ? (r1?.memoirs?.length || 0)
+        : (r2?.memoirs?.length || 0);
     const memoirs: any[] = [];
     for (let i = 0; i < length; i++) {
       const m1 = r1.memoirs[i];
@@ -260,7 +257,6 @@ export class UploadComponent implements OnInit, OnDestroy {
         });
       }
     }
-
     this.allForms.patchValue({
       event: events,
       memoir: memoirs,
@@ -280,7 +276,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.sub.push(
         this.activatedRoute.queryParams.subscribe((params) => {
           this.contributionId = params['value'];
-          console.log(this.contributionId);
           // if (!this.contributionId) {
           //   this.contributionId = params['value'];
           // }

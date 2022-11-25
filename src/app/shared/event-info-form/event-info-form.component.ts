@@ -84,10 +84,11 @@ export class EventInfoFormComponent
   writeValue(obj: any[]): void {
     if (obj) {
       if (obj.length > 0) {
-        this.eventArray.setParent(
-          this.formBuilder.array(obj.map((item) => this.newEvent(item)))
-        );
-        this.eventArray.patchValue(obj);
+        // this.eventArray.setParent(
+        //   this.formBuilder.array(obj.map((item) => this.newEvent(item)))
+        // );
+        this.eventArray.clear();
+        obj.map((item) => this.eventArray.push(this.newEvent(item)));
       }
       if (this.eventArray.controls.length === 0) {
         this.addEvent();
