@@ -223,13 +223,13 @@ export class UploadComponent implements OnInit, OnDestroy {
 
   mapForm(r1: Rightist, r2: Rightist) {
     const length =
-      r1.memoirs?.length > r2.memoirs?.length
-        ? (r1?.memoirs?.length || 0)
-        : (r2?.memoirs?.length || 0);
+      (r1.memoirs?.length ?? 0) > (r2.memoirs?.length ?? 0)
+        ? r1?.memoirs?.length ?? 0
+        : r2?.memoirs?.length ?? 0;
     const memoirs: any[] = [];
     for (let i = 0; i < length; i++) {
-      const m1 = r1.memoirs[i];
-      const m2 = r2.memoirs[i];
+      const m1 = r1.memoirs?.[i] ?? ({} as any);
+      const m2 = r2.memoirs?.[i] ?? ({} as any);
       if (m1 && m2) {
         memoirs.push({
           memoirTitle: m1.memoirTitle,
@@ -241,14 +241,15 @@ export class UploadComponent implements OnInit, OnDestroy {
         });
       }
     }
+    // const nullZero
     const enlen =
-      r1.events?.length > r2.events?.length
-        ? r1.events.length
-        : r2.events.length;
+      (r1?.events?.length ?? 0) > (r2?.events?.length ?? 0)
+        ? r1?.events?.length ?? 0
+        : r2?.events?.length ?? 0;
     const events: any[] = [];
     for (let i = 0; i < enlen; i++) {
-      const m1 = r1.events[i];
-      const m2 = r2.events[i];
+      const m1 = r1.events?.[i] ?? ({} as any);
+      const m2 = r2.events?.[i] ?? ({} as any);
       if (m1 && m2) {
         events.push({
           startYear: m1.startYear || m2.startYear,
