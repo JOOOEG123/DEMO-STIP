@@ -232,9 +232,9 @@
               class="col-12 ms-3"
               *ngFor="let event of profile?.events || []"
             >
-              {{ (event?.startYear | date: "yyyy") || "common.unknown" | translate }} --
-              {{ (event?.endYear | date: "yyyy") || "common.unknown" | translate }},
-              {{ (event?.event | titlecase) || "-" }}
+              {{ ((event?.startYear ?? 0) | date: "yyyy") || "common.unknown" | translate }} --
+              {{ ((event?.endYear ?? 0)| date: "yyyy") || "common.unknown" | translate }},
+              {{ ((event?.event ) | titlecase) || "-" }}
               <!-- <span *ngIf="language == 'en'">
                 {{ event.event[0] || u }} {{ event.event.substr(1) || "-" }}
               </span>
