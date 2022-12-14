@@ -267,7 +267,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           otherImageUrl: i2?.imageUrl,
         });
       }
-      console.log(images, 'dsdsdsdsdsd')
+      console.log(images, 'dsdsdsdsdsd');
     }
     this.allForms.patchValue({
       event: events,
@@ -334,18 +334,20 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     const currentImages = () =>
       dd.map(async (x) => {
-        const file = await this.storageAPI.uploadContributionImage(
-          this.auth.uid,
-          rightistId,
-          x.imageId,
-          x.file
-        );
+        const file = x.imageUrl.includes('firebasestorage')
+          ? x.imageUrl
+          : await this.storageAPI.uploadContributionImage(
+              this.auth.uid,
+              rightistId,
+              x.imageId,
+              x.file
+            );
 
         return {
           imageId: x.imageId,
           rightistId: rightistId,
           imagePath: x.image,
-          imageUrl: x.imageUrl.includes('firebasestorage') ? x.imageUrl : (file || ''),
+          imageUrl: file || '',
           isProfile: x.isProfile,
           isGallery: x.imageUpload,
           category: x.imageCategory,
