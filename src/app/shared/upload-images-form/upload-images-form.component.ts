@@ -109,10 +109,8 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
   writeValue(obj: UploadImagesType[]): void {
     if (obj) {
       if (obj.length > 0) {
-        this.imageArray.setParent(
-          this.formBuilder.array(obj.map((item) => this.newImage(item)))
-        );
-        this.imageArray.patchValue(obj);
+        this.imageArray.clear();
+        obj.map((item) => this.imageArray.push(this.newImage(item)));
       }
       if (this.imageArray.controls.length === 0) {
         this.addImage();

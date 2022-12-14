@@ -267,6 +267,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           otherImageUrl: i2?.imageUrl,
         });
       }
+      console.log(images, 'dsdsdsdsdsd')
     }
     this.allForms.patchValue({
       event: events,
@@ -332,27 +333,27 @@ export class UploadComponent implements OnInit, OnDestroy {
     const dd: UploadImagesType[] = this.allForms.value.imagesDetails;
 
     const currentImages = () =>
-      dd.map(async (x) => ({
-        imageId: x.imageId,
-        rightistId: rightistId,
-        imagePath: x.image,
-        imageUrl: x.imageUrl.includes('firebasestorage')
-          ? x.imageUrl
-          : await firstValueFrom(
-              this.storageAPI.uploadContributionImage(
-                this.auth.uid,
-                rightistId,
-                x.imageId,
-                x.file
-              )
-            ),
-        isProfile: x.isProfile,
-        isGallery: x.imageUpload,
-        category: x.imageCategory,
-        title: x.imageTitle,
-        detail: x.imageDes,
-        source: x.imageSource,
-      })) || ([] as any);
+      dd.map(async (x) => {
+        const file = await this.storageAPI.uploadContributionImage(
+          this.auth.uid,
+          rightistId,
+          x.imageId,
+          x.file
+        );
+
+        return {
+          imageId: x.imageId,
+          rightistId: rightistId,
+          imagePath: x.image,
+          imageUrl: x.imageUrl.includes('firebasestorage') ? x.imageUrl : (file || ''),
+          isProfile: x.isProfile,
+          isGallery: x.imageUpload,
+          category: x.imageCategory,
+          title: x.imageTitle,
+          detail: x.imageDes,
+          source: x.imageSource,
+        };
+      }) || ([] as any);
     let images: ImagesSchema[] = [] as any;
     try {
       images = await Promise.all(currentImages());

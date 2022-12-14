@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { AuthServiceService } from './auth-service.service';
 
 @Injectable({
@@ -40,10 +40,11 @@ export class StorageApIService {
     return upload;
   }
 
-  uploadContributionImage(uid: string, contributionid: string, imageid: string, file: File) {
+   async uploadContributionImage(uid: string, contributionid: string, imageid: string, file: File) {
+    const url = `/images/contribution/${uid}/${contributionid}/${imageid}`;
     const ref = this.afs.ref(`/images/contribution/${uid}/${contributionid}/${imageid}`);
-    const upload = ref.put(file);
-    return ref.getDownloadURL();
+    const ff = await lastValueFrom(this.afs.upload(url, file).snapshotChanges())
+    return ff?.ref.getDownloadURL();
   }
 
   removeGalleryImage(uid: string) {
