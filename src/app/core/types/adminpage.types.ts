@@ -84,6 +84,42 @@ export interface Memoir {
   memoirAuthor: string;
 }
 
+export type UploadImagesType = {
+  file: File;
+  image: string;
+  imageId: string;
+  imageCategory: string;
+  imageDes: string;
+  imageDetails: string;
+  imageSource: string;
+  imageTitle: string;
+  imageUpload: string;
+  isProfile?: boolean;
+  imageUrl: string;
+  // other fields
+  otherImage: string;
+  otherImageCategory: string;
+  otherImageDes: string;
+  otherImageDetails: string;
+  otherImageSource: string;
+  otherImageTitle: string;
+  otherImageUpload: string;
+  otherImageUrl: string;
+};
+
+export interface ImagesSchema {
+  imageId: string;
+  rightistId: string;
+  imagePath?: string;
+  imageUrl: string;
+  isProfile: any;
+  isGallery: any;
+  category: string;
+  title: string;
+  detail: string;
+  source: string;
+}
+
 export interface RightistSchema {
   rightistId: string;
   contributorId: string;
@@ -109,6 +145,7 @@ export interface RightistSchema {
   reference: string;
   description: string;
   source: Source;
+  images?: ImagesSchema[];
   lastUpdatedAt: Date; // set from the service when updating a contribution
 }
 
@@ -150,6 +187,8 @@ export interface ContributionJson {
 export interface OuterContributionJson {
   [contributorId: string]: ContributionJson;
 }
+
+
 
 export interface ImageSchema {
   imageId: string;

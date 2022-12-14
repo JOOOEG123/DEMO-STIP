@@ -1,30 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { lastValueFrom, Observable, Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
+import { StorageApIService } from 'src/app/core/services/storage-api.service';
+import { UploadImagesType } from 'src/app/core/types/adminpage.types';
 import { FormCustomProvider } from 'src/app/core/utils/helper';
+import { createUniqueUID } from 'src/app/core/utils/uuid';
 
-type UploadImagesType = {
-  file: File;
-  image: string;
-  imageCategory: string;
-  imageDes: string;
-  imageDetails: string;
-  imageSource: string;
-  imageTitle: string;
-  imageUpload: string;
-  imageUrl: string;
-  // other fields
-  otherImage: string;
-  otherImageCategory: string;
-  otherImageDes: string;
-  otherImageDetails: string;
-  otherImageSource: string;
-  otherImageTitle: string;
-  otherImageUpload: string;
-  otherImageUrl: string;
-};
 
 @Component({
   selector: 'app-upload-images-form',
@@ -38,12 +22,14 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
     return this.formBuilder.group({
       image: this.formBuilder.control(a.image || ''),
       file: this.formBuilder.control(a.file || ''),
+      imageId: this.formBuilder.control(createUniqueUID()),
       imageCategory: this.formBuilder.control(a.imageCategory  || 'People'),
       imageDes: this.formBuilder.control(a.imageDes || ''),
       imageDetails: this.formBuilder.control(a.imageDetails || ''),
       imageSource: this.formBuilder.control(a.imageSource || ''),
       imageTitle: this.formBuilder.control(a.imageTitle || ''),
       imageUpload: this.formBuilder.control(a.imageUpload || ''),
+      isProfile: this.formBuilder.control(a.isProfile || ''),
       imageUrl: this.formBuilder.control(a.imageUrl || ''),
       otherImage: this.formBuilder.control(a.otherImage || ''),
       otherImageCategory: this.formBuilder.control(a.otherImageCategory || ''),
@@ -77,7 +63,9 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
   constructor(
     private formBuilder: FormBuilder,
     private auth: AuthServiceService,
-    private transService: TranslateService
+    private transService: TranslateService,
+    private storageAPI: StorageApIService,
+    private _ref: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -104,11 +92,12 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
     this._disabled = isDisabled;
   }
 
-  onselectFile(e, i) {
+  async onselectFile(e, i) {
     if (e.target.files) {
       var reader = new FileReader();
       const file = e.target.files[0];
       reader.readAsDataURL(file);
+
       reader.onload = (event: any) => {
         this.imageArray.controls[i].patchValue({
           imageUrl: event.target.result,
@@ -162,5 +151,13 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
         this.onChange(data);
       })
     );
+  }
+
+  selectDefaultProfile(i) {
+    this.imageArray.controls.forEach((e, idx) => {
+      if (idx !== i)  {
+        e.get('isProfile')?.setValue(false);
+      }
+    });
   }
 }
