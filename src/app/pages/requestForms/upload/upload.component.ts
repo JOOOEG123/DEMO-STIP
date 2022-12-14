@@ -9,7 +9,7 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription, zip } from 'rxjs';
+import { firstValueFrom, lastValueFrom, Subscription, zip } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
@@ -17,9 +17,11 @@ import { ImagesService } from 'src/app/core/services/images.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
 import {
   ContributionDetails,
+  ImagesSchema,
   langType,
   Rightist,
   RightistSchema,
+  UploadImagesType,
 } from 'src/app/core/types/adminpage.types';
 import { UUID } from 'src/app/core/utils/uuid';
 import { mapOtherRightists } from './upload.helper';
@@ -111,47 +113,6 @@ export class UploadComponent implements OnInit, OnDestroy {
     });
   }
 
-  // onImageChange(data: any) {
-  //   console.log(data);
-  //   if (data.type == 'image') {
-  //     this.imageData = {
-  //       ...this.imageData,
-  //       isGallery: data.value.imageUpload === 'yes',
-  //       galleryCategory: data.value.imageCategory || '',
-  //       galleryTitle: data.value.imageTitle || '',
-  //       galleryDetail: data.value.imageDes || '',
-  //       gallerySource: data.value.imageSource || '',
-  //     };
-
-  //     this.otherImageData = {
-  //       ...this.otherImageData,
-  //       isGallery: data.value.imageUpload === 'yes',
-  //       galleryCategory: data.value.otherImageCategory || '',
-  //       galleryTitle: data.value.otherImageTitle || '',
-  //       galleryDetail: data.value.otherImageDes || '',
-  //       gallerySource: data.value.otherImageSource || '',
-  //     };
-  //   }
-
-  //   if (data.type == 'url') {
-  //     this.url = data.value;
-  //   }
-
-  //   if (data.type == 'clear') {
-  //     this.url = '';
-  //     this.imageData.imagePath = '';
-  //   }
-
-  //   this.imageChange.emit({
-  //     image: this.imageData,
-  //     otherImage: this.otherImageData,
-  //     url: this.url,
-  //   });
-
-  //   console.log(this.imageData);
-  //   console.log(this.otherImageData);
-  // }
-
   ngOnInit(): void {
     this.language = localStorage.getItem('lang')!;
     this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
@@ -169,6 +130,9 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.onInit();
       })
     );
+    this.allForms.valueChanges.subscribe((x) => {
+      console.log(x);
+    });
   }
 
   updateData() {
@@ -201,6 +165,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       const other = this._contribution[this.otherLanguage];
       const { rightist: r1 } = this._contribution[this.language];
       const { rightist: r2 } = this._contribution[this.otherLanguage];
+      console.log({ r1, r2 });
       if (r1 && r2) {
         this.mapForm(r1, r2);
       } else if (curr && other) {
@@ -258,9 +223,56 @@ export class UploadComponent implements OnInit, OnDestroy {
         });
       }
     }
+
+    // imageId: x.imageId,
+    // rightistId: rightistId,
+    // imagePath: x.image,
+    // imageUrl: images[i].imageUrl,
+    // isProfile: x.isProfile,
+    // isGallery: x.imageUpload,
+    // category: x.otherImageCategory,
+    // title: x.otherImageTitle,
+    // detail: x.otherImageDes,
+    // source: x.otherImageSource,
+
+    const imagesLength =
+      (r1?.images?.length ?? 0) > (r2?.images?.length ?? 0)
+        ? r1?.images?.length ?? 0
+        : r2?.images?.length ?? 0;
+    const images = [] as any;
+    for (let i = 0; i < imagesLength; i++) {
+      const i1 = r1.images?.[i] ?? ({} as any);
+      const i2 = r2.images?.[i] ?? ({} as any);
+      if (i1 && i2) {
+        images.push({
+          file: undefined,
+          image: '',
+          imageId: i1?.imageId,
+          imageCategory: i1?.category,
+          imageDes: i1?.detail,
+          imageDetails: i1?.detail,
+          imageSource: i1?.source,
+          imageTitle: i1?.title,
+          imageUpload: i1?.isGallery,
+          isProfile: i1?.isProfile,
+          imageUrl: i1?.imageUrl,
+          // other fields
+          otherImage: '',
+          otherImageCategory: i2?.category,
+          otherImageDes: i2?.detail,
+          otherImageDetails: '',
+          otherImageSource: i2?.source,
+          otherImageTitle: i2?.title,
+          otherImageUpload: i2?.isGallery,
+          otherImageUrl: i2?.imageUrl,
+        });
+      }
+      console.log(images, 'dsdsdsdsdsd');
+    }
     this.allForms.patchValue({
       event: events,
       memoir: memoirs,
+      imagesDetails: images,
     });
   }
 
@@ -297,7 +309,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.isLoading = true;
     const rightistId =
       this.contribution?.rightist?.rightistId ||
@@ -318,6 +330,53 @@ export class UploadComponent implements OnInit, OnDestroy {
       birthYear,
       deathYear,
     } = this.allForms.value.rightist!;
+    const dd: UploadImagesType[] = this.allForms.value.imagesDetails;
+
+    const currentImages = () =>
+      dd.map(async (x) => {
+        const file = x.imageUrl.includes('firebasestorage')
+          ? x.imageUrl
+          : await this.storageAPI.uploadContributionImage(
+              this.auth.uid,
+              rightistId,
+              x.imageId,
+              x.file
+            );
+
+        return {
+          imageId: x.imageId,
+          rightistId: rightistId,
+          imagePath: x.image,
+          imageUrl: file || '',
+          isProfile: x.isProfile,
+          isGallery: x.imageUpload,
+          category: x.imageCategory,
+          title: x.imageTitle,
+          detail: x.imageDes,
+          source: x.imageSource,
+        };
+      }) || ([] as any);
+    let images: ImagesSchema[] = [] as any;
+    try {
+      images = await Promise.all(currentImages());
+      currentImages();
+    } catch (e) {
+      console.log('Error: ', e, 'images');
+    }
+
+    const otherImages = () =>
+      dd.map((x, i) => ({
+        imageId: x.imageId,
+        rightistId: rightistId,
+        imagePath: x.image,
+        imageUrl: images[i].imageUrl,
+        isProfile: x.isProfile,
+        isGallery: x.imageUpload,
+        category: x.otherImageCategory,
+        title: x.otherImageTitle,
+        detail: x.otherImageDes,
+        source: x.otherImageSource,
+      })) || ([] as any);
 
     // if (!this.contribution) {
     let rightist: RightistSchema = {
@@ -325,6 +384,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       contributorId: this.auth.uid,
       // imageId: [],
       // profileImageId: '',
+      images: images,
       initial: '',
       firstName: '',
       lastName: '',
@@ -355,6 +415,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       contributorId: this.auth.uid || '',
       imageId: '',
       // profileImageId: '',
+      images: otherImages(),
       initial: '',
       firstName: '',
       lastName: '',
