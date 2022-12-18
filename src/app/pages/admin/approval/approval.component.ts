@@ -22,7 +22,7 @@ import {
   ContributionJson,
   ContributionSchema,
   Event,
-  ImageSchema,
+  ImagesSchema,
   Memoir,
   Publish,
   Rightist,
@@ -79,24 +79,28 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   emptyContributionMessage = 'Nothing Here!';
 
   url: string = '';
-  image: ImageSchema = {
+  image: ImagesSchema = {
     imageId: '',
     rightistId: '',
     isGallery: false,
-    galleryCategory: '',
-    galleryTitle: '',
-    galleryDetail: '',
-    gallerySource: '',
+    category: '',
+    title: '',
+    detail: '',
+    source: '',
+    imageUrl: '',
+    isProfile: undefined
   };
 
-  otherImage: ImageSchema = {
+  otherImage: ImagesSchema = {
     imageId: '',
     rightistId: '',
     isGallery: false,
-    galleryCategory: '',
-    galleryTitle: '',
-    galleryDetail: '',
-    gallerySource: '',
+    category: '',
+    title: '',
+    detail: '',
+    source: '',
+    imageUrl: '',
+    isProfile: undefined
   };
 
   languageSubscription?: Subscription;
@@ -183,15 +187,17 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                   .getRightistById(this.language, data.rightistId)
                   .subscribe((rightist: any) => {
                     // console.log(rightist);
-                    this.sub.push(
-                      this.imageAPI
-                        .getImage(this.language, rightist.imageId)
-                        .subscribe((image: any) => {
-                          data.rightist = rightist;
-                          data.image = image;
-                          this.loaded = true;
-                        })
-                    );
+                    if (rightist ?.imageId) {
+                      this.sub.push(
+                        this.imageAPI
+                          .getImage(this.language, rightist.imageId)
+                          .subscribe((image: any) => {
+                            data.rightist = rightist;
+                            data.image = image;
+                            this.loaded = true;
+                          })
+                      );
+                    }
                   })
               );
               this.approvedContributions.push(data);
@@ -435,7 +441,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.updatedContribution = { ...contribution };
     this.otherUpdatedContribution = { ...contribution };
     this.image = { ...contribution.image! };
-    this.modalRef = this.modalService.show(template, { class: 'modal-xl' });
+    this.modalRef = this.modalService.show(template, { class: 'modal-custom-style' });
   }
 
   onEventChange(source: any) {

@@ -166,7 +166,7 @@ export interface ContributionSchema {
   contributionId: string; // set from the service when creating a new contribution
   contributorId: string; // set from the service when creating a new contribution
   rightist?: RightistSchema;
-  image?: ImageSchema;
+  image?: ImagesSchema;
   rightistId: string;
   publish: Publish;
   lastUpdatedAt: Date;
@@ -190,21 +190,21 @@ export interface OuterContributionJson {
 
 
 
-export interface ImageSchema {
-  imageId: string;
-  rightistId: string;
-  imagePath?: string;
-  isGallery: boolean;
-  galleryCategory: string;
-  galleryTitle: string;
-  galleryDetail: string;
-  gallerySource: string;
-}
+// export interface ImagesSchema {
+//   imageId: string;
+//   rightistId: string;
+//   imagePath?: string;
+//   isGallery: boolean;
+//   category: string;
+//   title: string;
+//   detail: string;
+//   source: string;
+// }
 
-export interface Image extends ImageSchema {
+export interface Image extends ImagesSchema {
   opacity: number;
 }
 
 export interface ImageJson {
-  [imageId: string]: ImageSchema;
+  [imageId: string]: ImagesSchema;
 }
