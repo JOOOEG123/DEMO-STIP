@@ -12,7 +12,7 @@ import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { Subscription } from 'rxjs';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Image, ImageSchema } from 'src/app/core/types/adminpage.types';
+import { Image, ImagesSchema } from 'src/app/core/types/adminpage.types';
 
 import { ImagesService } from 'src/app/core/services/images.service';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
@@ -165,7 +165,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
       result = this.images.slice();
     } else {
       for (const image of this.images) {
-        if (image.galleryCategory == gallery) {
+        if (image.category == gallery) {
           result.push(image);
         }
       }
@@ -208,8 +208,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   async onAdd(data: any) {
     let imageId = `Image-${UUID()}`;
-    let image: ImageSchema = data.value;
-    let otherImage: ImageSchema = data.otherValue;
+    let image: ImagesSchema = data.value;
+    let otherImage: ImagesSchema = data.otherValue;
 
     image.imageId = imageId;
     otherImage.imageId = imageId;

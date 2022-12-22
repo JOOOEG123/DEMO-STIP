@@ -79,7 +79,7 @@ export class OverlayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.image) {
-      
+
     }
   }
 
@@ -104,12 +104,12 @@ export class OverlayComponent implements OnInit, OnDestroy {
     this.category = Object.keys(LIST_OF_IMAGE_CATEGORIES[this.language!]).find(
       (k) =>
         LIST_OF_IMAGE_CATEGORIES[this.language!][k] ===
-        this.image!.galleryCategory
+        this.image!.category
     )!;
 
-    this.title = this.image!.galleryTitle;
-    this.detail = this.image!.galleryDetail;
-    this.source = this.image!.gallerySource;
+    this.title = this.image!.title;
+    this.detail = this.image!.detail;
+    this.source = this.image!.source;
 
     // Fetch the image in other language
     this.sub.push(
@@ -118,16 +118,16 @@ export class OverlayComponent implements OnInit, OnDestroy {
         .subscribe((data: any) => {
           this.otherImage = {
             ...this.image!,
-            galleryCategory: data.galleryCategory,
-            galleryTitle: data.galleryTitle,
-            galleryDetail: data.galleryDetail,
-            gallerySource: data.gallerySource,
+            category: data.category,
+            title: data.title,
+            detail: data.detail,
+            source: data.source,
           };
 
-          this.otherCategory = this.otherImage?.galleryCategory;
-          this.otherTitle = this.otherImage?.galleryTitle;
-          this.otherDetail = this.otherImage?.galleryDetail;
-          this.otherSource = this.otherImage?.gallerySource;
+          this.otherCategory = this.otherImage?.category;
+          this.otherTitle = this.otherImage?.title;
+          this.otherDetail = this.otherImage?.detail;
+          this.otherSource = this.otherImage?.source;
         })
     );
   }
@@ -136,21 +136,21 @@ export class OverlayComponent implements OnInit, OnDestroy {
     this.submit.emit({
       image: {
         ...this.image,
-        galleryCategory:
+        category:
           LIST_OF_IMAGE_CATEGORIES[this.language!][this.category] ||
           LIST_OF_IMAGE_CATEGORIES[this.language!][
             LIST_OF_IMAGE_CATEGORIES[this.language!].length - 1
           ],
-        galleryTitle: this.title,
-        galleryDetail: this.detail,
-        gallerySource: this.source,
+        title: this.title,
+        detail: this.detail,
+        source: this.source,
       },
       otherImage: {
         ...this.otherImage,
-        galleryCategory: this.otherCategory,
-        galleryTitle: this.otherTitle,
-        galleryDetail: this.otherDetail,
-        gallerySource: this.otherSource,
+        category: this.otherCategory,
+        title: this.otherTitle,
+        detail: this.otherDetail,
+        source: this.otherSource,
       },
       status: 'submit',
     });
@@ -188,23 +188,23 @@ export class OverlayComponent implements OnInit, OnDestroy {
       imageId: '',
       rightistId: '',
       isGallery: true,
-      galleryCategory:
+      category:
         LIST_OF_IMAGE_CATEGORIES[this.language!][this.category] ||
         LIST_OF_IMAGE_CATEGORIES[this.language!][
           LIST_OF_IMAGE_CATEGORIES[this.language!].length - 1
         ],
-      galleryTitle: this.title,
-      galleryDetail: this.detail,
-      gallerySource: this.source,
+      title: this.title,
+      detail: this.detail,
+      source: this.source,
     };
     let otherImage = {
       imageId: '',
       rightistId: '',
       isGallery: true,
-      galleryCategory: this.otherCategory,
-      galleryTitle: this.otherTitle,
-      galleryDetail: this.otherDetail,
-      gallerySource: this.otherSource,
+      category: this.otherCategory,
+      title: this.otherTitle,
+      detail: this.otherDetail,
+      source: this.otherSource,
     };
 
     this.add.emit({

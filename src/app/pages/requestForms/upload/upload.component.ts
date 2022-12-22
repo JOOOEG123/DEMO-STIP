@@ -458,6 +458,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     let contributionId = this.contributionId || UUID();
 
     if (this.isAdmin && ['contribution', 'profile'].includes(this.page)) {
+      // TO DO: add images that was uploaded after approval by the admin to gallery schemas.
       Promise.all([
         this.contributionService.updateUserContribution(this.language, {
           contributionId: contributionId,

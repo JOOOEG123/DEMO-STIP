@@ -10,7 +10,7 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LIST_OF_IMAGE_CATEGORIES } from 'src/app/core/constants/group.constants';
 import { ImagesService } from 'src/app/core/services/images.service';
-import { ImageSchema } from 'src/app/core/types/adminpage.types';
+import { ImagesSchema } from 'src/app/core/types/adminpage.types';
 
 @Component({
   selector: 'app-upload-image',
@@ -33,8 +33,8 @@ export class UploadImageComponent implements OnInit {
   }
 
   @Input() page?: string;
-  @Input() imageData?: ImageSchema;
-  @Input() otherImageData?: ImageSchema;
+  @Input() imageData?: ImagesSchema;
+  @Input() otherImageData?: ImagesSchema;
   @Input() imageDisabled?: boolean;
   @Output() imageChange: EventEmitter<any> = new EventEmitter();
 
@@ -90,21 +90,21 @@ export class UploadImageComponent implements OnInit {
       this.imageForm.patchValue({
         imageUpload: this.imageData!.isGallery ? 'yes' : 'no',
         image: '',
-        imageTitle: this.imageData!.galleryTitle,
-        imageDes: this.imageData!.galleryDetail,
-        imageSource: this.imageData!.gallerySource,
-        imageCategory: this.imageData!.galleryCategory,
+        imageTitle: this.imageData!.title,
+        imageDes: this.imageData!.detail,
+        imageSource: this.imageData!.source,
+        imageCategory: this.imageData!.category,
       })
     }
 
     if (this.otherImageData) {
       this.imageForm.patchValue({
-        otherImageTitle: this.otherImageData.galleryTitle,
-        otherImageDes: this.otherImageData.galleryDetail,
-        otherImageSource: this.otherImageData.gallerySource,
-        otherImageCategory: this.otherImageData.galleryCategory,
+        otherImageTitle: this.otherImageData.title,
+        otherImageDes: this.otherImageData.detail,
+        otherImageSource: this.otherImageData.source,
+        otherImageCategory: this.otherImageData.category,
       });
-    
+
 
     // if (this.imageData!.imageId) {
     //   this.sub.push(
@@ -112,16 +112,16 @@ export class UploadImageComponent implements OnInit {
     //       .getImage(this.otherLanguage, this.imageData!.imageId)
     //       .subscribe((otherImage: any) => {
     //         if (this.otherImageData) {
-              
+
     //           console.log(otherImage);
 
     //           this.imageForm.patchValue({
     //             imageUpload: this.imageData!.isGallery ? 'yes' : 'no',
     //             image: '',
-    //             otherImageTitle: otherImage.galleryTitle,
-    //             otherImageDes: otherImage.galleryDetail,
-    //             otherImageSource: otherImage.gallerySource,
-    //             otherImageCategory: otherImage.galleryCategory,
+    //             otherImageTitle: otherImage.title,
+    //             otherImageDes: otherImage.detail,
+    //             otherImageSource: otherImage.source,
+    //             otherImageCategory: otherImage.category,
     //           });
     //         }
     //       })

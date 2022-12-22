@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { ImageSchema } from '../types/adminpage.types';
+import { ImagesSchema } from '../types/adminpage.types';
 
 @Injectable({
   providedIn: 'root',
@@ -24,13 +24,13 @@ export class ImagesService {
       .valueChanges();
   }
 
-  addImage(language: string, image: ImageSchema) {
+  addImage(language: string, image: ImagesSchema) {
     return this.db
       .object(`persons/data/${language}/images`)
       .update({ [image.imageId]: image });
   }
 
-  updateImage(language: string, image: ImageSchema) {
+  updateImage(language: string, image: ImagesSchema) {
     return this.db
       .object(`persons/data/${language}/images`)
       .update({ [image.imageId]: image });

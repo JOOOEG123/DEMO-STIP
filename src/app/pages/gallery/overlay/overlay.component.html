@@ -29,12 +29,12 @@
         <div class="display-6">
           <span class="fw-bold"
             >{{ "gallery.gallery_overlay_category" | translate }}: </span
-          >{{ this.image?.galleryCategory }}
+          >{{ this.image?.category }}
         </div>
         <div class="display-6" *ngIf="status == 'submit'">
           <span class="fw-bold"
             >{{ "gallery.gallery_overlay_category_other" | translate }}: </span
-          >{{ this.otherImage?.galleryCategory }}
+          >{{ this.otherImage?.category }}
         </div>
       </div>
 
@@ -83,12 +83,12 @@
         <div class="display-6">
           <span class="fw-bold"
             >{{ "gallery.gallery_overlay_title" | translate }}: </span
-          >{{ this.image?.galleryTitle }}
+          >{{ this.image?.title }}
         </div>
         <div class="display-6" *ngIf="status == 'submit'">
           <span class="fw-bold"
             >{{ "gallery.gallery_overlay_title_other" | translate }}: </span
-          >{{ this.otherImage?.galleryTitle }}
+          >{{ this.otherImage?.title }}
         </div>
       </div>
 
@@ -130,12 +130,12 @@
         <div class="display-6">
           <span class="fw-bold"
             >{{ "gallery.gallery_overlay_detail" | translate }}: </span
-          >{{ this.image?.galleryDetail }}
+          >{{ this.image?.detail }}
         </div>
         <div class="display-6" *ngIf="status == 'submit'">
           <span class="fw-bold"
             >{{ "gallery.gallery_overlay_detail_other" | translate }}: </span
-          >{{ this.otherImage?.galleryDetail }}
+          >{{ this.otherImage?.detail }}
         </div>
       </div>
 
@@ -177,12 +177,12 @@
         <div class="display-6">
           <span class="fw-bold"
             >{{ "gallery.gallery_overlay_source" | translate }}: </span
-          >{{ this.image?.gallerySource }}
+          >{{ this.image?.source }}
         </div>
         <div class="display-6" *ngIf="status == 'submit'">
           <span class="fw-bold"
             >{{ "gallery.gallery_overlay_source_other" | translate }}: </span
-          >{{ this.otherImage?.gallerySource }}
+          >{{ this.otherImage?.source }}
         </div>
       </div>
 
