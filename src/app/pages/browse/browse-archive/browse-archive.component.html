@@ -207,7 +207,9 @@
                 {{ "archive.profile_birth_year" | translate }}:
                 {{
                   profile?.birthYear
-                    ? (profile?.birthYear | date : "yyyy")
+                    ? profile?.birthYear?.toString().length === 4
+                      ? profile?.birthYear
+                      : (profile?.birthYear | date : "yyyy")
                     : "-"
                 }}
               </div>
@@ -219,7 +221,9 @@
                 {{ "archive.profile_death_year" | translate }}:
                 {{
                   profile?.deathYear
-                    ? (profile?.deathYear | date : "yyyy")
+                    ? profile?.deathYear?.toString().length === 4
+                      ? profile?.deathYear
+                      : (profile?.deathYear | date : "yyyy")
                     : "-"
                 }}
               </div>
