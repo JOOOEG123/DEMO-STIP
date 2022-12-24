@@ -36,7 +36,6 @@ export const contactUs = functions.https.onCall( async (data: ContactUs, context
     from: 'joeladeniji123@gmail.com',
     subject: `${name || 'User'} Contact Us (${email || 'User'})`,
     html: contactUsTemplate(data),
-
   };
   try {
     await sdmail.send(msg);

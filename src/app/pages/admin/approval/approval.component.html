@@ -66,13 +66,9 @@
 
 <ng-template #readMoreTemplate>
   <app-upload
+    #appUpload
     [contribution]="selectedContribution"
     page="contribution"
-    (formChange)="onFormChange($event)"
-    (eventChange)="onEventChange($event)"
-    (memoirChange)="onMemoirChange($event)"
-    (imageChange)="onImageChange($event)"
-    (descriptionChange)="onDescriptionChange($event)"
     (save)="onSave($event)"
   ></app-upload>
   <div
@@ -81,7 +77,7 @@
   >
     <button
       type="button"
-      (click)="onApprove()"
+      (click)="onApprove(appUpload)"
       class="btn btn-transparent btn-lg mx-2 display-4 check-icon"
     >
       <span class="check-icon">&checkmark;</span>

@@ -6,7 +6,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { forkJoin, mergeMap, Subscription, zip } from 'rxjs';
@@ -29,6 +29,7 @@ import {
   RightistSchema,
 } from 'src/app/core/types/adminpage.types';
 import { UUID } from 'src/app/core/utils/uuid';
+import { UploadComponent } from '../../requestForms/upload/upload.component';
 
 @Component({
   selector: 'app-approval',
@@ -56,6 +57,8 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   selectedContribution!: ContributionDetails;
   updatedContribution!: Contribution;
   otherUpdatedContribution!: Contribution;
+
+  @ViewChild('readMoreTemplate') appUpload: TemplateRef<any> | undefined;
 
   categoriesList: Categories[] = [
     'New Contributions',
@@ -228,10 +231,13 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.languageSubscription?.unsubscribe();
   }
 
-  onApprove() {
-    this.modalRef?.hide();
+  onApprove(el: UploadComponent) {
+    console.log(el)
     this.publish = 'approved';
     this.selectedContribution.state = 'removed';
+    el.onSubmit().then(()=> {
+      this.modalRef?.hide();
+    })
   }
 
   onSave(data: any) {
@@ -293,122 +299,12 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.selectedContribution.state === 'removed'
     ) {
       if (this.publish === 'approved') {
-        this.updatedContribution.publish = this.publish;
-        this.otherUpdatedContribution.publish = this.publish;
+        console.log(this.appUpload)
+        // this.appUpload?.onSubmit().then(() => {
+        //   this.modalRef?.hide();
+        // }
+        // )
 
-        if (this.url) {
-          this.image!.imagePath = this.url;
-        }
-
-        if (this.image!.imagePath!) {
-          let imageId = `Image-${UUID()}`;
-          this.image!.imageId = imageId;
-          this.otherImage!.imageId = imageId;
-          await fetch(this.image?.imagePath!).then(async (response) => {
-            console.log(imageId);
-            const contentType = response.headers.get('content-type');
-            const blob = await response.blob();
-            const file = new File([blob], imageId, { type: contentType! });
-            await this.storageAPI.uploadGalleryImage(imageId, file);
-            this.sub.push(
-              this.storageAPI
-                .getGalleryImageURL(imageId)
-                .subscribe(async (imageUrl: any) => {
-                  console.log(imageUrl);
-                  this.image!.imagePath = imageUrl;
-                  this.otherImage!.imagePath = imageUrl;
-                  this.image!.rightistId = this.updatedContribution.rightistId;
-                  this.otherImage!.rightistId =
-                    this.updatedContribution.rightistId;
-                  // update the current timestamp
-                  this.updatedContribution.lastUpdatedAt = new Date();
-                  this.updatedContribution.rightist!.lastUpdatedAt = new Date();
-
-                  if (this.updatedContribution.rightist) {
-                    this.updatedContribution.publish = this.publish;
-
-                    const { state, ...contribution } = this.updatedContribution;
-                    const { state: otherState, ...otherContribution } =
-                      this.otherUpdatedContribution;
-
-                    let { rightist, image, ...result } = contribution;
-                    let {
-                      rightist: otherRightist,
-                      image: otherImage,
-                      ...otherResult
-                    } = otherContribution;
-
-                    result.rightistId = rightist!.rightistId;
-                    result.approvedAt = new Date();
-
-                    otherResult.rightistId = otherRightist!.rightistId;
-                    otherResult.approvedAt = new Date();
-
-                    rightist!.imageId = imageId;
-                    otherRightist!.imageId = imageId;
-
-                    Promise.all([
-                      this.contributionAPI.updateUserContribution(
-                        this.language,
-                        result
-                      ),
-                      this.contributionAPI.updateUserContribution(
-                        this.otherLanguage,
-                        otherResult
-                      ),
-                      this.archiveAPI.addRightist(this.language, rightist!),
-                      this.archiveAPI.addRightist(
-                        this.otherLanguage,
-                        otherRightist!
-                      ),
-                      this.imageAPI.updateImage(this.language, this.image!),
-                      this.imageAPI.updateImage(
-                        this.otherLanguage,
-                        this.otherImage!
-                      ),
-                    ]);
-                  }
-                })
-            );
-          });
-        } else {
-          this.updatedContribution.lastUpdatedAt = new Date();
-          this.updatedContribution.rightist!.lastUpdatedAt = new Date();
-
-          if (this.updatedContribution.rightist) {
-            this.updatedContribution.publish = this.publish;
-
-            const { state, ...contribution } = this.updatedContribution;
-            const { state: otherState, ...otherContribution } =
-              this.otherUpdatedContribution;
-
-            let { rightist, image, ...result } = contribution;
-            let {
-              rightist: otherRightist,
-              image: otherImage,
-              ...otherResult
-            } = otherContribution;
-
-            result.rightistId = rightist!.rightistId;
-            result.approvedAt = new Date();
-
-            otherResult.rightistId = otherRightist!.rightistId;
-            otherResult.approvedAt = new Date();
-
-            Promise.all([
-              this.contributionAPI.updateUserContribution(
-                this.language,
-                result
-              ),
-              this.contributionAPI.updateUserContribution(
-                this.otherLanguage,
-                otherResult
-              ),
-              this.archiveAPI.addRightist(this.language, rightist!),
-              this.archiveAPI.addRightist(this.otherLanguage, otherRightist!),
-            ]);
-          }
-        }
       } else {
         this.updatedContribution.publish = this.publish;
         this.otherUpdatedContribution.publish = this.publish;

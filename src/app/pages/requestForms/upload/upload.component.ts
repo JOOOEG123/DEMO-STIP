@@ -34,7 +34,7 @@ import { mapOtherRightists } from './upload.helper';
 export class UploadComponent implements OnInit, OnDestroy {
   // private _contribution!: Contribution;
   private _contribution: langType = {} as any;
-  contributionId!: string;
+  @Input() contributionId!: string;
   rightist?: Rightist;
   isLoading: boolean = false;
   sub: Subscription[] = [];
@@ -130,9 +130,9 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.onInit();
       })
     );
-    this.allForms.valueChanges.subscribe((x) => {
-      console.log(x);
-    });
+    // this.allForms.valueChanges.subscribe((x) => {
+    //   console.log(x);
+    // });
   }
 
   updateData() {
@@ -455,12 +455,10 @@ export class UploadComponent implements OnInit, OnDestroy {
       rightist.initial = rightist.fullName.trim().charAt(0).toUpperCase();
       otherRightist.initial = rightist.fullName.trim().charAt(0).toUpperCase();
     }
-    let contributionId = this.contributionId || UUID();
+    let contributionId = this.contributionId || this.contribution.contributionId || UUID();
 
     if (this.isAdmin && ['contribution', 'profile'].includes(this.page)) {
       // TO DO: add images that was uploaded after approval by the admin to gallery schemas.
-
-
       Promise.all([
         this.contributionService.updateUserContribution(this.language, {
           contributionId: contributionId,
@@ -493,7 +491,9 @@ export class UploadComponent implements OnInit, OnDestroy {
                 }
               });
             }
-            this.route.navigateByUrl('/account');
+            if (this.page != 'contribution') {
+              this.route.navigateByUrl('/account');
+            }
           }),
       ])
         .then(() => {
@@ -505,7 +505,9 @@ export class UploadComponent implements OnInit, OnDestroy {
             });
           }
           this.clear2();
-          this.route.navigateByUrl('/account');
+          if (this.page != 'contribution') {
+            this.route.navigateByUrl('/account');
+          }
           this.isLoading = false;
         })
         .catch((err) => {
@@ -540,7 +542,9 @@ export class UploadComponent implements OnInit, OnDestroy {
       ])
         .then(() => {
           this.clear2();
-          this.route.navigateByUrl('/account');
+          if (this.page != 'contribution') {
+            this.route.navigateByUrl('/account');
+          }
           this.isLoading = false;
         })
         .catch((err) => {
