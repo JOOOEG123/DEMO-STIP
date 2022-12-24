@@ -63,7 +63,7 @@ export const modifyRightistRequest = functions.https.onCall( async (data: Reques
   const to = await adminEmails();
   const msg = {
     to,
-    from: 'joelAdeniji123@gmail.com',
+    from: 'joeladeniji123@gmail.com',
     subject: `New Request to Modify Rightist ${email || 'User'} (${
       rightistId || 'User'
     })`,
