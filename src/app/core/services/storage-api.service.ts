@@ -10,7 +10,8 @@ export class StorageApIService {
   constructor(
     private afs: AngularFireStorage,
     private auth: AuthServiceService
-  ) {}
+  ) {
+  }
 
   profileImage(uid = this.auth.uid) {
     return this.afs.ref(`userProfile/${uid}`);

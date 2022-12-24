@@ -181,7 +181,7 @@
 
       <!-- radio buttons for choosing if user wants to include photo in gallery -->
       <br />
-      <div *ngIf="isAdmin" class="my-3">
+      <div class="my-3">
         <p>
           {{ "upload.include" | translate }}
           <img
@@ -197,12 +197,12 @@
             class="form-check-input"
             type="radio"
             name="galleryOptions"
-            id="galleryYes"
-            value="yes"
+            [id]="'galleryYes'+i"
+            [value]="true"
             formControlName="imageUpload"
           />
           <!-- yes button -->
-          <label class="form-check-label" for="galleryYes">{{
+          <label class="form-check-label" [for]="'galleryYes'+i">{{
             "upload.yes" | translate
           }}</label>
         </div>
@@ -211,19 +211,19 @@
             class="form-check-input"
             type="radio"
             name="galleryOptions"
-            id="galleryNo"
-            value="no"
+            [id]="'galleryNo'+i"
+            [value]="false"
             formControlName="imageUpload"
           />
           <!-- no button -->
-          <label class="form-check-label" for="galleryNo">{{
+          <label class="form-check-label" [for]="'galleryNo'+i">{{
             "upload.no" | translate
           }}</label>
         </div>
       </div>
 
       <!-- Is Profile-->
-      <div *ngIf="isAdmin">
+      <div>
         <!-- <pre>{{ imageForm.get('isProfile')!.value }}</pre> -->
         <div class="form-check form-check-inline">
           <input
