@@ -5,8 +5,13 @@ npm run lint -- --fix
 #Install emulator for local test case
 firebase init emulators
 
+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
+
+
 # Email Setup
 https://dev.to/chideraao/sending-emails-in-your-firebase-app-with-nodemailer-5ff9
 
 # ENV VARIABLE
 firebase functions:config:set gmail.useremail="yourgoogleemail@gmail.com" gmail.clientid="yourclientid.apps.googleusercontent.com" gmail.refreshtoken="1//04zKnDTh1mXdLCgYI-yourrefreshtoken" gmail.clientsecret="mbFQnYOurCLienTSecREt"
+
+firebase functions:config:set gmail.useremail="yourgoogleemail@gmail.com" gmail.clientid="yourclientid.apps.googleusercontent.com" gmail.refreshtoken="1//04zKnDTh1mXdLCgYI-yourrefreshtoken" gmail.clientsecret="mbFQnYOurCLienTSecREt" sendgrid.key="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"
