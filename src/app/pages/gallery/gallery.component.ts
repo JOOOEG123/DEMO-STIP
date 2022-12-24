@@ -86,28 +86,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
       this.translate.onLangChange.subscribe((data: any) => {
         this.language = data.lang;
         this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
-      })
-    );
-
-    this.sub.push(
-      this.auth.isAdmin.subscribe((isAdmin: any) => {
-        this.isAdmin = isAdmin;
-      })
-    );
-
-    this.sub.push(
-      // Translation
-      this.translate.stream('gallery').subscribe((data) => {
-        this.galleries.length = 0;
-
-        this.galleries.push(data['gallery_top_cat_one_button']);
-        this.galleries.push(data['gallery_top_cat_two_button']);
-        this.galleries.push(data['gallery_top_cat_three_button']);
-        this.galleries.push(data['gallery_top_cat_four_button']);
-        this.galleries.push(data['gallery_top_cat_five_button']);
-        this.title = data['gallery_top_title'];
-        this.imageButton = data['gallery_image_button'];
-
         this.sub.push(
           this.imagesAPI
             .getGalleryImages(this.language || this.translate.currentLang)
@@ -137,6 +115,29 @@ export class GalleryComponent implements OnInit, OnDestroy {
               }
             })
         );
+      })
+    );
+
+    this.sub.push(
+      this.auth.isAdmin.subscribe((isAdmin: any) => {
+        this.isAdmin = isAdmin;
+      })
+    );
+
+    this.sub.push(
+      // Translation
+      this.translate.stream('gallery').subscribe((data) => {
+        this.galleries.length = 0;
+
+        this.galleries.push(data['gallery_top_cat_one_button']);
+        this.galleries.push(data['gallery_top_cat_two_button']);
+        this.galleries.push(data['gallery_top_cat_three_button']);
+        this.galleries.push(data['gallery_top_cat_four_button']);
+        this.galleries.push(data['gallery_top_cat_five_button']);
+        this.title = data['gallery_top_title'];
+        this.imageButton = data['gallery_image_button'];
+
+
 
         this.selectedCategory = this.galleries[0];
         this.currentImageIndex = -1;
