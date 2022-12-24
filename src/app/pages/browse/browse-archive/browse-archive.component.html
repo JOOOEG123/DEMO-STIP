@@ -253,7 +253,7 @@
               *ngFor="let event of profile?.events || []"
             >
               {{
-                event?.startYear.toString().length === 4
+                event?.startYear?.toString()?.length === 4
                   ? event?.startYear
                   : event?.startYear
                   ? (event?.startYear | date : "yyyy")
@@ -261,7 +261,7 @@
               }}
               --
               {{
-                event?.endYear.toString().length === 4
+                event?.endYear?.toString()?.length === 4
                   ? event?.endYear ?? 0
                   : event?.endYear
                   ? (event?.endYear | date : "yyyy")

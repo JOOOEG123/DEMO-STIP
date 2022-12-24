@@ -22,13 +22,13 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
     return this.formBuilder.group({
       image: this.formBuilder.control(a.image || ''),
       file: this.formBuilder.control(a.file || ''),
-      imageId: this.formBuilder.control(createUniqueUID()),
+      imageId: this.formBuilder.control(a.imageId || createUniqueUID()),
       imageCategory: this.formBuilder.control(a.imageCategory  || 'People'),
       imageDes: this.formBuilder.control(a.imageDes || ''),
       imageDetails: this.formBuilder.control(a.imageDetails || ''),
       imageSource: this.formBuilder.control(a.imageSource || ''),
       imageTitle: this.formBuilder.control(a.imageTitle || ''),
-      imageUpload: this.formBuilder.control(a.imageUpload || ''),
+      imageUpload: this.formBuilder.control(a.imageUpload || false),
       isProfile: this.formBuilder.control(a.isProfile || ''),
       imageUrl: this.formBuilder.control(a.imageUrl || ''),
       otherImage: this.formBuilder.control(a.otherImage || ''),
@@ -37,7 +37,7 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
       otherImageDetails: this.formBuilder.control(a.otherImageDetails || ''),
       otherImageSource: this.formBuilder.control(a.otherImageSource || ''),
       otherImageTitle: this.formBuilder.control(a.otherImageTitle || ''),
-      otherImageUpload: this.formBuilder.control(a.otherImageUpload || ''),
+      otherImageUpload: this.formBuilder.control(a.otherImageUpload || false),
       otherImageUrl: this.formBuilder.control(a.otherImageUrl || ''),
     });
   }

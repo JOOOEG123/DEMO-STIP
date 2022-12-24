@@ -346,7 +346,7 @@ export class UploadComponent implements OnInit, OnDestroy {
         return {
           imageId: x.imageId,
           rightistId: rightistId,
-          imagePath: x.image,
+          imagePath: file,
           imageUrl: file || '',
           isProfile: x.isProfile,
           isGallery: x.imageUpload,
@@ -368,7 +368,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       dd.map((x, i) => ({
         imageId: x.imageId,
         rightistId: rightistId,
-        imagePath: x.image,
+        imagePath: images[i].imageUrl,
         imageUrl: images[i].imageUrl,
         isProfile: x.isProfile,
         isGallery: x.imageUpload,
@@ -459,6 +459,8 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     if (this.isAdmin && ['contribution', 'profile'].includes(this.page)) {
       // TO DO: add images that was uploaded after approval by the admin to gallery schemas.
+
+
       Promise.all([
         this.contributionService.updateUserContribution(this.language, {
           contributionId: contributionId,
@@ -484,10 +486,24 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.archiveAPI
           .addRightist(this.otherLanguage, otherRightist)
           .then(() => {
+            if (rightist.images?.length && rightist.images.length > 0) {
+              rightist.images?.forEach(async (image)=> {
+                if (image?.isGallery) {
+                  await this.imageAPI.addImage(this.language, image);
+                }
+              });
+            }
             this.route.navigateByUrl('/account');
           }),
       ])
         .then(() => {
+          if (otherRightist.images?.length && otherRightist.images.length > 0) {
+            otherRightist.images?.forEach(async (image)=> {
+              if (image?.isGallery) {
+                await this.imageAPI.addImage(this.otherLanguage, image);
+              }
+            });
+          }
           this.clear2();
           this.route.navigateByUrl('/account');
           this.isLoading = false;

@@ -112,6 +112,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
           this.imagesAPI
             .getGalleryImages(this.language || this.translate.currentLang)
             .subscribe((imagesList: any) => {
+              console.log(imagesList)
               this.categoryImages.length = 0;
               this.display.length = 0;
               this.images.length = 0;
