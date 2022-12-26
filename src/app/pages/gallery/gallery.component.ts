@@ -112,17 +112,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!;
+    this.language = this.translate.currentLang;
     this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
-
-    this.sub.push(
-      this.translate.onLangChange.subscribe((data: any) => {
-        this.language = data.lang;
-        this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
-        this.callAPI();
-      })
-    );
-
     this.sub.push(
       this.auth.isAdmin.subscribe((isAdmin: any) => {
         this.isAdmin = isAdmin;
@@ -132,6 +123,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
     this.sub.push(
       // Translation
       this.translate.stream('gallery').subscribe((data) => {
+        this.language = this.translate.currentLang;
+        this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
         this.galleries.length = 0;
 
         this.galleries.push(data['gallery_top_cat_one_button']);
@@ -141,8 +134,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.galleries.push(data['gallery_top_cat_five_button']);
         this.title = data['gallery_top_title'];
         this.imageButton = data['gallery_image_button'];
-
-
         this.callAPI();
         this.selectedCategory = this.galleries[0];
         this.currentImageIndex = -1;
