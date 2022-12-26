@@ -67,6 +67,8 @@ export class GalleryComponent implements OnInit, OnDestroy {
   isAdmin?: boolean;
   loaded: boolean = false;
 
+  subAPI : {[x: string]: Subscription} = {} as any;
+
   constructor(
     private translate: TranslateService,
     private storageAPI: StorageApIService,
@@ -78,16 +80,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit(): void {}
 
-  ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!;
-    this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
-
-    this.sub.push(
-      this.translate.onLangChange.subscribe((data: any) => {
-        this.language = data.lang;
-        this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
-        this.sub.push(
-          this.imagesAPI
+  callAPI() {
+    this.subAPI[this.language]?.unsubscribe();
+    this.subAPI[this.language] = this.imagesAPI
             .getGalleryImages(this.language || this.translate.currentLang)
             .subscribe((imagesList: any) => {
               console.log(imagesList)
@@ -114,7 +109,17 @@ export class GalleryComponent implements OnInit, OnDestroy {
                 }
               }
             })
-        );
+  }
+
+  ngOnInit(): void {
+    this.language = localStorage.getItem('lang')!;
+    this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
+
+    this.sub.push(
+      this.translate.onLangChange.subscribe((data: any) => {
+        this.language = data.lang;
+        this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
+        this.callAPI();
       })
     );
 
@@ -138,7 +143,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
         this.imageButton = data['gallery_image_button'];
 
 
-
+        this.callAPI();
         this.selectedCategory = this.galleries[0];
         this.currentImageIndex = -1;
       })
