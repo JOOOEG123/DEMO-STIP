@@ -5,30 +5,29 @@ const LIST_OF_IMAGE_CATEGORIES = {
 
 const ObJ_OF_STATUS = {
   en: {
-    'Alive': '活',
-    'Deceased': '死者',
-    'Unknown': '未知',
+    Alive: '活',
+    Deceased: '死者',
+    Unknown: '未知',
   },
   cn: {
-    '活': 'Alive',
-    '死者': 'Deceased',
-    '未知': 'Unknown',
-  }
-}
+    活: 'Alive',
+    死者: 'Deceased',
+    未知: 'Unknown',
+  },
+};
 
 const ObJ_OF_GENDERS = {
   en: {
-    'Male': '男性',
-    'Female': '女性',
-    'Unknown': '未知',
+    Male: '男性',
+    Female: '女性',
+    Unknown: '未知',
   },
   cn: {
-    '男性': 'Male',
-    '女性': 'Female',
-    '未知': 'Unknown',
-  }
-}
-
+    男性: 'Male',
+    女性: 'Female',
+    未知: 'Unknown',
+  },
+};
 
 const ETHNIC_GROUP_CONSTANTS = {
   en: [
@@ -92,9 +91,64 @@ const ETHNIC_GROUP_CONSTANTS = {
     'Naturalized Citizen',
   ],
   en_cn: {
-    'Han':'汉族',
-    'Zhuang':'壮族',
-    'Hui': '回族'
+    Han: '汉族',
+    Zhuang: '壮族',
+    Hui: '回族',
+    Manchu: '满族',
+    Uyghur: '维吾尔族',
+    Miao: '苗族',
+    Yi: '彝族',
+    Tujia: '土家族',
+    Tibetan: '藏族',
+    Mongol: '蒙古族',
+    Dong: '侗族',
+    Bouyei: '布依族',
+    Yao: '瑶族',
+    Bai: '白族',
+    Joseonjok: '朝鲜族',
+    Hani: '哈尼族',
+    Li: '黎族',
+    Kazakh: '哈萨克族',
+    Dai: '傣族',
+    She: '畲族',
+    Lisu: '傈僳族',
+    Dongxiang: '东乡族',
+    Gelao: '仡佬族',
+    Lahu: '拉祜族',
+    Wa: '佤族',
+    Sui: '水族',
+    Nakhi: '纳西族',
+    Qiang: '羌族',
+    Tu: '土族',
+    Mulao: '仫佬族',
+    Xibe: '锡伯族',
+    Kyrgyz: '柯尔克孜族',
+    Jingpo: '景颇族',
+    Daur: '达斡尔族',
+    Salar: '撒拉族',
+    Blang: '布朗族',
+    Maonan: '毛南族',
+    Tajik: '塔吉克族',
+    Pumi: '普米族',
+    Achang: '阿昌族',
+    Nu: '怒族',
+    Evenki: '鄂温克族',
+    Vietnamese: '京族',
+    Jino: '基诺族',
+    'De ang': '德昂族',
+    Bonan: '保安族',
+    Russian: '俄罗斯族',
+    Yugur: '裕固族',
+    Uzbek: '乌孜别克族',
+    Monba: '门巴族',
+    Oroqen: '鄂伦春族',
+    Derung: '独龙族',
+    Hezhen: '赫哲族',
+    Gaoshan: '高山族',
+    Lhoba: '珞巴族',
+    Tatars: '塔塔尔族',
+    Unknown: '未知',
+    'Naturalized Citizen': '外国人加入中国籍',
   },
   cn: [
     '汉族',
@@ -174,5 +228,5 @@ export {
   LIST_OF_STATUS,
   LIST_OF_IMAGE_CATEGORIES,
   ObJ_OF_GENDERS,
-  ObJ_OF_STATUS
+  ObJ_OF_STATUS,
 };
