@@ -165,7 +165,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       const other = this._contribution[this.otherLanguage];
       const { rightist: r1 } = this._contribution[this.language];
       const { rightist: r2 } = this._contribution[this.otherLanguage];
-      console.log({ r1, r2 });
+      console.log({ r1, r2 }, data);
       if (r1 && r2) {
         this.mapForm(r1, r2);
       } else if (curr && other) {

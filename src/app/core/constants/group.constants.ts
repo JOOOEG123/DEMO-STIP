@@ -5,27 +5,27 @@ const LIST_OF_IMAGE_CATEGORIES = {
 
 const ObJ_OF_STATUS = {
   en: {
-    Alive: '活',
-    Deceased: '死者',
-    Unknown: '未知',
+    alive: '活',
+    deceased: '死者',
+    unknown: '未知',
   },
   cn: {
-    活: 'Alive',
-    死者: 'Deceased',
-    未知: 'Unknown',
+    活: 'alive',
+    死者: 'deceased',
+    未知: 'unknown',
   },
 };
 
 const ObJ_OF_GENDERS = {
   en: {
-    Male: '男性',
-    Female: '女性',
-    Unknown: '未知',
+    male: '男性',
+    female: '女性',
+    unknown: '未知',
   },
   cn: {
-    男性: 'Male',
-    女性: 'Female',
-    未知: 'Unknown',
+    男性: 'male',
+    女性: 'female',
+    未知: 'unknown',
   },
 };
 
@@ -213,12 +213,12 @@ const ETHNIC_GROUP_CONSTANTS = {
 };
 
 const LIST_OF_GENDER = {
-  en: ['Male', 'Female', 'Unknown'],
+  en: ['male', 'female', 'unknown'],
   cn: ['男性', '女性', '未知'],
 };
 
 const LIST_OF_STATUS = {
-  en: ['Alive', 'Deceased', 'Unknown'],
+  en: ['alive', 'deceased', 'unknown'],
   cn: ['活', '死者', '未知'],
 };
 
