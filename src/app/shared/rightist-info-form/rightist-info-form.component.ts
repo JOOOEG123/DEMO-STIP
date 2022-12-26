@@ -70,10 +70,13 @@ export class RightistInfoFormComponent
   statuses: string[] = [];
   otherStatuses: string[] = [];
   otherImageCategories: string[] = [];
-  allEn_CnEnthic = ETHNIC_GROUP_CONSTANTS['en_cn'];
+
 
   language: string = this.transService.currentLang;
   otherLanguage: string = this.language === 'en' ? 'cn' : 'en';
+
+  allEn_CnEnthic = ETHNIC_GROUP_CONSTANTS[`${this.language}_${this.otherLanguage}`];
+  allcn_enEnthic = ETHNIC_GROUP_CONSTANTS[`${this.otherLanguage}_${this.language}`];
 
   // imageValue!: UploadImagesType[];
 
@@ -97,6 +100,8 @@ export class RightistInfoFormComponent
       this.transService.onLangChange.subscribe((lang) => {
         this.language = lang.lang;
         this.otherLanguage = lang.lang === 'en' ? 'cn' : 'en';
+        this.allEn_CnEnthic = ETHNIC_GROUP_CONSTANTS[`${this.language}_${this.otherLanguage}`];
+        this.allcn_enEnthic = ETHNIC_GROUP_CONSTANTS[`${this.otherLanguage}_${this.language}`];
         this.initializeConstants();
       })
     );
@@ -145,7 +150,7 @@ export class RightistInfoFormComponent
   }
 
   initializeConstants() {
-    this.ethnicGroup = Object.keys(this.allEn_CnEnthic);
+    this.ethnicGroup = Object.keys(ETHNIC_GROUP_CONSTANTS[`${this.language}_${this.otherLanguage}`]);
     this.otherEthnicGroup = ETHNIC_GROUP_CONSTANTS[this.otherLanguage];
 
     this.genders = LIST_OF_GENDER[this.language];
@@ -163,6 +168,6 @@ export class RightistInfoFormComponent
     console.log(this.form.value)
   }
   patchChange(key: string, otherKey: string) {
-    this.form.get(otherKey)!.setValue(this.form.get(key)!.value);
+    this.form.get(otherKey)!.setValue(this.allEn_CnEnthic[this.form.get(key)!.value]);
   }
 }
