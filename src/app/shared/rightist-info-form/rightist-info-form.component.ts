@@ -54,9 +54,9 @@ export class RightistInfoFormComponent
       otherEthnic: [a.otherEthnic || ''],
       occupation: [a.occupation || '', Validators.required],
       otherOccupation: [a.otherOccupation || ''],
-      rightistYear: [a.rightistYear || '', Validators.required],
+      rightistYear: [a.rightistYear || ''],
       birthYear: [a.birthYear || '', Validators.required],
-      deathYear: [a.deathYear || '', Validators.required],
+      deathYear: [a.deathYear || ''],
     });
   }
   form = this.newForm();
