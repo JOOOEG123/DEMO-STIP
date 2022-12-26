@@ -334,14 +334,18 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     const currentImages = () =>
       dd.map(async (x) => {
-        const file = x.imageUrl.includes('firebasestorage')
-          ? x.imageUrl
-          : await this.storageAPI.uploadContributionImage(
-              this.auth.uid,
-              rightistId,
-              x.imageId,
-              x.file
-            );
+        let file = ''
+
+        if (x.imageUrl.includes('firebasestorage')) {
+          file = x.imageUrl;
+        } else if (x.file) {
+          file = await this.storageAPI.uploadContributionImage(
+            this.auth.uid,
+            rightistId,
+            x.imageId,
+            x.file
+          ) || '';
+        }
 
         return {
           imageId: x.imageId,
