@@ -3,7 +3,7 @@
     <div class="d-flex profile-bg-image-blue-inner">
       <div class="d-flex flex-column align-items-center flex-shrink-1 my-5">
         <img
-          alt="Image not Found"
+          [alt]="src ? profile?.fullName + ' profile' : 'Image not Found'"
           [src]="src"
           width="200"
           height="200"
@@ -29,9 +29,14 @@
               class="list-group-item border-0"
               style="background-color: #e8e8e8"
             >
-              <label class="border-bottom border-dark fw-bold">
-                Gallery&emsp;</label
+              <div class="border-bottom border-dark fw-bold">
+                Gallery&emsp;</div
               >
+              <div class="row mt-2">
+                <div *ngFor="let image of imagesUrls"[ngClass]="{ 'col d-flex' : image?.imagePath}">
+                  <img *ngIf="image?.imagePath" [src]="image?.imagePath" class="img-fluid my-auto">
+                </div>
+              </div>
             </li>
           </ul>
         </div>

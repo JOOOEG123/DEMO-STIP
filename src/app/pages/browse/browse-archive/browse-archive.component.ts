@@ -33,6 +33,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
   @ViewChild('infoContent') infoContent!: ElementRef;
 
   [x: string]: any;
+  imagesUrls: any[] = [];
   id = this.route.snapshot.paramMap.get('id') as string;
   profile = {} as any;
   url = location.href;
@@ -71,19 +72,14 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
         .getRightistById(this.language!, this.id)
         .subscribe((res: any) => {
           this.profile = res;
-          console.log(res);
-
-          if (res?.imageId) {
-            this.sub.push(
-              this.images
-                .getImage(this.language!, this.profile.imageId)
-                .subscribe((image: any) => {
-                  this.src = image.imagePath;
-                  this.loaded = true;
-                })
-            );
-          } else {
-            this.loaded = true;
+          this.loaded = true;
+          if (res?.images) {
+            this.imagesUrls = res?.images;
+            res.images.forEach(o => {
+              if (o.imagePath && o.isProfile) {
+                this.src = o.imagePath
+              }
+            });
           }
 
           //sorting event based on starting year
