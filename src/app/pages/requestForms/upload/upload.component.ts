@@ -279,7 +279,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   onInit() {
     if (this.page === 'contribution') {
       if (this.contribution) {
-        if (this.contribution.contributionId && this.contribution.rightist) {
+        if (this.contribution?.contributionId && this.contribution.rightist) {
           const rightist: Rightist = this.contribution.rightist;
           // this.mapForm(rightist);
           this.updateData();
@@ -459,7 +459,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       rightist.initial = rightist.fullName.trim().charAt(0).toUpperCase();
       otherRightist.initial = rightist.fullName.trim().charAt(0).toUpperCase();
     }
-    let contributionId = this.contributionId || this.contribution.contributionId || UUID();
+    let contributionId = this.contributionId || this.contribution?.contributionId || UUID();
 
     if (this.isAdmin && ['contribution', 'profile'].includes(this.page)) {
       // TO DO: add images that was uploaded after approval by the admin to gallery schemas.
