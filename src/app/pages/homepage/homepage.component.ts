@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
+import { AnnouncementService } from 'src/app/core/services/announcement.service';
 import { RequestModification } from 'src/app/core/types/emails.types';
 
 @Component({
@@ -10,7 +11,7 @@ import { RequestModification } from 'src/app/core/types/emails.types';
 })
 export class HomepageComponent implements OnInit {
   data$: any;
-  constructor(private router: Router, private func: AngularFireFunctions) {}
+  constructor(private router: Router, private func: AngularFireFunctions, private announceProfile: AnnouncementService ) {}
   searchTerm: string = '';
   transPath = 'homepage.component.';
 
@@ -33,7 +34,9 @@ export class HomepageComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.announceProfile.getRandomProfile()
+  }
   searchArchives() {
     this.router.navigate(['/browse/main'], {
       queryParams: { searchTerm: this.searchTerm },

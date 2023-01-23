@@ -26,4 +26,12 @@ export class AnnouncementService {
       announce: message,
     });
   }
+
+  getRandomProfile(lang: string = 'en') {
+    return this.db
+      .list(`/persons/data/${lang}/rightists`, (ref) =>
+        ref.orderByChild('images/0/isProfile').equalTo(true).limitToLast(3)
+      )
+      .valueChanges();
+  }
 }
