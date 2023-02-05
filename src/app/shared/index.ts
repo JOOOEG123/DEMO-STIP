@@ -17,5 +17,5 @@ export const sharedComponents = [
   UploadImagesFormComponent,
   RightistInfoFormComponent,
   MemoirInfoFormComponent,
-  EventInfoFormComponent
+  EventInfoFormComponent,
 ];

@@ -75,9 +75,9 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
           this.loaded = true;
           if (res?.images) {
             this.imagesUrls = res?.images;
-            res.images.forEach(o => {
+            res.images.forEach((o) => {
               if (o.imagePath && o.isProfile) {
-                this.src = o.imagePath
+                this.src = o.imagePath;
               }
             });
           }
@@ -99,7 +99,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loaded = false;
-    this.language = localStorage.getItem('lang')!
+    this.language = localStorage.getItem('lang')!;
     this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
 
     this.languageSubscription = this.translate.onLangChange.subscribe(

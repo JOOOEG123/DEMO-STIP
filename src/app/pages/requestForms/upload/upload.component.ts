@@ -334,17 +334,18 @@ export class UploadComponent implements OnInit, OnDestroy {
 
     const currentImages = () =>
       dd.map(async (x) => {
-        let file = ''
+        let file = '';
 
         if (x.imageUrl.includes('firebasestorage')) {
           file = x.imageUrl;
         } else if (x.file) {
-          file = await this.storageAPI.uploadContributionImage(
-            this.auth.uid,
-            rightistId,
-            x.imageId,
-            x.file
-          ) || '';
+          file =
+            (await this.storageAPI.uploadContributionImage(
+              this.auth.uid,
+              rightistId,
+              x.imageId,
+              x.file
+            )) || '';
         }
 
         return {
@@ -459,7 +460,8 @@ export class UploadComponent implements OnInit, OnDestroy {
       rightist.initial = rightist.fullName.trim().charAt(0).toUpperCase();
       otherRightist.initial = rightist.fullName.trim().charAt(0).toUpperCase();
     }
-    let contributionId = this.contributionId || this.contribution?.contributionId || UUID();
+    let contributionId =
+      this.contributionId || this.contribution?.contributionId || UUID();
 
     if (this.isAdmin && ['contribution', 'profile'].includes(this.page)) {
       // TO DO: add images that was uploaded after approval by the admin to gallery schemas.
@@ -489,7 +491,7 @@ export class UploadComponent implements OnInit, OnDestroy {
           .addRightist(this.otherLanguage, otherRightist)
           .then(() => {
             if (rightist.images?.length && rightist.images.length > 0) {
-              rightist.images?.forEach(async (image)=> {
+              rightist.images?.forEach(async (image) => {
                 if (image?.isGallery) {
                   await this.imageAPI.addImage(this.language, image);
                 }
@@ -502,7 +504,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       ])
         .then(() => {
           if (otherRightist.images?.length && otherRightist.images.length > 0) {
-            otherRightist.images?.forEach(async (image)=> {
+            otherRightist.images?.forEach(async (image) => {
               if (image?.isGallery) {
                 await this.imageAPI.addImage(this.otherLanguage, image);
               }

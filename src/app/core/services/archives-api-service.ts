@@ -195,9 +195,13 @@ export class ArchieveApiService {
       .update({ [rightist.rightistId]: rightist });
   }
 
-  updateRightistImageId(language: string, rightistId: string, newImageId: string) {
+  updateRightistImageId(
+    language: string,
+    rightistId: string,
+    newImageId: string
+  ) {
     return this.db
-    .object(`persons/data/${language}/rightists/${rightistId}`)
-    .update({ imageId: newImageId });
+      .object(`persons/data/${language}/rightists/${rightistId}`)
+      .update({ imageId: newImageId });
   }
 }

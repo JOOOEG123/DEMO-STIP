@@ -5,7 +5,7 @@ export type Categories =
 
 export type CategoryList = Record<Categories, Contribution[]>;
 
-type Gender = 'male' | 'female' | 'unknown' | '男性' | '女性' | '未知'
+type Gender = 'male' | 'female' | 'unknown' | '男性' | '女性' | '未知';
 type Ethnicity =
   | 'Han'
   | 'Zhuang'
@@ -64,13 +64,13 @@ type Ethnicity =
   | 'Tatar'
   | 'Bai';
 
-export type Status = 'deceased' | 'alive' | 'unknown' | '活' | '死者' | '未知'
+export type Status = 'deceased' | 'alive' | 'unknown' | '活' | '死者' | '未知';
 
 export type State = 'void' | 'removed';
 
 export type Publish = 'original' | 'new' | 'approved' | 'rejected';
 
-export type Source = 'original' | 'contributed'
+export type Source = 'original' | 'contributed';
 
 export interface Event {
   startYear: number;
@@ -134,8 +134,8 @@ export interface RightistSchema {
   rightistYear: number;
   status: Status;
   ethnicity: string;
-  birthplace: string,
-  education: string,
+  birthplace: string;
+  education: string;
   job: string;
   detailJob: string;
   workplace: string;
@@ -187,8 +187,6 @@ export interface ContributionJson {
 export interface OuterContributionJson {
   [contributorId: string]: ContributionJson;
 }
-
-
 
 // export interface ImagesSchema {
 //   imageId: string;

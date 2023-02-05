@@ -8,9 +8,8 @@ describe('GalleryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GalleryComponent ]
-    })
-    .compileComponents();
+      declarations: [GalleryComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -24,25 +23,25 @@ describe('GalleryComponent', () => {
   });
 
   it('initializes selectedCategory', () => {
-    expect(component.selectedCategory).toBe('All')
-  })
+    expect(component.selectedCategory).toBe('All');
+  });
 
   it('initializes currentImageIndex', () => {
-    expect(component.currentImageIndex).toBe(-1)
-  })
+    expect(component.currentImageIndex).toBe(-1);
+  });
 
   it('changes selectedCategory', () => {
-    component.setActive('new')
-    expect(component.selectedCategory).toBe('new')
-  })
+    component.setActive('new');
+    expect(component.selectedCategory).toBe('new');
+  });
 
   it('changes currentImageIndex', () => {
-    component.onEnter(5)
-    expect(component.currentImageIndex).toBe(5)
-  })
+    component.onEnter(5);
+    expect(component.currentImageIndex).toBe(5);
+  });
 
   it('resets currentImageIndex', () => {
-    component.onLeave()
-    expect(component.currentImageIndex).toBe(-1)
-  })
+    component.onLeave();
+    expect(component.currentImageIndex).toBe(-1);
+  });
 });

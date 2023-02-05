@@ -85,10 +85,7 @@ export class ContributionsService {
       .valueChanges();
   }
 
-  updateUserContribution(
-    language: string,
-    obj: ContributionSchema
-  ) {
+  updateUserContribution(language: string, obj: ContributionSchema) {
     return this.db
       .object(`/persons/data/${language}/contributions/${obj.contributorId}`)
       .update({ [obj.contributionId]: obj });
@@ -116,7 +113,11 @@ export class ContributionsService {
     return this.db.object(`/persons/data/${language}`);
   }
 
-  deleteUserContribution(language: string, contributorId: string, contributionId: string) {
+  deleteUserContribution(
+    language: string,
+    contributorId: string,
+    contributionId: string
+  ) {
     this.db
       .object(
         `/persons/data/${language}/contributions/${contributorId}/${contributionId}`

@@ -42,23 +42,28 @@
           </h2>
           <div
             class="col-xs-12 col-md-6 col-lg-4 my-4"
-            *ngFor="let profile of fakeProfile"
+            *ngFor="let profile of randomProfile"
           >
             <div class="card h-100 shadow">
               <div class="card-body">
                 <div class="text-center">
                   <img
-                    src="assets/homepage/{{ profile.profile }}"
+                  *ngIf="profile?.images[0]?.imageUrl"
+                    [src]="profile?.images[0]?.imageUrl"
                     class="rounded-circle img-fluid"
-                    width="200"
+                  />
+                  <img
+                  *ngIf="!profile?.images[0]?.imageUrl"
+                    src="/assets/homepage/default-profile.png"
+                    class="rounded-circle img-fluid"
                   />
                 </div>
                 <div class="col-10 mt-auto mx-auto pt-4">
                   <h4 class="text-green text-center mb-3 fw-bold">
-                    {{ profile.name }}
+                    {{ profile.fullName | titlecase }}
                   </h4>
                   <p class="text-dark-green">
-                    {{ "common.profile_lorem" | translate }}
+                    {{ profile.description }}
                   </p>
                 </div>
               </div>

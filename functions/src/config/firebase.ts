@@ -11,4 +11,4 @@ const fireStore = admin.firestore();
 const database = admin.database();
 const storage = admin.storage();
 
-export {fireStore, database, storage, admin};
+export { fireStore, database, storage, admin };

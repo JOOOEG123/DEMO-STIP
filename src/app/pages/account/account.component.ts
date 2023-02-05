@@ -21,9 +21,9 @@ export class AccountComponent implements OnInit, OnDestroy {
   userId = this.auth.uid;
   isVeryBtnClicked!: boolean;
 
-  language: string = ''
+  language: string = '';
 
-  languageSubscription?: Subscription
+  languageSubscription?: Subscription;
 
   constructor(
     public auth: AuthServiceService,
@@ -35,39 +35,46 @@ export class AccountComponent implements OnInit, OnDestroy {
   ) {}
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
-    this.languageSubscription?.unsubscribe()
+    this.languageSubscription?.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.language = localStorage.getItem('lang')!
+    this.language = localStorage.getItem('lang')!;
 
-    this.languageSubscription = this.translate.onLangChange.subscribe((langChange: any) => {
-      this.language = langChange.lang
-      this.subscription.forEach(x => x.unsubscribe())
-      this.subscription.length = 0
-      this.initialize()
-    })
+    this.languageSubscription = this.translate.onLangChange.subscribe(
+      (langChange: any) => {
+        this.language = langChange.lang;
+        this.subscription.forEach((x) => x.unsubscribe());
+        this.subscription.length = 0;
+        this.initialize();
+      }
+    );
 
-    this.initialize()
+    this.initialize();
   }
 
   initialize() {
     this.subscription.push(
-      this.contributionService.fetchUserContributions(this.language).subscribe((x: any) => {
-        this.userContribution = [];
-        for (const contribution of x) {
-          if (contribution.publish === 'approved') {
-            this.archiveService
-              .getRightistById(this.language, contribution.rightistId)
-              .subscribe((rightist: any) => {
-                contribution.rightist = rightist;
-              });
+      this.contributionService
+        .fetchUserContributions(this.language)
+        .subscribe((x: any) => {
+          this.userContribution = [];
+          for (const contribution of x) {
+            if (contribution.publish === 'approved') {
+              this.archiveService
+                .getRightistById(this.language, contribution.rightistId)
+                .subscribe((rightist: any) => {
+                  contribution.rightist = rightist;
+                });
+            }
           }
-        }
-        this.userContribution = x.sort((a, b) => {
-          return new Date(b.contributedAt).getTime() - new Date(a.contributedAt).getTime();
-        });
-      })
+          this.userContribution = x.sort((a, b) => {
+            return (
+              new Date(b.contributedAt).getTime() -
+              new Date(a.contributedAt).getTime()
+            );
+          });
+        })
     );
     const h = this.storage.profileImgeUrl();
     if (h) {

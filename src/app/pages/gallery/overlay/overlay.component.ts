@@ -79,7 +79,6 @@ export class OverlayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.image) {
-
     }
   }
 
@@ -103,8 +102,7 @@ export class OverlayComponent implements OnInit, OnDestroy {
 
     this.category = Object.keys(LIST_OF_IMAGE_CATEGORIES[this.language!]).find(
       (k) =>
-        LIST_OF_IMAGE_CATEGORIES[this.language!][k] ===
-        this.image!.category
+        LIST_OF_IMAGE_CATEGORIES[this.language!][k] === this.image!.category
     )!;
 
     this.title = this.image!.title;

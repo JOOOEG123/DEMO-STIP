@@ -66,7 +66,7 @@ export class MemoirInfoFormComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: any[]): void {
-    console.log({obj});
+    console.log({ obj });
     if (obj) {
       if (obj.length > 0) {
         this.memiorArray.clear();

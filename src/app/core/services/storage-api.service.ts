@@ -10,8 +10,7 @@ export class StorageApIService {
   constructor(
     private afs: AngularFireStorage,
     private auth: AuthServiceService
-  ) {
-  }
+  ) {}
 
   profileImage(uid = this.auth.uid) {
     return this.afs.ref(`userProfile/${uid}`);
@@ -41,10 +40,19 @@ export class StorageApIService {
     return upload;
   }
 
-   async uploadContributionImage(uid: string, contributionid: string, imageid: string, file: File) {
+  async uploadContributionImage(
+    uid: string,
+    contributionid: string,
+    imageid: string,
+    file: File
+  ) {
     const url = `/images/contribution/${uid}/${contributionid}/${imageid}`;
-    const ref = this.afs.ref(`/images/contribution/${uid}/${contributionid}/${imageid}`);
-    const ff = await lastValueFrom(this.afs.upload(url, file).snapshotChanges())
+    const ref = this.afs.ref(
+      `/images/contribution/${uid}/${contributionid}/${imageid}`
+    );
+    const ff = await lastValueFrom(
+      this.afs.upload(url, file).snapshotChanges()
+    );
     return ff?.ref.getDownloadURL();
   }
 
@@ -59,10 +67,10 @@ export class StorageApIService {
   }
 
   uploadImage(imageId: string, file: File) {
-    return this.afs.ref(`images/${imageId}`).put(file)
+    return this.afs.ref(`images/${imageId}`).put(file);
   }
 
   removeImage(imageId: string) {
-    return this.afs.ref(`images/${imageId}`).delete()
+    return this.afs.ref(`images/${imageId}`).delete();
   }
 }
