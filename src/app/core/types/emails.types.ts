@@ -1,3 +1,4 @@
+
 type ContactUs = {
   name: string;
   email: string;
@@ -13,4 +14,4 @@ type RequestModification = {
   [key: string]: string;
 };
 
-export { ContactUs, RequestModification };
+export {ContactUs, RequestModification};

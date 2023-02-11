@@ -8,8 +8,9 @@ describe('BrowseArchiveComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BrowseArchiveComponent],
-    }).compileComponents();
+      declarations: [ BrowseArchiveComponent ]
+    })
+    .compileComponents();
   });
 
   beforeEach(() => {

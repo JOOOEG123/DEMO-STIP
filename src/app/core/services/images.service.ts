@@ -37,14 +37,10 @@ export class ImagesService {
   }
 
   deleteImage(language: string, imageId: string) {
-    return this.db
-      .object(`persons/data/${language}/images/${imageId}`)
-      .remove();
+    return this.db.object(`persons/data/${language}/images/${imageId}`).remove();
   }
 
-  getImage(language: string, imageId: string) {
-    return this.db
-      .object(`persons/data/${language}/images/${imageId}`)
-      .valueChanges();
+  getImage(language: string, imageId:string) {
+    return this.db.object(`persons/data/${language}/images/${imageId}`).valueChanges()
   }
 }

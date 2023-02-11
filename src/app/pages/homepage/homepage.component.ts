@@ -11,12 +11,7 @@ import { RequestModification } from 'src/app/core/types/emails.types';
 })
 export class HomepageComponent implements OnInit {
   data$: any;
-  randomProfile: any[] = [];
-  constructor(
-    private router: Router,
-    private func: AngularFireFunctions,
-    private announceProfile: AnnouncementService
-  ) {}
+  constructor(private router: Router, private func: AngularFireFunctions, private announceProfile: AnnouncementService ) {}
   searchTerm: string = '';
   transPath = 'homepage.component.';
 
@@ -30,7 +25,7 @@ export class HomepageComponent implements OnInit {
       name: 'Jane Doe',
       email: 'JaneDoe@aol.com',
       profile: 'default-profile.png',
-      desc: `In 1957, he was accused of “setting fire`,
+      desc: `In 1957, he was accused of “setting fire`
     },
     {
       name: 'John Smith',
@@ -40,10 +35,7 @@ export class HomepageComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.announceProfile.getRandomProfile().subscribe(x =>{
-      console.log(x);
-      this.randomProfile = x;
-    })
+    this.announceProfile.getRandomProfile()
   }
   searchArchives() {
     this.router.navigate(['/browse/main'], {

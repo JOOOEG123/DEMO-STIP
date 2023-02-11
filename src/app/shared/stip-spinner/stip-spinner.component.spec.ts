@@ -8,8 +8,9 @@ describe('StipSpinnerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StipSpinnerComponent],
-    }).compileComponents();
+      declarations: [ StipSpinnerComponent ]
+    })
+    .compileComponents();
   });
 
   beforeEach(() => {

@@ -67,7 +67,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
   isAdmin?: boolean;
   loaded: boolean = false;
 
-  subAPI: { [x: string]: Subscription } = {} as any;
+  subAPI : {[x: string]: Subscription} = {} as any;
 
   constructor(
     private translate: TranslateService,
@@ -83,32 +83,32 @@ export class GalleryComponent implements OnInit, OnDestroy {
   callAPI() {
     this.subAPI[this.language]?.unsubscribe();
     this.subAPI[this.language] = this.imagesAPI
-      .getGalleryImages(this.language || this.translate.currentLang)
-      .subscribe((imagesList: any) => {
-        console.log(imagesList);
-        this.categoryImages.length = 0;
-        this.display.length = 0;
-        this.images.length = 0;
-        this.images = imagesList;
+            .getGalleryImages(this.language || this.translate.currentLang)
+            .subscribe((imagesList: any) => {
+              console.log(imagesList)
+              this.categoryImages.length = 0;
+              this.display.length = 0;
+              this.images.length = 0;
+              this.images = imagesList;
 
-        if (this.images.length == 0) {
-          this.loaded = true;
-        } else {
-          for (const image of this.images) {
-            this.categoryImages.push(image);
-            if (this.display.length < this.itemsPerPage) {
-              this.display.push(image);
-            }
+              if (this.images.length == 0) {
+                this.loaded = true;
+              } else {
+                for (const image of this.images) {
+                  this.categoryImages.push(image);
+                  if (this.display.length < this.itemsPerPage) {
+                    this.display.push(image);
+                  }
 
-            if (imagesList.length === this.categoryImages.length) {
-              this.loaded = true;
-              setTimeout(() => {
-                this.reloadMasonryLayout();
-              }, 300);
-            }
-          }
-        }
-      });
+                  if (imagesList.length === this.categoryImages.length) {
+                    this.loaded = true;
+                    setTimeout(() => {
+                      this.reloadMasonryLayout();
+                    }, 300);
+                  }
+                }
+              }
+            })
   }
 
   ngOnInit(): void {
@@ -290,11 +290,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
     if (data.status == 'delete') {
       this.modalService.hide();
       Promise.all([
-        this.archiveAPI.updateRightistImageId(
-          this.language!,
-          image.rightistId,
-          ''
-        ),
+        this.archiveAPI.updateRightistImageId(this.language!, image.rightistId, ''),
         this.imagesAPI.deleteImage(this.language!, image.imageId),
         this.imagesAPI.deleteImage(this.otherLanguage!, image.imageId),
         this.storageAPI.removeGalleryImage(image.imageId),

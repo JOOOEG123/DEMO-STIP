@@ -6,15 +6,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  Output,
-  TemplateRef,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { forkJoin, mergeMap, Subscription, zip } from 'rxjs';
@@ -99,7 +91,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     detail: '',
     source: '',
     imageUrl: '',
-    isProfile: undefined,
+    isProfile: undefined
   };
 
   otherImage: ImagesSchema = {
@@ -111,7 +103,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     detail: '',
     source: '',
     imageUrl: '',
-    isProfile: undefined,
+    isProfile: undefined
   };
 
   languageSubscription?: Subscription;
@@ -198,7 +190,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                   .getRightistById(this.language, data.rightistId)
                   .subscribe((rightist: any) => {
                     // console.log(rightist);
-                    if (rightist?.imageId) {
+                    if (rightist ?.imageId) {
                       this.sub.push(
                         this.imageAPI
                           .getImage(this.language, rightist.imageId)
@@ -240,12 +232,12 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   onApprove(el: UploadComponent) {
-    console.log(el);
+    console.log(el)
     this.publish = 'approved';
     this.selectedContribution.state = 'removed';
-    el.onSubmit().then(() => {
+    el.onSubmit().then(()=> {
       this.modalRef?.hide();
-    });
+    })
   }
 
   onSave(data: any) {
@@ -307,11 +299,12 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.selectedContribution.state === 'removed'
     ) {
       if (this.publish === 'approved') {
-        console.log(this.appUpload);
+        console.log(this.appUpload)
         // this.appUpload?.onSubmit().then(() => {
         //   this.modalRef?.hide();
         // }
         // )
+
       } else {
         this.updatedContribution.publish = this.publish;
         this.otherUpdatedContribution.publish = this.publish;
@@ -344,9 +337,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.updatedContribution = { ...contribution };
     this.otherUpdatedContribution = { ...contribution };
     this.image = { ...contribution.image! };
-    this.modalRef = this.modalService.show(template, {
-      class: 'modal-custom-style',
-    });
+    this.modalRef = this.modalService.show(template, { class: 'modal-custom-style' });
   }
 
   onEventChange(source: any) {
@@ -451,7 +442,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     }
 
     if (data.type == 'other') {
-      console.log(data);
+      console.log(data)
       this.otherUpdatedContribution = {
         ...this.otherUpdatedContribution,
         rightist: {

@@ -1,2 +1,2 @@
-import { NavBar } from './layout.constants';
+import { NavBar } from "./layout.constants";
 export type NavBarLinks = typeof NavBar;

@@ -9,6 +9,7 @@ import { UploadImagesType } from 'src/app/core/types/adminpage.types';
 import { FormCustomProvider } from 'src/app/core/utils/helper';
 import { createUniqueUID } from 'src/app/core/utils/uuid';
 
+
 @Component({
   selector: 'app-upload-images-form',
   templateUrl: './upload-images-form.component.html',
@@ -22,7 +23,7 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
       image: this.formBuilder.control(a.image || ''),
       file: this.formBuilder.control(a.file || ''),
       imageId: this.formBuilder.control(a.imageId || createUniqueUID()),
-      imageCategory: this.formBuilder.control(a.imageCategory || 'People'),
+      imageCategory: this.formBuilder.control(a.imageCategory  || 'People'),
       imageDes: this.formBuilder.control(a.imageDes || ''),
       imageDetails: this.formBuilder.control(a.imageDetails || ''),
       imageSource: this.formBuilder.control(a.imageSource || ''),
@@ -152,7 +153,7 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
 
   selectDefaultProfile(i) {
     this.imageArray.controls.forEach((e, idx) => {
-      if (idx !== i) {
+      if (idx !== i)  {
         e.get('isProfile')?.setValue(false);
       }
     });
