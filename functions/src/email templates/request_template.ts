@@ -1,4 +1,4 @@
-import { ContactUs, RequestModification } from '../types/emails.types';
+import {ContactUs, RequestModification} from '../types/emails.types';
 
 const sharedStyle = `* {
   box-sizing: border-box;

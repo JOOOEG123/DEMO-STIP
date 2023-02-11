@@ -13,4 +13,4 @@ type RequestModification = {
   [key: string]: string;
 };
 
-export { ContactUs, RequestModification };
+export {ContactUs, RequestModification};

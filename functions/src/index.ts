@@ -4,8 +4,8 @@
 import * as functions from 'firebase-functions';
 import * as express from 'express';
 import * as cors from 'cors';
-import { allArchies } from './archiveController';
-import { testFetchDetails } from './testController';
+import {allArchies} from './archiveController';
+import {testFetchDetails} from './testController';
 import {
   contactUs,
   modifyRightistRequest,
@@ -15,7 +15,7 @@ import {
 // https://firebase.google.com/docs/database/extend-with-functions
 
 const app = express();
-app.use(cors({ origin: true }));
+app.use(cors({origin: true}));
 
 app.post('/', (_req, res) => res.status(200).send('Hello World!'));
 app.post('/allArchies', allArchies);
