@@ -88,14 +88,17 @@
 <div *ngIf="!contribution.rightist">
   <div class="row w-100">
     <small class="col-3"
-      ><strong>Approved At:</strong> {{ contribution.approvedAt }}</small
-    >
-    <small class="col-3"
-      ><strong>Last Update At:</strong> {{ contribution.lastUpdatedAt }}</small
-    >
-    <small class="col-3"
       ><strong>Contribution ID:</strong> {{ contribution.contributorId }}</small
     >
+    <small class="col-3"
+      ><strong>Approved At:</strong>
+      {{ contribution.approvedAt | date : "short" }}</small
+    >
+    <small class="col-3"
+      ><strong>Last Update At:</strong>
+      {{ contribution.lastUpdatedAt | date : "short" }}</small
+    >
+
     <small class="col-3"
       ><strong>Rightist: </strong>
       <a
