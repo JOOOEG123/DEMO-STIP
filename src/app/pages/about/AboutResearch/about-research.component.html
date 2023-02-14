@@ -1,13 +1,15 @@
 <!-- Project overview header -->
 <div class="container-fluid p-0 pb-3 bg-image-blue bg-white">
   <div class="bg-colors">
-    <div class="container-fluid text-white p-0 m-0 bg-image-blue-inner bg-image-blue-inner-pb-15">
+    <div
+      class="container-fluid text-white p-0 m-0 bg-image-blue-inner bg-image-blue-inner-pb-15"
+    >
       <div class="container w-50 py-5">
-        <h2 class="text-center py-4">{{ "project_overview.first_title" | translate }}</h2>
+        <h2 class="text-center py-4">
+          {{ "project_overview.first_title" | translate }}
+        </h2>
         <p class="pb-5 mb-5">
-          {{
-            "research.overview_body" | translate
-          }}
+          {{ "research.overview_body" | translate }}
         </p>
       </div>
     </div>
@@ -16,20 +18,16 @@
 
 <!-- What we found section -->
 <div class="container text-center w-50 my-4">
-  <h2 class="text-center pb-4">{{
-    "research.research_found" | translate
-  }}</h2>
+  <h2 class="text-center pb-4">{{ "research.research_found" | translate }}</h2>
   <p>
-    {{
-      "research.research_body" | translate
-    }}
+    {{ "research.research_body" | translate }}
   </p>
 </div>
 
 <!--Graphs-->
 <div class="container w-100 my-5">
-  <div class="row">
-    <div class="col-8 text-left">
+  <div class="row row-gap">
+    <div class="col-12 col-lg-9 text-left w-80">
       <app-chart
         *ngIf="rightistYearData.length != 0"
         id="rightistYearBarChart"
@@ -38,29 +36,21 @@
         [total]="total"
       ></app-chart>
     </div>
-    <div class="col-4 text-end align-self-center">
-      <h2>{{
-        "research.data1" | translate
-      }}</h2>
+    <div class="col-12 col-lg-3 text-end align-self-center">
+      <h2>{{ "research.data1" | translate }}</h2>
       <p>
-        {{
-          "research.data1_body" | translate
-        }}
+        {{ "research.data1_body" | translate }}
       </p>
     </div>
   </div>
   <div class="row row-gap">
     <div class="col-4 text-start align-self-center">
-      <h2>{{
-        "research.data2" | translate
-      }}</h2>
+      <h2>{{ "research.data2" | translate }}</h2>
       <p>
-        {{
-          "research.data2_body" | translate
-        }}
+        {{ "research.data2_body" | translate }}
       </p>
     </div>
-    <div class="col-8 text-end" id="chartElement">
+    <div class="col-8 text-end d-flex" id="chartElement">
       <div id="chart" class="chart-container"></div>
     </div>
   </div>
@@ -68,13 +58,9 @@
 
 <!-- Summary section -->
 <div class="container w-50 my-4 text-center">
-  <h2>{{
-    "research.summary" | translate
-  }}</h2>
+  <h2>{{ "research.summary" | translate }}</h2>
   <p>
-    {{
-      "research.summary_body" | translate
-    }}
+    {{ "research.summary_body" | translate }}
   </p>
   <div class="my-5">
     <div class="col-10 mx-auto">
@@ -82,9 +68,7 @@
         class="btn btn-success rounded-pill btn-lg"
         routerLink="/meetTeam"
       >
-      {{
-        "research.team_button" | translate
-      }}
+        {{ "research.team_button" | translate }}
       </button>
     </div>
   </div>
