@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { AnnouncementService } from 'src/app/core/services/announcement.service';
 import { RequestModification } from 'src/app/core/types/emails.types';
 
@@ -9,11 +11,21 @@ import { RequestModification } from 'src/app/core/types/emails.types';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
   data$: any;
-  constructor(private router: Router, private func: AngularFireFunctions, private announceProfile: AnnouncementService ) {}
+  randomProfile: any[] = [];
+  constructor(
+    private router: Router,
+    private func: AngularFireFunctions,
+    private announceProfile: AnnouncementService,
+    private translateService: TranslateService
+  ) {}
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub?.unsubscribe());
+  }
   searchTerm: string = '';
   transPath = 'homepage.component.';
+  subs: Subscription[] = [];
 
   fakeProfile = [
     {
@@ -25,7 +37,7 @@ export class HomepageComponent implements OnInit {
       name: 'Jane Doe',
       email: 'JaneDoe@aol.com',
       profile: 'default-profile.png',
-      desc: `In 1957, he was accused of “setting fire`
+      desc: `In 1957, he was accused of “setting fire`,
     },
     {
       name: 'John Smith',
@@ -35,7 +47,16 @@ export class HomepageComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.announceProfile.getRandomProfile()
+    this.subs.push(this.translateService.onLangChange.subscribe(async (res) => {
+      this.randomProfile = [];
+      const randomProfile =( await firstValueFrom<any>(this.announceProfile.getRandomProfile(res.lang)));
+      while (this.randomProfile.length < 3 && randomProfile.length >= 3) {
+        const random = Math.floor(Math.random() * randomProfile.length);
+        if (!this.randomProfile.includes(randomProfile[random])) {
+          this.randomProfile.push(randomProfile[random]);
+        }
+      }
+    }));
   }
   searchArchives() {
     this.router.navigate(['/browse/main'], {

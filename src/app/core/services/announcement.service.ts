@@ -30,7 +30,7 @@ export class AnnouncementService {
   getRandomProfile(lang: string = 'en') {
     return this.db
       .list(`/persons/data/${lang}/rightists`, (ref) =>
-        ref.orderByChild('images/0/isProfile').equalTo(true).limitToLast(3)
+        ref.orderByChild('images/0/isProfile').equalTo(true).limitToLast(15)
       )
       .valueChanges();
   }
