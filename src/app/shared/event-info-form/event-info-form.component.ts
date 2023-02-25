@@ -123,7 +123,6 @@ export class EventInfoFormComponent
     this.onChange(this.eventArray.value);
     this.subImageChange.push(
       this.eventArray.valueChanges.subscribe((data) => {
-        console.log(data);
         this.onChange(data);
       })
     );

@@ -145,7 +145,6 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
     this.onChange(this.imageArray.value);
     this.subImageChange.push(
       this.imageArray.valueChanges.subscribe((data) => {
-        console.log(data);
         this.onChange(data);
       })
     );

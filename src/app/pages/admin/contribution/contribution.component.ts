@@ -44,8 +44,7 @@ export class ContributionComponent implements OnInit {
 
   _loaded: boolean = false
   @Input() set loaded(value: boolean) {
-    this._loaded = value
-    console.log(value)
+    this._loaded = value;
   }
 
   get loaded(): boolean {
@@ -55,8 +54,6 @@ export class ContributionComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.loaded)
-    console.log(this.contribution)
   }
 
   onReadMore() {

@@ -48,6 +48,10 @@ export class StorageApIService {
     return ff?.ref.getDownloadURL();
   }
 
+   async deleteConrtibutionImages(uid: string, contributionid: string, imageid: string) {
+    return this.afs.ref(`/images/contribution/${uid}/${contributionid}/${imageid}`).delete()
+  }
+
   removeGalleryImage(uid: string) {
     const ref = this.afs.ref(`images/galleries/${uid}`);
     const upload = ref.delete();

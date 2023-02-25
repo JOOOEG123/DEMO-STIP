@@ -55,6 +55,7 @@ export class UploadComponent implements OnInit, OnDestroy {
   otherLanguage = this.language === 'en' ? 'cn' : 'en';
   subLang: Subscription[] = [];
   allData: any;
+  captureImagesId: string[] = [];
 
   @Input() get contribution() {
     return this._contribution[this.language];
@@ -130,9 +131,6 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.onInit();
       })
     );
-    // this.allForms.valueChanges.subscribe((x) => {
-    //   console.log(x);
-    // });
   }
 
   updateData() {
@@ -158,6 +156,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       );
     }
     zipObj$?.subscribe((data: any) => {
+      this.captureImagesId = [];
       this.allData = data;
       this._contribution[this.language] = data[0] || data[1];
       this._contribution[this.otherLanguage] = data[1] || data[0];
@@ -165,7 +164,16 @@ export class UploadComponent implements OnInit, OnDestroy {
       const other = this._contribution[this.otherLanguage];
       const { rightist: r1 } = this._contribution[this.language];
       const { rightist: r2 } = this._contribution[this.otherLanguage];
-      console.log({ r1, r2 }, data);
+      data?.forEach((k) => {
+        if (k?.images) {
+          k.images?.forEach((a) => {
+            if (a?.imageId && !this.captureImagesId.includes(a.imageId)) {
+              this.captureImagesId.push(a.imageId);
+            }
+          });
+        }
+      });
+
       if (r1 && r2) {
         this.mapForm(r1, r2);
       } else if (curr && other) {
@@ -224,17 +232,6 @@ export class UploadComponent implements OnInit, OnDestroy {
       }
     }
 
-    // imageId: x.imageId,
-    // rightistId: rightistId,
-    // imagePath: x.image,
-    // imageUrl: images[i].imageUrl,
-    // isProfile: x.isProfile,
-    // isGallery: x.imageUpload,
-    // category: x.otherImageCategory,
-    // title: x.otherImageTitle,
-    // detail: x.otherImageDes,
-    // source: x.otherImageSource,
-
     const imagesLength =
       (r1?.images?.length ?? 0) > (r2?.images?.length ?? 0)
         ? r1?.images?.length ?? 0
@@ -267,7 +264,6 @@ export class UploadComponent implements OnInit, OnDestroy {
           otherImageUrl: i2?.imageUrl,
         });
       }
-      console.log(images, 'dsdsdsdsdsd');
     }
     this.allForms.patchValue({
       event: events,
@@ -315,6 +311,25 @@ export class UploadComponent implements OnInit, OnDestroy {
       this.contribution?.rightist?.rightistId ||
       this.contribution?.rightistId ||
       `Rightist-${UUID()}`;
+
+    const dd: UploadImagesType[] = [
+      ...(this.allForms.value.imagesDetails || []),
+    ].sort((x) => (x?.isProfile ? -1 : 1));
+
+    const newimages = this.captureImagesId.filter(
+      (x) => !dd.map((x) => x.imageId).includes(x)
+    );
+
+    const captures = newimages.map(async (x) => {
+      this.imageAPI.deleteImage('en', x).then((_) => {});
+      this.imageAPI.deleteImage('cn', x).then((_) => {});
+      return await this.storageAPI.deleteConrtibutionImages(
+        this.auth.uid,
+        rightistId,
+        x
+      );
+    });
+    await Promise.all(captures);
     const {
       name,
       otherName,
@@ -330,9 +345,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       birthYear,
       deathYear,
     } = this.allForms.value.rightist!;
-    const dd: UploadImagesType[] = [
-      ...(this.allForms.value.imagesDetails || []),
-    ].sort((x) => (x?.isProfile ? -1 : 1));
+
     const currentImages = () =>
       dd.map(async (x) => {
         let file = '';
@@ -557,7 +570,6 @@ export class UploadComponent implements OnInit, OnDestroy {
         .catch((err) => {
           console.log(err);
           this.isLoading = false;
-          // use the alert service to show a message
         });
     }
   }

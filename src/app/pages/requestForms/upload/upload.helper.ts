@@ -7,7 +7,6 @@ export const mapOtherEvents = (events: any) => {
   });
 };
 export const mapOtherMemiors = (memiors: any[]) => {
-  console.log('mapOtherMemiors', memiors);
   return memiors.map((m) => {
     return {
       otherMemoir: m.memoir || '',

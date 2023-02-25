@@ -143,7 +143,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.contributionAPI
         .fetchAllContributions(this.language)
         .subscribe((data: any) => {
-          console.log(data);
           this.contributions.length = 0;
           this.newContributions.length = 0;
           this.approvedContributions.length = 0;
@@ -162,8 +161,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             );
           });
 
-          console.log(this.contributions);
-
           for (let contribution of this.contributions) {
             let data: Contribution = {
               ...contribution,
@@ -180,7 +177,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             }
 
             if (contribution.publish == 'new') {
-              console.log(data);
               this.newContributions.push(data);
             }
 
@@ -189,7 +185,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
                 this.archiveAPI
                   .getRightistById(this.language, data.rightistId)
                   .subscribe((rightist: any) => {
-                    // console.log(rightist);
                     if (rightist ?.imageId) {
                       this.sub.push(
                         this.imageAPI
@@ -211,8 +206,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             }
           }
 
-          console.log(this.approvedContributions);
-
           this.approvedContributions.sort(function (a, b) {
             return (
               new Date(b.lastUpdatedAt).getTime() -
@@ -232,7 +225,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   onApprove(el: UploadComponent) {
-    console.log(el)
     this.publish = 'approved';
     this.selectedContribution.state = 'removed';
     el.onSubmit().then(()=> {
@@ -241,8 +233,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   onSave(data: any) {
-    console.log(this.updatedContribution);
-    console.log(this.otherUpdatedContribution);
 
     this.updatedContribution.image = this.image;
     this.otherUpdatedContribution.image = this.otherImage;
@@ -292,18 +282,12 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   async animationDone(event: AnimationEvent) {
     this.disabled = false;
-    console.log(this.updatedContribution);
 
     if (
       this.selectedContribution &&
       this.selectedContribution.state === 'removed'
     ) {
       if (this.publish === 'approved') {
-        console.log(this.appUpload)
-        // this.appUpload?.onSubmit().then(() => {
-        //   this.modalRef?.hide();
-        // }
-        // )
 
       } else {
         this.updatedContribution.publish = this.publish;
@@ -391,7 +375,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   onFormChange(data: any) {
-    console.log(data);
     this.updatedContribution = {
       ...this.updatedContribution,
       rightist: {
@@ -425,7 +408,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   onImageChange(data: any) {
     this.url = data.url;
-    console.log(data);
     this.image = { ...data.image };
     this.otherImage = { ...data.otherImage };
   }
@@ -442,7 +424,6 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     }
 
     if (data.type == 'other') {
-      console.log(data)
       this.otherUpdatedContribution = {
         ...this.otherUpdatedContribution,
         rightist: {
