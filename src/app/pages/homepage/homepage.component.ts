@@ -76,7 +76,6 @@ export class HomepageComponent implements OnInit, OnDestroy {
     this.func
       .httpsCallable('modifyRightistRequest')(payload)
       .subscribe((res) => {
-        console.log('Function: ', res);
       });
   }
 }

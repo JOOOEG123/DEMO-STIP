@@ -66,7 +66,6 @@ export class MemoirInfoFormComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(obj: any[]): void {
-    console.log({obj});
     if (obj) {
       if (obj.length > 0) {
         this.memiorArray.clear();
@@ -104,7 +103,6 @@ export class MemoirInfoFormComponent implements OnInit, ControlValueAccessor {
     this.onChange(this.memiorArray.value);
     this.subImageChange.push(
       this.memiorArray.valueChanges.subscribe((data) => {
-        console.log(data);
         this.onChange(data);
       })
     );

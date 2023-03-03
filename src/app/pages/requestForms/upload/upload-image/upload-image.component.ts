@@ -82,8 +82,6 @@ export class UploadImageComponent implements OnInit {
       )
     );
 
-    console.log(this.imageData);
-    console.log(this.otherImageData);
 
     if (this.imageForm) {
       this.url = this.imageData!.imagePath!;
@@ -104,28 +102,6 @@ export class UploadImageComponent implements OnInit {
         otherImageSource: this.otherImageData.source,
         otherImageCategory: this.otherImageData.category,
       });
-
-
-    // if (this.imageData!.imageId) {
-    //   this.sub.push(
-    //     this.imageAPI
-    //       .getImage(this.otherLanguage, this.imageData!.imageId)
-    //       .subscribe((otherImage: any) => {
-    //         if (this.otherImageData) {
-
-    //           console.log(otherImage);
-
-    //           this.imageForm.patchValue({
-    //             imageUpload: this.imageData!.isGallery ? 'yes' : 'no',
-    //             image: '',
-    //             otherImageTitle: otherImage.title,
-    //             otherImageDes: otherImage.detail,
-    //             otherImageSource: otherImage.source,
-    //             otherImageCategory: otherImage.category,
-    //           });
-    //         }
-    //       })
-    //   );
     }
 
     this.sub.push(

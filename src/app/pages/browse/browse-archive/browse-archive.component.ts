@@ -104,7 +104,6 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
 
     this.languageSubscription = this.translate.onLangChange.subscribe(
       (langChange: any) => {
-        console.log(langChange.lang);
         this.language = langChange.lang;
         this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
         this.sub.forEach((x) => x.unsubscribe());
@@ -196,21 +195,16 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
 
   onYes() {
     this.loaded = false;
-    console.log(this.profile);
     this.modalService.hide();
     this.sub.push(
       this.contributionAPI
         .getUserContributionsList(this.language!, this.profile.contributorId)
         .subscribe((data: any) => {
           let contributions = [...data];
-          console.log(contributions);
 
           for (let contribution of contributions) {
             if (this.profile.rightistId === contribution.rightistId) {
-              console.log(contribution);
-              console.log(this.profile);
               if (this.profile.imageId) {
-                console.log('Has Image');
                 Promise.all([
                   this.contributionAPI.deleteUserContribution(
                     this.language!,
