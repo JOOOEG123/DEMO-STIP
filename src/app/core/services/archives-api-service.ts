@@ -22,6 +22,17 @@ export class ArchieveApiService {
       return this.db.object('/persons/data/en/rightists').valueChanges();
     }
   }
+  getAllArchieveList(curLan: string, letter: string = 'All', limit: number =  50) {
+    let ref = (r) => r.orderByChild('initial').equalTo(letter).limitToFirst(limit)
+    if (letter === 'All') {
+      ref = (r) => r.limitToFirst(limit);
+    }
+    if (curLan == 'cn') {
+      return this.db.list('/persons/data/cn/rightists', ref).valueChanges();
+    } else {
+      return this.db.list('/persons/data/en/rightists', ref).valueChanges();
+    }
+  }
 
   getArchiveList() {
     return this.db.list('/persons/requestArchieve/persons').valueChanges();
