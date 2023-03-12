@@ -73,9 +73,13 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   searchArchives() {
-    this.router.navigate(['/browse/main'], {
-      queryParams: { searchTerm: this.searchTerm, searchBy: this.searchBy },
-    });
+    if (this.searchTerm) {
+      this.router.navigate(['/browse/main'], {
+        queryParams: { searchTerm: this.searchTerm, searchBy: this.searchBy },
+      });
+    } else {
+      this.router.navigate(['/browse/main']);
+    }
   }
 
   sendRequestForm() {

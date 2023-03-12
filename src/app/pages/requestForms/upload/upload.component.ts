@@ -396,7 +396,8 @@ export class UploadComponent implements OnInit, OnDestroy {
         detail: x.otherImageDes,
         source: x.otherImageSource,
       })) || ([] as any);
-
+    const splitName =  (name || '')?.split(' ') ?? [];
+    const splitOtherName =  (otherName || '')?.split(' ') ?? [];
     // if (!this.contribution) {
     let rightist: RightistSchema = {
       rightistId: rightistId,
@@ -405,8 +406,8 @@ export class UploadComponent implements OnInit, OnDestroy {
       // profileImageId: '',
       images: images,
       initial: '',
-      firstName: '',
-      lastName: '',
+      firstName: splitName.pop(),
+      lastName: splitName.join(' '),
       fullName: name,
       gender: gender || 'unknown',
       birthYear: birthYear || 0,
@@ -436,8 +437,8 @@ export class UploadComponent implements OnInit, OnDestroy {
       // profileImageId: '',
       images: otherImages(),
       initial: '',
-      firstName: '',
-      lastName: '',
+      firstName: splitOtherName.pop(),
+      lastName: splitOtherName.join(' '),
       fullName: otherName || '',
       gender: otherGender || '',
       birthYear: birthYear || 0,

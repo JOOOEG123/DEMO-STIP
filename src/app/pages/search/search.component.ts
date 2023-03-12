@@ -32,8 +32,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   limit: number = 50;
   original: any;
   searchBy: string =
-    this.route.snapshot.queryParamMap.get('searchBy') ?? 'fullName';
-  searchInput = this.route.snapshot.queryParamMap.get('searchTerm') ?? '';
+    this.route.snapshot.queryParamMap.get('searchBy') || 'fullName';
+  searchInput = this.route.snapshot.queryParamMap.get('searchTerm') || '';
   searchSelect: string = 'All Fields';
   searchState = {
     key: this.route.snapshot.queryParamMap.get('searchBy') || 'initial',
@@ -165,6 +165,9 @@ export class SearchComponent implements OnInit, OnDestroy {
         queryParamsHandling: 'merge',
       });
     } else {
+      this.router.navigate([], {
+        queryParams: {}
+      });
       this.searchState = { key: 'initial', value: 'All' };
       this.callAPI(this.currentLetter, this.searchState);
     }

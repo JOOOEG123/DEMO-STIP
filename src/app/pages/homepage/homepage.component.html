@@ -43,7 +43,7 @@
                 <img src="assets/homepage/search.png" alt="globe" width="15" />
               </button>
             </div>
-           </div>
+          </div>
         </div>
       </div>
     </div>
@@ -75,9 +75,13 @@
                   />
                 </div>
                 <div class="col-10 mt-auto mx-auto pt-4">
-                  <h4 class="text-green text-center mb-3 fw-bold">
+                  <a
+                    routerLink="/browse/main/memoir/{{ profile.rightistId }}"
+                    aria-label="Redirect to {{ profile.fullName }}'s memoir page"
+                    class="text-green text-center mb-3 fw-bold link-success h4"
+                  >
                     {{ profile.fullName | titlecase }}
-                  </h4>
+                  </a>
                   <p class="text-dark-green">
                     {{ profile.description }}
                   </p>
