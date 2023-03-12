@@ -19,31 +19,22 @@ import { LETTERS } from '../browse/main-browse/main-browse.constant';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-  //search result panel variables
+  @Input() db_result: any[] = [];
+  //variables for search functionalities
+  archSubAPI: Subscription[] = [];
+  currentLanguage = this.translate.currentLang;
   currentLetter = 'All';
   curView = 'List';
   display: any[] = [];
-
-  searchInput = '';
-  letters = LETTERS;
-
-  //variables for search functionalities
-  @Input() db_result: any[] = [];
-
-  letter_changed: boolean = false;
-  archCacheAPI: any = {};
-  archSubAPI: Subscription[] = [];
   isloading!: boolean;
-  original: any;
+  letter_changed: boolean = false;
+  letters = LETTERS;
   limit: number = 50;
-
-  onScroll() {
-    this.callAPI();
-  }
-
+  original: any;
+  searchBy: string = 'fullName';
+  searchInput = '';
   searchSelect: string = 'All Fields';
-
-  currentLanguage = this.translate.currentLang;
+  searchState = { key: 'initial', value: 'All' };
   sub: Subscription[] = [];
 
   constructor(
@@ -74,7 +65,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     );
     this.translate.onLangChange.subscribe((res) => {
       this.currentLanguage = res.lang;
-
       this.translate
         .get(['archive.archive_searchbar_all'])
         .subscribe((translations) => {
@@ -87,7 +77,10 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.archSubAPI.forEach((sub) => sub.unsubscribe());
-    this.archCacheAPI = {};
+  }
+
+  onScroll() {
+    this.callAPI(this.currentLetter, this.searchState, true);
   }
 
   /**
@@ -97,7 +90,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   lettersBtnClickOrReset(letter: string) {
     this.currentLetter = letter;
     this.limit = 50;
-    this.callAPI(letter);
+    this.searchState = { key: 'initial', value: letter };
+    this.callAPI(letter, this.searchState);
   }
 
   /**
@@ -118,7 +112,11 @@ export class SearchComponent implements OnInit, OnDestroy {
    * For efficiency, fetched data would get placed into "cache"
    * @param letter Letters from A to Z, and "All"
    */
-  callAPI(letter: string = this.currentLetter) {
+  callAPI(
+    letter: string = this.currentLetter,
+    search = { key: 'initial', value: 'All' },
+    isScroll = false
+  ) {
     //clear up display
     this.display = [];
     const archKey = `person_arch_${letter}`;
@@ -128,21 +126,37 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.archSubAPI.forEach((sub) => sub.unsubscribe());
       // replace api when database change. An we need to add profileId to json data.
       res = this.archApi
-        .getAllArchieveList(this.currentLanguage, letter, this.limit)
+        .getAllArchieveList(this.currentLanguage, { ...search }, this.limit)
         .subscribe((datas: any) => {
           this.display = datas;
           this.removeInitialForDesciption();
-          this.archCacheAPI[archKey] = this.db_result;
           this.isloading = false;
           setTimeout(() => {
-            document.getElementById('local_id_' + (this.limit - 51 ))?.focus();
+            const idIdx =
+              this.display.length !== this.limit
+                ? this.display.length - 1
+                : this.limit - 51;
+            if (isScroll) {
+              document.getElementById('local_id_' + idIdx)?.focus();
+              this.changeDetection.detectChanges();
+            }
             this.limit += 50;
-            this.changeDetection.detectChanges();
           }, 500);
         });
     }
     if (res) {
       this.archSubAPI.push(res);
+    }
+  }
+  search() {
+    this.limit = 50;
+    if (this.searchInput) {
+      this.currentLetter = 'All';
+      this.searchState = { key: this.searchBy, value: this.searchInput };
+      this.callAPI('All', this.searchState);
+    } else {
+      this.searchState = { key: 'initial', value: 'All' };
+      this.callAPI(this.currentLetter, this.searchState);
     }
   }
 

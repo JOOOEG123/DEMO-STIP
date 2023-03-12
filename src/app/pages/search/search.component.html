@@ -2,25 +2,30 @@
   <!-- search bar -->
   <div class="col-10 m-auto py-5">
     <div class="input-group">
-      <div
-        class="btn-group"
-        dropdown
-        #dropdown="bs-dropdown"
-        [autoClose]="true"
-      ></div>
-
+      <select class="form-select border-0 rounded-end rounded-pill" aria-label="Search by the following values"  [(ngModel)]="searchBy" (change)="search()" >
+        <option value ="fullName" selected>Full Name</option>
+        <option value="firstName">First Name</option>
+        <option value="lastName">Last Name</option>
+        <option value="birthYear">Birth Date</option>
+        <option value="deathYear">Death Date</option>
+        <option value="rightistYear">Joined Rightist Year</option>
+        <option value="rightistId">Rightist Id</option>
+      </select>
       <input
         type="search"
-        class="form-control"
+        class="form-control border-start-0"
+        style="width: 70% !important"
         placeholder="{{ 'archive.archive_searchbar_placeholder' | translate }}"
         translate
         [(ngModel)]="searchInput"
+        (search)="search()"
         aria-label="Search for ... "
         aria-describedby="button-addon2"
       />
       <button
         class="btn border border-start-0 bg-white rounded-start rounded-pill"
         type="button"
+        (click)="search()"
       >
         <img src="assets/global/search.svg" alt="" width="20" />
       </button>
@@ -110,8 +115,8 @@
           <div
             class="search-results"
             infiniteScroll
-            [infiniteScrollThrottle]="150"
             (scrolled)="onScroll()"
+            [infiniteScrollDistance]="1"
             [scrollWindow]="false"
           >
             <div *ngIf="curView === 'List'; else elseBlock">
