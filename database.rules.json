@@ -26,7 +26,7 @@
           "rightists": {
             ".read": true,
             ".write": "auth.token.admin === true",
-            ".indexOn": [".value", "lastName","images/0/isProfile", "images/1/isProfile", "reference", "birthplace", "initial"]
+            ".indexOn": [".value", "lastName","images/0/isProfile", "images/1/isProfile", "reference", "birthplace", "initial", "fullName", "rightistId"]
           },
           "test": {
             ".read": true,
