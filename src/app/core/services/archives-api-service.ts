@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Rightist, RightistSchema } from '../types/adminpage.types';
+import { QueryReference } from '@angular/fire/compat/database/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,28 @@ export class ArchieveApiService {
       // return this.db.object('/persons/requestArchieve/persons').valueChanges();
       return this.db.object('/persons/data/en/rightists').valueChanges();
     }
+  }
+  getAllArchieveList(
+    curLan: string,
+    v = { key: 'initial', value: 'All' },
+    limit: number = 50
+  ) {
+    let ref = (r: QueryReference) =>
+      r
+        .orderByChild(v.key)
+        .startAt(v.value)
+        .endBefore(v.value + '\uF8FF')
+        .limitToLast(limit);
+
+    if (v.key === 'initial' && v.value === 'All') {
+      ref = (r: QueryReference) => r.limitToFirst(limit);
+    } else if (v.key === 'initial' && v.value !== 'All') {
+      ref = (r: QueryReference) =>
+        r.orderByChild(v.key).equalTo(v.value).limitToFirst(limit);
+    }
+    return this.db
+      .list(`/persons/data/${curLan}/rightists`, ref)
+      .valueChanges();
   }
 
   getArchiveList() {
@@ -195,9 +218,13 @@ export class ArchieveApiService {
       .update({ [rightist.rightistId]: rightist });
   }
 
-  updateRightistImageId(language: string, rightistId: string, newImageId: string) {
+  updateRightistImageId(
+    language: string,
+    rightistId: string,
+    newImageId: string
+  ) {
     return this.db
-    .object(`persons/data/${language}/rightists/${rightistId}`)
-    .update({ imageId: newImageId });
+      .object(`persons/data/${language}/rightists/${rightistId}`)
+      .update({ imageId: newImageId });
   }
 }

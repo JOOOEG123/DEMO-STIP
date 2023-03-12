@@ -54,6 +54,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { RequestModifyComponent } from './pages/requestForms/upload/request-modify/request-modify.component';
 import { UploadImageComponent } from './pages/requestForms/upload/upload-image/upload-image.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SearchComponent } from './pages/search/search.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -73,6 +75,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ContributionComponent,
     RequestModifyComponent,
     UploadImageComponent,
+    SearchComponent,
   ],
   imports: [
     AngularFireAuthModule,
@@ -92,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     NgxMasonryModule,
     NgxSpinnerModule,
+    InfiniteScrollModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

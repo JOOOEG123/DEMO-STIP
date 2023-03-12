@@ -21,7 +21,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
     private translateService: TranslateService
   ) {}
   ngOnDestroy(): void {
-    this.subs.forEach((sub) => sub?.unsubscribe());
+    // this.subs.forEach((sub) => sub?.unsubscribe());
   }
   searchTerm: string = '';
   transPath = 'homepage.component.';
@@ -47,17 +47,30 @@ export class HomepageComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit(): void {
-    this.subs.push(this.translateService.onLangChange.subscribe(async (res) => {
-      this.randomProfile = [];
-      const randomProfile =( await firstValueFrom<any>(this.announceProfile.getRandomProfile(res.lang)));
-      while (this.randomProfile.length < 3 && randomProfile.length >= 3) {
-        const random = Math.floor(Math.random() * randomProfile.length);
-        if (!this.randomProfile.includes(randomProfile[random])) {
-          this.randomProfile.push(randomProfile[random]);
-        }
-      }
-    }));
+    console.log(this.randomProfile);
+    this.subs.push(
+      this.translateService.onLangChange.subscribe(async (res) => {
+        this.getRandomProfile(res.lang);
+      })
+    );
+    if (this.randomProfile.length === 0) {
+      this.getRandomProfile();
+    }
   }
+
+  async getRandomProfile(lang = this.translateService.currentLang) {
+    this.randomProfile = [];
+    const randomProfile = await firstValueFrom<any>(
+      this.announceProfile.getRandomProfile(lang)
+    );
+    while (this.randomProfile.length < 3 && randomProfile.length >= 3) {
+      const random = Math.floor(Math.random() * randomProfile.length);
+      if (!this.randomProfile.includes(randomProfile[random])) {
+        this.randomProfile.push(randomProfile[random]);
+      }
+    }
+  }
+
   searchArchives() {
     this.router.navigate(['/browse/main'], {
       queryParams: { searchTerm: this.searchTerm },
@@ -75,7 +88,6 @@ export class HomepageComponent implements OnInit, OnDestroy {
     };
     this.func
       .httpsCallable('modifyRightistRequest')(payload)
-      .subscribe((res) => {
-      });
+      .subscribe((res) => {});
   }
 }

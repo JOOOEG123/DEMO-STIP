@@ -38,26 +38,33 @@
     <div class="container-fluid">
       <div
         *ngIf="selectedContributions.length > 0"
-        class="overflow-auto shadow p-3 rounded-lg contribution-scroller my-4"
+        class="search-results shadow p-3 rounded-lg contribution-scroller my-4"
+        infiniteScroll
+        [infiniteScrollDistance]="1"
+        [infiniteScrollThrottle]="300"
+        (scrolled)="onScroll()"
+        [scrollWindow]="false"
       >
         <div
           class="row my-3 contribution-container border border-2 bg-opacity-10"
           *ngFor="let contribution of selectedContributions"
           [ngClass]="{
             'border-danger bg-danger': activeCategory == 'New Contributions',
-            'border-success bg-success': activeCategory == 'Approved Contributions',
-            'border-warning bg-warning': activeCategory == 'Rejected Contributions'
+            'border-success bg-success':
+              activeCategory == 'Approved Contributions',
+            'border-warning bg-warning':
+              activeCategory == 'Rejected Contributions'
           }"
           [@contributionAnimation]="contribution.state"
           (@contributionAnimation.start)="animationStart($event)"
           (@contributionAnimation.done)="animationDone($event)"
         >
           <app-contribution
-          [contribution]="contribution"
-          [activeCategory]="activeCategory"
-          [loaded]='loaded'
-          (readMore)="onReadMore(readMoreTemplate, $event)"
-        ></app-contribution>
+            [contribution]="contribution"
+            [activeCategory]="activeCategory"
+            [loaded]="loaded"
+            (readMore)="onReadMore(readMoreTemplate, $event)"
+          ></app-contribution>
         </div>
       </div>
     </div>

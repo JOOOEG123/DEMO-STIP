@@ -77,7 +77,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   contributions: any[] = [];
   publish: Publish = 'new';
   isLoaded: boolean = false;
-  limit: number = 3;
+  limit: number = 10;
 
   emptyContributionMessage = 'Nothing Here!';
 
@@ -108,6 +108,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
 
   languageSubscription?: Subscription;
   sub: Subscription[] = [];
+  subFetchAll!: Subscription;
 
   language: string = '';
   otherLanguage: string = '';
@@ -121,6 +122,10 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {}
 
+  onScroll() {
+    this.initialize();
+  }
+
   ngOnInit(): void {
     this.language = localStorage.getItem('lang')!;
     this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
@@ -128,6 +133,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
     this.languageSubscription = this.translate.onLangChange.subscribe(
       (langChange: any) => {
         this.sub.forEach((x) => x.unsubscribe());
+        this.subFetchAll?.unsubscribe();
         this.sub.length = 0;
         this.language = langChange.lang;
         this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
@@ -139,15 +145,15 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   }
 
   initialize() {
-    this.sub.push(
-      this.contributionAPI
-        .fetchAllContributions(this.language)
+    this.subFetchAll?.unsubscribe();
+    this.subFetchAll = this.contributionAPI
+        .fetchAllContributionsList(this.language, this.limit)
         .subscribe((data: any) => {
           this.contributions.length = 0;
           this.newContributions.length = 0;
           this.approvedContributions.length = 0;
           this.rejectedContributions.length = 0;
-          const test: ContributionJson[] = Object.values(data);
+          const test: ContributionJson[] = data;
           for (let lol of test) {
             for (const contribution of Object.values(lol)) {
               this.contributions.push(contribution);
@@ -181,6 +187,7 @@ export class ApprovalComponent implements OnInit, OnDestroy {
             }
 
             if (contribution.publish == 'approved') {
+              this.sub.forEach((x) => x.unsubscribe());
               this.sub.push(
                 this.archiveAPI
                   .getRightistById(this.language, data.rightistId)
@@ -212,11 +219,15 @@ export class ApprovalComponent implements OnInit, OnDestroy {
               new Date(a.lastUpdatedAt).getTime()
             );
           });
-        })
-    );
-
+        });
+    this.limit += 1;
     this.selectedContributions = this.newContributions;
-    this.activeCategory = 'New Contributions';
+    console.log(this.activeCategory)
+    if (!this.activeCategory) {
+      this.activeCategory = 'New Contributions';
+    } else {
+      this.selectedContributions = this.categories[this.activeCategory];
+    }
   }
 
   ngOnDestroy(): void {
