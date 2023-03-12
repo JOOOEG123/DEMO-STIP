@@ -26,6 +26,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
   searchTerm: string = '';
   transPath = 'homepage.component.';
   subs: Subscription[] = [];
+  searchBy: string = 'fullName';
 
   fakeProfile = [
     {
@@ -73,7 +74,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
   searchArchives() {
     this.router.navigate(['/browse/main'], {
-      queryParams: { searchTerm: this.searchTerm },
+      queryParams: { searchTerm: this.searchTerm, searchBy: this.searchBy },
     });
   }
 
