@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
@@ -31,15 +31,20 @@ export class SearchComponent implements OnInit, OnDestroy {
   letters = LETTERS;
   limit: number = 50;
   original: any;
-  searchBy: string = 'fullName';
-  searchInput = '';
+  searchBy: string =
+    this.route.snapshot.queryParamMap.get('searchBy') ?? 'fullName';
+  searchInput = this.route.snapshot.queryParamMap.get('searchTerm') ?? '';
   searchSelect: string = 'All Fields';
-  searchState = { key: 'initial', value: 'All' };
+  searchState = {
+    key: this.route.snapshot.queryParamMap.get('searchBy') || 'initial',
+    value: this.route.snapshot.queryParamMap.get('searchTerm') || 'All',
+  };
   sub: Subscription[] = [];
 
   constructor(
     private archApi: ArchieveApiService,
     private route: ActivatedRoute,
+    private router: Router,
     private changeDetection: ChangeDetectorRef,
     private translate: TranslateService
   ) {}
@@ -50,7 +55,7 @@ export class SearchComponent implements OnInit, OnDestroy {
    */
   initLetter(letter) {
     this.currentLetter = letter;
-    this.callAPI(letter);
+    this.callAPI(letter, this.searchState);
     this.searchSelect =
       this.currentLanguage == 'en' ? 'All Fields' : '所有信息栏';
     this.db_result = [];
@@ -154,6 +159,11 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.currentLetter = 'All';
       this.searchState = { key: this.searchBy, value: this.searchInput };
       this.callAPI('All', this.searchState);
+      // set query params to url for searchInput
+      this.router.navigate([], {
+        queryParams: { searchBy: this.searchBy, searchTerm: this.searchInput },
+        queryParamsHandling: 'merge',
+      });
     } else {
       this.searchState = { key: 'initial', value: 'All' };
       this.callAPI(this.currentLetter, this.searchState);
