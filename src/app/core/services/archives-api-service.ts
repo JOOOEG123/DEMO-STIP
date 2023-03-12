@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { Rightist, RightistSchema } from '../types/adminpage.types';
 import { QueryReference } from '@angular/fire/compat/database/interfaces';
-const querybase = require('querybase');
-import queryBase from 'querybase';
 
 @Injectable({
   providedIn: 'root',
