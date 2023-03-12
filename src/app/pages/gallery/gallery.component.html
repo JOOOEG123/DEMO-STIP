@@ -8,7 +8,8 @@
       <button
         #image
         [ngClass]="{
-          'border-start-0 border-end-0 border-top-0 border-4 border-warning': selectedCategory == gallery
+          'border-start-0 border-end-0 border-top-0 border-4 border-warning':
+            selectedCategory == gallery
         }"
         class="fw-bold btn btn-transparent"
         (click)="setActive(gallery)"
@@ -16,19 +17,25 @@
         <b>{{ gallery }}</b>
       </button>
     </div>
+    <div class="mx-5" *ngIf="isAdmin">
+      <button
+        class="btn-khali rounded-pill mt-3"
+        (click)="addImage(galleryModal)"
+      >
+        Add Image
+      </button>
+    </div>
   </div>
-  <div class="text-end" *ngIf="isAdmin">
-    <button class="btn btn-primary" (click)="addImage(galleryModal)">Add Image</button>
-  </div>
+
   <hr class="divider border-orange-red" />
 </div>
 
 <!-- Masonry Columns -->
 <div class="container my-4">
   <ngx-masonry
-    [ordered]="true"
+    [ordered]="false"
     [options]="masonryOptions"
-    [ngStyle]="{ width: '100%' }"
+    class="w-100"
     *ngIf="loaded"
   >
     <div
@@ -39,16 +46,16 @@
       <div class="images">
         <img
           [src]="image.imagePath"
-          width="100%"
-          class="hovered-img"
+          class="hovered-img rounded-3 img-fluid w-100"
           (mouseleave)="onLeave()"
           (mouseover)="onEnter(i)"
           [ngStyle]="{ opacity: currentImageIndex == i ? '0.4' : '1' }"
         />
         <button
           (focus)="onEnter(i)"
-          class="hovered-button"
+          class="border-0 hovered-button rounded-pill fw-bold btn-lg"
           (mouseover)="onEnter(i)"
+          type="button"
           [ngStyle]="{ opacity: currentImageIndex == i ? '1.0' : '0.0' }"
           (blur)="onLeave()"
           (click)="onLearnMore(galleryModal, image)"

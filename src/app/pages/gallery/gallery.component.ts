@@ -26,7 +26,9 @@ import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
   styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent implements OnInit, OnDestroy {
-  selectedCategory?: string;
+  selectedCategory: string = this.translate.currentLang.includes('e')
+    ? 'All'
+    : '所有';
   currentImageIndex?: number;
 
   title?: string;
@@ -35,6 +37,12 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   public masonryOptions: NgxMasonryOptions = {
     gutter: 20,
+    resize: true,
+    itemSelector: '.masonry-item',
+    // fitWidth: true,
+    // horizontalOrder: true,
+    // percentPosition: true,
+    // columnWidth: 120,
   };
 
   images: Image[] = [];
@@ -67,7 +75,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
   isAdmin?: boolean;
   loaded: boolean = false;
 
-  subAPI : {[x: string]: Subscription} = {} as any;
+  resultCache = {} as { [x: string]: Image[] };
+
+  subAPI: { [x: string]: Subscription } = {} as any;
 
   constructor(
     private translate: TranslateService,
@@ -83,31 +93,26 @@ export class GalleryComponent implements OnInit, OnDestroy {
   callAPI() {
     this.subAPI[this.language]?.unsubscribe();
     this.subAPI[this.language] = this.imagesAPI
-            .getGalleryImages(this.language || this.translate.currentLang)
-            .subscribe((imagesList: any) => {
-              this.categoryImages.length = 0;
-              this.display.length = 0;
-              this.images.length = 0;
-              this.images = imagesList;
+      .getGalleryImages(this.language || this.translate.currentLang)
+      .subscribe((imagesList: any) => {
+        this.categoryImages.length = 0;
+        this.display.length = 0;
+        this.images.length = 0;
+        this.images = imagesList;
 
-              if (this.images.length == 0) {
-                this.loaded = true;
-              } else {
-                for (const image of this.images) {
-                  this.categoryImages.push(image);
-                  if (this.display.length < this.itemsPerPage) {
-                    this.display.push(image);
-                  }
+        if (this.images.length == 0) {
+          this.loaded = true;
+        } else {
+          this.resultCache[this.selectedCategory] = this.images;
+          this.categoryImages.push(...this.resultCache[this.selectedCategory]);
 
-                  if (imagesList.length === this.categoryImages.length) {
-                    this.loaded = true;
-                    setTimeout(() => {
-                      this.reloadMasonryLayout();
-                    }, 300);
-                  }
-                }
-              }
-            })
+          setTimeout(() => {
+            this.loaded = true;
+            this.display = this.categoryImages.slice(0, this.itemsPerPage);
+            this.reloadMasonryLayout();
+          }, 50);
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -142,7 +147,7 @@ export class GalleryComponent implements OnInit, OnDestroy {
 
   reloadMasonryLayout() {
     if (this.masonry !== undefined) {
-      this.masonry.reloadItems();
+      // this.masonry.reloadItems();
       this.masonry.layout();
     }
   }
@@ -159,20 +164,21 @@ export class GalleryComponent implements OnInit, OnDestroy {
     let result: Image[] = [];
 
     if (gallery == 'All' || gallery == '全部') {
-      result = this.images.slice();
-    } else {
+      result = this.resultCache[gallery];
+    } else if (!this.resultCache[gallery]) {
       for (const image of this.images) {
         if (image.category == gallery) {
           result.push(image);
         }
       }
+      this.resultCache[gallery] = result;
     }
 
     this.currentPage = 1;
 
     // issue with ngx pagination (can only update one field at a time)
     setTimeout(() => {
-      this.categoryImages = result;
+      this.categoryImages = this.resultCache[gallery];
       this.display = this.categoryImages.slice(0, this.itemsPerPage);
       this.reloadMasonryLayout();
       // this.display = this.searchImages.slice(0, this.itemsPerPage)
@@ -289,7 +295,11 @@ export class GalleryComponent implements OnInit, OnDestroy {
     if (data.status == 'delete') {
       this.modalService.hide();
       Promise.all([
-        this.archiveAPI.updateRightistImageId(this.language!, image.rightistId, ''),
+        this.archiveAPI.updateRightistImageId(
+          this.language!,
+          image.rightistId,
+          ''
+        ),
         this.imagesAPI.deleteImage(this.language!, image.imageId),
         this.imagesAPI.deleteImage(this.otherLanguage!, image.imageId),
         this.storageAPI.removeGalleryImage(image.imageId),
