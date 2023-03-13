@@ -19,6 +19,7 @@ import { StorageApIService } from 'src/app/core/services/storage-api.service';
 import { UUID } from 'src/app/core/utils/uuid';
 import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ArchieveApiService } from 'src/app/core/services/archives-api-service';
+import { OverlayComponent } from './overlay/overlay.component';
 
 @Component({
   selector: 'app-gallery',
@@ -63,8 +64,9 @@ export class GalleryComponent implements OnInit, OnDestroy {
   status: string = 'initial';
   type?: string;
 
-  @ViewChild('image') imageRef?: ElementRef;
+  @ViewChild('imagegallery') imageRef?: ElementRef;
   @ViewChild(NgxMasonryComponent) masonry?: NgxMasonryComponent;
+  @ViewChild(OverlayComponent) overlay?: OverlayComponent;
 
   sub: Subscription[] = [];
   searchTerm?: string;
@@ -78,14 +80,13 @@ export class GalleryComponent implements OnInit, OnDestroy {
   resultCache = {} as { [x: string]: Image[] };
 
   subAPI: { [x: string]: Subscription } = {} as any;
+  disabled: boolean = false;
 
   constructor(
     private translate: TranslateService,
-    private storageAPI: StorageApIService,
     private imagesAPI: ImagesService,
-    private modalService: BsModalService,
-    private auth: AuthServiceService,
-    private archiveAPI: ArchieveApiService
+    public modalService: BsModalService,
+    private auth: AuthServiceService
   ) {}
 
   ngAfterViewInit(): void {}
@@ -181,7 +182,6 @@ export class GalleryComponent implements OnInit, OnDestroy {
       this.categoryImages = this.resultCache[gallery];
       this.display = this.categoryImages.slice(0, this.itemsPerPage);
       this.reloadMasonryLayout();
-      // this.display = this.searchImages.slice(0, this.itemsPerPage)
     }, 100);
   }
 
@@ -203,128 +203,18 @@ export class GalleryComponent implements OnInit, OnDestroy {
   }
 
   onLearnMore(template: TemplateRef<any>, image: Image) {
+    this.disabled = true;
     this.selectedImage = image;
     this.type = 'edit';
     this.status = 'initial';
-    this.modalService.show(template, { class: 'modal-xl', backdrop: 'static' });
-  }
-
-  async onAdd(data: any) {
-    let imageId = `Image-${UUID()}`;
-    let image: ImagesSchema = data.value;
-    let otherImage: ImagesSchema = data.otherValue;
-
-    image.imageId = imageId;
-    otherImage.imageId = imageId;
-
-    await fetch(data.url).then(async (response) => {
-      const contentType = response.headers.get('content-type');
-      const blob = await response.blob();
-      const file = new File([blob], image.imageId, { type: contentType! });
-      await this.storageAPI.uploadGalleryImage(image.imageId, file).then(() => {
-        this.sub.push(
-          this.storageAPI
-            .getGalleryImageURL(image.imageId)
-            .subscribe((imageUrl: any) => {
-              image.imagePath = imageUrl;
-              otherImage.imagePath = imageUrl;
-
-              Promise.all([
-                this.imagesAPI.addImage(this.language!, image),
-                this.imagesAPI.addImage(this.otherLanguage!, otherImage),
-              ]).then(() => {
-                this.modalService.hide();
-              });
-            })
-        );
-      });
-    });
-  }
-
-  // functionality in modal
-  onSubmit(data: any, template: TemplateRef<any>) {
-    this.modalService.hide();
-
-    setTimeout(() => {
-      this.status = data.status;
-      this.selectedImage = data.image;
-      this.otherImage = data.otherImage;
-      this.modalService.show(template, {
-        class: 'modal-xl',
-        backdrop: 'static',
-      });
-    }, 500);
-  }
-
-  onRemove(data: any, template: TemplateRef<any>) {
-    this.modalService.hide();
-
-    setTimeout(() => {
-      this.status = data.status;
-      this.modalService.show(template, {
-        class: 'modal-xl',
-        backdrop: 'static',
-      });
-    }, 500);
-  }
-
-  async onUpdate(data: any) {
-    let image: Image = data.image;
-    let otherImage: Image = data.otherImage;
-    if (this.selectedImage) {
-      if (data.status == 'update') {
-        this.modalService.hide();
-        let { opacity, ...result } = image;
-
-        await this.imagesAPI.updateImage(this.language!, result);
-      }
-    }
-
-    if (this.otherImage) {
-      if (data.status == 'update') {
-        this.modalService.hide();
-        let { opacity, ...result } = otherImage;
-        await this.imagesAPI.updateImage(this.otherLanguage!, result);
-      }
-    }
-    this.currentPage = 1;
-  }
-
-  onDelete(data: any) {
-    let image = data.image;
-    if (data.status == 'delete') {
-      this.modalService.hide();
-      Promise.all([
-        this.archiveAPI.updateRightistImageId(
-          this.language!,
-          image.rightistId,
-          ''
-        ),
-        this.imagesAPI.deleteImage(this.language!, image.imageId),
-        this.imagesAPI.deleteImage(this.otherLanguage!, image.imageId),
-        this.storageAPI.removeGalleryImage(image.imageId),
-      ]).then(() => {
-        this.currentPage = 1;
-      });
-    }
-  }
-
-  onCancel(data: any) {
-    if (data.status == 'cancel') {
-      this.modalService.hide();
-    }
-  }
-
-  onClose(data: any) {
-    if (data.status === 'close') {
-      this.modalService.hide();
-    }
+    this.modalService.show(template, { class: 'modal-xl' });
   }
 
   addImage(template: TemplateRef<any>) {
     this.type = 'add';
     this.status = 'initial';
     this.selectedImage = undefined;
-    this.modalService.show(template, { class: 'modal-xl', backdrop: 'static' });
+    this.disabled = false;
+    this.modalService.show(template, { class: 'modal-xl'});
   }
 }

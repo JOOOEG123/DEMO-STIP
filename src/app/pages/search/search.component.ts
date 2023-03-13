@@ -145,7 +145,7 @@ export class SearchComponent implements OnInit, OnDestroy {
               document.getElementById('local_id_' + idIdx)?.focus();
               this.changeDetection.detectChanges();
             }
-            this.limit += 50;
+            this.limit = this.display.length + 50;
           }, 500);
         });
     }

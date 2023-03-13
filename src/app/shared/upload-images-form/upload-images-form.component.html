@@ -12,11 +12,11 @@
     <form [formGroup]="imageForm">
       <!-- select photo section -->
       <div class="d-flex">
-        <button class="main-canvas" (click)="uploadFile.click()">
+        <button class="main-canvas" (click)="uploadFileNew.click()">
           <input
             type="file"
-            #uploadFile
-            id="profile-image"
+            #uploadFileNew
+            id="profile-image-{{ i }}"
             class="visually-hidden"
             accept="image/*"
             formControlName="image"
@@ -166,7 +166,7 @@
           >
             <option value="People" selected>{{ "upload.people" | translate }}</option>
             <option value="Media">{{ "upload.media" | translate }}</option>
-            <option value="Camps">{{ "upload.Camps" | translate }}</option>
+            <option value="Camps">{{ "upload.camps" | translate }}</option>
             <option value="Other">{{ "upload.other" | translate }}</option>
           </select>
           <!-- <div *ngIf="isAdmin">
@@ -181,7 +181,7 @@
 
       <!-- radio buttons for choosing if user wants to include photo in gallery -->
       <br />
-      <div class="my-3">
+      <div class="my-3" *ngIf="pageType !== 'gallery'">
         <p>
           {{ "upload.include" | translate }}
           <img
@@ -223,7 +223,7 @@
       </div>
 
       <!-- Is Profile-->
-      <div>
+      <div *ngIf="pageType === 'profile'">
         <!-- <pre>{{ imageForm.get('isProfile')!.value }}</pre> -->
         <div class="form-check form-check-inline">
           <input
@@ -249,7 +249,7 @@
         type="button"
         tooltip="Remove this event"
         placement="auto"
-        *ngIf="!first || !last"
+        *ngIf="(!first || !last) && type === 'multiple'"
         class="btn btn-lg btn-outline-danger rounded-pill bg-white text-danger"
         (click)="remove(i)"
       >
@@ -259,7 +259,7 @@
       </button>
       <!-- add event button -->
       <button
-        *ngIf="last"
+        *ngIf="last && type === 'multiple'"
         type="button"
         (click)="addImage()"
         tooltip="Add another event"

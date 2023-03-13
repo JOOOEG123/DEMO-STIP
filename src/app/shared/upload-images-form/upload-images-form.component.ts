@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom, Observable, Subscription } from 'rxjs';
@@ -9,6 +9,8 @@ import { UploadImagesType } from 'src/app/core/types/adminpage.types';
 import { FormCustomProvider } from 'src/app/core/utils/helper';
 import { createUniqueUID } from 'src/app/core/utils/uuid';
 
+type UploadType = 'single' | 'multiple';
+type PageType = 'gallery' | 'profile';
 
 @Component({
   selector: 'app-upload-images-form',
@@ -17,18 +19,18 @@ import { createUniqueUID } from 'src/app/core/utils/uuid';
   providers: [FormCustomProvider(UploadImagesFormComponent)],
 })
 export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
-  private _disabled: boolean = false;
+  disabled: boolean = false;
   private newImage(a = {} as UploadImagesType): FormGroup {
     return this.formBuilder.group({
       image: this.formBuilder.control(a.image || ''),
       file: this.formBuilder.control(a.file || ''),
       imageId: this.formBuilder.control(a.imageId || createUniqueUID()),
-      imageCategory: this.formBuilder.control(a.imageCategory  || 'People'),
+      imageCategory: this.formBuilder.control(a.imageCategory || 'People'),
       imageDes: this.formBuilder.control(a.imageDes || ''),
       imageDetails: this.formBuilder.control(a.imageDetails || ''),
       imageSource: this.formBuilder.control(a.imageSource || ''),
       imageTitle: this.formBuilder.control(a.imageTitle || ''),
-      imageUpload: this.formBuilder.control(a.imageUpload || false),
+      imageUpload: this.formBuilder.control(a.imageUpload || this.pageType === 'gallery' || false),
       isProfile: this.formBuilder.control(a.isProfile || ''),
       imageUrl: this.formBuilder.control(a.imageUrl || ''),
       otherImage: this.formBuilder.control(a.otherImage || ''),
@@ -37,10 +39,12 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
       otherImageDetails: this.formBuilder.control(a.otherImageDetails || ''),
       otherImageSource: this.formBuilder.control(a.otherImageSource || ''),
       otherImageTitle: this.formBuilder.control(a.otherImageTitle || ''),
-      otherImageUpload: this.formBuilder.control(a.otherImageUpload || false),
+      otherImageUpload: this.formBuilder.control(a.otherImageUpload || this.pageType === 'gallery'  || false),
       otherImageUrl: this.formBuilder.control(a.otherImageUrl || ''),
     });
   }
+  @Input() type: UploadType = 'multiple';
+  @Input() pageType: PageType = 'profile';
   imageArray = this.formBuilder.array([]);
   sub: Subscription[] = [];
   subLang: Subscription[] = [];
@@ -89,7 +93,12 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
   onTouched = (event) => {};
 
   setDisabledState?(isDisabled: boolean): void {
-    this._disabled = isDisabled;
+    this.disabled = isDisabled;
+    if (this.disabled) {
+      this.imageArray.disable();
+    } else {
+      this.imageArray.enable();
+    }
   }
 
   async onselectFile(e, i) {
@@ -97,7 +106,6 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
       var reader = new FileReader();
       const file = e.target.files[0];
       reader.readAsDataURL(file);
-
       reader.onload = (event: any) => {
         this.imageArray.controls[i].patchValue({
           imageUrl: event.target.result,
@@ -116,6 +124,11 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
         this.addImage();
       }
       this.imagesChange();
+      if (this.disabled) {
+        this.imageArray.disable();
+      } else {
+        this.imageArray.enable();
+      }
     } else {
       this.imageArray.controls = [];
       if (this.imageArray.controls.length === 0) {
@@ -152,7 +165,7 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
 
   selectDefaultProfile(i) {
     this.imageArray.controls.forEach((e, idx) => {
-      if (idx !== i)  {
+      if (idx !== i) {
         e.get('isProfile')?.setValue(false);
       }
     });

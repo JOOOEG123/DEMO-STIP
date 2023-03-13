@@ -24,6 +24,10 @@ export class ImagesService {
       .valueChanges();
   }
 
+  getGalleryImageById(language: string, imageId: string) {
+    return this.db.object(`persons/data/${language}/images/${imageId}`).valueChanges();
+  }
+
   addImage(language: string, image: ImagesSchema) {
     return this.db
       .object(`persons/data/${language}/images`)

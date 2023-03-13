@@ -53,7 +53,6 @@ import { OverlayComponent } from './pages/gallery/overlay/overlay.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { RequestModifyComponent } from './pages/requestForms/upload/request-modify/request-modify.component';
-import { UploadImageComponent } from './pages/requestForms/upload/upload-image/upload-image.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SearchComponent } from './pages/search/search.component';
 
@@ -74,7 +73,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     OverlayComponent,
     ContributionComponent,
     RequestModifyComponent,
-    UploadImageComponent,
     SearchComponent,
   ],
   imports: [
