@@ -26,6 +26,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
   searchTerm: string = '';
   transPath = 'homepage.component.';
   subs: Subscription[] = [];
+  searchBy: string = 'fullName';
 
   fakeProfile = [
     {
@@ -72,9 +73,13 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   searchArchives() {
-    this.router.navigate(['/browse/main'], {
-      queryParams: { searchTerm: this.searchTerm },
-    });
+    if (this.searchTerm) {
+      this.router.navigate(['/browse/main'], {
+        queryParams: { searchTerm: this.searchTerm, searchBy: this.searchBy },
+      });
+    } else {
+      this.router.navigate(['/browse/main']);
+    }
   }
 
   sendRequestForm() {

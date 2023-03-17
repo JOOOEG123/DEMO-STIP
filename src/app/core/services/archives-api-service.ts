@@ -31,9 +31,10 @@ export class ArchieveApiService {
     let ref = (r: QueryReference) =>
       r
         .orderByChild(v.key)
-        .startAt(v.value)
-        .endBefore(v.value + '\uF8FF')
-        .limitToLast(limit);
+        // .startAt(`%${v.value}%`)
+        .startAt(`${v.value}`)
+        .endBefore(`${v.value}` + '\uF8FF')
+        .limitToFirst(limit);
 
     if (v.key === 'initial' && v.value === 'All') {
       ref = (r: QueryReference) => r.limitToFirst(limit);
