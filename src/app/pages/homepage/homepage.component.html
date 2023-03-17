@@ -61,29 +61,27 @@
             *ngFor="let profile of randomProfile"
           >
             <div class="card h-100 shadow">
+              <img
+                *ngIf="profile?.images[0]?.imageUrl"
+                [src]="profile?.images[0]?.imageUrl"
+                class="card-img-top shadow h-90 img-fluid"
+              />
+              <img
+                *ngIf="!profile?.images[0]?.imageUrl"
+                src="/assets/homepage/default-profile.png"
+                class="card-img-top shadow h-90"
+              />
+              <a
+                routerLink="/browse/main/memoir/{{ profile.rightistId }}"
+                aria-label="Redirect to {{ profile.fullName }}'s memoir page"
+                class="text-green text-center mb-3 fw-bold link-success h5 card-title mt-3"
+              >
+                {{ profile.fullName | titlecase }}
+              </a>
               <div class="card-body">
-                <div class="text-center">
-                  <img
-                    *ngIf="profile?.images[0]?.imageUrl"
-                    [src]="profile?.images[0]?.imageUrl"
-                    class="rounded-circle img-fluid"
-                  />
-                  <img
-                    *ngIf="!profile?.images[0]?.imageUrl"
-                    src="/assets/homepage/default-profile.png"
-                    class="rounded-circle img-fluid"
-                  />
-                </div>
                 <div class="col-10 mt-auto mx-auto pt-4">
-                  <a
-                    routerLink="/browse/main/memoir/{{ profile.rightistId }}"
-                    aria-label="Redirect to {{ profile.fullName }}'s memoir page"
-                    class="text-green text-center mb-3 fw-bold link-success h4"
-                  >
-                    {{ profile.fullName | titlecase }}
-                  </a>
-                  <p class="text-dark-green">
-                    {{ profile.description }}
+                  <p class="text-dark-green" style="height: 8rem;">
+                    {{ profile.description.slice(0, 50) }} {{ profile.description.length > 50 ? '...' : '' }}
                   </p>
                 </div>
               </div>
