@@ -123,7 +123,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     isScroll = false
   ) {
     //clear up display
-    this.display = [];
     const archKey = `person_arch_${letter}`;
     let res;
     this.isloading = true;
@@ -133,7 +132,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       res = this.archApi
         .getAllArchieveList(this.currentLanguage, { ...search }, this.limit)
         .subscribe((datas: any) => {
-          this.display = datas;
+          this.display = datas.slice();
           this.removeInitialForDesciption();
           this.isloading = false;
           setTimeout(() => {
@@ -142,7 +141,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 ? this.display.length - 1
                 : this.limit - 51;
             if (isScroll) {
-              document.getElementById('local_id_' + idIdx)?.focus();
+              // document.getElementById('local_id_' + idIdx)?.focus();
               this.changeDetection.detectChanges();
             }
             this.limit = this.display.length + 50;
