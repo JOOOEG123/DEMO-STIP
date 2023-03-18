@@ -1,13 +1,11 @@
 <div class="container-fluid p-0 profile-bg-image-blue" *ngIf="loaded">
   <div class="profile-bg-colors">
-    <div class="d-flex profile-bg-image-blue-inner">
+    <div class="d-flex profile-bg-image-blue-inner px-4">
       <div class="d-flex flex-column align-items-center flex-shrink-1 my-5">
         <img
           [alt]="src ? profile?.fullName + ' profile' : 'Image not Found'"
           [src]="src"
-          width="200"
-          height="200"
-          class="img-fluid rounded-circle mx-5 align-self-center"
+          class="user align-self-center"
         />
         <div class="text-light mx-auto">ID: {{ id || "-" }}</div>
       </div>
@@ -15,7 +13,7 @@
         class="d-flex flex-column align-self-center text-light flex-fill"
         style="height: 100%"
       >
-        <div class="fs-1">{{ profile?.fullName || "-" }}</div>
+        <div class="fs-1 px-4">{{ profile?.fullName || "-" }}</div>
       </div>
     </div>
   </div>

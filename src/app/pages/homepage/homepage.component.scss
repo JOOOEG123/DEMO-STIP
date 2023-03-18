@@ -1,1 +1,57 @@
+@import './../../../styles/colors.scss';
 
+.homepage-body {
+  max-height: 100vh;
+  height: 90vh;
+}
+// :host {
+//   display: block;
+//   background: white url('^./../../../assets/homepage/gold_pathern.png') no-repeat center center;
+//   // background-size: cover;
+//   z-index: 999;
+//   display: block;
+
+// }
+
+// vertical line with clip path
+.vertical-line {
+  background-color: $medium-blue;
+  clip-path: polygon(0% 0%,100% 0%,100% 100%,50% 100%,0% 70%);
+  z-index: 1;
+}
+.vertical-continue {
+  // width: 1px;
+  // height: 100%;
+  // background-color: $medium-blue;
+  // background-color: #fff;
+  clip-path: polygon(50% 0%,100% 40%,100% 100%,0% 100%,0% 0%);
+}
+
+.timeline-background {
+  background-color: $khaki-light;
+}
+
+.layer-1 {
+  background: transparent url('^assets/homepage/china_sign.png') no-repeat right center;
+}
+.layer-line {
+  background: transparent url('./../../../assets/homepage/gold_lines.png') no-repeat center center;
+  font-optical-sizing: auto;
+}
+
+.circle-profile {
+  width: 100px; /* adjust to your desired size */
+  height: 100px; /* adjust to your desired size */
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #fff; /* adjust border size and color */
+}
+
+.circle-profile img {
+  width: 100%;
+  height: auto;
+
+}

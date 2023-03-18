@@ -4,6 +4,13 @@ $lower-large: 979px;
 $upper-medium: 768px;
 $lower-medium: 767px;
 $small: 480px;
+:host {
+  // position: relative;
+  background-image: url('./../../../assets/homepage/gold_lines.png'), url('./../../../assets/aboutpage/Group\ 66.png'), url('./../../../assets/aboutpage/Group\ 66.png'), url('./../../../assets/aboutpage/Group\ 66.png');
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: bottom, left, right center, top right;
+  display: block;
+}
 
 
 .title{
