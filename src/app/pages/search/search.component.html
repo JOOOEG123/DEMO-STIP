@@ -47,7 +47,7 @@
   </div>
 </div>
 
-<div class="outer-bg justify-content-center text-dark position-relative">
+<div class="outer-bg justify-content-center text-dark " >
   <div class="row m-0">
     <div class="image"></div>
     <div class="col-10 border text-dark inner-bg mx-auto rounded shadow my-4">
@@ -60,13 +60,13 @@
         <div class="container-fluid">
           <div class="row row-cols-lg-auto">
             <h4 class="col-12 me-auto p-2 text-light text-nowrap my-2">
-              {{ this.display.length }} of
+              {{ "archive.archive_num_result" | translate }} {{ this.display.length }} of
               {{
                 this.display.length !== limit - 50
                   ? this.display.length
-                  : "39000+"
+                  : "more than " + this.display.length
               }}
-              {{ "archive.archive_num_result" | translate }}
+
             </h4>
             <div class="col-12 flex-shrink-0 my-2">
               <label for="viewSelect" class="text-white">{{
@@ -111,8 +111,8 @@
 
           <!-- display search results -->
           <app-stip-spinner [isLoading]="isloading"></app-stip-spinner>
-
-          <div
+          <div>
+            <div
             class="search-results"
             infiniteScroll
             (scrolled)="onScroll()"
@@ -159,6 +159,8 @@
               </div>
             </div>
           </div>
+          </div>
+
         </div>
       </div>
     </div>

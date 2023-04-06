@@ -101,7 +101,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
     this.loaded = false;
     this.language = localStorage.getItem('lang')!
     this.otherLanguage = this.language === 'en' ? 'cn' : 'en';
-
+    this.initialize();
     this.languageSubscription = this.translate.onLangChange.subscribe(
       (langChange: any) => {
         this.language = langChange.lang;
@@ -111,7 +111,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.initialize();
+    
   }
 
   ngOnDestroy(): void {

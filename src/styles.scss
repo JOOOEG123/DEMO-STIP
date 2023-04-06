@@ -5,16 +5,26 @@
 
 /* You can add global styles to this file, and also import other style files */
 
-
 .browse-list-box {
   height: 150px;
   border-radius: 28px;
-  color: black;
+  // color: black;
   text-decoration: none;
-  background-color: #d4e0df;
+  background-color: #d4e0df !important;
+  // on hover shake the box and add a sslow boder
+  &:hover {
+    animation: shake 1s;
+    animation-iteration-count: 1;
+    border: 4px solid $khaki;
+  }
+  // &:hover {
+  //   animation: shake 1s;
+  //   animation-iteration-count: 2;
+  //   ;
+  // }
 }
 .browse-text-color {
-  color: $dark-green
+  color: $dark-blue;
 }
 .browse-text-color-two {
   color: grey
@@ -253,10 +263,25 @@ body {
   border-color: $khaki !important;
   border: 2px solid $khaki !important;
 }
+.text-khaki {
+  color: $khaki !important;
+}
+
+.text-orange-red {
+  color: $orange-red !important;
+}
 
 .border-orange-red {
-  border-color: $orange-red;
-  border: 2px solid $orange-red;
+  border-color: $orange-red !important;
+  border: 2px solid $orange-red !important;
+}
+.border-orange-red {
+  border-color: $orange-red !important;
+  border: 2px solid $orange-red !important;
+}
+.border-grey-green {
+  border-color: $grey-green;
+  border: 2px solid $grey-green;
 }
 
 .btn-bg-color-grey-green {
