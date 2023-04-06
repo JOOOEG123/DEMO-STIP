@@ -29,7 +29,7 @@ $small: 480px;
 .hovered-button {
     transition: 1s;
     position: absolute;
-    background-color: $dark-green;
+    background-color: $dark-blue;
     color: white;
     padding: 10px;
     top: 50%;
@@ -42,7 +42,7 @@ $small: 480px;
     &:active,
     &:checked {
       background-color: white;
-      color: $dark-green;
+      color: $dark-blue;
     }
 }
 

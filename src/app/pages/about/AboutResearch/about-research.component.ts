@@ -87,13 +87,13 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
         value: ((this.femaleRightistList.length / this.total!) * 100).toFixed(
           2
         ),
-        color: '#266461',
+        color: '#a76724',
       },
 
       {
         name: 'Male',
         value: ((this.maleRightistList.length / this.total!) * 100).toFixed(2),
-        color: '#D2D497',
+        color: 'gray',
       },
 
       {
@@ -105,7 +105,7 @@ export class AboutResearchComponent implements OnInit, OnDestroy {
             this.total!) *
           100
         ).toFixed(2),
-        color: '#61AF87',
+        color: '#df4008',
       },
     ];
     var width = 300,

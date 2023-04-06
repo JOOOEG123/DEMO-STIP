@@ -1,22 +1,20 @@
-<div *ngIf="!page">
-  <h2 class="text-center pb-5 pt-5 mt-5">
-    {{ "upload.request_form" | translate }}
-  </h2>
-  <h3 class="text-center pt-3 pb-5">{{ "upload.upload" | translate }}</h3>
-</div>
 
-<div *ngIf="page">
-  <h3 class="text-center pb-5 pt-5 mt-5">
-    {{ "upload.detail_edit" | translate }}
-  </h3>
-  <div class="text-center my-4" *ngIf="page == 'contribution'">
-    <button (click)="onSave()" class="btn btn-primary">
-      {{ "common.save" | translate }}
-    </button>
+<div class="container-fluid p-0 pb-3">
+  <div class="container-fluid px-0 text-center bg-image-blue bg-khali pb-1">
+    <div class="bg-image-blue bg-medium-blue pb-3">
+      <div class="bg-image-blue-inner">
+        <div class="bg-image-blue-inner bg-dark-blue">
+          <div class="container w-50 pt-4">
+            <h2 class="text-center">
+              {{ (!page ? "upload.request_form" : "upload.detail_edit" )| translate }} - {{(!page ? "upload.upload" : "common.save" ) | translate }}
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<form class="container-fluid" [formGroup]="allForms">
+<form class="container-fluid mt-4" [formGroup]="allForms">
   <app-rightist-info-form formControlName="rightist"></app-rightist-info-form>
   <div class="row">
     <div class="col-md-4 ms-5 ps-5">
