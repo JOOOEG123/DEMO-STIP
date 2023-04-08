@@ -536,7 +536,7 @@ export class UploadComponent implements OnInit, OnDestroy {
       Promise.all([
         this.contributionService.updateUserContribution(this.language, {
           contributionId: contributionId,
-          contributorId: this.auth.uid,
+          contributorId: this.isAdmin ? this.contribution?.contributorId ?? this.auth.uid : this.auth.uid,
           rightistId: rightistId,
           contributedAt: new Date(),
           approvedAt: new Date(),
@@ -548,7 +548,7 @@ export class UploadComponent implements OnInit, OnDestroy {
         }),
         this.contributionService.updateUserContribution(this.otherLanguage, {
           contributionId: contributionId,
-          contributorId: this.auth.uid,
+          contributorId: this.isAdmin ? this.contribution?.contributorId ?? this.auth.uid : this.auth.uid,
           rightistId: rightistId,
           contributedAt: new Date(),
           approvedAt: new Date(),

@@ -87,8 +87,11 @@
 
 <div *ngIf="!contribution.rightist">
   <div class="row w-100">
-    <small class="col-3"
+    <small class="col-3" *ngIf="!contribution?.fullName"
       ><strong>Contribution ID:</strong> {{ contribution.contributorId }}</small
+    >
+    <small class="col-3" *ngIf="contribution?.fullName"
+      ><strong>Rightist Name:</strong> {{ contribution.fullName }}</small
     >
     <small class="col-3"
       ><strong>Approved At:</strong>
