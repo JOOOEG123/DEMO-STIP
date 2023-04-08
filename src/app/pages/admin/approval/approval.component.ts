@@ -238,42 +238,27 @@ export class ApprovalComponent implements OnInit, OnDestroy {
   onApprove(el: UploadComponent) {
     this.publish = 'approved';
     this.selectedContribution.state = 'removed';
-    el.onSubmit().then(()=> {
+    el.onSubmit('approved').then(()=> {
       this.modalRef?.hide();
     })
   }
 
-  onSave(data: any) {
-
-    this.updatedContribution.image = this.image;
-    this.otherUpdatedContribution.image = this.otherImage;
-
-    if (data.type == 'save') {
-      Promise.all([
-        this.contributionAPI.updateUserContribution(
-          this.language,
-          this.updatedContribution
-        ),
-        this.contributionAPI.updateUserContribution(
-          this.otherLanguage,
-          this.otherUpdatedContribution
-        ),
-      ]).then(() => {
-        this.modalRef?.hide();
-      });
-    }
-  }
-
-  onReject() {
+  onReject(el: UploadComponent) {
     this.modalRef?.hide();
     this.publish = 'rejected';
     this.selectedContribution.state = 'removed';
+    el.onSubmit('rejected').then(()=> {
+      this.modalRef?.hide();
+    })
   }
 
-  onReconsider() {
+  onReconsider(el: UploadComponent) {
     this.modalRef?.hide();
     this.publish = 'approved';
     this.selectedContribution.state = 'removed';
+    el.onSubmit('new').then(()=> {
+      this.modalRef?.hide();
+    })
   }
 
   onEdit() {
@@ -298,150 +283,12 @@ export class ApprovalComponent implements OnInit, OnDestroy {
       this.selectedContribution &&
       this.selectedContribution.state === 'removed'
     ) {
-      if (this.publish === 'approved') {
-
-      } else {
-        this.updatedContribution.publish = this.publish;
-        this.otherUpdatedContribution.publish = this.publish;
-
-        const { state, ...contribution } = this.updatedContribution;
-        const { state: otherState, ...otherContribution } =
-          this.otherUpdatedContribution;
-        if (this.url) {
-          this.updatedContribution!.image!.imagePath = this.url;
-          this.otherUpdatedContribution!.image!.imagePath = this.url;
-        }
-
-        Promise.all([
-          this.contributionAPI.updateUserContribution(
-            this.language,
-            contribution
-          ),
-          this.contributionAPI.updateUserContribution(
-            this.otherLanguage,
-            otherContribution
-          ),
-        ]);
-      }
       this.selectedContribution.state = 'void';
     }
   }
 
   onReadMore(template: TemplateRef<any>, contribution: ContributionDetails) {
     this.selectedContribution = contribution;
-    this.updatedContribution = { ...contribution };
-    this.otherUpdatedContribution = { ...contribution };
-    this.image = { ...contribution.image! };
     this.modalRef = this.modalService.show(template, { class: 'modal-custom-style' });
-  }
-
-  onEventChange(source: any) {
-    let events: Event[] = [];
-    let otherEvents: Event[] = [];
-
-    for (let data of source) {
-      let event: Event = {
-        startYear: data.startYear,
-        endYear: data.endYear,
-        event: data.event,
-      };
-
-      let otherEvent: Event = {
-        startYear: data.startYear,
-        endYear: data.endYear,
-        event: data.otherEvent,
-      };
-
-      events.push(event);
-      otherEvents.push(otherEvent);
-    }
-
-    this.updatedContribution.rightist!.events = events;
-    this.otherUpdatedContribution.rightist!.events = otherEvents;
-  }
-
-  onMemoirChange(source: any) {
-    let memoirs: Memoir[] = [];
-    let otherMemoirs: Memoir[] = [];
-
-    for (let data of source) {
-      let memoir: Memoir = {
-        memoirTitle: data.memoirTitle,
-        memoirAuthor: data.memoirAuthor,
-        memoirContent: data.memoirContent,
-      };
-
-      let otherMemoir: Memoir = {
-        memoirTitle: data.otherMemoirTitle,
-        memoirAuthor: data.otherMemoirAuthor,
-        memoirContent: data.otherMemoirContent,
-      };
-
-      memoirs.push(memoir);
-      otherMemoirs.push(otherMemoir);
-    }
-
-    this.updatedContribution.rightist!.memoirs = memoirs;
-    this.otherUpdatedContribution.rightist!.memoirs = otherMemoirs;
-  }
-
-  onFormChange(data: any) {
-    this.updatedContribution = {
-      ...this.updatedContribution,
-      rightist: {
-        ...this.updatedContribution.rightist!,
-        fullName: data.name,
-        gender: data.gender,
-        status: data.status,
-        ethnicity: data.ethnic,
-        job: data.occupation,
-        workplace: data.workplace,
-        rightistYear: data.rightistYear,
-        birthYear: data.birthYear,
-      },
-    };
-
-    this.otherUpdatedContribution = {
-      ...this.otherUpdatedContribution,
-      rightist: {
-        ...this.otherUpdatedContribution.rightist!,
-        fullName: data.otherName,
-        gender: data.otherGender,
-        status: data.otherStatus,
-        ethnicity: data.otherEthnic,
-        job: data.otherOccupation,
-        workplace: data.otherWorkplace,
-        rightistYear: data.rightistYear,
-        birthYear: data.birthYear,
-      },
-    };
-  }
-
-  onImageChange(data: any) {
-    this.url = data.url;
-    this.image = { ...data.image };
-    this.otherImage = { ...data.otherImage };
-  }
-
-  onDescriptionChange(data: any) {
-    if (data.type == 'original') {
-      this.updatedContribution = {
-        ...this.updatedContribution,
-        rightist: {
-          ...this.updatedContribution.rightist!,
-          description: data.value,
-        },
-      };
-    }
-
-    if (data.type == 'other') {
-      this.otherUpdatedContribution = {
-        ...this.otherUpdatedContribution,
-        rightist: {
-          ...this.otherUpdatedContribution.rightist!,
-          description: data.value,
-        },
-      };
-    }
   }
 }

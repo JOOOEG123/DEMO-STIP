@@ -100,6 +100,22 @@
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
   background-position: bottom, left, top right, right;
 }
+.backImgChinaSign {
+  // position: relative;
+  background-image: url('./assets/homepage/china_sign.png');
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 11rem;
+  background-position-x: right;
+}
+.backImgChinaSign-left {
+  // position: relative;
+  background-image: url('./assets/homepage/china_sign.png');
+  background-repeat: no-repeat;
+  // background-position: bottom right;
+  background-size: 12rem;
+  background-position-x: left;
+}
 
 
 .layer1 {

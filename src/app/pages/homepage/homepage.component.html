@@ -89,13 +89,17 @@
                 >
                   {{ profile.fullName | titlecase }}
                 </a>
-                <div class="card-body">
-                  <div class="col-10 mt-auto mx-auto pt-4">
-                    <p class="text-white" style="height: 8rem">
+                <div class="card-body mb-5 pb-5">
+                  <div class="col-12 mt-auto mx-auto text-end">
+                    <p class="text-white text-center" style="max-height: 8rem">
                       {{ profile.description.slice(0, 50) }}
                       {{ profile.description.length > 50 ? "..." : "" }}
                     </p>
+                    <a routerLink="/browse/main/memoir/{{ profile.rightistId }}" class="a_link text-start mb-3 fw-bold text-decoration-none " >
+                      read more <strong>></strong>
+                    </a>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -104,10 +108,10 @@
       </div>
     </div>
 
-    <div class="bg-medium-blue border-0">
-      <div class="container-fluid bg-danger vertical-continue bg-white">
-        <div class="container">
-          <div class="row">
+    <div class="bg-medium-blue border-0 backImgChinaSign ">
+      <div class="container-fluid bg-danger vertical-continue bg-white backImgChinaSign pb-5">
+        <div class="container pb-5 ">
+          <div class="row ">
             <div class="col-lg-6 col-md-12 col-xs-12">
               <div
                 class="w-100 h-100 brief-responsive d-flex align-items-center text-dark"
@@ -124,7 +128,7 @@
         </div>
       </div>
     </div>
-    <div class="bg-white layer-line">
+    <div class="bg-white layer-line homepage-img1">
       <div class="col-12 col-md-10 mx-auto text-center  rounded-lg timeline-background">
         <h2 class="text-center text-orange-red py-3">{{ "home.home_timeline" | translate }}</h2>
         <img class="img-fluid timeline-img" src="assets/homepage/timeline.png" />

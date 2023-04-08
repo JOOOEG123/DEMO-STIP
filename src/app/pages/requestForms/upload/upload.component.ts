@@ -19,6 +19,7 @@ import {
   ContributionDetails,
   ImagesSchema,
   langType,
+  Publish,
   Rightist,
   RightistSchema,
   UploadImagesType,
@@ -74,7 +75,6 @@ export class UploadComponent implements OnInit, OnDestroy {
   @Output() memoirChange: EventEmitter<any> = new EventEmitter();
   @Output() imageChange: EventEmitter<any> = new EventEmitter();
   @Output() descriptionChange: EventEmitter<any> = new EventEmitter();
-  @Output() save: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private contributionService: ContributionsService,
@@ -299,13 +299,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSave() {
-    this.save.emit({
-      type: 'save',
-    });
-  }
-
-  async onSubmit() {
+  async onSubmit(published: Publish) {
     this.isLoading = true;
     const rightistId =
       this.contribution?.rightist?.rightistId ||
@@ -477,7 +471,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     let contributionId =
       this.contributionId || this.contribution?.contributionId || UUID();
 
-    if (this.isAdmin && ['contribution', 'profile'].includes(this.page)) {
+    if (this.isAdmin && ['contribution', 'profile'].includes(this.page) && published === 'approved') {
       // TO DO: add images that was uploaded after approval by the admin to gallery schemas.
       Promise.all([
         this.contributionService.updateUserContribution(this.language, {
@@ -487,7 +481,8 @@ export class UploadComponent implements OnInit, OnDestroy {
           contributedAt: new Date(),
           approvedAt: new Date(),
           rejectedAt: new Date(),
-          publish: 'approved',
+          fullName: rightist?.fullName ?? '',
+          publish: published,
           lastUpdatedAt: new Date(),
         }),
         this.archiveAPI.addRightist(this.language, rightist),
@@ -498,7 +493,8 @@ export class UploadComponent implements OnInit, OnDestroy {
           contributedAt: new Date(),
           approvedAt: new Date(),
           rejectedAt: new Date(),
-          publish: 'approved',
+          fullName: otherRightist?.fullName ?? '',
+          publish: published,
           lastUpdatedAt: new Date(),
         }),
         this.archiveAPI
@@ -535,7 +531,8 @@ export class UploadComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           // use the alert service to show a message
         });
-    } else {
+    } else if (['new', 'rejected'].includes(published)) {
+      console.log(published, otherRightist),
       Promise.all([
         this.contributionService.updateUserContribution(this.language, {
           contributionId: contributionId,
@@ -544,7 +541,8 @@ export class UploadComponent implements OnInit, OnDestroy {
           contributedAt: new Date(),
           approvedAt: new Date(),
           rejectedAt: new Date(),
-          publish: 'new',
+          fullName: rightist?.fullName ?? '',
+          publish: published,
           rightist: rightist,
           lastUpdatedAt: new Date(),
         }),
@@ -555,7 +553,8 @@ export class UploadComponent implements OnInit, OnDestroy {
           contributedAt: new Date(),
           approvedAt: new Date(),
           rejectedAt: new Date(),
-          publish: 'new',
+          fullName: otherRightist?.fullName ?? '',
+          publish: published,
           rightist: otherRightist,
           lastUpdatedAt: new Date(),
         }),

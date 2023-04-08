@@ -49,9 +49,25 @@
   align-items: center;
   border: 2px solid #fff; /* adjust border size and color */
 }
+.a_link {
+  color: white;
+  :hover {
+   font-weight: 100px !important;
+   text-decoration: dashed !important
+  }
+}
 
 .circle-profile img {
   width: 100%;
   height: auto;
+
+}
+.homepage-img1 {
+  // position: relative;
+  background-image: url('./../../../assets/homepage/gold_lines.png'), url('./../../../assets/homepage/china_sign.png'), url('./../../../assets/aboutpage/Group\ 66.png'), url('./../../../assets/aboutpage/Group\ 66.png');
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: bottom, left, right center, top right;
+  background-size: 150rem 5rem, 12rem, 7rem, 9rem;
+  display: block;
 
 }

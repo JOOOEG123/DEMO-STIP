@@ -65,7 +65,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.sub.push(
       this.route.queryParams.subscribe((params) => {
         this.searchInput = params['searchTerm'] || '';
-        this.initLetter('All');
+        this.initLetter(this.currentLetter ?? 'All');
       })
     );
     this.translate.onLangChange.subscribe((res) => {
@@ -77,7 +77,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         });
       // clean up cache, so different languages can use the cache.
       this.ngOnDestroy();
-      this.initLetter('All');
+      this.initLetter(this.currentLetter ?? 'All');
     });
   }
   ngOnDestroy(): void {
