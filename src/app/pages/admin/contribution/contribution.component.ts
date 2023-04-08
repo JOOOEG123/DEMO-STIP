@@ -39,6 +39,8 @@ export class ContributionComponent implements OnInit {
   @Output() readMore: EventEmitter<Contribution | any> = new EventEmitter();
   @Output() rightistNavigation: EventEmitter<Contribution> = new EventEmitter()
 
+  newDate
+
   // character limit
   limit: number = 50;
 

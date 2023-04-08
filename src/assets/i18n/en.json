@@ -188,7 +188,8 @@
     "project_overview_Gender": "Gender",
     "project_overview_Rightist_Year": "Year someone became a \"Rightist\"",
     "project_overview_summary": "Summary",
-    "project_overview_meet_the_team_button": "Meet the team behind the research"
+    "project_overview_meet_the_team_button": "Meet the team behind the research",
+    "project_overview_meet_the_team_title": "Meet the team behind the research"
   },
   "other_resources": {
     "other_resources_title": "Other Resources"
@@ -474,7 +475,7 @@
     "people":"People",
     "media":"Media",
     "camps":"Camps",
-    "other":"Other", 
+    "other":"Other",
     "image_cat": "Image category",
     "include": "Include this image in gallery",
     "add": "Add Another Image",

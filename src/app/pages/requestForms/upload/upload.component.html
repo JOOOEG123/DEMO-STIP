@@ -80,7 +80,7 @@
       type="button"
       class="btn btn-lg btn-outline-dark me-3 rounded-pill mx-2 px-4"
       [disabled]="allForms.invalid || isLoading"
-      (click)="onSubmit()"
+      (click)="onSubmit('new')"
     >
       {{ "upload.submit" | translate }}
     </button>

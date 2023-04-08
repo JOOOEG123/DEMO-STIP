@@ -169,6 +169,7 @@ export interface ContributionSchema {
   image?: ImagesSchema;
   rightistId: string;
   publish: Publish;
+  fullName: string;
   lastUpdatedAt: Date;
   contributedAt: Date; // set from the service when creating a new contribution
   approvedAt: Date; // set from the service when approving a contribution
