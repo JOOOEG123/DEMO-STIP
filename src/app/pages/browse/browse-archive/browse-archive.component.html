@@ -7,7 +7,7 @@
           [src]="src"
           class="user align-self-center"
         />
-        <div class="text-light mx-auto">ID: {{ id || "-" }}</div>
+        <div class="text-light mx-auto" *ngIf="isAdmin">ID: {{ id || "-" }}</div>
       </div>
       <div
         class="d-flex flex-column align-self-center text-light flex-fill"

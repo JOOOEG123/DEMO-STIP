@@ -23,6 +23,17 @@ export class ArchieveApiService {
       return this.db.object('/persons/data/en/rightists').valueChanges();
     }
   }
+
+  getGenderList(curLan: string, gender: string) {
+    return this.db.list(`/persons/data/${curLan}/rightists`, (ref) => ref.orderByChild("gender").equalTo(gender)).valueChanges();
+  }
+
+  getRightistYearList(curLan: string, year: string) {
+    return this.db.list(`/persons/data/${curLan}/rightists`, (ref) => {
+      return ref.orderByChild("gender").startAfter(year).endAt(year);
+    }).snapshotChanges();
+  }
+
   getAllArchieveList(
     curLan: string,
     v = { key: 'initial', value: 'All' },
