@@ -69,6 +69,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
       this.arch
         .getRightistById(this.language!, this.id)
         .subscribe((res: any) => {
+          console.log(res);
           this.profile = res;
           this.loaded = true;
           if (res?.images) {
@@ -194,6 +195,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
   onYes() {
     this.loaded = false;
     this.modalService.hide();
+    console.log(this.profile)
     this.sub.push(
       this.contributionAPI
         .getUserContributionsList(this.language!, this.profile.contributorId)
