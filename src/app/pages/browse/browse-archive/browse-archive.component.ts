@@ -17,10 +17,8 @@ import { AuthServiceService } from 'src/app/core/services/auth-service.service';
 import { ImagesService } from 'src/app/core/services/images.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { Rightist } from 'src/app/core/types/adminpage.types';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ContributionsService } from 'src/app/core/services/contributions.service';
-import { TypeaheadOptions } from 'ngx-bootstrap/typeahead';
 import { StorageApIService } from 'src/app/core/services/storage-api.service';
 
 @Component({
@@ -71,6 +69,10 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
       this.arch
         .getRightistById(this.language!, this.id)
         .subscribe((res: any) => {
+          if (!res) {
+             this.router.navigate(['../../../','account']);
+            return
+          }
           this.profile = res;
           this.loaded = true;
           if (res?.images) {
@@ -111,7 +113,7 @@ export class BrowseArchiveComponent implements OnInit, OnDestroy {
       }
     );
 
-    
+
   }
 
   ngOnDestroy(): void {

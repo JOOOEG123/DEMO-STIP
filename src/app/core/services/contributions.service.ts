@@ -126,4 +126,11 @@ export class ContributionsService {
       )
       .remove();
   }
+  deleteUserContributorContent(language: string, contributorId: string) {
+    this.db
+      .object(
+        `/persons/data/${language}/contributions/${contributorId}`
+      )
+      .remove();
+  }
 }

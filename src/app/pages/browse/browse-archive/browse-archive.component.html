@@ -7,7 +7,7 @@
           [src]="src"
           class="user align-self-center"
         />
-        <div class="text-light mx-auto">ID: {{ id || "-" }}</div>
+        <div class="text-light mx-auto" *ngIf="isAdmin">ID: {{ id || "-" }}</div>
       </div>
       <div
         class="d-flex flex-column align-self-center text-light flex-fill"
@@ -383,7 +383,7 @@
 
 <ng-template #deleteTemplate>
   <div class="m-4">
-    <h1>Are you sure you want to delete this profile?</h1>
+    <p>Are you sure you want to delete this profile?</p>
   </div>
   <div class="m-4 d-flex flex-rows justify-content-center align-items-center">
     <button (click)="onYes()" class="btn btn-success my-2">Yes</button>

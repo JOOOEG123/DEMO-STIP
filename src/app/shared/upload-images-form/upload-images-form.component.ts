@@ -45,6 +45,7 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
   }
   @Input() type: UploadType = 'multiple';
   @Input() pageType: PageType = 'profile';
+  @Input() showOnlyDetails: boolean = false;
   imageArray = this.formBuilder.array([]);
   sub: Subscription[] = [];
   subLang: Subscription[] = [];
@@ -60,6 +61,10 @@ export class UploadImagesFormComponent implements OnInit, ControlValueAccessor {
 
   get controls(): FormGroup[] {
     return this.imageArray.controls as FormGroup[];
+  }
+
+  get onlyDetails(): boolean {
+    return this.showOnlyDetails && this.pageType === 'gallery' && this.disabled;
   }
 
   // imageValue!: UploadImagesType[];

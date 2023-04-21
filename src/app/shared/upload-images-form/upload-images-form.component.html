@@ -11,7 +11,7 @@
   >
     <form [formGroup]="imageForm">
       <!-- select photo section -->
-      <div class="d-flex">
+      <div class="d-flex" *ngIf="!onlyDetails">
         <button class="main-canvas" (click)="uploadFileNew.click()">
           <input
             type="file"
@@ -42,8 +42,35 @@
           <div class="middle mt-5">{{ "account.add_photo" | translate }}</div>
         </button>
       </div>
+      <a class="d-flex" *ngIf="onlyDetails" target="_blank" [href]="imageForm.value!.imageUrl ?? '/assets/homepage/default-profile.png'">
+          <img
+            *ngIf="imageForm.value!.imageUrl"
+            src="{{ imageForm.value!.imageUrl }}"
+            alt="profile image"
+            class="image image-diablo"
+            height="250"
+            width="200"
+          />
+          <img
+            *ngIf="!imageForm.value!.imageUrl"
+            src="/assets/homepage/default-profile.png"
+            alt="user"
+            class="image image-diablo"
+            height="250"
+            width="200"
+          />
+      </a>
 
-      <div class="mb-4">
+      <div class="d-flex flex-column mt-3" *ngIf="onlyDetails">
+        <!-- Design for details-->
+        <h3>{{ imageForm.value!.imageTitle}} ({{ imageForm.value!.imageCategory }})</h3>
+        <p>{{ imageForm.value!.imageDes ??  imageForm.value!.imageDetails}}</p>
+        <p class="text-reset mt-auto">{{ imageForm.value!.imageSource}}</p>
+        
+
+      </div>
+
+      <div class="mb-4" *ngIf="!onlyDetails">
         <div>
           <label for="imageTitle" class="form-label"
             >{{ "upload.title" | translate }} ({{
@@ -79,7 +106,7 @@
         </div>
       </div>
 
-      <div class="mb-4">
+      <div class="mb-4" *ngIf="!onlyDetails">
         <div>
           <label for="imageDetails" class="form-label"
             >{{ "upload.detail" | translate }} ({{
@@ -115,7 +142,7 @@
         </div>
       </div>
 
-      <div class="mb-4">
+      <div class="mb-4" *ngIf="!onlyDetails">
         <div>
           <label for="imageSource" class="form-label"
             >{{
@@ -151,7 +178,7 @@
         </div>
       </div>
 
-      <div>
+      <div *ngIf="!onlyDetails">
         <div>
           <label for="categories"
             >{{ "upload.image_cat" | translate }} ({{
