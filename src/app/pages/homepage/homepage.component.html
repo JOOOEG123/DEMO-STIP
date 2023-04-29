@@ -72,12 +72,12 @@
               <div class="h-100">
                 <div class="card-img-top my-4">
                   <img
-                    *ngIf="profile?.images[0]?.imageUrl"
-                    [src]="profile?.images[0]?.imageUrl"
+                    *ngIf="profile?.images?.[0]?.imageUrl"
+                    [src]="profile?.images?.[0]?.imageUrl"
                     class="user"
                   />
                   <img
-                    *ngIf="!profile?.images[0]?.imageUrl"
+                    *ngIf="!profile?.images?.[0]?.imageUrl"
                     src="/assets/homepage/default-profile.png"
                     class="user"
                   />

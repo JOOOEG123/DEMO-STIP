@@ -61,9 +61,15 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
   async getRandomProfile(lang = this.translateService.currentLang) {
     this.randomProfile = [];
-    const randomProfile = await firstValueFrom<any>(
+    let randomProfile = await firstValueFrom<any>(
       this.announceProfile.getRandomProfile(lang)
-    );
+    ) ?? [];
+    if (randomProfile.length < 3) {
+      randomProfile.push(...(await firstValueFrom<any>(
+        this.announceProfile.getRandomProfile(lang, false)
+      ) ?? []));
+    }
+    console.log(randomProfile);
     while (this.randomProfile.length < 3 && randomProfile.length >= 3) {
       const random = Math.floor(Math.random() * randomProfile.length);
       if (!this.randomProfile.includes(randomProfile[random])) {
